@@ -9,11 +9,29 @@ import 'package:xyz_gen/utils/helpers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-String? readFile(String path) {
+Future<String?> readFile(String filePath) async {
   try {
-    final file = File(getFixedPath(path));
-    return file.readAsStringSync();
+    final file = File(getFixedPath(filePath));
+    final data = await file.readAsString();
+    return data;
   } catch (_) {
     return null;
   }
+}
+
+Future<void> writeFile(
+  String filePath,
+  String content, {
+  bool append = false,
+}) async {
+  final file = File(getFixedPath(filePath));
+  await file.writeAsString(
+    content,
+    mode: append ? FileMode.append : FileMode.write,
+  );
+}
+
+Future<void> clearFile(String filePath) async {
+  final file = File(getFixedPath(filePath));
+  await file.writeAsString("");
 }

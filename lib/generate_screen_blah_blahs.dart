@@ -9,14 +9,13 @@ import 'package:xyz_gen/utils/list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void generateScreenBlahBlahs(String dirPath) {
-  final filePaths = listFilePaths(dirPath);
+Future<void> generateScreenBlahBlahs(String dirPath) async {
+  final filePaths = await listFilePaths(dirPath);
   if (filePaths != null) {
     for (final filePath in filePaths) {
-      final fileName = getFileName(filePath);
-      final dartFile = isDartFile(fileName);
-      if (dartFile) {
-        //
+      final (correctFileName, fileName) = isCorrectFileName(filePath, "screen", "dart");
+      if (correctFileName) {
+        print(dirPath);
       }
     }
   }

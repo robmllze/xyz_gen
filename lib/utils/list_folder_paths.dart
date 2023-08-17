@@ -9,11 +9,13 @@ import 'package:xyz_gen/utils/helpers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-List<String>? listFolderPaths(String dirPath, {bool recursive = false}) {
+Future<List<String>?> listFolderPaths(
+  String dirPath, {
+  bool recursive = true,
+}) async {
   final dir = Directory(getFixedPath(dirPath));
-  List<String> folderPaths = [];
-
-  if (dir.existsSync()) {
+  final folderPaths = <String>[];
+  if (await dir.exists()) {
     var entities = dir.listSync(recursive: recursive);
     for (var entity in entities) {
       if (entity is Directory) {
@@ -23,6 +25,5 @@ List<String>? listFolderPaths(String dirPath, {bool recursive = false}) {
   } else {
     return null;
   }
-
   return folderPaths;
 }

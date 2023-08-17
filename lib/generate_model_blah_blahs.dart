@@ -4,12 +4,19 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'dart:io';
 import 'package:xyz_gen/utils/helpers.dart';
+import 'package:xyz_gen/utils/list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void writeFile(String path, String content) {
-  final file = File(getFixedPath(path));
-  file.writeAsStringSync(content);
+Future<void> generateModelBlahBlahs(String dirPath) async {
+  final filePaths = await listFilePaths(dirPath);
+  if (filePaths != null) {
+    for (final filePath in filePaths) {
+      final (correctFileName, fileName) = isCorrectFileName(filePath, "model", "dart");
+      if (correctFileName) {
+        print(dirPath);
+      }
+    }
+  }
 }
