@@ -5,12 +5,13 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 import 'dart:io';
+import 'package:xyz_gen/utils/helpers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 List<String> getTemplatesFromMd(String path) {
   final result = <String>[];
-  final file = File(path);
+  final file = File(getFixedPath(path));
   final body = file.readAsStringSync();
   final expression = RegExp(r"```dart\s+(.*?)\s+```", dotAll: true);
   final matches = expression.allMatches(body);

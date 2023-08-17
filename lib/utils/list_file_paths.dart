@@ -5,11 +5,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 import 'dart:io';
+import 'package:xyz_gen/utils/helpers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-List<String>? listFilePaths(String directoryPath, {bool recursive = false}) {
-  var dir = Directory(directoryPath);
+List<String>? listFilePaths(String dirPath, {bool recursive = false}) {
+  final dir = Directory(getFixedPath(dirPath));
   List<String> filePaths = [];
 
   if (dir.existsSync()) {
