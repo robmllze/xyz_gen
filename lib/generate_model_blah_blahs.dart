@@ -4,31 +4,28 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
+import 'package:xyz_gen/utils/find_files.dart';
+import 'package:xyz_utils/xyz_utils.dart';
+
 import 'utils/analyze_source_classes.dart';
 import 'utils/helpers.dart';
-import 'utils/list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateModelBlahBlahs(String dirPath) async {
-  final filePaths = await listFilePaths(dirPath);
-  if (filePaths != null) {
-    for (final filePath in filePaths) {
+Future<void> generateModelBlahBlahs(
+  String startingDirPath,
+  Set<String> pathPatterns,
+) async {
+  await findFiles(
+    startingDirPath: startingDirPath,
+    pathPatterns: pathPatterns,
+    onFileFound: (final dirName, final folderName, final filePath) async {
       final (correctFileName, fileName) = isCorrectFileName(filePath, "model", "dart");
       if (correctFileName) {
-        _generateForFile(filePath);
+        await _generateForFile(filePath);
       }
-    }
-  }
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-class GenerateModelBlahBlahs {
-  final Set<String> options;
-  const GenerateModelBlahBlahs({
-    this.options = const {},
-  });
+    },
+  );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -36,7 +33,7 @@ class GenerateModelBlahBlahs {
 Future<void> _generateForFile(String fixedFilePath) async {
   await analyzeSourceClasses(
       filePath: fixedFilePath,
-      annotationDisplayName: "GenerateModelBlahBlah",
+      annotationDisplayName: "GenerateModelBlahBlahs",
       fieldNames: {"options"},
       onField: (final classDisplayName, final fieldName, final object) {
         switch (fieldName) {
@@ -46,4 +43,13 @@ Future<void> _generateForFile(String fixedFilePath) async {
             break;
         }
       });
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class GenerateModelBlahBlahs {
+  final Set<String> options;
+  const GenerateModelBlahBlahs({
+    this.options = const {},
+  });
 }

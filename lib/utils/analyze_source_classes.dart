@@ -19,7 +19,7 @@ Future<void> analyzeSourceClasses({
   required String annotationDisplayName,
   required Set<String> fieldNames,
   required void Function(String, String, DartObject) onField,
-  String? matchClass,
+  RegExp? classNamePattern,
 }) async {
   final file = File(filePath).absolute;
   final normalizedFilePath = p.normalize(file.path);
@@ -37,7 +37,7 @@ Future<void> analyzeSourceClasses({
   for (final classElement in classElements) {
     final classDisplayName = classElement.displayName;
 
-    if (matchClass == null || RegExp(matchClass).hasMatch(classDisplayName)) {
+    if (classNamePattern == null || classNamePattern.hasMatch(classDisplayName)) {
       // Loop though the class element's metadata.
       for (final metadata in classElement.metadata) {
         final metadataElement = metadata.element;

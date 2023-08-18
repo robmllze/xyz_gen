@@ -53,10 +53,10 @@ bool pathContainsComponent(String path, Set<String> components) {
   return false;
 }
 
-bool pathContainsPatterns(String path, Set<String> inputs) {
+bool pathContainsPatterns(String path, Set<String> pathPatterns) {
   final fixedPath = getFixedPath(path);
-  for (final input in inputs) {
-    if (RegExp(input).hasMatch(fixedPath)) return true;
+  for (final pattern in pathPatterns) {
+    if (RegExp(pattern).hasMatch(fixedPath)) return true;
   }
   return false;
 }
