@@ -2,4 +2,4 @@
 // See: https://github.com/robmllze/xyz_gen
 
 export 'screen_test_2.dart';
-export 'screen_test_1.dart';
+export 'screen_connection_details.dart';

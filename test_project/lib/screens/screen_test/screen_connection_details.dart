@@ -2,13 +2,14 @@ import 'package:xyz_gen/generate_screen_access.dart';
 
 @GenerateScreenAccess(
   isOnlyAccessibleIfSignedInAndVerified: true,
-  // isOnlyAccessibleIfSignedIn: true,
-  // isOnlyAccessibleIfSignedOut: true,
   isRedirectable: false,
+  internalParameters: {
+    "target": "ModelUserData",
+  },
 )
-class ScreenTest1 {
+class ScreenConnectionDetails {
   final String? key;
-  const ScreenTest1({
+  const ScreenConnectionDetails({
     this.key,
   });
 }

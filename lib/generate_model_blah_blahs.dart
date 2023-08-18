@@ -32,7 +32,7 @@ Future<void> generateModelBlahBlahs(
       final b = isSourceDartFilePath(filePath);
       final c = a && b;
       if (c) {
-        await _generateForFile(filePath, templates);
+        await _generateForFile(filePath, templates.toList());
       }
     },
   );

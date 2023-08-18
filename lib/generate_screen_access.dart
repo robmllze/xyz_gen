@@ -84,8 +84,8 @@ Future<void> _generateForFile(
             queryParameters =
                 object.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
           case "pathSegments":
-            queryParameters =
-                object.toListValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
+            pathSegments =
+                object.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
             break;
         }
       });
@@ -94,9 +94,9 @@ Future<void> _generateForFile(
     final template = templates[n];
     final baseName = getBaseName(fixedFilePath);
     final a = getFileNameWithoutExtension(getBaseName(fixedFilePath));
-    final b = n == 0 ? "$a.g.dart" : "_${n}_$a.g.dart";
+    final b = n == 0 ? "$a.g.dart" : "${a}_$n.g.dart";
     final c = getDirName(fixedFilePath);
-    final d = p.join(c, b);
+    final outputFilePath = p.join(c, b);
     final screenKey = className!.toSnakeCase();
     final segment = screenKey.replaceAll("screen_", "");
     final location = "/$segment";
@@ -127,35 +127,26 @@ Future<void> _generateForFile(
         "___L0___": l0,
         "___L1___": l1,
         "___L2___": l2,
-        "___I0___": i0(internalParameters!),
-        "___I1___": i1(internalParameters!),
-        "___I2___": i2(internalParameters!),
-        "___Q0___": q0(queryParameters!),
-        "___Q1___": q1(queryParameters!),
-        "___Q2___": q2(queryParameters!),
-        "___P0___": p0(pathSegments!),
-        "___P1___": p1(pathSegments),
-        "___P2___": p2(pathSegments),
+        "___I0___": i0(internalParameters ?? {}),
+        "___I1___": i1(internalParameters ?? {}),
+        "___I2___": i2(internalParameters ?? {}),
+        "___Q0___": q0(queryParameters ?? {}),
+        "___Q1___": q1(queryParameters ?? {}),
+        "___Q2___": q2(queryParameters ?? {}),
+        "___P0___": p0(pathSegments ?? []),
+        "___P1___": p1(pathSegments ?? []),
+        "___P2___": p2(pathSegments ?? []),
       }.nonNulls,
     );
-    await writeFile(d, output);
+    await writeFile(outputFilePath, output);
+    print(outputFilePath);
+    await fmtDartFile(outputFilePath);
   }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 String i0(Map<String, String> internalParameters) {
-  final a = internalParameters.entries.map((final l) {
-    final fieldName = l.key;
-    final fieldType = l.value;
-    final required = fieldType.endsWith("?") ? "" : "required ";
-    return "$required$fieldType $fieldName,";
-  }).toList()
-    ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
-}
-
-String i1(Map<String, String> internalParameters) {
   final a = internalParameters.entries.map((final l) {
     final fieldName = l.key;
     final fieldType = l.value;
@@ -176,6 +167,17 @@ String i1(Map<String, String> internalParameters) {
   return a.isNotEmpty ? a.join("\n") : "";
 }
 
+String i1(Map<String, String> internalParameters) {
+  final a = internalParameters.entries.map((final l) {
+    final fieldName = l.key;
+    final fieldType = l.value;
+    final required = fieldType.endsWith("?") ? "" : "required ";
+    return "$required$fieldType $fieldName,";
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
+}
+
 String i2(Map<String, String> internalParameters) {
   final a = internalParameters.entries.map((final l) {
     final fieldName = l.key;
@@ -185,7 +187,7 @@ String i2(Map<String, String> internalParameters) {
     return "$ifNotNull $fieldK: $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? "internalParameters: {${a.join("\n")}}" : "";
+  return a.isNotEmpty ? "internalParameters: {${a.join("\n")}}," : "";
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -223,7 +225,7 @@ String q2(Set<String> queryParameters) {
     return "if ($fieldName != null) $fieldK: $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? "queryParameters: {${a.join("\n")}}" : "";
+  return a.isNotEmpty ? "queryParameters: {${a.join("\n")}}," : "";
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -260,7 +262,7 @@ String p2(List<String> pathSegments) {
     return "$fieldName ?? \"\",";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? "pathSegments: [${a.join("\n")}]" : "";
+  return a.isNotEmpty ? "pathSegments: [${a.join("\n")}]," : "";
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

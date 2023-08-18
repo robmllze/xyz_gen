@@ -13,6 +13,15 @@ import 'list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+Future<void> fmtDartFile(String filePath) async {
+  try {
+    final fixedPath = getFixedPath(filePath);
+    await Process.run("dart", ["format", fixedPath]);
+  } catch (e) {
+    print(e);
+  }
+}
+
 Future<void> deleteGeneratedFiles(
   String dirPath, [
   Set<String> pathPatterns = const {},
@@ -32,7 +41,6 @@ Future<void> deleteGeneratedFiles(
 
 String replaceAllData(String input, Map<Pattern, dynamic> data) {
   var output = input;
-
   for (final entry in data.entries) {
     final pattern = entry.key;
     final value = entry.value;
