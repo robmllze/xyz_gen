@@ -9,10 +9,10 @@ import 'helpers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-List<String> getTemplatesFromMd(String path) {
+Future<List<String>> getTemplatesFromMd(String filePath) async {
   final result = <String>[];
-  final file = File(getFixedPath(path));
-  final body = file.readAsStringSync();
+  final file = File(getFixedPath(filePath));
+  final body = await file.readAsString();
   final expression = RegExp(r"```dart\s+(.*?)\s+```", dotAll: true);
   final matches = expression.allMatches(body);
   for (final match in matches) {

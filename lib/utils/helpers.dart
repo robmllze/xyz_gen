@@ -8,7 +8,32 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 
+import 'file_io.dart';
+import 'list_file_paths.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Future<void> deleteGeneratedFiles(String dirPath) async {
+  final filePaths = await listFilePaths(dirPath);
+  if (filePaths != null) {
+    for (final filePath in filePaths) {
+      if (isGeneratedDartFilePath(filePath)) {
+        await deleteFile(filePath);
+      }
+    }
+  }
+}
+
+String replaceAllData(String input, Map<Pattern, dynamic> data) {
+  var output = input;
+
+  for (final entry in data.entries) {
+    final pattern = entry.key;
+    final value = entry.value;
+    output = output.replaceAll(pattern, value.toString());
+  }
+  return output;
+}
 
 bool isDartFilePath(String filePath) {
   return filePath.toLowerCase().endsWith(".dart");

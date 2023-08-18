@@ -14,7 +14,7 @@ import 'package:path/path.dart' as p;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> analyzeSourceClasses({
+Future<void> analyzeAnnotatedClasses({
   required String filePath,
   required String annotationDisplayName,
   required Set<String> fieldNames,

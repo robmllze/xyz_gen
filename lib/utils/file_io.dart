@@ -35,3 +35,8 @@ Future<void> clearFile(String filePath) async {
   final file = File(getFixedPath(filePath));
   await file.writeAsString("");
 }
+
+Future<void> deleteFile(String filePath) async {
+  final file = File(getFixedPath(filePath));
+  await file.delete();
+}

@@ -12,6 +12,7 @@ dependency_overrides:
 
 dependencies:
   analyzer:
+  args: ^2.4.2
   path:
 
   xyz_utils:
