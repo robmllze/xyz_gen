@@ -4,22 +4,10 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'dart:io';
-import 'helpers.dart';
+import 'package:xyz_gen/generate_all_exports.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-List<String> getTemplatesFromMd(String path) {
-  final result = <String>[];
-  final file = File(getFixedPath(path));
-  final body = file.readAsStringSync();
-  final expression = RegExp(r"```dart\s+(.*?)\s+```", dotAll: true);
-  final matches = expression.allMatches(body);
-  for (final match in matches) {
-    final group1 = match.group(1)?.trim();
-    if (group1 != null) {
-      result.add(group1);
-    }
-  }
-  return result;
+Future<void> main() async {
+  await generateAllExports("./test_project/", {"/screens/"});
 }

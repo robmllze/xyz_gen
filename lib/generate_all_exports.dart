@@ -4,16 +4,16 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/utils/file_io.dart';
-import 'package:xyz_gen/utils/helpers.dart';
-import 'package:xyz_gen/utils/list_file_paths.dart';
+import 'utils/file_io.dart';
+import 'utils/helpers.dart';
+import 'utils/list_file_paths.dart';
 import 'package:path/path.dart' as p;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExports(
   String startingDirPath,
-  Set<String> targetFolderNames,
+  Set<String> folders,
 ) async {
   final filePaths = await listFilePaths(startingDirPath);
   if (filePaths != null) {
@@ -22,7 +22,8 @@ Future<void> generateAllExports(
       if (isSourceDartFilePath(filePath)) {
         final dirName = getDirName(filePath);
         final folderName = getBaseName(dirName);
-        if (targetFolderNames.contains(folderName)) {
+        final a = pathContainsPatterns(filePath, folders);
+        if (a) {
           final allFilePath = p.join(dirName, "all_$folderName.dart");
           if (dirName != cachedDirName) {
             cachedDirName = dirName;

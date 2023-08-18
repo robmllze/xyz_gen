@@ -4,8 +4,8 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/utils/helpers.dart';
-import 'package:xyz_gen/utils/list_file_paths.dart';
+import 'utils/helpers.dart';
+import 'utils/list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -19,4 +19,13 @@ Future<void> generateScreenBlahBlahs(String dirPath) async {
       }
     }
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class GenerateScreenBlahBlahs {
+  final Set<String> options;
+  const GenerateScreenBlahBlahs({
+    this.options = const {},
+  });
 }

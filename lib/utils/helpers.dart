@@ -42,6 +42,25 @@ String? getSourcePath(String filePath) {
 String getBaseName(String path) => p.basename(getFixedPath(path));
 String getDirName(String path) => p.dirname(getFixedPath(path));
 
+bool pathContainsComponent(String path, Set<String> components) {
+  final fixedPath = getFixedPath(path);
+  final a = p.split(fixedPath);
+  for (final component in components) {
+    if (a.contains(component.toLowerCase())) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool pathContainsPatterns(String path, Set<String> inputs) {
+  final fixedPath = getFixedPath(path);
+  for (final input in inputs) {
+    if (RegExp(input).hasMatch(fixedPath)) return true;
+  }
+  return false;
+}
+
 String getFileNameWithoutExtension(String filePath) {
   return p.basenameWithoutExtension(getFixedPath(filePath));
 }
