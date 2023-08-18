@@ -22,7 +22,7 @@ Future<void> fmtDartFile(String filePath) async {
   }
 }
 
-Future<void> deleteGeneratedFiles(
+Future<void> deleteGeneratedFiles1(
   String dirPath, [
   Set<String> pathPatterns = const {},
 ]) async {
@@ -78,8 +78,8 @@ String? getSourcePath(String filePath) {
   return null;
 }
 
-String getBaseName(String path) => p.basename(getFixedPath(path));
-String getDirName(String path) => p.dirname(getFixedPath(path));
+String getFileName(String path) => p.basename(getFixedPath(path));
+String getDirPath(String path) => p.dirname(getFixedPath(path));
 
 bool pathContainsComponent(String path, Set<String> components) {
   final fixedPath = getFixedPath(path);
@@ -109,12 +109,12 @@ String getFixedPath(String path) {
 }
 
 bool isPrivateFile(String filePath) {
-  final fileName = getBaseName(filePath);
+  final fileName = getFileName(filePath);
   return fileName.startsWith("_");
 }
 
-(bool, String) isCorrectFileName(String filePath, String begType, String endType) {
-  final fileName = getBaseName(filePath);
+(bool, String) isMatchingFileName(String filePath, String begType, String endType) {
+  final fileName = getFileName(filePath);
   final a = fileName.startsWith("${begType.toLowerCase()}_");
   final b = fileName.endsWith(".$endType".toLowerCase());
   final c = a && b;

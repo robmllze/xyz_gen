@@ -6,13 +6,13 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of '___SOURCE_BASE_NAME___';
+part of '___CLASS_FILE____';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _L = "screens.___CLASS_NAME___";
-const _LOCATION = "___LOCATION___";
-const _NAME_SCREEN_CLASS = "___CLASS_NAME___";
+const _TR_KEY = "screens.___CLASS___";
+const _PATH = "___PATH___";
+const _CLASS = "___CLASS___";
 
 extension _ScreenTrExtension on String {
   String screenTr([Map<dynamic, dynamic> args = const {}]) {
@@ -20,73 +20,73 @@ extension _ScreenTrExtension on String {
   }
 }
 
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED____SEGMENT_KEY___ = [__A0__];
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN____SEGMENT_KEY___ = [__A1__];
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_OUT____SEGMENT_KEY___ = [__A2__];
-const LOCATION_ACCESSIBLE____SEGMENT_KEY___ = [__A3__];
-const LOCATION_NOT_REDIRECTABLE____SEGMENT_KEY___ = [__A4__];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED____SEGMENT_KEY___ = ___LA0___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN____SEGMENT_KEY___ = ___LA1___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT____SEGMENT_KEY___ = ___LA2___ ? [_PATH]: [];
+const PATH_ACCESSIBLE____SEGMENT_KEY___ = ___LA3___ ? [_PATH]: [];
+const PATH_NOT_REDIRECTABLE____SEGMENT_KEY___ = ___LA4___ ? [_PATH]: [];
 
-final cast___CLASS_NAME___Configuration =
+final cast___CONFIGURATION___ =
   Map<Type, MyRouteConfiguration Function(MyRouteConfiguration)>.unmodifiable({
-    ___CLASS_NAME___Configuration: (MyRouteConfiguration a) => ___CLASS_NAME___Configuration.from(a),
+    ___CONFIGURATION___: (MyRouteConfiguration a) => ___CONFIGURATION___.from(a),
 });
 
-MyScreen? maker___CLASS_NAME___(
+MyScreen? maker___CLASS___(
   MyRouteConfiguration configuration,
   bool isSignedInAndVerified,
   bool isSignedIn,
   bool isSignedOut,
 ) {
-  if ((___L0___ && !isSignedInAndVerified) || (___L1___ && !isSignedIn) || (___L2___ && !isSignedOut)) {
+  if ((___LA0___ && !isSignedInAndVerified) || (___LA1___ && !isSignedIn) || (___LA2___ && !isSignedOut)) {
     return null;
   }
-  if (configuration is ___CLASS_NAME___Configuration ||
+  if (configuration is ___CONFIGURATION___ ||
       RegExp(
-        r"^(" + _LOCATION + r")([?/].*)?$",
+        r"^(" + _PATH + r")([?/].*)?$",
       ).hasMatch(
         Uri.decodeComponent(
           configuration.uri.toString(),
         ),
       )) {
-    return ___CLASS_NAME___(configuration);
+    return ___CLASS___(configuration);
   }
   return null;
 }
 
-/// Configuration object for [___CLASS_NAME___].
+/// Configuration object for [___CLASS___].
 ///
 /// ### Usage examples:
 ///
 /// ```dart
 /// // Push the screen to the app.
-/// await G.router.push(___CLASS_NAME___Configuration(/* OPTIONS */));
+/// await G.router.push(___CONFIGURATION___(/* OPTIONS */));
 ///
 /// // Use a unique [key] to allow pushing to multiple instances of the screen.
-/// await G.router.push(___CLASS_NAME___Configuration(key: UniqueKey().toString(), /* OPTIONS */));
+/// await G.router.push(___CONFIGURATION___(key: UniqueKey().toString(), /* OPTIONS */));
 /// ```
-class ___CLASS_NAME___Configuration extends MyRouteConfiguration {
-  static const LOCATION = _LOCATION;
-  static const L = _L;
-  static const NAME_SCREEN_CLASS = _NAME_SCREEN_CLASS;
+class ___CONFIGURATION___ extends MyRouteConfiguration {
+  static const LOCATION = _PATH;
+  static const TR_KEY = _TR_KEY;
+  static const NAME_SCREEN_CLASS = _CLASS;
   
-  ___I0___
-  ___Q0___
-  ___P0___
+  ___IP0___
+  ___QP0___
+  ___PS0___
 
-  ___CLASS_NAME___Configuration({
+  ___CONFIGURATION___({
     String? key,
-    ___I1___
-    ___Q1___
-    ___P1___
+    ___IP1___
+    ___QP1___
+    ___PS1___
   }): super(
-    _LOCATION,
+    _PATH,
     key: key,
-    ___I2___
-    ___Q2___
-    ___P2___
+    ___IP2___
+    ___QP2___
+    ___PS2___
   );
 
-  ___CLASS_NAME___Configuration.from(
+  ___CONFIGURATION___.from(
     MyRouteConfiguration from,
   ) : super.fromUri(
           from.uri,
@@ -104,8 +104,8 @@ class ___CLASS_NAME___Configuration extends MyRouteConfiguration {
   }
 }
 
-abstract class _LogicBroker<T1 extends ___CLASS_NAME___, T2 extends _State>
-    extends MyScreenLogic<___CLASS_NAME___Configuration> {
+abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
+    extends MyScreenLogic<___CONFIGURATION___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
   late final configuration = this.state.configuration;

@@ -22,8 +22,8 @@ Future<void> findFiles({
   if (filePaths != null) {
     for (final filePath in filePaths) {
       if (isSourceDartFilePath(filePath)) {
-        final dirName = getDirName(filePath);
-        final folderName = getBaseName(dirName);
+        final dirName = getDirPath(filePath);
+        final folderName = getFileName(dirName);
         final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
         if (a) {
           await onFileFound(dirName, folderName, filePath);

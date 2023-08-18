@@ -18,17 +18,17 @@ import 'package:path/path.dart' as p;
 Future<void> generateModelBlahBlahs(
   String rootDirPath, {
   Set<String> pathPatterns = const {},
-  bool deleteGFiles = false,
+  bool deleteGeneratedFiles = false,
 }) async {
-  if (deleteGFiles) {
-    await deleteGeneratedFiles(rootDirPath, pathPatterns);
+  if (deleteGeneratedFiles) {
+    await deleteGeneratedFiles1(rootDirPath, pathPatterns);
   }
   final templates = await getTemplatesFromMd("./templates/model_templates.md");
   await findFiles(
     rootDirPath: rootDirPath,
     pathPatterns: pathPatterns,
     onFileFound: (final dirName, final folderName, final filePath) async {
-      final (a, _) = isCorrectFileName(filePath, "model", "dart");
+      final (a, _) = isMatchingFileName(filePath, "model", "dart");
       final b = isSourceDartFilePath(filePath);
       final c = a && b;
       if (c) {
@@ -61,16 +61,16 @@ Future<void> _generateForFile(
 
   for (var n = 0; n < templates.length; n++) {
     final template = templates[n];
-    final baseName = getBaseName(fixedFilePath);
-    final a = getFileNameWithoutExtension(getBaseName(fixedFilePath));
+    final baseName = getFileName(fixedFilePath);
+    final a = getFileNameWithoutExtension(getFileName(fixedFilePath));
     final b = n == 0 ? "$a.g.dart" : "_${n}_$a.g.dart";
-    final c = getDirName(fixedFilePath);
+    final c = getDirPath(fixedFilePath);
     final d = p.join(c, b);
     final output = replaceAllData(
       template,
       {
-        "___CLASS_NAME___": className ?? "___CLASS_NAME___",
-        "___SOURCE_BASE_NAME__": baseName,
+        "___CLASS___": className ?? "___CLASS___",
+        "___CLASS_FILE___": baseName,
       },
     );
     await writeFile(d, output);

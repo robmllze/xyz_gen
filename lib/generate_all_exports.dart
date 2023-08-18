@@ -40,7 +40,7 @@ Future<void> generateAllExports(
         );
       }
       if (filePath != allFilePath) {
-        final fileName = getBaseName(filePath);
+        final fileName = getFileName(filePath);
         final data = "export '$fileName';";
         print("[generateAllExports] Writing `$data` to `$allFilePath`...");
         await writeFile(
