@@ -14,12 +14,12 @@ import 'package:path/path.dart' as p;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExports(
-  String startingDirPath,
+  String rootDirPath,
   Set<String> pathPatterns,
 ) async {
   var cachedDirName = "";
   await findFiles(
-    startingDirPath: startingDirPath,
+    rootDirPath: rootDirPath,
     pathPatterns: pathPatterns,
     onFileFound: (
       final dirName,

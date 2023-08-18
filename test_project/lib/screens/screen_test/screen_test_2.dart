@@ -1,6 +1,6 @@
-import 'package:xyz_gen/generate_screen_blah_blahs.dart';
+import 'package:xyz_gen/generate_screen_access.dart';
 
-@GenerateScreenBlahBlahs()
+@GenerateScreenAccess()
 class ScreenTest2 {
   final String? key;
   const ScreenTest2({

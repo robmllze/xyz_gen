@@ -16,12 +16,16 @@ import 'package:path/path.dart' as p;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateModelBlahBlahs(
-  String startingDirPath,
-  Set<String> pathPatterns,
-) async {
+  String rootDirPath, {
+  Set<String> pathPatterns = const {},
+  bool deleteGFiles = false,
+}) async {
+  if (deleteGFiles) {
+    await deleteGeneratedFiles(rootDirPath, pathPatterns);
+  }
   final templates = await getTemplatesFromMd("./templates/model_templates.md");
   await findFiles(
-    startingDirPath: startingDirPath,
+    rootDirPath: rootDirPath,
     pathPatterns: pathPatterns,
     onFileFound: (final dirName, final folderName, final filePath) async {
       final (a, _) = isCorrectFileName(filePath, "model", "dart");

@@ -13,11 +13,17 @@ import 'list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> deleteGeneratedFiles(String dirPath) async {
+Future<void> deleteGeneratedFiles(
+  String dirPath, [
+  Set<String> pathPatterns = const {},
+]) async {
   final filePaths = await listFilePaths(dirPath);
   if (filePaths != null) {
     for (final filePath in filePaths) {
-      if (isGeneratedDartFilePath(filePath)) {
+      final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+      final b = isGeneratedDartFilePath(filePath);
+      final c = a && b;
+      if (c) {
         await deleteFile(filePath);
       }
     }

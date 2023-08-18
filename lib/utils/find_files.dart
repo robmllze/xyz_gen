@@ -10,7 +10,7 @@ import 'list_file_paths.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> findFiles({
-  required String startingDirPath,
+  required String rootDirPath,
   Set<String> pathPatterns = const {},
   required Future<void> Function(
     String dirName,
@@ -18,7 +18,7 @@ Future<void> findFiles({
     String filePath,
   ) onFileFound,
 }) async {
-  final filePaths = await listFilePaths(startingDirPath);
+  final filePaths = await listFilePaths(rootDirPath);
   if (filePaths != null) {
     for (final filePath in filePaths) {
       if (isSourceDartFilePath(filePath)) {
