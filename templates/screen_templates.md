@@ -6,7 +6,7 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of '___SOURCE_BASE_NAME__';
+part of '___SOURCE_BASE_NAME___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -111,7 +111,4 @@ abstract class _LogicBroker<T1 extends ___CLASS_NAME___, T2 extends _State>
   late final configuration = this.state.configuration;
   _LogicBroker(super.superScreen, super.superState);
 }
-``````
-``````dart
-// HELLO WORLD
 ``````

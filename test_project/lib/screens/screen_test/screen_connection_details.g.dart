@@ -5,7 +5,7 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of 'screen_connection_details.dart';
+part of 'screen_connection_details.dart_';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
