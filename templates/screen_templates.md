@@ -6,7 +6,7 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of '___CLASS_FILE____';
+part of '___CLASS_FILE___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

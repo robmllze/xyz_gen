@@ -16,9 +16,10 @@ import 'package:path/path.dart' as p;
 
 Future<void> analyzeAnnotatedClasses({
   required String filePath,
-  required String annotationDisplayName,
+  required String annotationName,
   required Set<String> fieldNames,
-  required void Function(String, String, DartObject) onField,
+  required void Function(String) onClass,
+  required void Function(String, DartObject) onField,
   RegExp? classNamePattern,
 }) async {
   final file = File(filePath).absolute;
@@ -35,20 +36,21 @@ Future<void> analyzeAnnotatedClasses({
 
   // Loop through the class elements in the file.
   for (final classElement in classElements) {
-    final classDisplayName = classElement.displayName;
+    final className = classElement.displayName;
 
-    if (classNamePattern == null || classNamePattern.hasMatch(classDisplayName)) {
+    if (classNamePattern == null || classNamePattern.hasMatch(className)) {
+      onClass(className);
+
       // Loop though the class element's metadata.
       for (final metadata in classElement.metadata) {
         final metadataElement = metadata.element;
-        final metadataDisplayName = metadataElement?.displayName;
-
-        if (metadataDisplayName == annotationDisplayName) {
+        final metadataName = metadataElement?.displayName;
+        if (metadataName == annotationName) {
           final object = metadata.computeConstantValue();
           for (final fieldName in fieldNames) {
             final field = object?.getField(fieldName);
             if (field != null) {
-              onField(classDisplayName, fieldName, field);
+              onField(fieldName, field);
             }
           }
         }

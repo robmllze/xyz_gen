@@ -9,9 +9,9 @@ part of 'screen_connection_details.dart_';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _L = "screens.ScreenConnectionDetails";
-const _LOCATION = "/connection_details";
-const _NAME_SCREEN_CLASS = "ScreenConnectionDetails";
+const _TR_KEY = "screens.ScreenConnectionDetails";
+const _PATH = "/connection_details";
+const _CLASS = "ScreenConnectionDetails";
 
 extension _ScreenTrExtension on String {
   String screenTr([Map<dynamic, dynamic> args = const {}]) {
@@ -19,13 +19,14 @@ extension _ScreenTrExtension on String {
   }
 }
 
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED_CONNECTION_DETAILS = [
-  _LOCATION
-];
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN_CONNECTION_DETAILS = [];
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_OUT_CONNECTION_DETAILS = [];
-const LOCATION_ACCESSIBLE_CONNECTION_DETAILS = [_LOCATION];
-const LOCATION_NOT_REDIRECTABLE_CONNECTION_DETAILS = [_LOCATION];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED_CONNECTION_DETAILS =
+    true ? [_PATH] : [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_CONNECTION_DETAILS =
+    false ? [_PATH] : [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT_CONNECTION_DETAILS =
+    false ? [_PATH] : [];
+const PATH_ACCESSIBLE_CONNECTION_DETAILS = true ? [_PATH] : [];
+const PATH_NOT_REDIRECTABLE_CONNECTION_DETAILS = true ? [_PATH] : [];
 
 final castScreenConnectionDetailsConfiguration = Map<Type,
     MyRouteConfiguration Function(MyRouteConfiguration)>.unmodifiable({
@@ -46,7 +47,7 @@ MyScreen? makerScreenConnectionDetails(
   }
   if (configuration is ScreenConnectionDetailsConfiguration ||
       RegExp(
-        r"^(" + _LOCATION + r")([?/].*)?$",
+        r"^(" + _PATH + r")([?/].*)?$",
       ).hasMatch(
         Uri.decodeComponent(
           configuration.uri.toString(),
@@ -69,9 +70,9 @@ MyScreen? makerScreenConnectionDetails(
 /// await G.router.push(ScreenConnectionDetailsConfiguration(key: UniqueKey().toString(), /* OPTIONS */));
 /// ```
 class ScreenConnectionDetailsConfiguration extends MyRouteConfiguration {
-  static const LOCATION = _LOCATION;
-  static const L = _L;
-  static const NAME_SCREEN_CLASS = _NAME_SCREEN_CLASS;
+  static const LOCATION = _PATH;
+  static const TR_KEY = _TR_KEY;
+  static const NAME_SCREEN_CLASS = _CLASS;
 
   /// Key corresponding to the value `target`
   static const K_TARGET = "target";
@@ -84,7 +85,7 @@ class ScreenConnectionDetailsConfiguration extends MyRouteConfiguration {
     String? key,
     required ModelUserData target,
   }) : super(
-          _LOCATION,
+          _PATH,
           key: key,
           internalParameters: {
             K_TARGET: target,

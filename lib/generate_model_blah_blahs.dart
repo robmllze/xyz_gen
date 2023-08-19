@@ -21,7 +21,7 @@ Future<void> generateModelBlahBlahs(
   bool deleteGeneratedFiles = false,
 }) async {
   if (deleteGeneratedFiles) {
-    await deleteGeneratedFiles1(rootDirPath, pathPatterns);
+    await deleteGeneratedDartFiles(rootDirPath, pathPatterns);
   }
   final templates = await getTemplatesFromMd("./templates/model_templates.md");
   await findFiles(
@@ -48,10 +48,10 @@ Future<void> _generateForFile(
   String? className;
   await analyzeAnnotatedClasses(
       filePath: fixedFilePath,
-      annotationDisplayName: "GenerateModelBlahBlahs",
+      annotationName: "GenerateModelBlahBlahs",
       fieldNames: {"options"},
-      onField: (final classDisplayName, final fieldName, final object) {
-        className = classDisplayName;
+      onClass: (e) => className = e,
+      onField: (final fieldName, final object) {
         switch (fieldName) {
           case "options":
             options = object.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};

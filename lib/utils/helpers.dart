@@ -2,6 +2,8 @@
 //
 // XYZ Gen
 //
+// TODO: Move helpers to xyz_utils.
+//
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 import 'dart:io';
@@ -13,6 +15,7 @@ import 'list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Formats the dart file at [filePath].
 Future<void> fmtDartFile(String filePath) async {
   try {
     final fixedPath = getFixedPath(filePath);
@@ -22,7 +25,9 @@ Future<void> fmtDartFile(String filePath) async {
   }
 }
 
-Future<void> deleteGeneratedFiles1(
+/// Deletes all the .g.dart files form [dirPath] and its sub-directories if
+/// [dirPath] contains any of the [pathPatterns].
+Future<void> deleteGeneratedDartFiles(
   String dirPath, [
   Set<String> pathPatterns = const {},
 ]) async {
@@ -39,6 +44,7 @@ Future<void> deleteGeneratedFiles1(
   }
 }
 
+/// Replaces all the [data] in [input] and returns the output.
 String replaceAllData(String input, Map<Pattern, dynamic> data) {
   var output = input;
   for (final entry in data.entries) {
@@ -78,8 +84,13 @@ String? getSourcePath(String filePath) {
   return null;
 }
 
-String getFileName(String path) => p.basename(getFixedPath(path));
-String getDirPath(String path) => p.dirname(getFixedPath(path));
+String getFileName(String path) {
+  return p.basename(getFixedPath(path));
+}
+
+String getDirPath(String path) {
+  return p.dirname(getFixedPath(path));
+}
 
 bool pathContainsComponent(String path, Set<String> components) {
   final fixedPath = getFixedPath(path);
@@ -121,7 +132,9 @@ bool isPrivateFile(String filePath) {
   return (c, fileName);
 }
 
-Future<bool> fileExists(String filePath) => File(getFixedPath(filePath)).exists();
+Future<bool> fileExists(String filePath) {
+  return File(getFixedPath(filePath)).exists();
+}
 
 Future<bool> sourceAndGeneratedFileExists(String filePath) async {
   if (isSourceDartFilePath(filePath)) {
@@ -135,4 +148,37 @@ Future<bool> sourceAndGeneratedFileExists(String filePath) async {
     return a && b;
   }
   return false;
+}
+
+List<dynamic> extractScopes(String source, String open, String close) {
+  var index = 0;
+  dynamic parse() {
+    final result = <dynamic>[];
+    while (index < source.length) {
+      if (source.startsWith(open, index)) {
+        index += open.length;
+        result.add(parse());
+      } else if (source.startsWith(close, index)) {
+        index += close.length;
+        return result.isNotEmpty ? result : result.first;
+      } else {
+        final nextOpen = source.indexOf(open, index);
+        final nextClose = source.indexOf(close, index);
+        var nextIndex = nextOpen;
+        if (nextOpen == -1 || (nextClose != -1 && nextClose < nextOpen)) {
+          nextIndex = nextClose;
+        }
+        if (nextIndex == -1) {
+          result.add(source.substring(index).trim());
+          break;
+        } else {
+          result.add(source.substring(index, nextIndex).trim());
+          index = nextIndex;
+        }
+      }
+    }
+    return result.isNotEmpty ? result : null;
+  }
+
+  return parse();
 }

@@ -15,7 +15,7 @@ Future<void> main(List<String> arguments) async {
     ..addOption("directory", abbr: "d", help: "The path to the directory to search for files.");
   final results = parser.parse(arguments);
   final dirPath = results["directory"] ?? "./";
-  await deleteGeneratedFiles1(dirPath);
+  await deleteGeneratedDartFiles(dirPath);
 }
 
 // // my_app.dart
