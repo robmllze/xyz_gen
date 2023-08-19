@@ -5,7 +5,7 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of 'screen_connection_details.dart_';
+part of 'screen_connection_details.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -15,18 +15,20 @@ const _CLASS = "ScreenConnectionDetails";
 
 extension _ScreenTrExtension on String {
   String screenTr([Map<dynamic, dynamic> args = const {}]) {
-    return this.splitByLastOccurrenceOf("||").join("||$_L.").tr(args);
+    return this.splitByLastOccurrenceOf("||").join("||$_TR_KEY.").tr(args);
   }
 }
 
-const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED_CONNECTION_DETAILS =
-    true ? [_PATH] : [];
-const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_CONNECTION_DETAILS =
-    false ? [_PATH] : [];
-const PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT_CONNECTION_DETAILS =
-    false ? [_PATH] : [];
-const PATH_ACCESSIBLE_CONNECTION_DETAILS = true ? [_PATH] : [];
-const PATH_NOT_REDIRECTABLE_CONNECTION_DETAILS = true ? [_PATH] : [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED_CONNECTION_DETAILS //
+    = true ? [_PATH] : [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_CONNECTION_DETAILS //
+    = false ? [_PATH] : [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT_CONNECTION_DETAILS //
+    = false ? [_PATH] : [];
+const PATH_ACCESSIBLE_CONNECTION_DETAILS //
+    = true ? [_PATH] : [];
+const PATH_NOT_REDIRECTABLE_CONNECTION_DETAILS //
+    = true ? [_PATH] : [];
 
 final castScreenConnectionDetailsConfiguration = Map<Type,
     MyRouteConfiguration Function(MyRouteConfiguration)>.unmodifiable({

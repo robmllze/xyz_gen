@@ -16,15 +16,20 @@ const _CLASS = "___CLASS___";
 
 extension _ScreenTrExtension on String {
   String screenTr([Map<dynamic, dynamic> args = const {}]) {
-    return this.splitByLastOccurrenceOf("||").join("||$_L.").tr(args);
+    return this.splitByLastOccurrenceOf("||").join("||$_TR_KEY.").tr(args);
   }
 }
 
-const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED____SEGMENT_KEY___ = ___LA0___ ? [_PATH]: [];
-const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN____SEGMENT_KEY___ = ___LA1___ ? [_PATH]: [];
-const PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT____SEGMENT_KEY___ = ___LA2___ ? [_PATH]: [];
-const PATH_ACCESSIBLE____SEGMENT_KEY___ = ___LA3___ ? [_PATH]: [];
-const PATH_NOT_REDIRECTABLE____SEGMENT_KEY___ = ___LA4___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED____SEGMENT_KEY___ //
+  = ___LA0___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN____SEGMENT_KEY___ //
+  = ___LA1___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT____SEGMENT_KEY___ //
+  = ___LA2___ ? [_PATH]: [];
+const PATH_ACCESSIBLE____SEGMENT_KEY___ //
+  = ___LA3___ ? [_PATH]: [];
+const PATH_NOT_REDIRECTABLE____SEGMENT_KEY___ //
+  = ___LA4___ ? [_PATH]: [];
 
 final cast___CONFIGURATION___ =
   Map<Type, MyRouteConfiguration Function(MyRouteConfiguration)>.unmodifiable({
