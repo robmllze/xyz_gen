@@ -14,9 +14,7 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   //
   //
   //
-
-  static const K_ID = "id";
-  static const K_ARGS = "args";
+  
   ___P0___
 
   ___P1___
@@ -26,10 +24,8 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   //
 
   ___CLASS___({
-    String? id,
-    dynamic args,
     ___P2___
-  });//: super._() { super.id = id; super.args = args; }
+  });
   
   /*
   factory ___CLASS___.fromJMap(Map<String, dynamic> input) {
@@ -66,9 +62,7 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
 
   @override
   List<Object> get props => [
-        //this.id,
-        //this.args,
-        ___P2___
+        ___P2B___
       ].nonNulls.toList();
 
   //

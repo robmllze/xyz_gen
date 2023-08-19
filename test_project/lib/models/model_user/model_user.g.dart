@@ -14,27 +14,29 @@ class ModelUser extends ModelUserUtils {
   //
   //
 
-  static const K_ID = "id";
-  static const K_ARGS = "args";
   static const K_FIRST_NAME = "first_name";
   static const K_LAST_NAME = "last_name";
   static const K_DISPLAY_NAME = "display_name";
+  static const K_ID = "id";
+  static const K_ARGS = "args";
 
-  dynamic firstName;
-  dynamic lastName;
-  dynamic displayName;
+  String firstName;
+  String lastName;
+  String displayName;
+  String? id;
+  dynamic args;
 
   //
   //
   //
 
   ModelUser({
-    String? id,
-    dynamic args,
-    this.firstName,
-    this.lastName,
-    this.displayName,
-  }); //: super._() { super.id = id; super.args = args; }
+    required this.firstName,
+    required this.lastName,
+    required this.displayName,
+    this.id,
+    this.args,
+  });
 
   /*
   factory ModelUser.fromJMap(Map<String, dynamic> input) {
@@ -45,6 +47,8 @@ class ModelUser extends ModelUserUtils {
         firstName: input["first_name"],
 lastName: input["last_name"],
 displayName: input["display_name"],
+id: input["id"],
+args: input["args"],
       );
     } catch (e) {
       assert(false, e);
@@ -73,11 +77,11 @@ displayName: input["display_name"],
 
   @override
   List<Object> get props => [
-        //this.id,
-        //this.args,
         this.firstName,
         this.lastName,
         this.displayName,
+        this.id,
+        this.args,
       ].nonNulls.toList();
 
   //

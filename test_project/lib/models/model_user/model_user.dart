@@ -12,4 +12,4 @@ part 'model_user.g.dart';
   },
 )
 // ignore: must_be_immutable
-abstract class ModelUserUtils extends Model {}
+abstract class ModelUserUtils {}

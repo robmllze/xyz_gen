@@ -31,7 +31,7 @@ Future<void> generateModelFile(
   var sourceClassName = "";
   var className = "";
   String? collectionPath;
-  var parameters = <String, String>{};
+  var parameters = <String, TypeCode>{};
 
   void onField(String fieldName, DartObject object) {
     switch (fieldName) {
@@ -42,10 +42,13 @@ Future<void> generateModelFile(
         collectionPath = object.toStringValue();
         break;
       case _K_PARAMETERS:
-        parameters = object
-                .toMapValue()
-                ?.map((k, v) => MapEntry(k?.toStringValue(), v?.toStringValue()))
-                .nonNulls ??
+        parameters = object.toMapValue()?.map((k, v) {
+              final t = v?.toStringValue();
+              return MapEntry(
+                k?.toStringValue(),
+                t != null ? TypeCode(t) : null,
+              );
+            }).nonNulls ??
             {};
         break;
     }
@@ -74,21 +77,20 @@ Future<void> generateModelFile(
   final outputFileName = "$classKey.g.dart";
   final outputFilePath = p.join(classFileDirPath, outputFileName);
 
-  final parameterKeys = parameters.keys;
-  final keyNames = _getKeyNames(parameters);
-  final keyConstNames = _getKeyConstNames(parameters);
+  parameters["id"] = const TypeCode("String?");
+  parameters["args"] = const TypeCode("dynamic");
 
-  final p0 = parameterKeys.map((e) {
-    return 'static const ${keyConstNames[e]} = "${keyNames[e]}";';
-  }).join("\n");
+  final sortedEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+  final sortedKeys = sortedEntries.map((e) => e.key);
+  
+  final keyNames = _getKeyNames(sortedKeys);
+  final keyConstNames = _getKeyConstNames(sortedKeys);
 
-  final p1 = parameterKeys.map((e) => "dynamic $e;").join("\n");
-
-  final p2 = parameterKeys.map((e) => "this.$e,").join("\n");
-
-  final p3 = parameterKeys.map((e) {
-    return '$e: input["${keyNames[e]}"],';
-  }).join("\n");
+  final p0 = sortedKeys.map((e) => 'static const ${keyConstNames[e]} = "${keyNames[e]}";');
+  final p1 = sortedEntries.map((e) => "${e.value.getName()} ${e.key};");
+  final p2 = sortedEntries.map((e) => "${e.value.nullable() ? "" : "required "}this.${e.key},");
+  final p2b = sortedKeys.map((e) => "this.$e,");
+  final p3 = sortedKeys.map((e) => '$e: input["${keyNames[e]}"],');
 
   // Replace placeholders with the actual values.
   final output = replaceAllData(
@@ -98,10 +100,11 @@ Future<void> generateModelFile(
       "___SOURCE_CLASS___": sourceClassName,
       "___CLASS_FILE___": classFileName,
       "___COLLECTION_PATH___": collectionPath,
-      "___P0___": p0,
-      "___P1___": p1,
-      "___P2___": p2,
-      "___P3___": p3,
+      "___P0___": p0.join("\n"),
+      "___P1___": p1.join("\n"),
+      "___P2___": p2.join("\n"),
+      "___P3___": p3.join("\n"),
+      "___P2B___": p2b.join("\n"),
     },
   );
 
@@ -114,12 +117,26 @@ Future<void> generateModelFile(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Map<String, String> _getKeyNames(Map<String, String> parameters) {
-  return parameters.map((k, _) => MapEntry(k, k.toSnakeCase()));
+Map<String, String> _getKeyNames(Iterable<String> parameterKeys) {
+  return Map.fromEntries(
+    parameterKeys.map(
+      (k) => MapEntry(
+        k,
+        k.toSnakeCase(),
+      ),
+    ),
+  );
 }
 
-Map<String, String> _getKeyConstNames(Map<String, String> parameters) {
-  return parameters.map((k, _) => MapEntry(k, "K_${k.toSnakeCase().toUpperCase()}"));
+Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
+  return Map.fromEntries(
+    parameterKeys.map(
+      (e) => MapEntry(
+        e,
+        "K_${e.toSnakeCase().toUpperCase()}",
+      ),
+    ),
+  );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -166,4 +183,43 @@ abstract class Model extends Equatable {
 
   @override
   bool? get stringify => false;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class TypeCode {
+  final String typeCode;
+  const TypeCode(this.typeCode);
+
+  String getName() => _typeCodeToTypeName(typeCode);
+
+  bool nullable() {
+    final name = this.getName();
+    return name.endsWith("?") || name == "dynamic";
+  }
+
+  static String _typeCodeToTypeName(String typeCode) {
+    var temp = typeCode //
+        .replaceAll(" ", "")
+        .replaceAll("|let", "");
+    while (true) {
+      final match = RegExp(r"\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>").firstMatch(temp);
+      if (match == null) break;
+      final group0 = match.group(0);
+      if (group0 == null) break;
+      temp = temp.replaceAll(
+        group0,
+        group0
+            .replaceAll("|clean", "")
+            .replaceAll("?", "")
+            .replaceAll("<", "[")
+            .replaceAll(">", "]")
+            .replaceAll(",", "+"),
+      );
+    }
+    return temp //
+        .replaceAll("[", "<")
+        .replaceAll("]", ">")
+        .replaceAll("+", ", ");
+  }
 }

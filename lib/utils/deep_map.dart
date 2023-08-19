@@ -1,20 +1,28 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Gen
+// XYZ Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_model.dart';
-import 'package:xyz_gen/utils/genrate.dart';
+import 'package:collection/collection.dart' show DeepCollectionEquality;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> main() async {
-  await generate(
-    begType: "model",
-    rootDirPath: "./test_project/lib/models/",
-    templateFilePath: "./templates/model_template.md",
-    deleteGeneratedFiles: true,
-    generateForFile: generateModelFile,
-  );
+class DeepMap<K, V> {
+  Map<K, V> values;
+
+  DeepMap._([this.values = const {}]);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is DeepMap<K, V> && const DeepCollectionEquality().equals(other.values, values);
+  }
+
+  @override
+  int get hashCode => const DeepCollectionEquality().hash(values);
+}
+
+extension DeepMapExtension<K, V> on Map<K, V> {
+  DeepMap<K, V> get deep => DeepMap<K, V>._(this);
 }
