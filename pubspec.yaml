@@ -1,24 +1,38 @@
+## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+##
+## XYZ Gen
+##
+## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
 name: xyz_gen
-description:
 version: 0.1.0
 publish_to: none
 
+##
+
 environment:
   sdk: ^3.0.5
+
+##
 
 dependency_overrides:
   xyz_utils:
     path: ../xyz_utils
 
-dependencies:
-  analyzer:
-  args: ^2.4.2
-  path:
+##
 
+dependencies:
   xyz_utils:
     git:
       url: https://github.com/robmllze/xyz_utils.git
       ref: master
+  analyzer:
+  args:
+  equatable:
+  path:
+
+##
 
 dev_dependencies:
-  lints: ^2.0.0
+  flutter_lints:
+

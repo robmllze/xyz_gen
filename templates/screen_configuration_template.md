@@ -70,9 +70,9 @@ MyScreen? maker___CLASS___(
 /// await G.router.push(___CONFIGURATION___(key: UniqueKey().toString(), /* OPTIONS */));
 /// ```
 class ___CONFIGURATION___ extends MyRouteConfiguration {
-  static const LOCATION = _PATH;
+  static const PATH = _PATH;
   static const TR_KEY = _TR_KEY;
-  static const NAME_SCREEN_CLASS = _CLASS;
+  static const CLASS = _CLASS;
   
   ___IP0___
   ___QP0___

@@ -4,13 +4,17 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_model_blah_blahs.dart';
+import 'package:xyz_gen/generate_screen_configuration.dart';
+import 'package:xyz_gen/utils/geenrate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> main() async {
-  await generateModelBlahBlahs(
-    "./test_project/lib/models/",
+  await generate(
+    begType: "screen",
+    rootDirPath: "./test_project/lib/screens/",
+    templateFilePath: "./templates/legacy_screen_configuration_template.md",
     deleteGeneratedFiles: true,
+    generateForFile: generateScreenConfigurationFile,
   );
 }

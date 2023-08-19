@@ -182,3 +182,17 @@ List<dynamic> extractScopes(String source, String open, String close) {
 
   return parse();
 }
+
+// ignore: camel_case_extensions
+extension String_replaceLast on String {
+  String replaceLast(Pattern from, String to, [int startIndex = 0]) {
+    final match = from.allMatches(this, startIndex).lastOrNull;
+    if (match == null) return this;
+    final lastIndex = match.start;
+    final beforeLast = this.substring(0, lastIndex);
+    final group0 = match.group(0);
+    if (group0 == null) return this;
+    final afterLast = this.substring(lastIndex + group0.length);
+    return beforeLast + to + afterLast;
+  }
+}

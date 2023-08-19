@@ -1,6 +1,6 @@
-import 'package:xyz_gen/generate_screen_access.dart';
+import 'package:xyz_gen/generate_screen_configuration.dart';
 
-@GenerateScreenAccess(
+@GenerateScreenConfiguration(
   isOnlyAccessibleIfSignedInAndVerified: true,
   isRedirectable: false,
   internalParameters: {
