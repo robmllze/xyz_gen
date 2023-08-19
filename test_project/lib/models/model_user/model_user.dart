@@ -5,6 +5,11 @@ part 'model_user.g.dart';
 @GenerateModel(
   className: "ModelUser",
   collectionPath: "users",
-  parameters: {},
+  parameters: {
+    "firstName": "String",
+    "lastName": "String",
+    "displayName": "String",
+  },
 )
-class ModelUserUtils {}
+// ignore: must_be_immutable
+abstract class ModelUserUtils extends Model {}

@@ -74,6 +74,22 @@ Future<void> generateModelFile(
   final outputFileName = "$classKey.g.dart";
   final outputFilePath = p.join(classFileDirPath, outputFileName);
 
+  final parameterKeys = parameters.keys;
+  final keyNames = _getKeyNames(parameters);
+  final keyConstNames = _getKeyConstNames(parameters);
+
+  final p0 = parameterKeys.map((e) {
+    return 'static const ${keyConstNames[e]} = "${keyNames[e]}";';
+  }).join("\n");
+
+  final p1 = parameterKeys.map((e) => "dynamic $e;").join("\n");
+
+  final p2 = parameterKeys.map((e) => "this.$e,").join("\n");
+
+  final p3 = parameterKeys.map((e) {
+    return '$e: input["${keyNames[e]}"],';
+  }).join("\n");
+
   // Replace placeholders with the actual values.
   final output = replaceAllData(
     template,
@@ -81,6 +97,11 @@ Future<void> generateModelFile(
       "___CLASS___": className,
       "___SOURCE_CLASS___": sourceClassName,
       "___CLASS_FILE___": classFileName,
+      "___COLLECTION_PATH___": collectionPath,
+      "___P0___": p0,
+      "___P1___": p1,
+      "___P2___": p2,
+      "___P3___": p3,
     },
   );
 
@@ -93,8 +114,12 @@ Future<void> generateModelFile(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class ModelBody extends Equatable {
-  Map<String, dynamic> toJMap();
+Map<String, String> _getKeyNames(Map<String, String> parameters) {
+  return parameters.map((k, _) => MapEntry(k, k.toSnakeCase()));
+}
+
+Map<String, String> _getKeyConstNames(Map<String, String> parameters) {
+  return parameters.map((k, _) => MapEntry(k, "K_${k.toSnakeCase().toUpperCase()}"));
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -112,8 +137,33 @@ class GenerateModel {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _ParameterType {
-  final String value;
-  const _ParameterType(this.value);
-  bool get nullable => this.value.endsWith("?");
+// ignore: must_be_immutable
+abstract class Model extends Equatable {
+  String? id;
+
+  dynamic args;
+
+  Map<String, dynamic> toJMap();
+
+  T copyWith<T extends Model>({T? value});
+
+  T newFromJMap<T extends Model>(Map<String, dynamic> value) =>
+      this.newEmpty()..updateWithJMap(value);
+
+  T newOverrideJMap<T extends Model>(Map<String, dynamic> value) =>
+      this.newFromJMap({...this.toJMap(), ...value});
+
+  T newOverride<T extends Model>(T value);
+
+  T newEmpty<T extends Model>();
+
+  void updateWithJMap(Map<String, dynamic> value);
+
+  void updateWith<T extends Model>(T value);
+
+  @override
+  String toString() => this.toJMap().toString();
+
+  @override
+  bool? get stringify => false;
 }
