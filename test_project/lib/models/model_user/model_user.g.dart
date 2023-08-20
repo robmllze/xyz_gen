@@ -74,11 +74,11 @@ class ModelUser extends ModelUserUtils {
   factory ModelUser.fromJMap(Map<String, dynamic> input) {
     try {
       return ModelUser.unsafe(
-        id: input["id"],
-        args: input["args"],
-        displayName: input["display_name"],
-        firstName: input["first_name"],
-        lastName: input["last_name"],
+        id: input[K_ID],
+        args: input[K_ARGS],
+        displayName: input[K_DISPLAY_NAME],
+        firstName: input[K_FIRST_NAME],
+        lastName: input[K_LAST_NAME],
       );
     } catch (e) {
       assert(false, e);
@@ -129,7 +129,7 @@ class ModelUser extends ModelUserUtils {
   @override
   void updateWith<T extends Model>(T other) {
     if (other is ModelUser) {
-      this.id = other.id ?? this.id; // move to p7
+      this.id = other.id ?? this.id;
       this.args = other.args ?? this.id;
       this.displayName = other.displayName ?? this.displayName;
       this.firstName = other.firstName ?? this.firstName;

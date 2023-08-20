@@ -151,9 +151,9 @@ Map<String, String> _p(Map<String, _TypeCode> input) {
   ];
 
   final p8 = [
-    'id: input["id"],',
-    'args: input["args"],',
-    ...sortedKeys.map((e) => '$e: input["${keyNames[e]}"],'),
+    'id: input[K_ID],',
+    'args: input[K_ARGS],',
+    ...sortedKeys.map((e) => '$e: input[${keyConstNames[e]}],'),
   ];
 
   final p10 = sortedKeys.map((e) => 'this.$e = other.$e ?? this.$e;');
@@ -207,7 +207,7 @@ Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
 class GenerateModel {
   final String className;
   final String? collectionPath;
-  final Map<String, String> parameters;
+  final Map<String, dynamic> parameters;
   const GenerateModel({
     required this.className,
     this.parameters = const {},

@@ -110,7 +110,7 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   @override
   void updateWith<T extends Model>(T other) {
     if (other is ___CLASS___) {
-    this.id = other.id ?? this.id; // move to p7
+    this.id = other.id ?? this.id;
     this.args = other.args ?? this.id;
     ___P10___
     } else {
