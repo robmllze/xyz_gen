@@ -70,11 +70,11 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   //
 
   @override
-  Map<String, dynamic> toJMap() {
+  Map<String, dynamic> toJMap({dynamic defaultValue}) {
     try {
-      return {
+      return <String, dynamic>{
         ___P9___
-      };
+      }.mapWithDefault(defaultValue);
     } catch (e) {
       assert(false, e);
       rethrow;

@@ -91,9 +91,9 @@ class ModelUser extends ModelUserUtils {
   //
 
   @override
-  Map<String, dynamic> toJMap() {
+  Map<String, dynamic> toJMap({dynamic defaultValue}) {
     try {
-      return {};
+      return <String, dynamic>{}.mapWithDefault(defaultValue);
     } catch (e) {
       assert(false, e);
       rethrow;

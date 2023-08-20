@@ -100,7 +100,7 @@ Future<void> generateModelFile(
 
 Map<String, String> _p(Map<String, _TypeCode> input) {
   final parameters = Map<String, _TypeCode>.from(input);
-  
+
   final id = parameters["id"];
   parameters.remove("id");
   final args = parameters["args"];
@@ -164,6 +164,18 @@ Map<String, String> _p(Map<String, _TypeCode> input) {
     output["___P${n}___"] = p[n].join("\n");
   }
   return output;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+List<String> _p8(Map<String, _TypeCode> input) {
+  return [];
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+List<String> _p9(Map<String, _TypeCode> input) {
+  return [];
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
