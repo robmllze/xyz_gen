@@ -7,10 +7,10 @@
 // ignore_for_file: unnecessary_this, avoid_print
 
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:equatable/equatable.dart';
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils.dart';
 
+import 'utils/deep_map.dart';
 import 'utils/file_io.dart';
 import 'utils/analyze_source_classes.dart';
 import 'utils/helpers.dart';
@@ -31,7 +31,7 @@ Future<void> generateModelFile(
   var sourceClassName = "";
   var className = "";
   String? collectionPath;
-  var parameters = <String, TypeCode>{};
+  var parameters = <String, _TypeCode>{};
 
   void onField(String fieldName, DartObject object) {
     switch (fieldName) {
@@ -46,7 +46,7 @@ Future<void> generateModelFile(
               final t = v?.toStringValue();
               return MapEntry(
                 k?.toStringValue(),
-                t != null ? TypeCode(t) : null,
+                t != null ? _TypeCode(t) : null,
               );
             }).nonNulls ??
             {};
@@ -77,21 +77,6 @@ Future<void> generateModelFile(
   final outputFileName = "$classKey.g.dart";
   final outputFilePath = p.join(classFileDirPath, outputFileName);
 
-  parameters["id"] = const TypeCode("String?");
-  parameters["args"] = const TypeCode("dynamic");
-
-  final sortedEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
-  final sortedKeys = sortedEntries.map((e) => e.key);
-  
-  final keyNames = _getKeyNames(sortedKeys);
-  final keyConstNames = _getKeyConstNames(sortedKeys);
-
-  final p0 = sortedKeys.map((e) => 'static const ${keyConstNames[e]} = "${keyNames[e]}";');
-  final p1 = sortedEntries.map((e) => "${e.value.getName()} ${e.key};");
-  final p2 = sortedEntries.map((e) => "${e.value.nullable() ? "" : "required "}this.${e.key},");
-  final p2b = sortedKeys.map((e) => "this.$e,");
-  final p3 = sortedKeys.map((e) => '$e: input["${keyNames[e]}"],');
-
   // Replace placeholders with the actual values.
   final output = replaceAllData(
     template,
@@ -100,11 +85,7 @@ Future<void> generateModelFile(
       "___SOURCE_CLASS___": sourceClassName,
       "___CLASS_FILE___": classFileName,
       "___COLLECTION_PATH___": collectionPath,
-      "___P0___": p0.join("\n"),
-      "___P1___": p1.join("\n"),
-      "___P2___": p2.join("\n"),
-      "___P3___": p3.join("\n"),
-      "___P2B___": p2b.join("\n"),
+      ..._p(parameters),
     },
   );
 
@@ -113,6 +94,76 @@ Future<void> generateModelFile(
 
   // Format the generated Dart file.
   await fmtDartFile(outputFilePath);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Map<String, String> _p(Map<String, _TypeCode> input) {
+  final parameters = Map<String, _TypeCode>.from(input);
+  
+  final id = parameters["id"];
+  parameters.remove("id");
+  final args = parameters["args"];
+  parameters.remove("args");
+
+  final sortedEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+  final sortedKeys = sortedEntries.map((e) => e.key);
+  final nonNullableKeys = sortedKeys.where((e) => !parameters[e]!.nullable());
+  final keyNames = _getKeyNames(sortedKeys);
+  final keyConstNames = _getKeyConstNames(sortedKeys);
+
+  final p0 = [
+    'static const K_ID = "id";',
+    'static const K_ARGS = "args";',
+    ...sortedKeys.map((e) => 'static const ${keyConstNames[e]} = "${keyNames[e]}";')
+  ];
+
+  final p1 = sortedEntries.map((e) => "${e.value.getNullableName()} ${e.key};");
+
+  final p2 = [
+    id == null
+        ? "String? id,"
+        : () {
+            assert(id.getNullableName() == "String?");
+            return id.nullable() ? "String? id" : "required String id,";
+          }(),
+    args == null ? "dynamic args," : "${args.nullable() ? "" : "required "}${args.getName()} args,",
+  ];
+
+  final p3 = sortedEntries.map((e) => "${e.value.nullable() ? "" : "required "}this.${e.key},");
+
+  final p4 = [
+    "super.id = id;",
+    "super.args = args;",
+  ];
+
+  final p5 = [
+    "String? id,",
+    args == null ? "dynamic args," : "${args.getNullableName()} args,",
+  ];
+
+  final p6 = sortedKeys.map((e) => "this.$e,");
+
+  final p7 = [
+    id?.nullable() == false ? "assert(super.id != null);" : "",
+    args?.nullable() == false ? "assert(super.args != null);" : "",
+    ...nonNullableKeys.map((e) => "assert(this.$e != null);"),
+  ];
+
+  final p8 = [
+    'id: input["id"],',
+    'args: input["args"],',
+    ...sortedKeys.map((e) => '$e: input["${keyNames[e]}"],'),
+  ];
+
+  final p10 = sortedKeys.map((e) => 'this.$e = other.$e ?? this.$e;');
+
+  final p = [p0, p1, p2, p3, p4, p5, p6, p7, p8, <String>[], p10];
+  final output = <String, String>{};
+  for (var n = 0; n < p.length; n++) {
+    output["___P${n}___"] = p[n].join("\n");
+  }
+  return output;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -155,50 +206,60 @@ class GenerateModel {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 // ignore: must_be_immutable
-abstract class Model extends Equatable {
+abstract class Model {
   String? id;
 
   dynamic args;
 
+  String? collectionPath;
+
   Map<String, dynamic> toJMap();
 
-  T copyWith<T extends Model>({T? value});
+  T copy<T extends Model>();
 
-  T newFromJMap<T extends Model>(Map<String, dynamic> value) =>
-      this.newEmpty()..updateWithJMap(value);
+  T copyWith<T extends Model>({T? other});
 
-  T newOverrideJMap<T extends Model>(Map<String, dynamic> value) =>
-      this.newFromJMap({...this.toJMap(), ...value});
-
-  T newOverride<T extends Model>(T value);
-
-  T newEmpty<T extends Model>();
-
-  void updateWithJMap(Map<String, dynamic> value);
-
-  void updateWith<T extends Model>(T value);
+  void updateWith<T extends Model>(T other);
 
   @override
   String toString() => this.toJMap().toString();
 
-  @override
-  bool? get stringify => false;
+  bool equals<T extends Model>(T other) => this.toJMap().deep == other.toJMap().deep;
+
+  FirestoreRef? defaultFirestoreRef(dynamic firestore) {
+    return collectionPath != null && this.id != null
+        ? FirestoreRef._(firestore, this.collectionPath!, this.id!)
+        : null;
+  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class TypeCode {
-  final String typeCode;
-  const TypeCode(this.typeCode);
+class FirestoreRef {
+  final dynamic firestore;
+  final String collectionPath;
+  final String id;
+  const FirestoreRef._(this.firestore, this.collectionPath, this.id);
+  dynamic get collectionRef => this.firestore.collection(this.collectionPath);
+  dynamic get docRef => this.collectionRef().doc(this.id);
+}
 
-  String getName() => _typeCodeToTypeName(typeCode);
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class _TypeCode {
+  final String typeCode;
+
+  const _TypeCode(this.typeCode);
 
   bool nullable() {
     final name = this.getName();
     return name.endsWith("?") || name == "dynamic";
   }
 
-  static String _typeCodeToTypeName(String typeCode) {
+  String getName() => _typeCodeToName(typeCode);
+  String getNullableName() => this.nullable() ? this.getName() : "${this.getName()}?";
+
+  static String _typeCodeToName(String typeCode) {
     var temp = typeCode //
         .replaceAll(" ", "")
         .replaceAll("|let", "");
@@ -221,5 +282,13 @@ class TypeCode {
         .replaceAll("[", "<")
         .replaceAll("]", ">")
         .replaceAll("+", ", ");
+  }
+
+  @override
+  int get hashCode => this.typeCode.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == _TypeCode && other.hashCode == this.hashCode;
   }
 }

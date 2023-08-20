@@ -1,4 +1,4 @@
-import 'package:xyz_gen/generate_model.dart';
+import 'package:xyz_gen/generate_model_file.dart';
 
 part 'model_user.g.dart';
 
@@ -6,10 +6,14 @@ part 'model_user.g.dart';
   className: "ModelUser",
   collectionPath: "users",
   parameters: {
+    "id": "String",
+    "args": "List<String>",
     "firstName": "String",
     "lastName": "String",
     "displayName": "String",
   },
 )
 // ignore: must_be_immutable
-abstract class ModelUserUtils {}
+abstract class ModelUserUtils extends Model {
+  ModelUserUtils._();
+}

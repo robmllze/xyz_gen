@@ -14,48 +14,77 @@ class ModelUser extends ModelUserUtils {
   //
   //
 
-  static const K_FIRST_NAME = "first_name";
-  static const K_LAST_NAME = "last_name";
-  static const K_DISPLAY_NAME = "display_name";
   static const K_ID = "id";
   static const K_ARGS = "args";
+  static const K_DISPLAY_NAME = "display_name";
+  static const K_FIRST_NAME = "first_name";
+  static const K_LAST_NAME = "last_name";
 
-  String firstName;
-  String lastName;
-  String displayName;
-  String? id;
-  dynamic args;
+  String? displayName;
+  String? firstName;
+  String? lastName;
 
   //
   //
   //
 
   ModelUser({
+    required String id,
+    required List<String> args,
+    required this.displayName,
     required this.firstName,
     required this.lastName,
-    required this.displayName,
-    this.id,
-    this.args,
-  });
+  }) : super._() {
+    super.id = id;
+    super.args = args;
+  }
 
-  /*
+  //
+  //
+  //
+
+  ModelUser.unsafe({
+    String? id,
+    List<String>? args,
+    this.displayName,
+    this.firstName,
+    this.lastName,
+  }) : super._() {
+    super.id = id;
+    super.args = args;
+    assert(super.id != null);
+    assert(super.args != null);
+    assert(this.displayName != null);
+    assert(this.firstName != null);
+    assert(this.lastName != null);
+  }
+
+  //
+  //
+  //
+
+  factory ModelUser.from(ModelUser other) {
+    return ModelUser.fromJMap(other.toJMap());
+  }
+
+  //
+  //
+  //
+
   factory ModelUser.fromJMap(Map<String, dynamic> input) {
     try {
-      return ModelUser(
+      return ModelUser.unsafe(
         id: input["id"],
-        args: input["args"],  
+        args: input["args"],
+        displayName: input["display_name"],
         firstName: input["first_name"],
-lastName: input["last_name"],
-displayName: input["display_name"],
-id: input["id"],
-args: input["args"],
+        lastName: input["last_name"],
       );
     } catch (e) {
       assert(false, e);
       rethrow;
     }
   }
-  */
 
   //
   //
@@ -76,18 +105,37 @@ args: input["args"],
   //
 
   @override
-  List<Object> get props => [
-        this.firstName,
-        this.lastName,
-        this.displayName,
-        this.id,
-        this.args,
-      ].nonNulls.toList();
+  T copy<T extends Model>() {
+    return ModelUser.fromJMap(this.toJMap()) as T;
+  }
 
   //
   //
   //
 
   @override
-  String toString() => this.toJMap().toString();
+  T copyWith<T extends Model>({T? other}) {
+    if (other is ModelUser) {
+      return this.copy().updateWith(other) as T;
+    }
+    assert(false);
+    return this.copy();
+  }
+
+  //
+  //
+  //
+
+  @override
+  void updateWith<T extends Model>(T other) {
+    if (other is ModelUser) {
+      this.id = other.id ?? this.id; // move to p7
+      this.args = other.args ?? this.id;
+      this.displayName = other.displayName ?? this.displayName;
+      this.firstName = other.firstName ?? this.firstName;
+      this.lastName = other.lastName ?? this.lastName;
+    } else {
+      assert(false);
+    }
+  }
 }

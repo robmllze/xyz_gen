@@ -25,22 +25,45 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
 
   ___CLASS___({
     ___P2___
-  });
+    ___P3___
+  }) : super._() {
+    ___P4___
+  }
+
+  //
+  //
+  //
+
+  ___CLASS___.unsafe({
+    ___P5___
+    ___P6___
+  }) : super._() {
+    ___P4___
+    ___P7___
+  }
+
+  //
+  //
+  //
+
+  factory ___CLASS___.from(___CLASS___ other) {
+    return ___CLASS___.fromJMap(other.toJMap());
+  }
+
+  //
+  //
+  //
   
-  /*
   factory ___CLASS___.fromJMap(Map<String, dynamic> input) {
     try {
-      return ___CLASS___(
-        id: input["id"],
-        args: input["args"],  
-        ___P3___
+      return ___CLASS___.unsafe(
+        ___P8___
       );
     } catch (e) {
       assert(false, e);
       rethrow;
     }
   }
-  */
 
   //
   //
@@ -49,7 +72,9 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   @override
   Map<String, dynamic> toJMap() {
     try {
-      return {};
+      return {
+        ___P9___
+      };
     } catch (e) {
       assert(false, e);
       rethrow;
@@ -61,15 +86,36 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   //
 
   @override
-  List<Object> get props => [
-        ___P2B___
-      ].nonNulls.toList();
+  T copy<T extends Model>() {
+    return ___CLASS___.fromJMap(this.toJMap()) as T;
+  }
 
   //
   //
   //
 
   @override
-  String toString() => this.toJMap().toString();
+  T copyWith<T extends Model>({T? other}) {
+    if (other is ___CLASS___) {
+       return this.copy().updateWith(other) as T;
+    }
+    assert(false);
+    return this.copy();
+  }
+
+  //
+  //
+  //
+
+  @override
+  void updateWith<T extends Model>(T other) {
+    if (other is ___CLASS___) {
+    this.id = other.id ?? this.id; // move to p7
+    this.args = other.args ?? this.id;
+    ___P10___
+    } else {
+      assert(false);
+    }
+  }
 }
 ````
