@@ -4,62 +4,91 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-typedef TMappers = Map<String, String Function(_MapperEvent)>;
+typedef TTypeMappers = Map<String, String Function(_MapperEvent)>;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class TypeCodeCompiler {
+class TypeCodeMapper {
   //
   //
   //
 
-  final TMappers mappers;
-
-  //
-  //
-  //
-
-  const TypeCodeCompiler([this.mappers = const {}]);
+  final TTypeMappers mappers;
 
   //
   //
   //
 
-  factory TypeCodeCompiler.withDefaultToMappers([
-    TMappers add = const {},
-  ]) {
-    return TypeCodeCompiler({...defaultToMappers, ...add});
+  const TypeCodeMapper([this.mappers = const {}]);
+
+  //
+  //
+  //
+
+  String map(String typeCode, String fieldName) {
+    final a = this.mapObject(typeCode, fieldName);
+    final b = this.mapCollection(typeCode, fieldName);
+    final c = b.replaceFirst("#x0", a);
+    return c;
   }
 
   //
   //
   //
 
-  factory TypeCodeCompiler.withDefaultFromMappers([
-    TMappers add = const {},
-  ]) {
-    return TypeCodeCompiler({...defaultFromMappers, ...add});
+  String mapObject(String typeCode, String fieldName) {
+    final formula = _buildObjectMapper(typeCode, fieldName, this.mappers) ?? "#x0";
+    return formula;
   }
 
   //
   //
   //
 
-  String compile(String typeCode, String fieldName) {
-    final parsed = parseCollectionTypeCode(typeCode);
-    print(parsed);
-    final compiled = _complieExpression(
-      parsed,
-      mappers: this.mappers,
-    );
-    final replaced = compiled.replaceFirst("p0", fieldName);
-    return replaced;
+  String mapCollection(String typeCode, String fieldName) {
+    // Break the typeCode up into to a list of type data that can be processed
+    // by the builder.
+    final typeData = preprocessCollectionTypeCode(typeCode);
+    // Use the typeData to build a mapping formula.
+    var formula = _buildCollectionMapper(typeData, this.mappers);
+    // Insert the field name into the formula.
+    formula = formula.replaceFirst("p0", fieldName);
+    return formula;
   }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Iterable<List<String>> parseCollectionTypeCode(String typeCode) {
+String? _buildObjectMapper(
+  String type,
+  String fieldName,
+  TTypeMappers mappers,
+) {
+  // Get all mappers that match the type.
+  final results = filterMappersByType(
+    mappers,
+    type,
+  );
+  // If there are any matches, take the first one.
+  if (results.isNotEmpty) {
+    final result = results.entries.first;
+    final typePattern = result.key;
+    final match = RegExp(typePattern).firstMatch(type);
+    if (match != null) {
+      final event = ObjectMapperEvent.custom(
+        fieldName,
+        Iterable.generate(match.groupCount + 1, (i) => match.group(i)!),
+      );
+      final eventMapper = result.value;
+      return eventMapper(event);
+    }
+  }
+  return null;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Iterable<List<String>> preprocessCollectionTypeCode(String typeCode) {
   final unsorted = <int, List<String>>{};
   String? parse(String typeCode) {
     // Remove all spaces from the type code.
@@ -94,12 +123,12 @@ Iterable<List<String>> parseCollectionTypeCode(String typeCode) {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-TMappers filterMappersByType(
-  TMappers input,
+TTypeMappers filterMappersByType(
+  TTypeMappers mappers,
   String type,
 ) {
   return Map.fromEntries(
-    input.entries.where((e) {
+    mappers.entries.where((e) {
       final key = e.key;
       return RegExp(key).hasMatch(type);
     }),
@@ -110,7 +139,7 @@ TMappers filterMappersByType(
 
 String? _mapped(
   _MapperEvent event,
-  TMappers mappers,
+  TTypeMappers mappers,
 ) {
   final type = event.type;
   if (type != null) {
@@ -130,51 +159,51 @@ String? _mapped(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-String _complieExpression(
-  Iterable<List<String>> parsedTypeCodes, {
-  TMappers mappers = const {},
-}) {
+String _buildCollectionMapper(
+  Iterable<List<String>> typeData,
+  TTypeMappers mappingFormulas,
+) {
   var output = "#x0";
-  // Loop through type elements.
-  for (final parsedTypeCode in parsedTypeCodes) {
-    final base = CollectionMapperEvent().._ltypes = parsedTypeCode.skip(2);
-    final pLength = base._ltypes.length;
-    base
+  // Loop through type data elements.
+  for (final element in typeData) {
+    final collectionEvent = CollectionMapperEvent().._ltypes = element.skip(2);
+    final pLength = collectionEvent._ltypes.length;
+    collectionEvent
       .._lhashes = Iterable.generate(pLength, (e) => e).map((l) => "#p$l")
       .._lparams = Iterable.generate(pLength, (e) => e).map((l) => "p$l")
       .._largs = Iterable.generate(pLength, (e) => e).map((l) => "final p$l")
-      .._type = parsedTypeCode[1];
+      .._type = element[1];
     final argIdMatch = RegExp(r"#x(\d+)").firstMatch(output);
-    base._nameIndex = argIdMatch != null && argIdMatch.groupCount > 0 //
+    collectionEvent._nameIndex = argIdMatch != null && argIdMatch.groupCount > 0 //
         ? int.tryParse(argIdMatch.group(1)!)
         : null;
-    final xHash = "#x${base._nameIndex}";
-    final mapped = _mapped(base, mappers);
+    final xHash = "#x${collectionEvent._nameIndex}";
+    final mapped = _mapped(collectionEvent, mappingFormulas);
     if (mapped != null) {
       output = output.replaceFirst(xHash, mapped);
     } else {
-      assert(false, "Base-type mapper not found!");
+      assert(false, "Collection type-mapper not found!");
     }
-    // Loop through subtypes.
+    // Loop through object types.
     for (var n = 0; n < pLength; n++) {
-      final sub = ObjectMapperEvent()
+      final objectEvent = ObjectMapperEvent()
         .._nameIndex = n
-        .._type = base._ltypes.elementAt(n);
+        .._type = collectionEvent._ltypes.elementAt(n);
       final pHash = "#p$n";
 
-      // If the subtype is the next type element.
-      if (sub.type?[0] == "*") {
+      // If the object type is the next type data element.
+      if (objectEvent.type?[0] == "*") {
         final xHash = "#x$n";
         output = output.replaceFirst(pHash, xHash);
       }
-      // If the subtype is something other, presumably a simple object like
-      // num, int, double, bool or String.
+      // If the object type is something else like num, int, double, bool or
+      // String.
       else {
-        final mapped = _mapped(sub, mappers);
+        final mapped = _mapped(objectEvent, mappingFormulas);
         if (mapped != null) {
           output = output.replaceFirst(pHash, mapped);
         } else {
-          assert(false, "Sub-type mapper not found!");
+          assert(false, "Object type-mapper not found!");
         }
       }
     }
@@ -221,9 +250,9 @@ class CollectionMapperEvent extends _MapperEvent {
 /// Mapper event for non-collection types, e.g. int, String, DateTime.
 class ObjectMapperEvent extends _MapperEvent {
   ObjectMapperEvent();
-  ObjectMapperEvent.custom(String p, Iterable<String> keyMatchGroups) {
-    this._name = p;
-    this._matchGroups = keyMatchGroups;
+  ObjectMapperEvent.custom(String name, Iterable<String> matchGroups) {
+    this._name = name;
+    this._matchGroups = matchGroups;
   }
 }
 
@@ -256,7 +285,7 @@ String typeCodeToType(String typeCode) {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final defaultToMappers = TMappers.unmodifiable({
+final defaultToMappers = TTypeMappers.unmodifiable({
   r"^Map$": /* clean */ (e) {
     if (e is! CollectionMapperEvent) throw TypeError();
     return "${e.name}.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty";
@@ -355,7 +384,7 @@ final defaultToMappers = TMappers.unmodifiable({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final newFromMappers = TMappers.unmodifiable({
+final newFromMappers = TTypeMappers.unmodifiable({
   r"^String[\?]?$": (e) {
     if (e is! ObjectMapperEvent) throw TypeError();
     return "(${e.name}?.toString())";
@@ -364,7 +393,7 @@ final newFromMappers = TMappers.unmodifiable({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final defaultFromMappers = TMappers.unmodifiable({
+final defaultFromMappers = TTypeMappers.unmodifiable({
   r"^Map$": (e) {
     if (e is! CollectionMapperEvent) throw TypeError();
     return "(${e.name} as Map).map((${e.args}) => MapEntry(${e.hashes},),)";
