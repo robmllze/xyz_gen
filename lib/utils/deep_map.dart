@@ -9,9 +9,21 @@ import 'package:collection/collection.dart' show DeepCollectionEquality;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 class DeepMap<K, V> {
-  Map<K, V> values;
+  //
+  //
+  //
 
-  DeepMap._([this.values = const {}]);
+  final Map<K, V> values;
+
+  //
+  //
+  //
+
+  const DeepMap._(this.values);
+
+  //
+  //
+  //
 
   @override
   bool operator ==(Object other) {
@@ -19,9 +31,15 @@ class DeepMap<K, V> {
     return other is DeepMap<K, V> && const DeepCollectionEquality().equals(other.values, values);
   }
 
+  //
+  //
+  //
+
   @override
   int get hashCode => const DeepCollectionEquality().hash(values);
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 extension DeepMapExtension<K, V> on Map<K, V> {
   DeepMap<K, V> get deep => DeepMap<K, V>._(this);

@@ -9,9 +9,21 @@ import 'package:collection/collection.dart' show DeepCollectionEquality;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 class DeepList<T> {
-  List<T> values;
+  //
+  //
+  //
 
-  DeepList._([this.values = const []]);
+  final List<T> values;
+
+  //
+  //
+  //
+
+  const DeepList._(this.values);
+
+  //
+  //
+  //
 
   @override
   bool operator ==(Object other) {
@@ -19,9 +31,15 @@ class DeepList<T> {
     return other is DeepList<T> && const DeepCollectionEquality().equals(other.values, values);
   }
 
+  //
+  //
+  //
+
   @override
   int get hashCode => const DeepCollectionEquality().hash(values);
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 extension DeepListExtension<T> on List<T> {
   DeepList<T> get deep => DeepList<T>._(this);
