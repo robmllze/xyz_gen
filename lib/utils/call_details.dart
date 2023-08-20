@@ -90,14 +90,7 @@ class CallDetails {
   //
   //
 
-  Rec get _rec {
-    var rec = const Rec();
-    if ((this.fileName != null)) rec = rec(this.fileName);
-    if (this.className != null) rec = rec(this.className);
-    if (this.methodName != null) rec = rec(this.methodName);
-    if (this.lineNumber != null) rec = rec(this.lineNumber);
-    return rec;
-  }
+  Rec get _rec => Rec(this.fileName)(this.className)(this.methodName)(this.lineNumber);
 
   //
   //

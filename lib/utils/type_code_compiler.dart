@@ -4,6 +4,8 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
+import 'call_details.dart';
+
 typedef TTypeMappers = Map<String, String Function(_MapperEvent)>;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -64,23 +66,34 @@ String? _buildObjectMapper(
   String fieldName,
   TTypeMappers mappers,
 ) {
-  // Get all mappers that match the type.
-  final results = filterMappersByType(
-    mappers,
-    type,
-  );
-  // If there are any matches, take the first one.
-  if (results.isNotEmpty) {
-    final result = results.entries.first;
-    final typePattern = result.key;
-    final match = RegExp(typePattern).firstMatch(type);
-    if (match != null) {
-      final event = ObjectMapperEvent.custom(
-        fieldName,
-        Iterable.generate(match.groupCount + 1, (i) => match.group(i)!),
-      );
-      final eventMapper = result.value;
-      return eventMapper(event);
+  final event = ObjectMapperEvent().._name = fieldName;
+  return _buildMapper(event, mappers);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+String? _buildMapper(
+  _MapperEvent event,
+  TTypeMappers mappers,
+) {
+  final type = event.type;
+  if (type != null) {
+    // Get all mappers that match the type.
+    final results = filterMappersByType(
+      mappers,
+      type,
+    );
+    assert(results.length == 1);
+    // If there are any matches, take the first one.
+    if (results.isNotEmpty) {
+      final result = results.entries.first;
+      final typePattern = result.key;
+      final match = RegExp(typePattern).firstMatch(type);
+      if (match != null) {
+        event._matchGroups = Iterable.generate(match.groupCount + 1, (i) => match.group(i)!);
+        final eventMapper = result.value;
+        return eventMapper(event);
+      }
     }
   }
   return null;
@@ -111,10 +124,12 @@ Iterable<List<String>> preprocessCollectionTypeCode(String typeCode) {
     return entries.isEmpty ? null : input;
   }
 
-  String? c = typeCode;
-  do {
-    c = parse(c!);
-  } while (c != null);
+  {
+    String? e = typeCode;
+    do {
+      e = parse(e!);
+    } while (e != null);
+  }
   final entries = unsorted.entries.toList();
   entries.sort((a, b) => a.key.compareTo(b.key));
   final values = entries.map((e) => e.value);
@@ -133,28 +148,6 @@ TTypeMappers filterMappersByType(
       return RegExp(key).hasMatch(type);
     }),
   );
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-String? _mapped(
-  _MapperEvent event,
-  TTypeMappers mappers,
-) {
-  final type = event.type;
-  if (type != null) {
-    final all = filterMappersByType(mappers, type);
-    assert(all.length <= 1, "Multiple mapper matches found!");
-    if (all.length == 1) {
-      final first = all.entries.first;
-      final mapper = first.value;
-      final regExp = RegExp(first.key);
-      final match = regExp.firstMatch(type)!;
-      event._matchGroups = Iterable.generate(match.groupCount + 1, (i) => match.group(i)!);
-      return mapper(event);
-    }
-  }
-  return null;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -178,9 +171,9 @@ String _buildCollectionMapper(
         ? int.tryParse(argIdMatch.group(1)!)
         : null;
     final xHash = "#x${collectionEvent._nameIndex}";
-    final mapped = _mapped(collectionEvent, mappingFormulas);
-    if (mapped != null) {
-      output = output.replaceFirst(xHash, mapped);
+    final formula = _buildMapper(collectionEvent, mappingFormulas);
+    if (formula != null) {
+      output = output.replaceFirst(xHash, formula);
     } else {
       assert(false, "Collection type-mapper not found!");
     }
@@ -199,9 +192,9 @@ String _buildCollectionMapper(
       // If the object type is something else like num, int, double, bool or
       // String.
       else {
-        final mapped = _mapped(objectEvent, mappingFormulas);
-        if (mapped != null) {
-          output = output.replaceFirst(pHash, mapped);
+        final formula = _buildMapper(objectEvent, mappingFormulas);
+        if (formula != null) {
+          output = output.replaceFirst(pHash, formula);
         } else {
           assert(false, "Object type-mapper not found!");
         }

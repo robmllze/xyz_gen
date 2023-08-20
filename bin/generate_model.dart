@@ -12,7 +12,15 @@ import 'package:xyz_gen/utils/type_code_compiler.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+class AAA {
+  asdasd() {
+    CallDetails().debugLogAlert("Hello world!");
+  }
+}
+
 Future<void> main() async {
+  AAA().asdasd();
+
   final name = "data";
   final typeCode = "List<String>?";
   final compiled = TypeCodeMapper(defaultFromMappers).map(typeCode, name);
