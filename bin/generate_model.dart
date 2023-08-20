@@ -5,17 +5,15 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 import 'package:xyz_gen/generate_model_file.dart';
+import 'package:xyz_gen/utils/call_details.dart';
 import 'package:xyz_gen/utils/genrate.dart';
 import 'package:xyz_gen/utils/helpers.dart';
 import 'package:xyz_gen/utils/type_code_compiler.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+
 Future<void> main() async {
-  print(getCallDetails());
-  () {
-    print(getCallDetails());
-  }();
 
   /*
   final a = parseTypeCode("String?");

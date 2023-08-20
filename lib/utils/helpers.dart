@@ -13,29 +13,6 @@ import 'list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-(String?, String?, String?) getCallDetails() {
-  final stackTrace = StackTrace.current;
-  final stackTraceLines = stackTrace.toString().split("\n");
-
-  // Start iterating from the 2nd line of the stack trace to skip the current function.
-  for (var i = 1; i < stackTraceLines.length; i++) {
-    final e = stackTraceLines[i];
-    final match = RegExp(r"#\d+\s+([^\s]+) \(([^\s]+):(\d+):(\d+)\)").firstMatch(e);
-    if (match != null) {
-      final scopeName = match.group(1);
-      // If the scope is not anonymous.
-      if (scopeName != null && !scopeName.startsWith("<anonymous closure>")) {
-        final fileName = match.group(2);
-        final lineNumber = match.group(3);
-        return (fileName, scopeName, lineNumber);
-      }
-    }
-  }
-  return (null, null, null);
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 extension MapFilterExtension<K, V> on Map<K, V> {
   /// Returns a new map with the same keys as this map but with the specified
   /// [defaultValue] for all values that are null. If [defaultValue] is null,
