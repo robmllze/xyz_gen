@@ -4,9 +4,9 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'here.dart';
+typedef TTypeMappers = Map<String, String Function(MapperEvent)>;
 
-typedef TTypeMappers = Map<String, String Function(_MapperEvent)>;
+TTypeMappers newTypeMappers(TTypeMappers input) => TTypeMappers.unmodifiable(input);
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -66,14 +66,16 @@ String? _buildObjectMapper(
   String fieldName,
   TTypeMappers mappers,
 ) {
-  final event = ObjectMapperEvent().._name = fieldName;
+  final event = ObjectMapperEvent()
+    .._type = type
+    .._name = fieldName;
   return _buildMapper(event, mappers);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 String? _buildMapper(
-  _MapperEvent event,
+  MapperEvent event,
   TTypeMappers mappers,
 ) {
   final type = event.type;
@@ -206,7 +208,7 @@ String _buildCollectionMapper(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _MapperEvent {
+abstract class MapperEvent {
   /// The name of the field, e.g. "firstName" or "p3".
   String? get name => this._name ?? (this._nameIndex != null ? "p${this._nameIndex}" : null);
 
@@ -225,7 +227,7 @@ abstract class _MapperEvent {
 }
 
 /// Mapper event for collection types, e.g. Map, List, Set.
-class CollectionMapperEvent extends _MapperEvent {
+class CollectionMapperEvent extends MapperEvent {
   Iterable<String> _largs = [];
   Iterable<String> _lhashes = [];
   Iterable<String> _lparams = [];
@@ -241,7 +243,7 @@ class CollectionMapperEvent extends _MapperEvent {
 }
 
 /// Mapper event for non-collection types, e.g. int, String, DateTime.
-class ObjectMapperEvent extends _MapperEvent {
+class ObjectMapperEvent extends MapperEvent {
   ObjectMapperEvent();
   ObjectMapperEvent.custom(String name, Iterable<String> matchGroups) {
     this._name = name;
@@ -372,15 +374,6 @@ final defaultToMappers = TTypeMappers.unmodifiable({
   r"^\w+Type\?$": (e) {
     if (e is! ObjectMapperEvent) throw TypeError();
     return "${e.name}?.name";
-  },
-});
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-final newFromMappers = TTypeMappers.unmodifiable({
-  r"^String[\?]?$": (e) {
-    if (e is! ObjectMapperEvent) throw TypeError();
-    return "(${e.name}?.toString())";
   },
 });
 
