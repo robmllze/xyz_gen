@@ -8,7 +8,7 @@ import 'package:xyz_utils/xyz_utils.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class CallDetails {
+class Here {
   //
   //
   //
@@ -17,16 +17,18 @@ class CallDetails {
   final String? className;
   final String? methodName;
   final String? lineNumber;
+  final Symbol? group;
 
   //
   //
   //
 
-  const CallDetails._(
+  const Here._(
     this.filePath,
     this.className,
     this.methodName,
     this.lineNumber,
+    this.group,
   );
 
   //
@@ -44,11 +46,14 @@ class CallDetails {
     return null;
   }
 
+  Symbol? get _defaultGroup =>
+      this.group ?? (this.className != null ? Symbol("#${this.className}") : null);
+
   //
   //
   //
 
-  factory CallDetails() {
+  factory Here([Symbol? group]) {
     // Capture the current stack trace.
     final stackTrace = StackTrace.current;
     // Split the stack trace string by line for easier processing.
@@ -88,34 +93,57 @@ class CallDetails {
             // Extract the line number.
             final lineNumber = match.group(3);
             // Return the captured details as an instance of CallDetails.
-            return CallDetails._(fileName, className, methodName, lineNumber);
+            return Here._(
+              fileName,
+              className,
+              methodName,
+              lineNumber,
+              group,
+            );
           }
         }
       }
     }
     // If no suitable caller details are found, return an instance of CallDetails with null values.
-    return const CallDetails._(null, null, null, null);
+    return Here._(
+      null,
+      null,
+      null,
+      null,
+      group,
+    );
   }
 
   //
   //
   //
 
-  Rec get _rec => Rec(this.fileName)(this.className)(this.methodName)(this.lineNumber);
+  Rec get _rec {
+    return Rec(
+      this.fileName,
+      this._defaultGroup ?? #debug,
+    )(
+      this.className,
+    )(
+      this.methodName,
+    )(
+      this.lineNumber,
+    );
+  }
 
   //
   //
   //
 
-  void debugLog(String message) => this._rec.debugLog(message);
-  void debugLogAlert(String message) => this._rec.debugLogAlert(message);
-  void debugLogError(String message) => this._rec.debugLogError(message);
-  void debugLogIgnore(String message) => this._rec.debugLogIgnore(message);
-  void debugLogInfo(String message) => this._rec.debugLogInfo(message);
-  void debugLogMessage(String message) => this._rec.debugLogMessage(message);
-  void debugLogStart(String message) => this._rec.debugLogStart(message);
-  void debugLogStop(String message) => this._rec.debugLogStop(message);
-  void debugLogSuccess(String message) => this._rec.debugLogSuccess(message);
+  void debugLog(String m) => this._rec.debugLog(m);
+  void debugLogAlert(String m) => this._rec.debugLogAlert(m);
+  void debugLogError(String m) => this._rec.debugLogError(m);
+  void debugLogIgnore(String m) => this._rec.debugLogIgnore(m);
+  void debugLogInfo(String m) => this._rec.debugLogInfo(m);
+  void debugLogMessage(String m) => this._rec.debugLogMessage(m);
+  void debugLogStart(String m) => this._rec.debugLogStart(m);
+  void debugLogStop(String m) => this._rec.debugLogStop(m);
+  void debugLogSuccess(String m) => this._rec.debugLogSuccess(m);
 
   //
   //
