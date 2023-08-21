@@ -8,7 +8,7 @@ import 'package:xyz_gen/generate_model_file.dart';
 import 'package:xyz_gen/utils/call_details.dart';
 import 'package:xyz_gen/utils/genrate.dart';
 import 'package:xyz_gen/utils/helpers.dart';
-import 'package:xyz_gen/utils/type_code_compiler.dart';
+import 'package:xyz_gen/utils/type_code_mapper.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -20,11 +20,12 @@ class AAA {
 
 Future<void> main() async {
   AAA().asdasd();
+  CallDetails().debugLogAlert("Hello world!");
 
-  final name = "data";
-  final typeCode = "List<String>?";
-  final compiled = TypeCodeMapper(defaultFromMappers).map(typeCode, name);
-  print(compiled);
+  // final name = "data";
+  // final typeCode = "List<String>?";
+  // final compiled = TypeCodeMapper(defaultFromMappers).map(typeCode, name);
+  // print(compiled);
 
   // await generate(
   //   begType: "model",

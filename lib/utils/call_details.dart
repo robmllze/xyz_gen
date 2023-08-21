@@ -69,10 +69,21 @@ class CallDetails {
           final fullMethodName = match.group(1);
           // Split the full method name into class and method parts.
           final parts = fullMethodName?.split('.');
-          final className = parts != null && parts.length > 1 ? parts[0] : null;
-          final methodName = parts != null && parts.length > 1 ? parts[1] : null;
+          String? className;
+          String? methodName;
 
-          // Check if the captured method is not an anonymous closure.
+          if (parts != null) {
+            if (parts.length == 1) {
+              // This means it's a standalone function.
+              methodName = parts[0];
+            } else if (parts.length > 1) {
+              // This means it's a class method.
+              className = parts[0];
+              methodName = parts[1];
+            }
+          }
+
+          // Check if the captured method or function is not an anonymous closure.
           if (methodName != null && methodName != "<anonymous closure>") {
             // Extract the line number.
             final lineNumber = match.group(3);
