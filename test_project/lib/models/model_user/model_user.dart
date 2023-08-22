@@ -1,7 +1,7 @@
-import 'package:xyz_gen/generate_model/annotation.dart';
-import 'package:xyz_gen/generate_model/model.dart';
+import 'package:xyz_gen/generate_models/annotation.dart';
+import 'package:xyz_gen/generate_models/model.dart';
 import 'package:xyz_gen/utils/helpers.dart';
-import 'package:xyz_utils/_common.dart';
+import 'package:xyz_utils/xyz_utils.dart';
 
 part 'model_user.g.dart';
 

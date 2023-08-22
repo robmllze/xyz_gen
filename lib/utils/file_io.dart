@@ -25,6 +25,7 @@ Future<void> writeFile(
   bool append = false,
 }) async {
   final file = File(getFixedPath(filePath));
+  await file.parent.create(recursive: true); // ensure the parent directory exists
   await file.writeAsString(
     content,
     mode: append ? FileMode.append : FileMode.write,

@@ -82,11 +82,13 @@ Future<void> _generateScreenConfigurationFile(
       _K_PATH_SEGMENTS,
     },
     onClass: (e) {
-      print("- Generating screen configuration for $e");
+      Here().debugLog("Generating screen configuration for $e");
       className = e;
     },
     onField: onField,
   );
+
+  if (className.isEmpty) return;
 
   // Create the actual values to replace the placeholders with.
   final classFileName = getFileName(fixedFilePath);

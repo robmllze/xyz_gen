@@ -5,42 +5,17 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of 'my_widget.dart';
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+// default_my_widget_makeup
+
+import 'my_widget_makeup.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class MyWidgetMakeup {
-  //
-  //
-  //
-
-  int? value;
-  String colorCode;
-
-  //
-  //
-  //
-
-  MyWidgetMakeup({
-    this.value,
-    required this.colorCode,
-  });
-
-  //
-  //
-  //
-
-  MyWidgetMakeup copyWith({
-    int? value,
-    String? colorCode,
-  }) {
-    return MyWidgetMakeup(
-      value: value ?? this.value,
-      colorCode: colorCode ?? this.colorCode,
-    );
-  }
+MyWidgetMakeup defaultMyWidgetMakeup() {
+  return MyWidgetMakeup(
+    value: null,
+    colorCode: null, // Value required!
+  );
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-typedef FMyWidgetMakeup = MyWidgetMakeup Function();

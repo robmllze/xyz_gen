@@ -61,6 +61,8 @@ Future<void> _generateModelFile(
     onField: onField,
   );
 
+  if (className.isEmpty) return;
+
   // Create the actual values to replace the placeholders with.
   final classFileName = getFileName(fixedFilePath);
   final classFileDirPath = getDirPath(fixedFilePath);
