@@ -4,17 +4,13 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_screen_configuration/generate_screen_configuration_file.dart';
-import 'package:xyz_gen/utils/generate.dart';
+import 'package:xyz_gen/generate_screen_configuration/generate_screen_configuration.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> main() async {
-  await generate(
-    begType: "screen",
+  await generateScreenConfiguration(
     rootDirPath: "./test_project/lib/screens/",
-    templateFilePath: "./templates/legacy_screen_configuration_template.md",
-    deleteGeneratedFiles: true,
-    generateForFile: generateScreenConfigurationFile,
+    templateFilePath: "./templates/screen_configuration_template.md",
   );
 }
