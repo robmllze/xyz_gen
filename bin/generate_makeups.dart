@@ -15,6 +15,7 @@ Future<void> main() async {
       // NOTE: The order is important.
       "./templates/makeup_class_template.md",
       "./templates/makeup_builder_template.md",
+      "./templates/makeup_exports_template.md",
     },
   );
 }

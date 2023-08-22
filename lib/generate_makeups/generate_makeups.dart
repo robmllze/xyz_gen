@@ -89,8 +89,8 @@ Future<void> _generateMakeupFiles(
   final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
   final classKey = className.toSnakeCase();
   final makeupClassName = "${className}Makeup";
-  final makeupClassKey = makeupClassName.toSnakeCase();
-  final outputFileName0 = "$makeupClassKey.g.dart";
+  //final makeupClassKey = makeupClassName.toSnakeCase();
+  const outputFileName0 = "_makeup.g.dart";
   final outputDirPath0 =
       outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
   final outputFilePath0 = p.join(outputDirPath0, outputFileName0);
@@ -131,10 +131,13 @@ Future<void> _generateMakeupFiles(
 
   final a0 = entries.map((e) => "${e.key}: null,${e.value.nullable ? "" : "// Value required!"}");
 
+  final exportFiles = <String>[outputFileName0];
+
   for (final name in names) {
     final makeupKey = "${name.toSnakeCase()}_${classKey}_makeup";
     final makeupBuilder = makeupKey.toCamelCase();
-    final outputFileName1 = "$makeupKey.dart";
+    final outputFileName1 = "_$makeupKey.dart";
+    exportFiles.add(outputFileName1);
     final outputFilePath1 = p.join(outputDirPath0, outputFileName1);
 
     final output1 = replaceAllData(
@@ -152,4 +155,15 @@ Future<void> _generateMakeupFiles(
     await writeFile(outputFilePath1, output1);
     await fmtDartFile(outputFilePath1);
   }
+
+  final outputFilePath2 = p.join(outputDirPath0, "makeups.dart");
+  final template2 = templates.values.elementAt(2);
+
+  final output2 = replaceAllData(template2, {
+    ...data0,
+    "___EXPORTS___": exportFiles.map((e) => "export '$e';").join("\n"),
+  });
+
+  await writeFile(outputFilePath2, output2);
+  await fmtDartFile(outputFilePath2);
 }

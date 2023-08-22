@@ -8,7 +8,7 @@ import 'package:xyz_gen/generate_makeups/annotation.dart';
   },
   parameters: {
     "value": "int?",
-    "colorCode": "String",
+    "colorCode": "String?",
   },
 )
 class MyWidget {
