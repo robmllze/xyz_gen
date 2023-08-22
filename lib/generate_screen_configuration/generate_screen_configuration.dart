@@ -23,12 +23,14 @@ part 'parts/_generate_screen_configuration_file.dart';
 Future<void> generateScreenConfiguration({
   required String rootDirPath,
   required String templateFilePath,
+  Set<String> pathPatterns = const {},
 }) async {
   await generate(
     begType: "screen",
     rootDirPath: rootDirPath,
     templateFilePath: templateFilePath,
     deleteGeneratedFiles: true,
+    pathPatterns: pathPatterns,
     generateForFile: _generateScreenConfigurationFile,
   );
 }

@@ -28,12 +28,14 @@ part 'parts/_replacements.dart';
 Future<void> generateModels({
   required String rootDirPath,
   required String templateFilePath,
+  Set<String> pathPatterns = const {},
 }) async {
   await generate(
     begType: "model",
     rootDirPath: rootDirPath,
     templateFilePath: templateFilePath,
     deleteGeneratedFiles: true,
+    pathPatterns: pathPatterns,
     generateForFile: _generateModelFile,
   );
 }
