@@ -25,9 +25,8 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
 
   ___CLASS___({
     ___P2___
-    ___P3___
   }) : super._() {
-    ___P4___
+    ___P3___
   }
 
   //
@@ -35,11 +34,9 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   //
 
   ___CLASS___.unsafe({
-    ___P5___
-    ___P6___
-  }) : super._() {
     ___P4___
-    ___P7___
+  }) : super._() {
+    ___P5___
   }
 
   //
@@ -57,7 +54,7 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   factory ___CLASS___.fromJMap(Map<String, dynamic> input) {
     try {
       return ___CLASS___.unsafe(
-        ___P8___
+        ___P6___
       );
     } catch (e) {
       assert(false, e);
@@ -73,7 +70,7 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
   Map<String, dynamic> toJMap({dynamic defaultValue}) {
     try {
       return <String, dynamic>{
-        ___P9___
+        ___P7___
       }.mapWithDefault(defaultValue);
     } catch (e) {
       assert(false, e);
@@ -112,7 +109,7 @@ class ___CLASS___ extends ___SOURCE_CLASS___ {
     if (other is ___CLASS___) {
     this.id = other.id ?? this.id;
     this.args = other.args ?? this.id;
-    ___P10___
+    ___P8___
     } else {
       assert(false);
     }

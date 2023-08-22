@@ -102,60 +102,43 @@ Future<void> generateModelFile(
 Map<String, String> _p(Map<String, _TypeCode> input) {
   final parameters = Map<String, _TypeCode>.from(input);
 
-  final id = parameters["id"];
-  parameters.remove("id");
-  final args = parameters["args"];
-  parameters.remove("args");
+  final id = parameters["id"] ??= const _TypeCode("String?");
+  final args = parameters["args"] ??= const _TypeCode("dynamic");
+  final allEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+  final allIds = allEntries.map((e) => e.key);
+  final ids = allIds.where((e) => !const ["id", "args"].contains(e));
+  final entries = ids.map((i) => MapEntry(i, parameters[i]));
+  final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable());
+  final keys = _getKeyNames(allIds);
+  final keyConsts = _getKeyConstNames(allIds);
 
-  final sortedEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
-  final sortedKeys = sortedEntries.map((e) => e.key);
-  final nonNullableKeys = sortedKeys.where((e) => !parameters[e]!.nullable());
-  final keyNames = _getKeyNames(sortedKeys);
-  final keyConstNames = _getKeyConstNames(sortedKeys);
-
-  final p0 = [
-    'static const K_ID = "id";',
-    'static const K_ARGS = "args";',
-    ...sortedKeys.map((e) => 'static const ${keyConstNames[e]} = "${keyNames[e]}";')
-  ];
-
-  final p1 = sortedEntries.map((e) => "${e.value.getNullableName()} ${e.key};");
-
-  final p2 = [
-    id == null
-        ? "String? id,"
-        : () {
-            assert(id.getNullableName() == "String?");
-            return id.nullable() ? "String? id" : "required String id,";
-          }(),
-    args == null ? "dynamic args," : "${args.nullable() ? "" : "required "}${args.getName()} args,",
-  ];
-
-  final p3 = sortedEntries.map((e) => "${e.value.nullable() ? "" : "required "}this.${e.key},");
-
-  final p4 = [
-    "super.id = id;",
-    "super.args = args;",
-  ];
-
-  final p5 = [
-    "String? id,",
-    args == null ? "dynamic args," : "${args.getNullableName()} args,",
-  ];
-
-  final p6 = sortedKeys.map((e) => "this.$e,");
-
-  final p7 = [
-    id?.nullable() == false ? "assert(super.id != null);" : "",
-    args?.nullable() == false ? "assert(super.args != null);" : "",
-    ...nonNullableKeys.map((e) => "assert(this.$e != null);"),
-  ];
-
-  final p8 = [
-    "id: ${mapWithLooseFromMappers(fieldName: "input[K_ID]", typeCode: id?.typeCode ?? "String")},",
-    "args: ${mapWithLooseFromMappers(fieldName: "input[K_ARGS]", typeCode: args?.typeCode ?? "dynamic")},",
-    ...sortedKeys.map((e) {
-      final fieldName = "input[${keyConstNames[e]}]";
+  final p = <Iterable>[
+    // ___P0___
+    allIds.map((e) => 'static const ${keyConsts[e]} = "${keys[e]}";'),
+    // ___P1___
+    entries.map((e) => "${e.value!.getNullableName()} ${e.key};"),
+    // ___P2___
+    [
+      () {
+        assert(id.getNullableName() == "String?");
+        return id.nullable() ? "String? id" : "required String id,";
+      }(),
+      "${args.nullable() ? "" : "required "}${args.getName()} args,",
+      ...entries.map((e) => "${e.value!.nullable() ? "" : "required "}this.${e.key},"),
+    ],
+    // ___P3___
+    ["this.id = id;", "this.args = args;"],
+    // ___P4___
+    [
+      "String? id,",
+      "${args.getNullableName()} args,",
+      ...ids.map((e) => "this.$e,"),
+    ],
+    // ___P5___
+    nonNullableIds.map((e) => "assert(this.$e != null);"),
+    // ___P6___
+    allIds.map((e) {
+      final fieldName = "input[${keyConsts[e]}]";
       final parameter = parameters[e]!;
       final typeCode = parameter.typeCode;
       final value = mapWithLooseFromMappers(
@@ -164,13 +147,10 @@ Map<String, String> _p(Map<String, _TypeCode> input) {
       );
       return "$e: $value,";
     }),
-  ];
 
-  final p9 = [
-    "K_ID: ${mapWithLooseToMappers(fieldName: "this.id", typeCode: id?.typeCode ?? "String")},",
-    "K_ARGS: ${mapWithLooseToMappers(fieldName: "this.args", typeCode: args?.typeCode ?? "dynamic")},",
-    ...sortedKeys.map((e) {
-      final keyConst = keyConstNames[e];
+    // ___P7___
+    allIds.map((e) {
+      final keyConst = keyConsts[e];
       final parameter = parameters[e]!;
       final typeCode = parameter.typeCode;
       final value = mapWithLooseToMappers(
@@ -179,11 +159,10 @@ Map<String, String> _p(Map<String, _TypeCode> input) {
       );
       return "$keyConst: $value,";
     }),
+    // 8
+    allIds.map((e) => 'this.$e = other.$e ?? this.$e;'),
   ];
 
-  final p10 = sortedKeys.map((e) => 'this.$e = other.$e ?? this.$e;');
-
-  final p = [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
   final output = <String, String>{};
   for (var n = 0; n < p.length; n++) {
     output["___P${n}___"] = p[n].join("\n");

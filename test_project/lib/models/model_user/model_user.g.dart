@@ -14,10 +14,10 @@ class ModelUser extends ModelUserUtils {
   //
   //
 
-  static const K_ID = "id";
   static const K_ARGS = "args";
   static const K_DISPLAY_NAME = "display_name";
   static const K_FIRST_NAME = "first_name";
+  static const K_ID = "id";
   static const K_LAST_NAME = "last_name";
 
   String? displayName;
@@ -35,8 +35,8 @@ class ModelUser extends ModelUserUtils {
     required this.firstName,
     required this.lastName,
   }) : super._() {
-    super.id = id;
-    super.args = args;
+    this.id = id;
+    this.args = args;
   }
 
   //
@@ -50,12 +50,10 @@ class ModelUser extends ModelUserUtils {
     this.firstName,
     this.lastName,
   }) : super._() {
-    super.id = id;
-    super.args = args;
-    assert(super.id != null);
-    assert(super.args != null);
+    assert(this.args != null);
     assert(this.displayName != null);
     assert(this.firstName != null);
+    assert(this.id != null);
     assert(this.lastName != null);
   }
 
@@ -74,7 +72,6 @@ class ModelUser extends ModelUserUtils {
   factory ModelUser.fromJMap(Map<String, dynamic> input) {
     try {
       return ModelUser.unsafe(
-        id: input[K_ID]?.toTrimmedStringOrNull(),
         args: letList(input[K_ARGS])
             ?.map(
               (final p0) => p0?.toTrimmedStringOrNull(),
@@ -85,6 +82,7 @@ class ModelUser extends ModelUserUtils {
             .cast(),
         displayName: input[K_DISPLAY_NAME]?.toTrimmedStringOrNull(),
         firstName: input[K_FIRST_NAME]?.toTrimmedStringOrNull(),
+        id: input[K_ID]?.toTrimmedStringOrNull(),
         lastName: input[K_LAST_NAME]?.toTrimmedStringOrNull(),
       );
     } catch (e) {
@@ -101,9 +99,7 @@ class ModelUser extends ModelUserUtils {
   Map<String, dynamic> toJMap({dynamic defaultValue}) {
     try {
       return <String, dynamic>{
-        K_ID: this.id?.toTrimmedStringOrNull(),
-        K_ARGS: this
-            .args
+        K_ARGS: args
             ?.map(
               (final p0) => p0?.toTrimmedStringOrNull(),
             )
@@ -112,6 +108,7 @@ class ModelUser extends ModelUserUtils {
             .toList(),
         K_DISPLAY_NAME: displayName?.toTrimmedStringOrNull(),
         K_FIRST_NAME: firstName?.toTrimmedStringOrNull(),
+        K_ID: id?.toTrimmedStringOrNull(),
         K_LAST_NAME: lastName?.toTrimmedStringOrNull(),
       }.mapWithDefault(defaultValue);
     } catch (e) {
@@ -151,8 +148,10 @@ class ModelUser extends ModelUserUtils {
     if (other is ModelUser) {
       this.id = other.id ?? this.id;
       this.args = other.args ?? this.id;
+      this.args = other.args ?? this.args;
       this.displayName = other.displayName ?? this.displayName;
       this.firstName = other.firstName ?? this.firstName;
+      this.id = other.id ?? this.id;
       this.lastName = other.lastName ?? this.lastName;
     } else {
       assert(false);
