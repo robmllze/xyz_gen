@@ -10,6 +10,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils.dart';
 
+import 'type_codes/type_codes.dart';
 import 'utils/deep_map.dart';
 import 'utils/file_io.dart';
 import 'utils/analyze_source_classes.dart';
@@ -151,31 +152,43 @@ Map<String, String> _p(Map<String, _TypeCode> input) {
   ];
 
   final p8 = [
-    'id: input[K_ID],',
-    'args: input[K_ARGS],',
-    ...sortedKeys.map((e) => '$e: input[${keyConstNames[e]}],'),
+    "id: ${mapWithLooseFromMappers(fieldName: "input[K_ID]", typeCode: id?.typeCode ?? "String")},",
+    "args: ${mapWithLooseFromMappers(fieldName: "input[K_ARGS]", typeCode: args?.typeCode ?? "dynamic")},",
+    ...sortedKeys.map((e) {
+      final fieldName = "input[${keyConstNames[e]}]";
+      final parameter = parameters[e]!;
+      final typeCode = parameter.typeCode;
+      final value = mapWithLooseFromMappers(
+        fieldName: fieldName,
+        typeCode: typeCode,
+      );
+      return "$e: $value,";
+    }),
+  ];
+
+  final p9 = [
+    "K_ID: ${mapWithLooseToMappers(fieldName: "this.id", typeCode: id?.typeCode ?? "String")},",
+    "K_ARGS: ${mapWithLooseToMappers(fieldName: "this.args", typeCode: args?.typeCode ?? "dynamic")},",
+    ...sortedKeys.map((e) {
+      final keyConst = keyConstNames[e];
+      final parameter = parameters[e]!;
+      final typeCode = parameter.typeCode;
+      final value = mapWithLooseToMappers(
+        fieldName: e,
+        typeCode: typeCode,
+      );
+      return "$keyConst: $value,";
+    }),
   ];
 
   final p10 = sortedKeys.map((e) => 'this.$e = other.$e ?? this.$e;');
 
-  final p = [p0, p1, p2, p3, p4, p5, p6, p7, p8, <String>[], p10];
+  final p = [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
   final output = <String, String>{};
   for (var n = 0; n < p.length; n++) {
     output["___P${n}___"] = p[n].join("\n");
   }
   return output;
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-List<String> _p8(Map<String, _TypeCode> input) {
-  return [];
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-List<String> _p9(Map<String, _TypeCode> input) {
-  return [];
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

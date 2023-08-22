@@ -29,19 +29,19 @@ class LooseTypeMappers extends TypeMappers {
   TTypeMappers get collectionFromMappers => newTypeMappers({
         r"^Map[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
-          return "letMap(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty";
+          return "letMap(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty.cast()";
         },
         r"^Iterable[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
-          return "letIterable(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty";
+          return "letIterable(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty.cast()";
         },
         r"^List[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
-          return "letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()";
+          return "letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().cast()";
         },
         r"^Set[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
-          return "letSet(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet()";
+          return "letSet(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().cast()";
         },
       });
 
@@ -51,9 +51,13 @@ class LooseTypeMappers extends TypeMappers {
 
   @override
   TTypeMappers get collectionToMappers => newTypeMappers({
-        r"^Map|Iterable|List|Set[\?]?$": (e) {
+        r"^Map[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
           return "${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty";
+        },
+        r"^Iterable|List|Set[\?]?$": (e) {
+          if (e is! CollectionMapperEvent) throw TypeError();
+          return "${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty.toList()";
         },
       });
 

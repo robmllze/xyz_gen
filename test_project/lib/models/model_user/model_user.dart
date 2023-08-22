@@ -1,5 +1,6 @@
 import 'package:xyz_gen/generate_model_file.dart';
 import 'package:xyz_gen/utils/helpers.dart';
+import 'package:xyz_utils/_common.dart';
 
 part 'model_user.g.dart';
 

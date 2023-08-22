@@ -74,11 +74,18 @@ class ModelUser extends ModelUserUtils {
   factory ModelUser.fromJMap(Map<String, dynamic> input) {
     try {
       return ModelUser.unsafe(
-        id: input[K_ID],
-        args: input[K_ARGS],
-        displayName: input[K_DISPLAY_NAME],
-        firstName: input[K_FIRST_NAME],
-        lastName: input[K_LAST_NAME],
+        id: input[K_ID]?.toTrimmedStringOrNull(),
+        args: letList(input[K_ARGS])
+            ?.map(
+              (final p0) => p0?.toTrimmedStringOrNull(),
+            )
+            .nonNulls
+            .nullIfEmpty
+            ?.toList()
+            .cast(),
+        displayName: input[K_DISPLAY_NAME]?.toTrimmedStringOrNull(),
+        firstName: input[K_FIRST_NAME]?.toTrimmedStringOrNull(),
+        lastName: input[K_LAST_NAME]?.toTrimmedStringOrNull(),
       );
     } catch (e) {
       assert(false, e);
@@ -93,7 +100,20 @@ class ModelUser extends ModelUserUtils {
   @override
   Map<String, dynamic> toJMap({dynamic defaultValue}) {
     try {
-      return <String, dynamic>{}.mapWithDefault(defaultValue);
+      return <String, dynamic>{
+        K_ID: this.id?.toTrimmedStringOrNull(),
+        K_ARGS: this
+            .args
+            ?.map(
+              (final p0) => p0?.toTrimmedStringOrNull(),
+            )
+            .nonNulls
+            .nullIfEmpty
+            .toList(),
+        K_DISPLAY_NAME: displayName?.toTrimmedStringOrNull(),
+        K_FIRST_NAME: firstName?.toTrimmedStringOrNull(),
+        K_LAST_NAME: lastName?.toTrimmedStringOrNull(),
+      }.mapWithDefault(defaultValue);
     } catch (e) {
       assert(false, e);
       rethrow;
