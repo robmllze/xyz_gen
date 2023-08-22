@@ -4,7 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-part of 'type_codes.dart';
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -97,33 +97,6 @@ TTypeMappers filterMappersByType(
       return RegExp(key).hasMatch(type);
     }),
   );
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-String typeCodeToTypeString(String typeCode) {
-  var temp = typeCode //
-      .replaceAll(" ", "")
-      .replaceAll("|let", "");
-  while (true) {
-    final match = RegExp(r"\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>").firstMatch(temp);
-    if (match == null) break;
-    final group0 = match.group(0);
-    if (group0 == null) break;
-    temp = temp.replaceAll(
-      group0,
-      group0
-          .replaceAll("|clean", "")
-          .replaceAll("?", "")
-          .replaceAll("<", "[")
-          .replaceAll(">", "]")
-          .replaceAll(",", "+"),
-    );
-  }
-  return temp //
-      .replaceAll("[", "<")
-      .replaceAll("]", ">")
-      .replaceAll("+", ", ");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

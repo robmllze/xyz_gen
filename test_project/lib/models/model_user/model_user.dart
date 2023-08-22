@@ -1,4 +1,5 @@
-import 'package:xyz_gen/generate_model_file.dart';
+import 'package:xyz_gen/generate_model/annotation.dart';
+import 'package:xyz_gen/generate_model/model.dart';
 import 'package:xyz_gen/utils/helpers.dart';
 import 'package:xyz_utils/_common.dart';
 

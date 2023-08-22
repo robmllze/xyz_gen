@@ -6,7 +6,7 @@
 
 // ignore_for_file: prefer_final_fields
 
-part of 'type_codes.dart';
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

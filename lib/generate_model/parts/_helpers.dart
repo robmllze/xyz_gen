@@ -4,17 +4,28 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_screen_configuration/generate_screen_configuration_file.dart';
-import 'package:xyz_gen/utils/generate.dart';
+part of '../generate_model.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> main() async {
-  await generate(
-    begType: "screen",
-    rootDirPath: "./test_project/lib/screens/",
-    templateFilePath: "./templates/legacy_screen_configuration_template.md",
-    deleteGeneratedFiles: true,
-    generateForFile: generateScreenConfigurationFile,
+Map<String, String> _getKeyNames(Iterable<String> parameterKeys) {
+  return Map.fromEntries(
+    parameterKeys.map(
+      (k) => MapEntry(
+        k,
+        k.toSnakeCase(),
+      ),
+    ),
+  );
+}
+
+Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
+  return Map.fromEntries(
+    parameterKeys.map(
+      (e) => MapEntry(
+        e,
+        "K_${e.toSnakeCase().toUpperCase()}",
+      ),
+    ),
   );
 }

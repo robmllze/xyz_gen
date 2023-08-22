@@ -1,4 +1,4 @@
-import 'package:xyz_gen/generate_screen_configuration_file.dart';
+import 'package:xyz_gen/generate_screen_configuration/generate_screen_configuration_file.dart';
 
 @GenerateScreenConfiguration(
   isOnlyAccessibleIfSignedInAndVerified: true,

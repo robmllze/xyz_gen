@@ -4,17 +4,36 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_screen_configuration/generate_screen_configuration_file.dart';
-import 'package:xyz_gen/utils/generate.dart';
+// ignore_for_file: unnecessary_this, avoid_print
+
+import 'package:analyzer/dart/constant/value.dart';
+import 'package:path/path.dart' as p;
+import 'package:xyz_utils/xyz_utils.dart';
+
+import '../type_codes/type_codes.dart';
+import '../utils/file_io.dart';
+import '../utils/analyze_source_classes.dart';
+import '../utils/generate.dart';
+import '../utils/helpers.dart';
+
+export 'annotation.dart';
+export 'model.dart';
+
+part 'parts/_generate_model_file.dart';
+part 'parts/_helpers.dart';
+part 'parts/_replacements.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> main() async {
+Future<void> generateModels({
+  required String rootDirPath,
+  required String templateFilePath,
+}) async {
   await generate(
-    begType: "screen",
-    rootDirPath: "./test_project/lib/screens/",
-    templateFilePath: "./templates/legacy_screen_configuration_template.md",
+    begType: "model",
+    rootDirPath: rootDirPath,
+    templateFilePath: templateFilePath,
     deleteGeneratedFiles: true,
-    generateForFile: generateScreenConfigurationFile,
+    generateForFile: _generateModelFile,
   );
 }

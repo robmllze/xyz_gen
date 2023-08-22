@@ -6,9 +6,10 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-import 'utils/file_io.dart';
-import 'utils/find_files.dart';
-import 'utils/helpers.dart';
+import '../utils/file_io.dart';
+import '../utils/find_files.dart';
+import '../utils/helpers.dart';
+import '../utils/here.dart';
 import 'package:path/path.dart' as p;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -29,7 +30,7 @@ Future<void> generateAllExports(
       final allFilePath = p.join(dirName, "all_$folderName.dart");
       if (dirName != cachedDirName) {
         cachedDirName = dirName;
-        print("[generateAllExports] Clearing `$allFilePath`...");
+        Here().debugLog("Clearing `$allFilePath`...");
         await writeFile(
           allFilePath,
           [
@@ -42,14 +43,14 @@ Future<void> generateAllExports(
       if (filePath != allFilePath) {
         final fileName = getFileName(filePath);
         final data = "export '$fileName';";
-        print("[generateAllExports] Writing `$data` to `$allFilePath`...");
+        Here().debugLog("Writing `$data` to `$allFilePath`...");
         await writeFile(
           allFilePath,
           "$data\n",
           append: true,
         );
       } else {
-        print("[generateAllExports] Skipping `$filePath`...");
+        Here().debugLog("Skipping `$filePath`...");
       }
     },
   );

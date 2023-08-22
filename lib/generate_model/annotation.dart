@@ -4,10 +4,13 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_all_exports/generate_all_exports.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-Future<void> main() async {
-  await generateAllExports("./test_project/", {"/screens/"});
+class GenerateModel {
+  final String className;
+  final String? collectionPath;
+  final Map<String, dynamic> parameters;
+  const GenerateModel({
+    required this.className,
+    this.parameters = const {},
+    this.collectionPath,
+  });
 }
