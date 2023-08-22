@@ -6,7 +6,7 @@
 
 // ignore_for_file: constant_identifier_names, avoid_print
 
-part of '../generate_screen_configuration.dart';
+part of '../generate_screen_configurations.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,7 +24,7 @@ const _K_PATH_SEGMENTS = "pathSegments";
 /// Generates the boiler-plate code for the annotated screen class [fixedFilePath]
 Future<void> _generateScreenConfigurationFile(
   String fixedFilePath,
-  String template,
+  Map<String, String> templates,
 ) async {
   var className = "";
   var isOnlyAccessibleIfSignedInAndVerified = false;
@@ -109,7 +109,7 @@ Future<void> _generateScreenConfigurationFile(
 
   // Replace placeholders with the actual values.
   final output = replaceAllData(
-    template,
+    templates.keys.first,
     {
       "___CLASS___": className,
       "___CONFIGURATION___": "${className}Configuration",

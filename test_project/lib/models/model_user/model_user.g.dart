@@ -9,81 +9,56 @@ part of 'model_user.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ModelUser extends ModelUserUtils {
+class  extends ModelUserUtils {
   //
   //
   //
-
+  
   static const K_ARGS = "args";
-  static const K_DISPLAY_NAME = "display_name";
-  static const K_FIRST_NAME = "first_name";
-  static const K_ID = "id";
-  static const K_LAST_NAME = "last_name";
+static const K_ID = "id";
 
-  String? displayName;
-  String? firstName;
-  String? lastName;
-
+  
+  
   //
   //
   //
 
-  ModelUser({
-    required String id,
-    required List<String> args,
-    required this.displayName,
-    required this.firstName,
-    required this.lastName,
+  ({
+    String? id
+dynamic args,
   }) : super._() {
     this.id = id;
-    this.args = args;
+this.args = args;
   }
 
   //
   //
   //
 
-  ModelUser.unsafe({
+  .unsafe({
     String? id,
-    List<String>? args,
-    this.displayName,
-    this.firstName,
-    this.lastName,
+dynamic args,
   }) : super._() {
-    assert(this.args != null);
-    assert(this.displayName != null);
-    assert(this.firstName != null);
-    assert(this.id != null);
-    assert(this.lastName != null);
+    
   }
 
   //
   //
   //
 
-  factory ModelUser.from(ModelUser other) {
-    return ModelUser.fromJMap(other.toJMap());
+  factory .from( other) {
+    return .fromJMap(other.toJMap());
   }
 
   //
   //
   //
-
-  factory ModelUser.fromJMap(Map<String, dynamic> input) {
+  
+  factory .fromJMap(Map<String, dynamic> input) {
     try {
-      return ModelUser.unsafe(
-        args: letList(input[K_ARGS])
-            ?.map(
-              (final p0) => p0?.toTrimmedStringOrNull(),
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toList()
-            .cast(),
-        displayName: input[K_DISPLAY_NAME]?.toTrimmedStringOrNull(),
-        firstName: input[K_FIRST_NAME]?.toTrimmedStringOrNull(),
-        id: input[K_ID]?.toTrimmedStringOrNull(),
-        lastName: input[K_LAST_NAME]?.toTrimmedStringOrNull(),
+      return .unsafe(
+        args: input[K_ARGS],
+id: input[K_ID]?.toTrimmedStringOrNull(),
       );
     } catch (e) {
       assert(false, e);
@@ -99,17 +74,8 @@ class ModelUser extends ModelUserUtils {
   Map<String, dynamic> toJMap({dynamic defaultValue}) {
     try {
       return <String, dynamic>{
-        K_ARGS: args
-            ?.map(
-              (final p0) => p0?.toTrimmedStringOrNull(),
-            )
-            .nonNulls
-            .nullIfEmpty
-            .toList(),
-        K_DISPLAY_NAME: displayName?.toTrimmedStringOrNull(),
-        K_FIRST_NAME: firstName?.toTrimmedStringOrNull(),
-        K_ID: id?.toTrimmedStringOrNull(),
-        K_LAST_NAME: lastName?.toTrimmedStringOrNull(),
+        K_ARGS: args,
+K_ID: id?.toTrimmedStringOrNull(),
       }.mapWithDefault(defaultValue);
     } catch (e) {
       assert(false, e);
@@ -123,7 +89,7 @@ class ModelUser extends ModelUserUtils {
 
   @override
   T copy<T extends Model>() {
-    return ModelUser.fromJMap(this.toJMap()) as T;
+    return .fromJMap(this.toJMap()) as T;
   }
 
   //
@@ -132,8 +98,8 @@ class ModelUser extends ModelUserUtils {
 
   @override
   T copyWith<T extends Model>({T? other}) {
-    if (other is ModelUser) {
-      return this.copy().updateWith(other) as T;
+    if (other is ) {
+       return this.copy().updateWith(other) as T;
     }
     assert(false);
     return this.copy();
@@ -145,14 +111,11 @@ class ModelUser extends ModelUserUtils {
 
   @override
   void updateWith<T extends Model>(T other) {
-    if (other is ModelUser) {
-      this.id = other.id ?? this.id;
-      this.args = other.args ?? this.id;
-      this.args = other.args ?? this.args;
-      this.displayName = other.displayName ?? this.displayName;
-      this.firstName = other.firstName ?? this.firstName;
-      this.id = other.id ?? this.id;
-      this.lastName = other.lastName ?? this.lastName;
+    if (other is ) {
+    this.id = other.id ?? this.id;
+    this.args = other.args ?? this.id;
+    this.args = other.args ?? this.args;
+this.id = other.id ?? this.id;
     } else {
       assert(false);
     }

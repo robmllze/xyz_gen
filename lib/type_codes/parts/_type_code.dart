@@ -13,41 +13,49 @@ class TypeCode {
   //
   //
 
-  final String typeCode;
+  final String value;
 
   //
   //
   //
 
-  const TypeCode(this.typeCode);
+  const TypeCode(this.value);
 
   //
   //
   //
 
-  bool nullable() {
-    final name = this.getName();
-    return name.endsWith("?") || name == "dynamic";
+  static bool isNullable(String value) {
+    return value.endsWith("?") || value == "dynamic";
   }
 
   //
   //
   //
 
-  String getName() => _typeCodeToName(typeCode);
+  bool get nullable => isNullable(this.name);
 
   //
   //
   //
 
-  String getNullableName() => this.nullable() ? this.getName() : "${this.getName()}?";
+  String get name => _typeCodeToName(this.value);
 
   //
   //
   //
 
-  static String _typeCodeToName(String typeCode) {
-    var temp = typeCode //
+  String get nullableName {
+    final name = this.name;
+    return isNullable(name) ? name : "$name?";
+  }
+
+  //
+  //
+  //
+
+  static String _typeCodeToName(String value) {
+    var temp = value //
         .replaceAll(" ", "")
         .replaceAll("|let", "");
     while (true) {
@@ -76,7 +84,7 @@ class TypeCode {
   //
 
   @override
-  int get hashCode => this.typeCode.hashCode;
+  int get hashCode => this.value.hashCode;
 
   //
   //

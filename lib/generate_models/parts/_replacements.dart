@@ -4,7 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-part of '../generate_model.dart';
+part of '../generate_models.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -17,7 +17,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
   final allIds = allEntries.map((e) => e.key);
   final ids = allIds.where((e) => !const ["id", "args"].contains(e));
   final entries = ids.map((i) => MapEntry(i, parameters[i]));
-  final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable());
+  final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable);
   final keys = _getKeyNames(allIds);
   final keyConsts = _getKeyConstNames(allIds);
 
@@ -25,22 +25,22 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
     // ___P0___
     allIds.map((e) => 'static const ${keyConsts[e]} = "${keys[e]}";'),
     // ___P1___
-    entries.map((e) => "${e.value!.getNullableName()} ${e.key};"),
+    entries.map((e) => "${e.value!.nullableName} ${e.key};"),
     // ___P2___
     [
       () {
-        assert(id.getNullableName() == "String?");
-        return id.nullable() ? "String? id" : "required String id,";
+        assert(id.nullableName == "String?");
+        return id.nullable ? "String? id" : "required String id,";
       }(),
-      "${args.nullable() ? "" : "required "}${args.getName()} args,",
-      ...entries.map((e) => "${e.value!.nullable() ? "" : "required "}this.${e.key},"),
+      "${args.nullable ? "" : "required "}${args.name} args,",
+      ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
     ["this.id = id;", "this.args = args;"],
     // ___P4___
     [
       "String? id,",
-      "${args.getNullableName()} args,",
+      "${args.nullableName} args,",
       ...ids.map((e) => "this.$e,"),
     ],
     // ___P5___
@@ -49,7 +49,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
     allIds.map((e) {
       final fieldName = "input[${keyConsts[e]}]";
       final parameter = parameters[e]!;
-      final typeCode = parameter.typeCode;
+      final typeCode = parameter.value;
       final value = mapWithLooseFromMappers(
         fieldName: fieldName,
         typeCode: typeCode,
@@ -61,7 +61,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
     allIds.map((e) {
       final keyConst = keyConsts[e];
       final parameter = parameters[e]!;
-      final typeCode = parameter.typeCode;
+      final typeCode = parameter.value;
       final value = mapWithLooseToMappers(
         fieldName: e,
         typeCode: typeCode,

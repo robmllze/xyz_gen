@@ -4,28 +4,13 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-part of '../generate_model.dart';
+import 'package:xyz_gen/generate_screen_configurations/generate_screen_configurations.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Map<String, String> _getKeyNames(Iterable<String> parameterKeys) {
-  return Map.fromEntries(
-    parameterKeys.map(
-      (k) => MapEntry(
-        k,
-        k.toSnakeCase(),
-      ),
-    ),
-  );
-}
-
-Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
-  return Map.fromEntries(
-    parameterKeys.map(
-      (e) => MapEntry(
-        e,
-        "K_${e.toSnakeCase().toUpperCase()}",
-      ),
-    ),
+Future<void> main() async {
+  await generateScreenConfigurations(
+    rootDirPath: "./test_project/lib/screens/",
+    templateFilePath: "./templates/screen_configuration_template.md",
   );
 }

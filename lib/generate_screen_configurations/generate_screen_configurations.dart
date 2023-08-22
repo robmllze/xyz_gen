@@ -4,38 +4,33 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: unnecessary_this, avoid_print
+// ignore_for_file: constant_identifier_names, avoid_print
 
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils.dart';
 
-import '../type_codes/type_codes.dart';
-import '../utils/file_io.dart';
-import '../utils/analyze_source_classes.dart';
-import '../utils/generate.dart';
-import '../utils/helpers.dart';
+import '/utils/generate.dart';
+import '/utils/file_io.dart';
+import '/utils/analyze_source_classes.dart';
+import '/utils/helpers.dart';
+import 'package:path/path.dart' as p;
 
-export 'annotation.dart';
-export 'model.dart';
-
-part 'parts/_generate_model_file.dart';
-part 'parts/_helpers.dart';
 part 'parts/_replacements.dart';
+part 'parts/_generate_screen_configuration_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateModels({
+Future<void> generateScreenConfigurations({
   required String rootDirPath,
   required String templateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
   await generate(
-    begType: "model",
+    begType: "screen",
     rootDirPath: rootDirPath,
-    templateFilePath: templateFilePath,
+    templateFilePaths: {templateFilePath},
     deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
-    generateForFile: _generateModelFile,
+    generateForFiles: _generateScreenConfigurationFile,
   );
 }

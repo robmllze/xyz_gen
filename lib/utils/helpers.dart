@@ -161,8 +161,8 @@ bool isPrivateFile(String filePath) {
 
 (bool, String) isMatchingFileName(String filePath, String begType, String endType) {
   final fileName = getFileName(filePath);
-  final a = fileName.startsWith("${begType.toLowerCase()}_");
-  final b = fileName.endsWith(".$endType".toLowerCase());
+  final a = begType.isEmpty ? true : fileName.startsWith("${begType.toLowerCase()}_");
+  final b = endType.isEmpty ? true : fileName.endsWith(".$endType".toLowerCase());
   final c = a && b;
   return (c, fileName);
 }

@@ -4,13 +4,16 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_gen/generate_screen_configuration/generate_screen_configuration.dart';
+import 'package:xyz_gen/generate_makeups/generate_makeups.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> main() async {
-  await generateScreenConfiguration(
-    rootDirPath: "./test_project/lib/screens/",
-    templateFilePath: "./templates/screen_configuration_template.md",
+  await generateMakeups(
+    rootDirPath: "./test_project/lib/widgets/",
+    templateFilePaths: {
+      "./templates/makeup_class_template.md",
+      "./templates/makeup_template.md",
+    },
   );
 }

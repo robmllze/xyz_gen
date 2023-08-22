@@ -4,7 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-part of '../generate_model.dart';
+part of '../generate_models.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -17,7 +17,7 @@ const _K_PARAMETERS = "parameters";
 
 Future<void> _generateModelFile(
   String fixedFilePath,
-  String template,
+  Map<String, String> template,
 ) async {
   var sourceClassName = "";
   var className = "";
@@ -56,7 +56,7 @@ Future<void> _generateModelFile(
     },
     onClass: (e) {
       sourceClassName = e;
-      print("- Generating model for $e");
+      Here().debugLog("Generating model for $e");
     },
     onField: onField,
   );
@@ -70,7 +70,7 @@ Future<void> _generateModelFile(
 
   // Replace placeholders with the actual values.
   final output = replaceAllData(
-    template,
+    template.values.first,
     {
       "___CLASS___": className,
       "___SOURCE_CLASS___": sourceClassName,
