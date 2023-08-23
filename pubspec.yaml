@@ -30,6 +30,7 @@ dependencies:
   args:
   equatable:
   path:
+  collection:
 
 ##
 

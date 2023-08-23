@@ -4,20 +4,15 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: non_constant_identifier_names
-
-import '../utils/file_io.dart';
-import '../utils/find_files.dart';
-import '../utils/helpers.dart';
-import '../utils/here.dart';
+import '/utils/all_utils.dart';
 import 'package:path/path.dart' as p;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExports(
-  String rootDirPath,
-  Set<String> pathPatterns,
-) async {
+  String rootDirPath, [
+  Set<String> pathPatterns = const {},
+]) async {
   var cachedDirName = "";
   await findFiles(
     rootDirPath: rootDirPath,

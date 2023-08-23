@@ -10,12 +10,8 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils.dart';
 
-import '../type_codes/type_codes.dart';
-import '../utils/file_io.dart';
-import '../utils/analyze_annotated_classes.dart';
-import '../utils/generate.dart';
-import '../utils/helpers.dart';
-import '../utils/here.dart';
+import '/type_codes/type_codes.dart';
+import '/utils/all_utils.dart';
 
 export 'annotation.dart';
 export 'model.dart';

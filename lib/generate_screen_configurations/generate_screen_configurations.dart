@@ -9,11 +9,7 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:xyz_utils/xyz_utils.dart';
 
-import '../utils/here.dart';
-import '/utils/generate.dart';
-import '/utils/file_io.dart';
-import '../utils/analyze_annotated_classes.dart';
-import '/utils/helpers.dart';
+import '/utils/all_utils.dart';
 import 'package:path/path.dart' as p;
 
 part 'parts/_replacements.dart';

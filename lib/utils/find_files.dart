@@ -20,6 +20,7 @@ Future<void> findFiles({
 }) async {
   final filePaths = await listFilePaths(rootDirPath);
   if (filePaths != null) {
+    filePaths.sort();
     for (final filePath in filePaths) {
       if (isSourceDartFilePath(filePath)) {
         final dirName = getDirPath(filePath);
