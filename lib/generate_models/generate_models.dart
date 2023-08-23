@@ -12,7 +12,7 @@ import 'package:xyz_utils/xyz_utils.dart';
 
 import '../type_codes/type_codes.dart';
 import '../utils/file_io.dart';
-import '../utils/analyze_source_classes.dart';
+import '../utils/analyze_annotated_classes.dart';
 import '../utils/generate.dart';
 import '../utils/helpers.dart';
 import '../utils/here.dart';

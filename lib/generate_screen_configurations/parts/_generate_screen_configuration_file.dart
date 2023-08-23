@@ -36,34 +36,36 @@ Future<void> _generateScreenConfigurationFile(
   var pathSegments = const <String>[];
 
   void onField(
-    String name,
-    DartObject object,
+    String fieldName,
+    DartObject fieldValue,
   ) {
-    switch (name) {
+    switch (fieldName) {
       case _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN_AND_VERIFIED:
-        isOnlyAccessibleIfSignedInAndVerified = object.toBoolValue() ?? false;
+        isOnlyAccessibleIfSignedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
       case _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN:
-        isOnlyAccessibleIfSignedIn = object.toBoolValue() ?? false;
+        isOnlyAccessibleIfSignedIn = fieldValue.toBoolValue() ?? false;
         break;
       case _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_OUT:
-        isOnlyAccessibleIfSignedOut = object.toBoolValue() ?? false;
+        isOnlyAccessibleIfSignedOut = fieldValue.toBoolValue() ?? false;
         break;
       case _K_IS_REDIRECTABLE:
-        isRedirectable = object.toBoolValue();
+        isRedirectable = fieldValue.toBoolValue();
         break;
       case _K_INTERNAL_PARAMETERS:
-        internalParameters = object
+        internalParameters = fieldValue
                 .toMapValue()
                 ?.map((final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()))
                 .nonNulls ??
             const {};
         break;
       case _K_QUERY_PARAMETERS:
-        queryParameters = object.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
+        queryParameters =
+            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
         break;
       case _K_PATH_SEGMENTS:
-        pathSegments = object.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        pathSegments =
+            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
         break;
     }
   }
@@ -71,8 +73,8 @@ Future<void> _generateScreenConfigurationFile(
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
-    annotationName: _ANNOTATION_NAME,
-    fieldNames: {
+    classAnnotations: {_ANNOTATION_NAME},
+    classAnnotationFields: {
       _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN_AND_VERIFIED,
       _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN,
       _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_OUT,
@@ -81,11 +83,11 @@ Future<void> _generateScreenConfigurationFile(
       _K_QUERY_PARAMETERS,
       _K_PATH_SEGMENTS,
     },
-    onClass: (e) {
+    onAnnotatedClass: (_, e) {
       Here().debugLog("Generating screen configuration for $e");
       className = e;
     },
-    onField: onField,
+    onClassAnnotationField: onField,
   );
 
   if (className.isEmpty) return;

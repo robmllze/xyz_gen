@@ -9,7 +9,7 @@ import 'package:xyz_utils/xyz_utils.dart';
 import 'package:path/path.dart' as p;
 
 import '../type_codes/type_codes.dart';
-import '../utils/analyze_source_classes.dart';
+import '../utils/analyze_annotated_classes.dart';
 import '../utils/file_io.dart';
 import '../utils/generate.dart';
 import '../utils/helpers.dart';
@@ -48,13 +48,14 @@ Future<void> _generateMakeupFiles(
   var names = <String>{};
   var parameters = <String, TypeCode>{};
 
-  void onField(String fieldName, DartObject object) {
+  void onField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case _K_NAMES:
-        names = object.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{};
+        names =
+            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{};
         break;
       case _K_PARAMETERS:
-        parameters = object.toMapValue()?.map((k, v) {
+        parameters = fieldValue.toMapValue()?.map((k, v) {
               final typeCode = v?.toStringValue();
               return MapEntry(
                 k?.toStringValue(),
@@ -69,16 +70,16 @@ Future<void> _generateMakeupFiles(
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
-    annotationName: _ANNOTATION_NAME,
-    fieldNames: {
+    classAnnotations: {_ANNOTATION_NAME},
+    classAnnotationFields: {
       _K_NAMES,
       _K_PARAMETERS,
     },
-    onClass: (e) {
+    onAnnotatedClass: (_, e) {
       Here().debugLog("Generating makeup class for $e");
       className = e;
     },
-    onField: onField,
+    onClassAnnotationField: onField,
   );
 
   if (className.isEmpty) return;

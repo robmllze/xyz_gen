@@ -24,16 +24,16 @@ Future<void> _generateModelFile(
   String? collectionPath;
   var parameters = <String, TypeCode>{};
 
-  void onField(String fieldName, DartObject object) {
+  void onField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case _K_CLASS_NAME:
-        className = object.toStringValue() ?? "";
+        className = fieldValue.toStringValue() ?? "";
         break;
       case _K_COLLECTION_PATH:
-        collectionPath = object.toStringValue();
+        collectionPath = fieldValue.toStringValue();
         break;
       case _K_PARAMETERS:
-        parameters = object.toMapValue()?.map((k, v) {
+        parameters = fieldValue.toMapValue()?.map((k, v) {
               final t = v?.toStringValue();
               return MapEntry(
                 k?.toStringValue(),
@@ -48,17 +48,17 @@ Future<void> _generateModelFile(
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
-    annotationName: _ANNOTATION_NAME,
-    fieldNames: {
+    classAnnotations: {_ANNOTATION_NAME},
+    classAnnotationFields: {
       _K_CLASS_NAME,
       _K_COLLECTION_PATH,
       _K_PARAMETERS,
     },
-    onClass: (e) {
+    onAnnotatedClass: (_, e) {
       sourceClassName = e;
       Here().debugLog("Generating model for $e");
     },
-    onField: onField,
+    onClassAnnotationField: onField,
   );
 
   if (className.isEmpty) return;
