@@ -6,13 +6,13 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of '___CLASS_FILE___';
+part of '___CLASS_FILE_NAME___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _L = "screens.___CLASS___";
-const _LOCATION = "___PATH___";
-const _CLASS = "___CLASS___";
+const _L = "screens.___CLASS_NAME___";
+const _LOCATION = "___SCREEN_PATH___";
+const _CLASS = "___CLASS_NAME___";
 
 extension _ScreenTrExtension on String {
   String screenTr([Map<dynamic, dynamic> args = const {}]) {
@@ -20,23 +20,23 @@ extension _ScreenTrExtension on String {
   }
 }
 
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED____SEGMENT_KEY___ //
+const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED____SCREEN_SEGMENT_KEY___ //
   = ___LA0___ ? [_LOCATION]: [];
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN____SEGMENT_KEY___ //
+const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_IN____SCREEN_SEGMENT_KEY___ //
   = ___LA1___ ? [_LOCATION]: [];
-const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_OUT____SEGMENT_KEY___ //
+const LOCATION_ACCESSIBLE_ONLY_IF_SIGNED_OUT____SCREEN_SEGMENT_KEY___ //
   = ___LA2___ ? [_LOCATION]: [];
-const LOCATION_ACCESSIBLE____SEGMENT_KEY___ //
+const LOCATION_ACCESSIBLE____SCREEN_SEGMENT_KEY___ //
   = ___LA3___ ? [_LOCATION]: [];
-const LOCATION_NOT_REDIRECTABLE____SEGMENT_KEY___ //
+const LOCATION_NOT_REDIRECTABLE____SCREEN_SEGMENT_KEY___ //
   = ___LA4___ ? [_LOCATION]: [];
 
-final cast___CONFIGURATION___ =
+final cast___CONFIGURATION_CLASS___ =
   Map<Type, MyRouteConfiguration Function(MyRouteConfiguration)>.unmodifiable({
-    ___CONFIGURATION___: (MyRouteConfiguration a) => ___CONFIGURATION___.from(a),
+    ___CONFIGURATION_CLASS___: (MyRouteConfiguration a) => ___CONFIGURATION_CLASS___.from(a),
 });
 
-MyScreen? maker___CLASS___(
+MyScreen? maker___CLASS_NAME___(
   MyRouteConfiguration configuration,
   bool isSignedInAndVerified,
   bool isSignedIn,
@@ -45,7 +45,7 @@ MyScreen? maker___CLASS___(
   if ((___LA0___ && !isSignedInAndVerified) || (___LA1___ && !isSignedIn) || (___LA2___ && !isSignedOut)) {
     return null;
   }
-  if (configuration is ___CONFIGURATION___ ||
+  if (configuration is ___CONFIGURATION_CLASS___ ||
       RegExp(
         r"^(" + _LOCATION + r")([?/].*)?$",
       ).hasMatch(
@@ -53,23 +53,23 @@ MyScreen? maker___CLASS___(
           configuration.uri.toString(),
         ),
       )) {
-    return ___CLASS___(configuration);
+    return ___CLASS_NAME___(configuration);
   }
   return null;
 }
 
-/// Configuration object for [___CLASS___].
+/// Configuration object for [___CLASS_NAME___].
 ///
 /// ### Usage examples:
 ///
 /// ```dart
 /// // Push the screen to the app.
-/// await G.router.push(___CONFIGURATION___(/* OPTIONS */));
+/// await G.router.push(___CONFIGURATION_CLASS___(/* OPTIONS */));
 ///
 /// // Use a unique [key] to allow pushing to multiple instances of the screen.
-/// await G.router.push(___CONFIGURATION___(key: UniqueKey().toString(), /* OPTIONS */));
+/// await G.router.push(___CONFIGURATION_CLASS___(key: UniqueKey().toString(), /* OPTIONS */));
 /// ```
-class ___CONFIGURATION___ extends MyRouteConfiguration {
+class ___CONFIGURATION_CLASS___ extends MyRouteConfiguration {
   static const LOCATION = _LOCATION;
   static const L = _L;
   static const NAME_SCREEN_CLASS = _CLASS;
@@ -78,7 +78,7 @@ class ___CONFIGURATION___ extends MyRouteConfiguration {
   ___QP0___
   ___PS0___
 
-  ___CONFIGURATION___({
+  ___CONFIGURATION_CLASS___({
     String? key,
     ___IP1___
     ___QP1___
@@ -91,7 +91,7 @@ class ___CONFIGURATION___ extends MyRouteConfiguration {
     ___PS2___
   );
 
-  ___CONFIGURATION___.from(
+  ___CONFIGURATION_CLASS___.from(
     MyRouteConfiguration from,
   ) : super.fromUri(
           from.uri,
@@ -109,8 +109,8 @@ class ___CONFIGURATION___ extends MyRouteConfiguration {
   }
 }
 
-abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
-    extends MyScreenLogic<___CONFIGURATION___> {
+abstract class _LogicBroker<T1 extends ___CLASS_NAME___, T2 extends _State>
+    extends MyScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
   late final configuration = this.state.configuration;

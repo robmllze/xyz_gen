@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 
 import 'file_io.dart';
+import 'here.dart';
 import 'list_file_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -56,7 +57,7 @@ Future<void> fmtDartFile(String filePath) async {
     final fixedPath = getFixedPath(filePath);
     await Process.run("dart", ["format", fixedPath]);
   } catch (e) {
-    print(e);
+    Here().debugLogError(e);
   }
 }
 

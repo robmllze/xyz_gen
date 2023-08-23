@@ -4,7 +4,7 @@
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ___MAKEUP_CLASS___  {
+class ___MAKEUP_CLASS_NAME___  {
   //
   //
   //
@@ -15,7 +15,7 @@ class ___MAKEUP_CLASS___  {
   //
   //
   
-  ___MAKEUP_CLASS___({
+  ___MAKEUP_CLASS_NAME___({
     ___P1___
   });
 
@@ -23,7 +23,7 @@ class ___MAKEUP_CLASS___  {
   //
   //
 
-  ___MAKEUP_CLASS___ copyWith({
+  ___MAKEUP_CLASS_NAME___ copyWith({
     ___P2___
   }) {
     return MyWidgetMakeup(
@@ -34,5 +34,5 @@ class ___MAKEUP_CLASS___  {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef F___MAKEUP_CLASS___ = ___MAKEUP_CLASS___ Function();
+typedef F___MAKEUP_CLASS_NAME___ = ___MAKEUP_CLASS_NAME___ Function();
 ````

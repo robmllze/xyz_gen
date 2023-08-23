@@ -45,11 +45,12 @@ Future<void> _generateMakeupFiles(
   String fixedFilePath,
   Map<String, String> templates,
 ) async {
-  var className = "";
+  // ...
   var names = <String>{};
   var parameters = <String, TypeCode>{};
 
-  void onField(String fieldName, DartObject fieldValue) {
+  // Define the function that will be called for each field in the annotation.
+  void onClassAnnotationField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case "names":
         names =
@@ -68,6 +69,9 @@ Future<void> _generateMakeupFiles(
     }
   }
 
+  // ...
+  var className = "";
+
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
@@ -76,9 +80,10 @@ Future<void> _generateMakeupFiles(
       Here().debugLog("Generating makeup class for $e");
       className = e;
     },
-    onClassAnnotationField: onField,
+    onClassAnnotationField: onClassAnnotationField,
   );
 
+  // If className is empty, then there is no annotation in the file.
   if (className.isEmpty) return;
 
   // Create the actual values to replace the placeholders with.
@@ -87,12 +92,10 @@ Future<void> _generateMakeupFiles(
   final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
   final classKey = className.toSnakeCase();
   final makeupClassName = "${className}Makeup";
-  //final makeupClassKey = makeupClassName.toSnakeCase();
-  const outputFileName0 = "_makeup.g.dart";
+  const makeupFileName = "_makeup.g.dart";
   final outputDirPath0 =
       outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
-  final outputFilePath0 = p.join(outputDirPath0, outputFileName0);
-
+  final outputFilePath0 = p.join(outputDirPath0, makeupFileName);
   final entries = parameters.entries;
   final p0 = entries.map((e) => "${e.value.name} ${e.key};");
   final p1 = entries.map((e) => "${e.value.nullable ? "" : "required "}this.${e.key},");
@@ -100,11 +103,11 @@ Future<void> _generateMakeupFiles(
   final p3 = entries.map((e) => "${e.key}: ${e.key} ?? this.${e.key},");
 
   final data0 = {
-    "___MAKEUP_FILE___": outputFileName0,
-    "___MAKEUP_CLASS___": makeupClassName,
-    "___CLASS_FILE___": classFileName,
+    "___MAKEUP_FILE_NAME___": makeupFileName,
+    "___MAKEUP_CLASS_NAME___": makeupClassName,
+    "___CLASS_FILE_NAME___": classFileName,
     "___CLASS_KEY___": classKey,
-    "___CLASS___": className,
+    "___CLASS_NAME___": className,
     "___P0___": p0.join("\n"),
     "___P1___": p1.join("\n"),
     "___P2___": p2.join("\n"),
@@ -129,7 +132,7 @@ Future<void> _generateMakeupFiles(
 
   final a0 = entries.map((e) => "${e.key}: null,${e.value.nullable ? "" : "// Value required!"}");
 
-  final exportFiles = <String>[outputFileName0];
+  final exportFiles = <String>[makeupFileName];
 
   for (final name in names) {
     final makeupKey = "${name.toSnakeCase()}_${classKey}_makeup";

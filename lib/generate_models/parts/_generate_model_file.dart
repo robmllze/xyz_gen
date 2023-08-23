@@ -12,12 +12,13 @@ Future<void> _generateModelFile(
   String fixedFilePath,
   Map<String, String> template,
 ) async {
-  var sourceClassName = "";
+  // ...
   var className = "";
   String? collectionPath;
   var parameters = <String, TypeCode>{};
 
-  void onField(String fieldName, DartObject fieldValue) {
+  // Define the function that will be called for each field in the annotation.
+  void onClassAnnotationField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case "className":
         className = fieldValue.toStringValue() ?? "";
@@ -38,6 +39,9 @@ Future<void> _generateModelFile(
     }
   }
 
+  // ...
+  var sourceClassName = "";
+
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
@@ -46,9 +50,10 @@ Future<void> _generateModelFile(
       sourceClassName = e;
       Here().debugLog("Generating model for $e");
     },
-    onClassAnnotationField: onField,
+    onClassAnnotationField: onClassAnnotationField,
   );
 
+  // If className is empty, then there is no annotation in the file.
   if (className.isEmpty) return;
 
   // Create the actual values to replace the placeholders with.
@@ -62,9 +67,9 @@ Future<void> _generateModelFile(
   final output = replaceAllData(
     template.values.first,
     {
-      "___CLASS___": className,
+      "___CLASS_NAME___": className,
       "___SOURCE_CLASS___": sourceClassName,
-      "___CLASS_FILE___": classFileName,
+      "___CLASS_FILE_NAME___": classFileName,
       "___COLLECTION_PATH___": collectionPath,
       ..._replacements(parameters),
     },

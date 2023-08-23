@@ -4,12 +4,12 @@
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-import '___MAKEUP_FILE___';
+import '___MAKEUP_FILE_NAME___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-___MAKEUP_CLASS___ ___MAKEUP_BUILDER___() {
-  return ___MAKEUP_CLASS___(
+___MAKEUP_CLASS_NAME___ ___MAKEUP_BUILDER___() {
+  return ___MAKEUP_CLASS_NAME___(
     ___A0___
   );
 }

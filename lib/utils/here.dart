@@ -135,15 +135,15 @@ class Here {
   //
   //
 
-  void debugLog(String m) => this._rec.debugLog(m);
-  void debugLogAlert(String m) => this._rec.debugLogAlert(m);
-  void debugLogError(String m) => this._rec.debugLogError(m);
-  void debugLogIgnore(String m) => this._rec.debugLogIgnore(m);
-  void debugLogInfo(String m) => this._rec.debugLogInfo(m);
-  void debugLogMessage(String m) => this._rec.debugLogMessage(m);
-  void debugLogStart(String m) => this._rec.debugLogStart(m);
-  void debugLogStop(String m) => this._rec.debugLogStop(m);
-  void debugLogSuccess(String m) => this._rec.debugLogSuccess(m);
+  void debugLog(e) => this._rec.debugLog(e);
+  void debugLogAlert(e) => this._rec.debugLogAlert(e);
+  void debugLogError(e) => this._rec.debugLogError(e);
+  void debugLogIgnore(e) => this._rec.debugLogIgnore(e);
+  void debugLogInfo(e) => this._rec.debugLogInfo(e);
+  void debugLogMessage(e) => this._rec.debugLogMessage(e);
+  void debugLogStart(e) => this._rec.debugLogStart(e);
+  void debugLogStop(e) => this._rec.debugLogStop(e);
+  void debugLogSuccess(e) => this._rec.debugLogSuccess(e);
 
   //
   //

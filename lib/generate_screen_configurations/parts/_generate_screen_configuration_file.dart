@@ -13,7 +13,8 @@ Future<void> _generateScreenConfigurationFile(
   String fixedFilePath,
   Map<String, String> templates,
 ) async {
-  var className = "";
+  // ...
+
   var isOnlyAccessibleIfSignedInAndVerified = false;
   var isOnlyAccessibleIfSignedIn = false;
   var isOnlyAccessibleIfSignedOut = false;
@@ -22,7 +23,8 @@ Future<void> _generateScreenConfigurationFile(
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
 
-  void onField(
+  // Define the function that will be called for each field in the annotation.
+  void onClassAnnotationField(
     String fieldName,
     DartObject fieldValue,
   ) {
@@ -57,6 +59,9 @@ Future<void> _generateScreenConfigurationFile(
     }
   }
 
+  // ...
+  var className = "";
+
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
@@ -65,7 +70,7 @@ Future<void> _generateScreenConfigurationFile(
       Here().debugLog("Generating screen configuration for $e");
       className = e;
     },
-    onClassAnnotationField: onField,
+    onClassAnnotationField: onClassAnnotationField,
   );
 
   if (className.isEmpty) return;
@@ -77,7 +82,7 @@ Future<void> _generateScreenConfigurationFile(
   final screenKey = className.toSnakeCase();
   final screenSegment = screenKey.replaceAll("screen_", "");
   final screenPath = "/$screenSegment";
-  final segmentKey = screenSegment.toUpperCase();
+  final screenSegmentKey = screenSegment.toUpperCase();
   final la0 = isOnlyAccessibleIfSignedInAndVerified;
   final la1 = isOnlyAccessibleIfSignedIn;
   final la2 = isOnlyAccessibleIfSignedOut;
@@ -85,7 +90,6 @@ Future<void> _generateScreenConfigurationFile(
       !isOnlyAccessibleIfSignedIn &&
       !isOnlyAccessibleIfSignedOut;
   final la4 = isRedirectable == false;
-
   final outputFileName = "$classKey.g.dart";
   final outputFilePath = p.join(classFileDirPath, outputFileName);
 
@@ -93,13 +97,13 @@ Future<void> _generateScreenConfigurationFile(
   final output = replaceAllData(
     templates.keys.first,
     {
-      "___CLASS___": className,
-      "___CONFIGURATION___": "${className}Configuration",
-      "___CLASS_FILE___": classFileName,
+      "___CLASS_NAME___": className,
+      "___CONFIGURATION_CLASS___": "${className}Configuration",
+      "___CLASS_FILE_NAME___": classFileName,
       "___SCREEN_KEY___": screenKey,
-      "___SEGMENT___": screenSegment,
-      "___SEGMENT_KEY___": segmentKey,
-      "___PATH___": screenPath,
+      "___SCREEN_SEGMENT___": screenSegment,
+      "___SCREEN_SEGMENT_KEY___": screenSegmentKey,
+      "___SCREEN_PATH___": screenPath,
       "___LA0___": la0,
       "___LA1___": la1,
       "___LA2___": la2,
