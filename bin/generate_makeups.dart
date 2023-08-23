@@ -13,7 +13,7 @@ Future<void> main() async {
     rootDirPath: "./test_project/lib/widgets/",
     outputDirPath: "./test_project/lib/makeups/",
     classTemplateFilePath: "./templates/makeup_class_template.md",
-    makeupTemplateFilePath: "./templates/makeup_template.md",
+    builderTemplateFilePath: "./templates/makeup_builder_template.md",
     exportsTemplateFilePath: "./templates/makeup_exports_template.md",
   );
 }

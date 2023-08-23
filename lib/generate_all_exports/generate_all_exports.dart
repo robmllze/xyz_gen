@@ -38,12 +38,13 @@ Future<void> generateAllExports(
       if (filePath != allFilePath) {
         final fileName = getFileName(filePath);
         final data = "export '$fileName';";
-        Here().debugLog("Writing `$data` to `$allFilePath`...");
+
         await writeFile(
           allFilePath,
           "$data\n",
           append: true,
         );
+        Here().debugLog("Writing `$data` to `$allFilePath`...");
       } else {
         Here().debugLog("Skipping `$filePath`...");
       }

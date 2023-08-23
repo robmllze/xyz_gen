@@ -17,7 +17,7 @@ Future<void> generateMakeups({
   required String rootDirPath,
   required String? outputDirPath,
   required String classTemplateFilePath,
-  required String makeupTemplateFilePath,
+  required String builderTemplateFilePath,
   required String exportsTemplateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
@@ -25,7 +25,7 @@ Future<void> generateMakeups({
     rootDirPath: rootDirPath,
     templateFilePaths: {
       classTemplateFilePath,
-      makeupTemplateFilePath,
+      builderTemplateFilePath,
       exportsTemplateFilePath,
     },
     deleteGeneratedFiles: true,
@@ -89,78 +89,113 @@ Future<void> _generateMakeupFiles(
   final classKey = className.toSnakeCase();
   final makeupClassName = "${className}Makeup";
   const makeupFileName = "_makeup.g.dart";
-  final outputDirPath0 =
+  final selectedOutputDirPath =
       outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
-  final outputFilePath0 = p.join(outputDirPath0, makeupFileName);
-  final entries = parameters.entries;
-  final p0 = entries.map((e) => "${e.value.name} ${e.key};");
-  final p1 = entries.map((e) => "${e.value.nullable ? "" : "required "}this.${e.key},");
-  final p2 = entries.map((e) => "${e.value.nullableName} ${e.key},");
-  final p3 = entries.map((e) => "${e.key}: ${e.key} ?? this.${e.key},");
 
-  final data0 = {
+  final templateData = {
     "___MAKEUP_FILE_NAME___": makeupFileName,
     "___MAKEUP_CLASS_NAME___": makeupClassName,
     "___CLASS_FILE_NAME___": classFileName,
     "___CLASS_KEY___": classKey,
     "___CLASS_NAME___": className,
+  };
+
+  await _writeClassFile(
+    p.join(selectedOutputDirPath, makeupFileName),
+    templates.values.elementAt(1),
+    templateData,
+    parameters,
+  );
+
+  final exportFiles = await _writeMakeupFiles(
+    selectedOutputDirPath,
+    templates.values.elementAt(1),
+    templateData,
+    parameters,
+    names,
+    classKey,
+  );
+
+  await _writeExportsFile(
+    selectedOutputDirPath,
+    templates.values.elementAt(2),
+    templateData,
+    {makeupFileName, ...exportFiles},
+  );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Future<void> _writeClassFile(
+  String outputFilePath,
+  String template,
+  Map<String, String> tempalteData,
+  Map<String, TypeCode> parameters,
+) async {
+  final entries = parameters.entries;
+  final p0 = entries.map((e) => "${e.value.name} ${e.key};");
+  final p1 = entries.map((e) => "${e.value.nullable ? "" : "required "}this.${e.key},");
+  final p2 = entries.map((e) => "${e.value.nullableName} ${e.key},");
+  final p3 = entries.map((e) => "${e.key}: ${e.key} ?? this.${e.key},");
+  final output = replaceAllData(template, {
+    ...tempalteData,
     "___P0___": p0.join("\n"),
     "___P1___": p1.join("\n"),
     "___P2___": p2.join("\n"),
     "___P3___": p3.join("\n"),
-  };
+  });
+  await writeFile(outputFilePath, output);
+  await fmtDartFile(outputFilePath);
+  Here().debugLog("Generated makeup class: $outputFilePath");
+}
 
-  final template0 = templates.values.elementAt(0);
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-  // Replace placeholders with the actual values.
-  final output0 = replaceAllData(
-    template0,
-    data0,
-  );
-
-  // Write the generated Dart file.
-  await writeFile(outputFilePath0, output0);
-
-  // Format the generated Dart file.
-  await fmtDartFile(outputFilePath0);
-
-  final template1 = templates.values.elementAt(1);
-
-  final a0 = entries.map((e) => "${e.key}: null,${e.value.nullable ? "" : "// Value required!"}");
-
-  final exportFiles = <String>[makeupFileName];
-
+Future<Set<String>> _writeMakeupFiles(
+  String outputDirPath,
+  String template,
+  Map<String, String> templateData,
+  Map<String, TypeCode> parameters,
+  Set<String> names,
+  String classKey,
+) async {
+  final exportFiles = <String>{};
+  final a0 = parameters.entries
+      .map((e) => "${e.key}: null,${e.value.nullable ? "" : "// Value required!"}");
   for (final name in names) {
     final makeupKey = "${name.toSnakeCase()}_${classKey}_makeup";
     final makeupBuilder = makeupKey.toCamelCase();
-    final outputFileName1 = "_$makeupKey.dart";
-    exportFiles.add(outputFileName1);
-    final outputFilePath1 = p.join(outputDirPath0, outputFileName1);
+    final outputFileName = "_$makeupKey.dart";
+    exportFiles.add(outputFileName);
+    final outputFilePath = p.join(outputDirPath, outputFileName);
 
-    final output1 = replaceAllData(
-      template1,
-      {
-        ...data0,
-        "___MAKEUP_BUILDER___": makeupBuilder,
-        "___MAKEUP_KEY___": makeupKey,
-        "___A0___": a0.join("\n"),
-      },
-    );
-
-    Here().debugLog("Generating makeup builder for $name");
-
-    await writeFile(outputFilePath1, output1);
-    await fmtDartFile(outputFilePath1);
+    final output = replaceAllData(template, {
+      ...templateData,
+      "___MAKEUP_BUILDER___": makeupBuilder,
+      "___MAKEUP_KEY___": makeupKey,
+      "___A0___": a0.join("\n"),
+    });
+    await writeFile(outputFilePath, output);
+    await fmtDartFile(outputFilePath);
+    Here().debugLog("Generated makeup builder: $outputFilePath");
   }
+  return exportFiles;
+}
 
-  final outputFilePath2 = p.join(outputDirPath0, "makeups.dart");
-  final template2 = templates.values.elementAt(2);
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-  final output2 = replaceAllData(template2, {
-    ...data0,
+Future<void> _writeExportsFile(
+  String outputDirPath,
+  String template,
+  Map<String, String> templateData,
+  Set<String> exportFiles,
+) async {
+  final outputFilepath = p.join(outputDirPath, "makeups.dart");
+  final output = replaceAllData(template, {
+    ...templateData,
     "___EXPORTS___": exportFiles.map((e) => "export '$e';").join("\n"),
   });
-
-  await writeFile(outputFilePath2, output2);
-  await fmtDartFile(outputFilePath2);
+  await writeFile(outputFilepath, output);
+  await fmtDartFile(outputFilepath);
+  Here().debugLog("Generated exports file: $outputFilepath");
 }
