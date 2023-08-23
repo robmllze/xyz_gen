@@ -8,13 +8,6 @@ part of '../generate_models.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _ANNOTATION_NAME = "GenerateModel";
-const _K_CLASS_NAME = "className";
-const _K_COLLECTION_PATH = "collectionPath";
-const _K_PARAMETERS = "parameters";
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 Future<void> _generateModelFile(
   String fixedFilePath,
   Map<String, String> template,
@@ -26,13 +19,13 @@ Future<void> _generateModelFile(
 
   void onField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
-      case _K_CLASS_NAME:
+      case "className":
         className = fieldValue.toStringValue() ?? "";
         break;
-      case _K_COLLECTION_PATH:
+      case "collectionPath":
         collectionPath = fieldValue.toStringValue();
         break;
-      case _K_PARAMETERS:
+      case "parameters":
         parameters = fieldValue.toMapValue()?.map((k, v) {
               final t = v?.toStringValue();
               return MapEntry(
@@ -48,12 +41,7 @@ Future<void> _generateModelFile(
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
-    classAnnotations: {_ANNOTATION_NAME},
-    classAnnotationFields: {
-      _K_CLASS_NAME,
-      _K_COLLECTION_PATH,
-      _K_PARAMETERS,
-    },
+    classAnnotations: {"GenerateModel"},
     onAnnotatedClass: (_, e) {
       sourceClassName = e;
       Here().debugLog("Generating model for $e");

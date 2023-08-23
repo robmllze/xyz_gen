@@ -53,7 +53,7 @@ String _ip2(Map<String, String> internalParameters) {
     return "$ifNotNull $fieldK: $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? "$_K_INTERNAL_PARAMETERS: {${a.join("\n")}}," : "";
+  return a.isNotEmpty ? "internalParameters: {${a.join("\n")}}," : "";
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -95,7 +95,7 @@ String _qp2(Set<String> queryParameters) {
     return "if ($fieldName != null) $fieldK: $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? "$_K_QUERY_PARAMETERS: {${a.join("\n")}}," : "";
+  return a.isNotEmpty ? "queryParameters: {${a.join("\n")}}," : "";
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -136,5 +136,5 @@ String _ps2(List<String> pathSegments) {
     return "$fieldName ?? \"\",";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? "$_K_PATH_SEGMENTS: [${a.join("\n")}]," : "";
+  return a.isNotEmpty ? "pathSegments: [${a.join("\n")}]," : "";
 }

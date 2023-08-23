@@ -4,20 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: constant_identifier_names, avoid_print
-
 part of '../generate_screen_configurations.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-const _ANNOTATION_NAME = "GenerateScreenConfiguration";
-const _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN_AND_VERIFIED = "isOnlyAccessibleIfSignedInAndVerified";
-const _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN = "isOnlyAccessibleIfSignedIn";
-const _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_OUT = "isOnlyAccessibleIfSignedOut";
-const _K_IS_REDIRECTABLE = "isRedirectable";
-const _K_INTERNAL_PARAMETERS = "internalParameters";
-const _K_QUERY_PARAMETERS = "queryParameters";
-const _K_PATH_SEGMENTS = "pathSegments";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -40,30 +27,30 @@ Future<void> _generateScreenConfigurationFile(
     DartObject fieldValue,
   ) {
     switch (fieldName) {
-      case _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN_AND_VERIFIED:
+      case "isOnlyAccessibleIfSignedInAndVerified":
         isOnlyAccessibleIfSignedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
-      case _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN:
+      case "isOnlyAccessibleIfSignedIn":
         isOnlyAccessibleIfSignedIn = fieldValue.toBoolValue() ?? false;
         break;
-      case _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_OUT:
+      case "isOnlyAccessibleIfSignedOut":
         isOnlyAccessibleIfSignedOut = fieldValue.toBoolValue() ?? false;
         break;
-      case _K_IS_REDIRECTABLE:
+      case "isRedirectable":
         isRedirectable = fieldValue.toBoolValue();
         break;
-      case _K_INTERNAL_PARAMETERS:
+      case "internalParameters":
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map((final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()))
                 .nonNulls ??
             const {};
         break;
-      case _K_QUERY_PARAMETERS:
+      case "queryParameters":
         queryParameters =
             fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
         break;
-      case _K_PATH_SEGMENTS:
+      case "pathSegments":
         pathSegments =
             fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
         break;
@@ -73,16 +60,7 @@ Future<void> _generateScreenConfigurationFile(
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
-    classAnnotations: {_ANNOTATION_NAME},
-    classAnnotationFields: {
-      _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN_AND_VERIFIED,
-      _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_IN,
-      _K_IS_ONLY_ACCESSIBLE_IF_SIGNED_OUT,
-      _K_IS_REDIRECTABLE,
-      _K_INTERNAL_PARAMETERS,
-      _K_QUERY_PARAMETERS,
-      _K_PATH_SEGMENTS,
-    },
+    classAnnotations: {"GenerateScreenConfiguration"},
     onAnnotatedClass: (_, e) {
       Here().debugLog("Generating screen configuration for $e");
       className = e;

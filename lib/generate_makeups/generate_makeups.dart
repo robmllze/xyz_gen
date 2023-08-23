@@ -17,23 +17,24 @@ import '../utils/here.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _ANNOTATION_NAME = "GenerateMakeups";
-const _K_NAMES = "names";
-const _K_PARAMETERS = "parameters";
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 Future<void> generateMakeups({
   required String rootDirPath,
-  required Set<String> templateFilePaths,
+  required String? outputDirPath,
+  required String classTemplateFilePath,
+  required String makeupTemplateFilePath,
+  required String exportsTemplateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
   await generate(
     rootDirPath: rootDirPath,
-    templateFilePaths: templateFilePaths,
+    templateFilePaths: {
+      classTemplateFilePath,
+      makeupTemplateFilePath,
+      exportsTemplateFilePath,
+    },
     deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
-    generateForFiles: (a, b) => _generateMakeupFiles(null, a, b),
+    generateForFiles: (a, b) => _generateMakeupFiles(outputDirPath, a, b),
   );
 }
 
@@ -50,11 +51,11 @@ Future<void> _generateMakeupFiles(
 
   void onField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
-      case _K_NAMES:
+      case "names":
         names =
             fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{};
         break;
-      case _K_PARAMETERS:
+      case "parameters":
         parameters = fieldValue.toMapValue()?.map((k, v) {
               final typeCode = v?.toStringValue();
               return MapEntry(
@@ -70,11 +71,7 @@ Future<void> _generateMakeupFiles(
   // Analyze the annotated class to get the field values.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
-    classAnnotations: {_ANNOTATION_NAME},
-    classAnnotationFields: {
-      _K_NAMES,
-      _K_PARAMETERS,
-    },
+    classAnnotations: {"GenerateMakeups"},
     onAnnotatedClass: (_, e) {
       Here().debugLog("Generating makeup class for $e");
       className = e;

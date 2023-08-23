@@ -22,9 +22,6 @@ Future<void> analyzeAnnotatedClasses({
   Set<String>? classAnnotations,
   Set<String>? methodAnnotations,
   Set<String>? memberAnnotations,
-  Set<String> classAnnotationFields = const {},
-  Set<String> methodAnnotationFields = const {},
-  Set<String> memberAnnotationFields = const {},
   void Function(
     String classAnnotationName,
     String className,
@@ -71,7 +68,6 @@ Future<void> analyzeAnnotatedClasses({
         classElement,
         onAnnotatedClass,
         onClassAnnotationField,
-        classAnnotationFields,
         classAnnotations,
       );
       _processMethodAnnotations(
@@ -79,7 +75,6 @@ Future<void> analyzeAnnotatedClasses({
         methodNamePattern,
         onAnnotatedMethod,
         onMethodAnnotationField,
-        methodAnnotationFields,
         methodAnnotations,
       );
       _processMemberAnnotations(
@@ -87,7 +82,6 @@ Future<void> analyzeAnnotatedClasses({
         memberNamePattern,
         onAnnotatedMember,
         onMemberAnnotationField,
-        memberAnnotationFields,
         memberAnnotations,
       );
     }
@@ -100,19 +94,21 @@ void _processClassAnnotations(
   ClassElement classElement,
   void Function(String, String)? onAnnotatedClass,
   void Function(String, DartObject)? onClassAnnotationField,
-  Set<String> classAnnotationFields,
   Set<String>? classAnnotations,
 ) {
   for (final metadata in classElement.metadata) {
-    final classAnnotationName = metadata.element?.displayName;
+    final element = metadata.element;
+    final classAnnotationName = element?.displayName;
     if (classAnnotationName != null && classAnnotations?.contains(classAnnotationName) != false) {
       onAnnotatedClass?.call(classAnnotationName, classElement.displayName);
-
       if (onClassAnnotationField != null) {
-        for (final fieldName in classAnnotationFields) {
-          final field = metadata.computeConstantValue()?.getField(fieldName);
-          if (field != null) {
-            onClassAnnotationField(fieldName, field);
+        final fieldNames = element?.children.map((e) => e.displayName);
+        if (fieldNames != null) {
+          for (final fieldName in fieldNames) {
+            final field = metadata.computeConstantValue()?.getField(fieldName);
+            if (field != null) {
+              onClassAnnotationField(fieldName, field);
+            }
           }
         }
       }
@@ -127,26 +123,29 @@ void _processMethodAnnotations(
   RegExp? methodNamePattern,
   void Function(String, String, String)? onAnnotatedMethod,
   void Function(String, DartObject)? onMethodAnnotationField,
-  Set<String> methodAnnotationFields,
   Set<String>? methodAnnotations,
 ) {
-  for (final methodElement in classElement.methods) {
-    if (methodNamePattern == null || methodNamePattern.hasMatch(methodElement.displayName)) {
-      for (final methodMetadata in methodElement.metadata) {
+  for (final method in classElement.methods) {
+    if (methodNamePattern == null || methodNamePattern.hasMatch(method.displayName)) {
+      for (final methodMetadata in method.metadata) {
         final methodAnnotationName = methodMetadata.element?.displayName;
         if (methodAnnotationName != null &&
             methodAnnotations?.contains(methodAnnotationName) != false) {
           onAnnotatedMethod?.call(
             methodAnnotationName,
-            methodElement.displayName,
-            methodElement.type.getDisplayString(withNullability: false),
+            method.displayName,
+            method.type.getDisplayString(withNullability: false),
           );
 
           if (onMethodAnnotationField != null) {
-            for (final fieldName in methodAnnotationFields) {
-              final field = methodMetadata.computeConstantValue()?.getField(fieldName);
-              if (field != null) {
-                onMethodAnnotationField(fieldName, field);
+            final element = methodMetadata.element;
+            final fieldNames = element?.children.map((e) => e.displayName);
+            if (fieldNames != null) {
+              for (final fieldName in fieldNames) {
+                final field = methodMetadata.computeConstantValue()?.getField(fieldName);
+                if (field != null) {
+                  onMethodAnnotationField(fieldName, field);
+                }
               }
             }
           }
@@ -163,7 +162,6 @@ void _processMemberAnnotations(
   RegExp? memberNamePattern,
   void Function(String, String, String)? onAnnotatedMember,
   void Function(String, DartObject)? onMemberAnnotationField,
-  Set<String> memberAnnotationFields,
   Set<String>? memberAnnotations,
 ) {
   for (final fieldElement in classElement.fields) {
@@ -179,10 +177,14 @@ void _processMemberAnnotations(
           );
 
           if (onMemberAnnotationField != null) {
-            for (final fieldName in memberAnnotationFields) {
-              final field = fieldMetadata.computeConstantValue()?.getField(fieldName);
-              if (field != null) {
-                onMemberAnnotationField(fieldName, field);
+            final element = fieldMetadata.element;
+            final fieldNames = element?.children.map((e) => e.displayName);
+            if (fieldNames != null) {
+              for (final fieldName in fieldNames) {
+                final field = fieldMetadata.computeConstantValue()?.getField(fieldName);
+                if (field != null) {
+                  onMemberAnnotationField(fieldName, field);
+                }
               }
             }
           }
