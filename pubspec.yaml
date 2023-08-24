@@ -16,6 +16,7 @@ environment:
 ##
 
 dependency_overrides:
+
   xyz_utils:
     path: ../xyz_utils
 
@@ -27,9 +28,10 @@ dependencies:
       url: https://github.com/robmllze/xyz_utils.git
       ref: master
   args:
+  path:
 
 ##
 
 dev_dependencies:
-  flutter_lints:
+  lints: ^2.1.1
 
