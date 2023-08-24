@@ -4,7 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import '/utils/all_utils.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 import 'package:path/path.dart' as p;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -14,7 +14,7 @@ Future<void> generateAllExports(
   Set<String> pathPatterns = const {},
 ]) async {
   var cachedDirName = "";
-  await findFiles(
+  await findDartFiles(
     rootDirPath: rootDirPath,
     pathPatterns: pathPatterns,
     onFileFound: (

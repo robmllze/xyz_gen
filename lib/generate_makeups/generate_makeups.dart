@@ -5,11 +5,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:xyz_utils/xyz_utils.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 import 'package:path/path.dart' as p;
-
-import '/type_codes/type_codes.dart';
-import '/utils/all_utils.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,7 +18,7 @@ Future<void> generateMakeups({
   required String exportsTemplateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
-  await generate(
+  await generateFromTemplates(
     rootDirPath: rootDirPath,
     templateFilePaths: {
       classTemplateFilePath,

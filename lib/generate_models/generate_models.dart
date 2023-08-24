@@ -8,10 +8,7 @@
 
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
-import 'package:xyz_utils/xyz_utils.dart';
-
-import '/type_codes/type_codes.dart';
-import '/utils/all_utils.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 
 export 'annotation.dart';
 export 'model.dart';
@@ -27,7 +24,7 @@ Future<void> generateModels({
   required String templateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
-  await generate(
+  await generateFromTemplates(
     begType: "model",
     rootDirPath: rootDirPath,
     templateFilePaths: {templateFilePath},
