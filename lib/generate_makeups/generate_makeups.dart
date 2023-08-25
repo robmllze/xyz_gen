@@ -79,8 +79,8 @@ Future<void> _generateMakeupFiles(
     final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
-    const makeupClassFileName = "_makeup.g.dart";
-    final selectedOutputDirPath =
+    const makeupClassFileName = "__makeup.g.dart";
+    final rootOutputDirPath =
         outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
     final templateData = {
       "___MAKEUP_CLASS_FILE___": makeupClassFileName,
@@ -89,17 +89,16 @@ Future<void> _generateMakeupFiles(
       "___CLASS_FILE_PATH___": fixedFilePath,
     };
 
-    final outputFilePath = p.join(selectedOutputDirPath, makeupClassFileName);
-
     await _writeClassFile(
-      outputFilePath,
+      p.join(rootOutputDirPath, "src", makeupClassFileName),
       templates.values.elementAt(0),
       templateData,
       parameters,
     );
 
     final exportFiles = await _writeBuilderFiles(
-      selectedOutputDirPath,
+      makeupClassName,
+      p.join(rootOutputDirPath, "src"),
       templates.values.elementAt(1),
       templateData,
       parameters,
@@ -108,7 +107,7 @@ Future<void> _generateMakeupFiles(
     );
 
     await _writeExportsFile(
-      selectedOutputDirPath,
+      rootOutputDirPath,
       templates.values.elementAt(2),
       templateData,
       {makeupClassFileName, ...exportFiles},
@@ -154,6 +153,7 @@ Future<void> _writeClassFile(
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<Set<String>> _writeBuilderFiles(
+  String makeupClassName,
   String outputDirPath,
   String template,
   Map<String, String> templateData,
@@ -162,24 +162,27 @@ Future<Set<String>> _writeBuilderFiles(
   String classKey,
 ) async {
   final exportFiles = <String>{};
-  final a0 = parameters.entries
+  final makeupBuilderArgs = parameters.entries
       .map((e) => "${e.key}: null,${e.value.nullable ? "" : "// Value required!"}");
   for (final name in names) {
-    final makeupKey = "${name.toSnakeCase()}_${classKey}_makeup";
-    final makeupBuilder = makeupKey.toCamelCase();
-    final outputFileName = "_$makeupKey.dart";
-    exportFiles.add(outputFileName);
+    final shortMakeupKey = name.toSnakeCase();
+    final longMakeupKey = "${shortMakeupKey}_${classKey}_makeup";
+    final outputFileName = "_$longMakeupKey.dart";
     final outputFilePath = p.join(outputDirPath, outputFileName);
-
     if (await fileExists(outputFilePath)) continue;
-
+    final makeupBuilder = longMakeupKey.toCamelCase();
+    final makeupBuilderFunction = shortMakeupKey == "default"
+        ? makeupClassName
+        : "${"default_${classKey}_makeup".toCamelCase()}().copyWith";
     final output = replaceAllData(template, {
       ...templateData,
-      "___MAKEUP_BUILDER___": makeupBuilder,
-      "___MAKEUP_BUILDER_ARGS___": a0.join("\n"),
+      "___BUILDER___": makeupBuilder,
+      "___BUILDER_FUNCTION___": makeupBuilderFunction,
+      "___BUILDER_FUNCTION_ARGS___": makeupBuilderArgs.join("\n"),
     });
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
+    exportFiles.add(outputFileName);
     printGreen("Generated makeup builder `$outputFilePath`");
   }
   return exportFiles;
@@ -196,7 +199,7 @@ Future<void> _writeExportsFile(
   final outputFilepath = p.join(outputDirPath, "makeups.dart");
   final output = replaceAllData(template, {
     ...templateData,
-    "___EXPORTS___": exportFiles.map((e) => "export '$e';").join("\n"),
+    "___EXPORTS___": exportFiles.map((e) => "export 'src/$e';").join("\n"),
   });
   await writeFile(outputFilepath, output);
   await fmtDartFile(outputFilepath);
