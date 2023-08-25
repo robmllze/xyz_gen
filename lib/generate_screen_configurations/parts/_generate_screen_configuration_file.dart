@@ -88,9 +88,9 @@ Future<void> _generateScreenConfigurationFile(
     final output = replaceAllData(
       template,
       {
-        "___CLASS_NAME___": className,
+        "___CLASS___": className,
         "___CONFIGURATION_CLASS___": "${className}Configuration",
-        "___CLASS_FILE_NAME___": classFileName,
+        "___CLASS_FILE___": classFileName,
         "___SCREEN_KEY___": screenKey,
         "___SCREEN_SEGMENT___": screenSegment,
         "___SCREEN_SEGMENT_KEY___": screenSegmentKey,
@@ -124,7 +124,7 @@ Future<void> _generateScreenConfigurationFile(
 
   // ---------------------------------------------------------------------------
 
-  // Analyze the annotated class to get the field values.
+  // Analyze the annotated class and generate the screen configuration file.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
     classAnnotations: {"GenerateScreenConfiguration"},

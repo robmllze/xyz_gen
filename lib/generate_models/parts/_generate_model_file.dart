@@ -84,7 +84,7 @@ Future<void> _generateModelFile(
 
   // ---------------------------------------------------------------------------
 
-  // Analyze the annotated class to get the field values.
+  // Analyze the annotated class and generate the model file.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
     classAnnotations: {"GenerateModel"},

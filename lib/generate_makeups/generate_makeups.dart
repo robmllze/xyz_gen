@@ -18,6 +18,12 @@ Future<void> generateMakeups({
   required String exportsTemplateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
+  await deleteGeneratedDartFiles(
+    outputDirPath ?? rootDirPath,
+    onDelete: (final filePath) {
+      printLightYellow("Deleted generated file `$filePath`");
+    },
+  );
   await generateFromTemplates(
     rootDirPath: rootDirPath,
     templateFilePaths: {
@@ -25,12 +31,8 @@ Future<void> generateMakeups({
       builderTemplateFilePath,
       exportsTemplateFilePath,
     },
-    deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
     generateForFiles: (a, b) => _generateMakeupFiles(outputDirPath, a, b),
-    onDelete: (final filePath) {
-      printLightYellow("Deleted generated file `$filePath`");
-    },
   );
 }
 
@@ -41,11 +43,15 @@ Future<void> _generateMakeupFiles(
   String fixedFilePath,
   Map<String, String> templates,
 ) async {
-  // ...
+  // ---------------------------------------------------------------------------
+
+  // Create variables to hold the annotation's field values.
   var names = <String>{};
   var parameters = <String, TypeCode>{};
 
-  // Define the function that will be called for each field in the annotation.
+  // ---------------------------------------------------------------------------
+
+  // Define the function to call for each annotation field.
   void onClassAnnotationField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case "names":
@@ -65,62 +71,58 @@ Future<void> _generateMakeupFiles(
     }
   }
 
-  // ...
-  var className = "";
+  // ---------------------------------------------------------------------------
 
-  // Analyze the annotated class to get the field values.
+  // Define the function to call for each annotated class.
+  Future<void> onAnnotatedClass(String _, String className) async {
+    final classFileDirPath = getDirPath(fixedFilePath);
+    final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
+    final classKey = className.toSnakeCase();
+    final makeupClassName = "${className}Makeup";
+    const makeupClassFileName = "_makeup.g.dart";
+    final selectedOutputDirPath =
+        outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
+    final templateData = {
+      "___MAKEUP_CLASS_FILE___": makeupClassFileName,
+      "___MAKEUP_CLASS___": makeupClassName,
+      "___WIDGET___": className,
+      "___CLASS_FILE_PATH___": fixedFilePath,
+    };
+
+    final outputFilePath = p.join(selectedOutputDirPath, makeupClassFileName);
+
+    await _writeClassFile(
+      outputFilePath,
+      templates.values.elementAt(0),
+      templateData,
+      parameters,
+    );
+
+    final exportFiles = await _writeBuilderFiles(
+      selectedOutputDirPath,
+      templates.values.elementAt(1),
+      templateData,
+      parameters,
+      names,
+      classKey,
+    );
+
+    await _writeExportsFile(
+      selectedOutputDirPath,
+      templates.values.elementAt(2),
+      templateData,
+      {makeupClassFileName, ...exportFiles},
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+
+  // Analyze the annotated class and generate the template files.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
     classAnnotations: {"GenerateMakeups"},
-    onAnnotatedClass: (_, e) {
-      Here().debugLog("Generating makeup class for $e");
-      className = e;
-    },
+    onAnnotatedClass: onAnnotatedClass,
     onClassAnnotationField: onClassAnnotationField,
-  );
-
-  // If className is empty, then there is no annotation in the file.
-  if (className.isEmpty) return;
-
-  // Create the actual values to replace the placeholders with.
-  final classFileName = getFileName(fixedFilePath);
-  final classFileDirPath = getDirPath(fixedFilePath);
-  final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
-  final classKey = className.toSnakeCase();
-  final makeupClassName = "${className}Makeup";
-  const makeupFileName = "_makeup.g.dart";
-  final selectedOutputDirPath =
-      outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
-
-  final templateData = {
-    "___MAKEUP_FILE_NAME___": makeupFileName,
-    "___MAKEUP_CLASS_NAME___": makeupClassName,
-    "___CLASS_FILE_NAME___": classFileName,
-    "___CLASS_KEY___": classKey,
-    "___CLASS_NAME___": className,
-  };
-
-  await _writeClassFile(
-    p.join(selectedOutputDirPath, makeupFileName),
-    templates.values.elementAt(1),
-    templateData,
-    parameters,
-  );
-
-  final exportFiles = await _writeMakeupFiles(
-    selectedOutputDirPath,
-    templates.values.elementAt(1),
-    templateData,
-    parameters,
-    names,
-    classKey,
-  );
-
-  await _writeExportsFile(
-    selectedOutputDirPath,
-    templates.values.elementAt(2),
-    templateData,
-    {makeupFileName, ...exportFiles},
   );
 }
 
@@ -146,12 +148,12 @@ Future<void> _writeClassFile(
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
-  Here().debugLog("Generated makeup class: $outputFilePath");
+  printGreen("Generated makeup class `$outputFilePath`");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<Set<String>> _writeMakeupFiles(
+Future<Set<String>> _writeBuilderFiles(
   String outputDirPath,
   String template,
   Map<String, String> templateData,
@@ -169,15 +171,16 @@ Future<Set<String>> _writeMakeupFiles(
     exportFiles.add(outputFileName);
     final outputFilePath = p.join(outputDirPath, outputFileName);
 
+    if (await fileExists(outputFilePath)) continue;
+
     final output = replaceAllData(template, {
       ...templateData,
       "___MAKEUP_BUILDER___": makeupBuilder,
-      "___MAKEUP_KEY___": makeupKey,
-      "___A0___": a0.join("\n"),
+      "___MAKEUP_BUILDER_ARGS___": a0.join("\n"),
     });
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
-    Here().debugLog("Generated makeup builder: $outputFilePath");
+    printGreen("Generated makeup builder `$outputFilePath`");
   }
   return exportFiles;
 }
@@ -197,5 +200,5 @@ Future<void> _writeExportsFile(
   });
   await writeFile(outputFilepath, output);
   await fmtDartFile(outputFilepath);
-  Here().debugLog("Generated exports file: $outputFilepath");
+  printGreen("Generated makeup exports `$outputFilepath`");
 }

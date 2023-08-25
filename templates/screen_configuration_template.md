@@ -6,13 +6,13 @@
 // ignore_for_file: unused_element
 // ignore_for_file: constant_identifier_names
 
-part of '___CLASS_FILE_NAME___';
+part of '___CLASS_FILE___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _TR_KEY = "screens.___CLASS_NAME___";
+const _TR_KEY = "screens.___CLASS___";
 const _PATH = "___SCREEN_PATH___";
-const _CLASS = "___CLASS_NAME___";
+const _CLASS = "___CLASS___";
 
 extension _ScreenTrExtension on String {
   String screenTr([Map<dynamic, dynamic> args = const {}]) {
@@ -36,7 +36,7 @@ final cast___CONFIGURATION_CLASS___ =
     ___CONFIGURATION_CLASS___: (MyRouteConfiguration a) => ___CONFIGURATION_CLASS___.from(a),
 });
 
-MyScreen? maker___CLASS_NAME___(
+MyScreen? maker___CLASS___(
   MyRouteConfiguration configuration,
   bool isSignedInAndVerified,
   bool isSignedIn,
@@ -53,12 +53,12 @@ MyScreen? maker___CLASS_NAME___(
           configuration.uri.toString(),
         ),
       )) {
-    return ___CLASS_NAME___(configuration);
+    return ___CLASS___(configuration);
   }
   return null;
 }
 
-/// Configuration object for [___CLASS_NAME___].
+/// Configuration object for [___CLASS___].
 ///
 /// ### Usage examples:
 ///
@@ -109,7 +109,7 @@ class ___CONFIGURATION_CLASS___ extends MyRouteConfiguration {
   }
 }
 
-abstract class _LogicBroker<T1 extends ___CLASS_NAME___, T2 extends _State>
+abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends MyScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
