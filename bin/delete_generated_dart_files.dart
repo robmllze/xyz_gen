@@ -6,8 +6,7 @@
 
 import 'package:args/args.dart';
 
-import 'package:xyz_gen/generate_all_exports/generate_all_exports.dart';
-import 'package:xyz_utils/xyz_utils.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 
 const DIRECTORY_OPTION = "directory";
 
@@ -39,7 +38,7 @@ void main(List<String> arguments) async {
       return;
     }
 
-    await generateAllExports(directoryPath);
+    await deleteGeneratedDartFiles(directoryPath);
   } catch (e) {
     printRed("Error: $e");
   }
@@ -50,9 +49,9 @@ void main(List<String> arguments) async {
 void printUsage(ArgParser parser) {
   printLightCyan(
     [
-      "XYZ Gen All Exports Generator",
-      "Usage: dart generate_all_exports.dart -d <directory_path>",
-      "Example: dart generate_all_exports.dart -d ./lib/utils/",
+      "XYZ Gen Delete Generated Dart Files",
+      "Usage: dart delete_generated_dart_files.dart -d <directory_path>",
+      "Example: dart delete_generated_dart_files.dart -d ./lib",
       parser.usage
     ].join("\n"),
   );

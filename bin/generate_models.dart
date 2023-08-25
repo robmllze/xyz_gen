@@ -5,19 +5,20 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 import 'dart:io';
-import 'package:xyz_gen/generate_models/generate_models.dart';
 import 'package:args/args.dart';
-import 'package:xyz_utils/xyz_utils_non_web.dart';
 
-const rootDirOption = "root";
-const templateFileOption = "template";
+import 'package:xyz_gen/generate_models/generate_models.dart';
+import 'package:xyz_utils/xyz_utils.dart';
+
+const ROOT_OPTION_DIR = "root";
+const TEMPLATE_FILE_OPTION = "template";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main(List<String> arguments) async {
   final parser = ArgParser()
-    ..addOption(rootDirOption, abbr: "r", help: "Path to the root directory.")
-    ..addOption(templateFileOption, abbr: "t", help: "Path to the template file.")
+    ..addOption(ROOT_OPTION_DIR, abbr: "r", help: "Path to the root directory.")
+    ..addOption(TEMPLATE_FILE_OPTION, abbr: "t", help: "Path to the template file.")
     ..addFlag("help", abbr: "h", negatable: false, help: "Displays the help information.");
 
   try {
@@ -33,8 +34,8 @@ void main(List<String> arguments) async {
       return;
     }
 
-    final rootDir = results[rootDirOption] as String?;
-    final templateFile = results[templateFileOption] as String?;
+    final rootDir = results[ROOT_OPTION_DIR] as String?;
+    final templateFile = results[TEMPLATE_FILE_OPTION] as String?;
 
     if (rootDir == null || templateFile == null) {
       printRed("You must provide both -root and -template options.");
@@ -57,7 +58,7 @@ void printUsage(ArgParser parser) {
   printLightCyan(
     [
       "XYZ Gen Model Generator",
-      "Usage: dart generate_models.dart -r <root_directory> -t <template_file>",
+      "Usage: dart generate_models.dart -r <root_directory_path> -t <template_file_path>",
       "Example: dart generate_models.dart -r ./my_xyz_project/lib/models/ -t ./templates/model_template.md",
       parser.usage
     ].join("\n"),
