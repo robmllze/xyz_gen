@@ -29,9 +29,11 @@ dependencies:
       ref: master
   args:
   path:
+  analyzer:
 
 ##
 
 dev_dependencies:
-  lints: ^2.1.1
+  lints:
+  
 

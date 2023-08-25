@@ -6,7 +6,7 @@ part of '___CLASS_FILE_NAME___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
+class ___CLASS___ extends ___PARENT_CLASS___ {
   //
   //
   //
@@ -19,7 +19,7 @@ class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
   //
   //
 
-  ___CLASS_NAME___({
+  ___CLASS___({
     ___P2___
   }) : super._() {
     ___P3___
@@ -29,7 +29,7 @@ class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
   //
   //
 
-  ___CLASS_NAME___.unsafe({
+  ___CLASS___.unsafe({
     ___P4___
   }) : super._() {
     ___P5___
@@ -39,17 +39,17 @@ class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
   //
   //
 
-  factory ___CLASS_NAME___.from(___CLASS_NAME___ other) {
-    return ___CLASS_NAME___.fromJMap(other.toJMap());
+  factory ___CLASS___.from(___CLASS___ other) {
+    return ___CLASS___.fromJMap(other.toJMap());
   }
 
   //
   //
   //
   
-  factory ___CLASS_NAME___.fromJMap(Map<String, dynamic> input) {
+  factory ___CLASS___.fromJMap(Map<String, dynamic> input) {
     try {
-      return ___CLASS_NAME___.unsafe(
+      return ___CLASS___.unsafe(
         ___P6___
       );
     } catch (e) {
@@ -80,7 +80,7 @@ class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
 
   @override
   T copy<T extends Model>() {
-    return ___CLASS_NAME___.fromJMap(this.toJMap()) as T;
+    return ___CLASS___.fromJMap(this.toJMap()) as T;
   }
 
   //
@@ -89,7 +89,7 @@ class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
 
   @override
   T copyWith<T extends Model>({T? other}) {
-    if (other is ___CLASS_NAME___) {
+    if (other is ___CLASS___) {
        return this.copy().updateWith(other) as T;
     }
     assert(false);
@@ -102,9 +102,7 @@ class ___CLASS_NAME___ extends ___SOURCE_CLASS___ {
 
   @override
   void updateWith<T extends Model>(T other) {
-    if (other is ___CLASS_NAME___) {
-    this.id = other.id ?? this.id;
-    this.args = other.args ?? this.id;
+    if (other is ___CLASS___) {
     ___P8___
     } else {
       assert(false);

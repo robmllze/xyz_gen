@@ -15,22 +15,23 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
   final args = parameters["args"] ??= const TypeCode("dynamic");
   final allEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final allIds = allEntries.map((e) => e.key);
+  print(allIds);
   final ids = allIds.where((e) => !const ["id", "args"].contains(e));
   final entries = ids.map((i) => MapEntry(i, parameters[i]));
   final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable);
-  final keys = _getKeyNames(allIds);
-  final keyConsts = _getKeyConstNames(allIds);
+  final allKeys = _getKeyNames(allIds);
+  final allKeyConsts = _getKeyConstNames(allIds);
 
   final p = <Iterable>[
     // ___P0___
-    allIds.map((e) => 'static const ${keyConsts[e]} = "${keys[e]}";'),
+    allIds.map((e) => 'static const ${allKeyConsts[e]} = "${allKeys[e]}";'),
     // ___P1___
     entries.map((e) => "${e.value!.nullableName} ${e.key};"),
     // ___P2___
     [
       () {
         assert(id.nullableName == "String?");
-        return id.nullable ? "String? id" : "required String id,";
+        return "${id.nullable ? "" : "required "}${id.name} id,";
       }(),
       "${args.nullable ? "" : "required "}${args.name} args,",
       ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
@@ -47,7 +48,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
     nonNullableIds.map((e) => "assert(this.$e != null);"),
     // ___P6___
     allIds.map((e) {
-      final fieldName = "input[${keyConsts[e]}]";
+      final fieldName = "input[${allKeyConsts[e]}]";
       final parameter = parameters[e]!;
       final typeCode = parameter.value;
       final value = mapWithLooseFromMappers(
@@ -59,7 +60,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
 
     // ___P7___
     allIds.map((e) {
-      final keyConst = keyConsts[e];
+      final keyConst = allKeyConsts[e];
       final parameter = parameters[e]!;
       final typeCode = parameter.value;
       final value = mapWithLooseToMappers(
@@ -68,7 +69,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
       );
       return "$keyConst: $value,";
     }),
-    // 8
+    // ___P8___
     allIds.map((e) => 'this.$e = other.$e ?? this.$e;'),
   ];
 
