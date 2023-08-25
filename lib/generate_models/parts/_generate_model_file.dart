@@ -21,7 +21,7 @@ Future<void> _generateModelFile(
 
   // ---------------------------------------------------------------------------
 
-  // Define the function to call for each annotation field .
+  // Define the function to call for each annotation field.
   void onClassAnnotationField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case "className":

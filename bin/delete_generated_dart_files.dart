@@ -8,13 +8,13 @@ import 'package:args/args.dart';
 
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 
-const DIRECTORY_OPTION = "directory";
+const ROOT_OPTION = "root";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main(List<String> arguments) async {
   final parser = ArgParser()
-    ..addOption(DIRECTORY_OPTION, abbr: "d", help: "Path to the directory.")
+    ..addOption(ROOT_OPTION, abbr: "r", help: "Path to the root directory.")
     ..addFlag("help", abbr: "h", negatable: false, help: "Displays the help information.");
 
   try {
@@ -30,16 +30,16 @@ void main(List<String> arguments) async {
       return;
     }
 
-    final directoryPath = results[DIRECTORY_OPTION] as String?;
+    final root = results[ROOT_OPTION] as String?;
 
-    if (directoryPath == null) {
+    if (root == null) {
       printRed("You must provide the -directory option.");
       printUsage(parser);
       return;
     }
 
     await deleteGeneratedDartFiles(
-      directoryPath,
+      root,
       onDelete: (final filePath) {
         printLightYellow("Deleted generated file `$filePath`");
       },
@@ -56,7 +56,7 @@ void printUsage(ArgParser parser) {
     [
       "XYZ Gen Delete Generated Dart Files",
       "Usage: dart delete_generated_dart_files.dart -d <directory_path>",
-      "Example: dart delete_generated_dart_files.dart -d ./lib",
+      "Example: dart delete_generated_dart_files.dart -d ../my_xyz_project/lib",
       parser.usage
     ].join("\n"),
   );

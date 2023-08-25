@@ -9,13 +9,13 @@ import 'package:args/args.dart';
 import 'package:xyz_gen/generate_all_exports/generate_all_exports.dart';
 import 'package:xyz_utils/xyz_utils.dart';
 
-const DIRECTORY_OPTION = "directory";
+const ROOT_OPTION = "root";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main(List<String> arguments) async {
   final parser = ArgParser()
-    ..addOption(DIRECTORY_OPTION, abbr: "d", help: "Path to the directory.")
+    ..addOption(ROOT_OPTION, abbr: "r", help: "Path to the root directory.")
     ..addFlag("help", abbr: "h", negatable: false, help: "Displays the help information.");
 
   try {
@@ -31,15 +31,15 @@ void main(List<String> arguments) async {
       return;
     }
 
-    final directoryPath = results[DIRECTORY_OPTION] as String?;
+    final root = results[ROOT_OPTION] as String?;
 
-    if (directoryPath == null) {
+    if (root == null) {
       printRed("You must provide the -directory option.");
       printUsage(parser);
       return;
     }
 
-    await generateAllExports(directoryPath);
+    await generateAllExports(root);
   } catch (e) {
     printRed("Error: $e");
   }
@@ -51,8 +51,8 @@ void printUsage(ArgParser parser) {
   printLightCyan(
     [
       "XYZ Gen All Exports Generator",
-      "Usage: dart generate_all_exports.dart -d <directory_path>",
-      "Example: dart generate_all_exports.dart -d ./lib/utils/",
+      "Usage: dart generate_all_exports.dart -d <root_directory_path>",
+      "Example: dart generate_all_exports.dart -d ../my_xyz_project/lib/",
       parser.usage
     ].join("\n"),
   );
