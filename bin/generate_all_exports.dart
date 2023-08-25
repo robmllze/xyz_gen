@@ -51,8 +51,8 @@ void printUsage(ArgParser parser) {
   printLightCyan(
     [
       "XYZ Gen All Exports Generator",
-      "Usage: dart generate_all_exports.dart -d <root_directory_path>",
-      "Example: dart generate_all_exports.dart -d ../my_xyz_project/lib/",
+      "Usage: dart generate_all_exports.dart -r <root_directory_path>",
+      "Example: dart generate_all_exports.dart -r ../my_xyz_project/lib/",
       parser.usage
     ].join("\n"),
   );

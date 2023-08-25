@@ -55,8 +55,8 @@ void printUsage(ArgParser parser) {
   printLightCyan(
     [
       "XYZ Gen Delete Generated Dart Files",
-      "Usage: dart delete_generated_dart_files.dart -d <directory_path>",
-      "Example: dart delete_generated_dart_files.dart -d ../my_xyz_project/lib",
+      "Usage: dart delete_generated_dart_files.dart -r <root_directory_path>",
+      "Example: dart delete_generated_dart_files.dart -r ../my_xyz_project/lib",
       parser.usage
     ].join("\n"),
   );

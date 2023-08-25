@@ -1,4 +1,4 @@
-import 'package:xyz_gen/generate_screen_configuration/parts/_generate_screen_configuration_file.dart';
+import 'package:xyz_gen/generate_screen_configurations/annotation.dart';
 
 @GenerateScreenConfiguration(
   isOnlyAccessibleIfSignedInAndVerified: true,
