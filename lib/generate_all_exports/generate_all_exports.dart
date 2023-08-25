@@ -25,7 +25,7 @@ Future<void> generateAllExports(
       final allFilePath = p.join(dirName, "all_$folderName.dart");
       if (dirName != cachedDirName) {
         cachedDirName = dirName;
-        Here().debugLog("Clearing `$allFilePath`...");
+        printGreen("Clearing `$allFilePath`...");
         await writeFile(
           allFilePath,
           [
@@ -44,9 +44,9 @@ Future<void> generateAllExports(
           "$data\n",
           append: true,
         );
-        Here().debugLog("Writing `$data` to `$allFilePath`...");
+        printGreen("Writing `$data` to `$allFilePath`...");
       } else {
-        Here().debugLog("Skipping `$filePath`...");
+        printGreen("Skipping `$filePath`...");
       }
     },
   );

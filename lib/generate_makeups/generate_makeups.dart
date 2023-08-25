@@ -28,6 +28,9 @@ Future<void> generateMakeups({
     deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
     generateForFiles: (a, b) => _generateMakeupFiles(outputDirPath, a, b),
+    onDelete: (final filePath) {
+      printLightYellow("Deleted generated file `$filePath`");
+    },
   );
 }
 

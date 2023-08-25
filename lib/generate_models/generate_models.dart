@@ -31,5 +31,8 @@ Future<void> generateModels({
     deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
     generateForFiles: _generateModelFile,
+    onDelete: (final filePath) {
+      printLightYellow("Deleted generated file `$filePath`");
+    },
   );
 }

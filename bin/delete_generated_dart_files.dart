@@ -38,7 +38,12 @@ void main(List<String> arguments) async {
       return;
     }
 
-    await deleteGeneratedDartFiles(directoryPath);
+    await deleteGeneratedDartFiles(
+      directoryPath,
+      onDelete: (final filePath) {
+        printLightYellow("Deleted generated file `$filePath`");
+      },
+    );
   } catch (e) {
     printRed("Error: $e");
   }

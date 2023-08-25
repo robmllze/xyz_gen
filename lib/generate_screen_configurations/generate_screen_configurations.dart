@@ -27,5 +27,8 @@ Future<void> generateScreenConfigurations({
     deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
     generateForFiles: _generateScreenConfigurationFile,
+    onDelete: (final filePath) {
+      printLightYellow("Deleted generated file `$filePath`");
+    },
   );
 }
