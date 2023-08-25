@@ -15,7 +15,6 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
   final args = parameters["args"] ??= const TypeCode("dynamic");
   final allEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final allIds = allEntries.map((e) => e.key);
-  print(allIds);
   final ids = allIds.where((e) => !const ["id", "args"].contains(e));
   final entries = ids.map((i) => MapEntry(i, parameters[i]));
   final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable);
