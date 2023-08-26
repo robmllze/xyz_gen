@@ -29,7 +29,7 @@ void main(List<String> arguments) async {
     final results = parser.parse(arguments);
 
     if (results["help"]) {
-      _printUsage(parser);
+      printUsage(parser);
       return;
     }
 
@@ -42,7 +42,7 @@ void main(List<String> arguments) async {
     if ([root, output, classTemplateFile, builderTemplateFile, exportsTemplateFile]
         .contains(null)) {
       print("You must provide all the required options.");
-      _printUsage(parser);
+      printUsage(parser);
       exit(1);
     }
 
@@ -58,7 +58,7 @@ void main(List<String> arguments) async {
   }
 }
 
-void _printUsage(ArgParser parser) {
+void printUsage(ArgParser parser) {
   print(
     [
       "XYZ Gen - Makeups Generator",

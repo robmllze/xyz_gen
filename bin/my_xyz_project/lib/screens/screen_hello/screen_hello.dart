@@ -8,52 +8,48 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-part of 'screen_home.dart';
+import 'package:flutter/material.dart';
+import 'package:xyz_gen/generate_screen_configurations/annotation.dart';
+
+import '/all.dart';
+
+part '_screen_hello.g.dart';
+part '_screen_hello.logic.dart';
+part '_screen_hello.logic.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _State
-    extends MyScreenState<ScreenHome, ScreenHomeConfiguration, _Logic> {
+@GenerateScreenConfiguration(
+  queryParameters: {
+    "",
+  },
+  pathSegments: [
+    "",
+  ],
+)
+class ScreenHello extends MyScreen {
   //
   //
   //
 
+  ScreenHello(MyRouteConfiguration configuration)
+      : super(
+          configuration,
+        );
+
+  //
+  //
+  //
+
+  // Do not modify.
   @override
-  Widget layout(Widget body) {
-    return super.layout(
-      SizedBox.expand(
-        child: MyScrollable(
-          makeup: G.theme.scrollableDefault(),
-          child: body,
-        ),
-      ),
-    );
-  }
+  _State createState() => _State();
 
   //
   //
   //
 
+  // Do not modify.
   @override
-  Widget body(final context) {
-    return MyColumn(
-      divider: SizedBox(height: $20),
-      children: [
-        // Consumer(
-        //   builder: (_, final ref, __) {
-        //     final value = ref.watch(this.logic.pCounter);
-        //     return Text("Count: $value", style: G.theme.textStyles.p1);
-        //   },
-        // ),
-        this.logic.pCounter.build((final value) {
-          return Text("Count: $value", style: G.theme.textStyles.p1);
-        }),
-        MyButton(
-          makeup: G.theme.buttonDefault(),
-          label: "INCREMENT COUNTER",
-          onTap: this.logic.incrementCounter,
-        ),
-      ],
-    );
-  }
+  _Logic createLogic(final screen, final state) => _Logic(screen, state);
 }

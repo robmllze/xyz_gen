@@ -8,29 +8,26 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-part of 'screen_home.dart';
+part of 'screen_hello.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _Logic extends _LogicBroker<ScreenHome, _State> {
+class _State
+    extends MyScreenState<ScreenHello, ScreenHelloConfiguration, _Logic> {
   //
   //
   //
 
-  _Logic(super.screen, super.state);
-
-  //
-  //
-  //
-
-  final pCounter = Pod<int>(-1);
-
-  //
-  //
-  //
-
-  void incrementCounter() {
-    this.pCounter.update((final value) => value + 1);
+  @override
+  Widget layout(Widget body) {
+    return super.layout(
+      SizedBox.expand(
+        child: MyScrollable(
+          makeup: G.theme.scrollableDefault(),
+          child: body,
+        ),
+      ),
+    );
   }
 
   //
@@ -38,19 +35,25 @@ class _Logic extends _LogicBroker<ScreenHome, _State> {
   //
 
   @override
-  void initLogic() {
-    this.pCounter.set(0);
-    super.initLogic();
-  }
-
-  //
-  //
-  //
-
-  @override
-  void dispose() {
-    // Be sure to dispose all pods here.
-    this.pCounter.dispose();
-    super.dispose();
+  Widget body(final context) {
+    return MyColumn(
+      divider: SizedBox(height: $20),
+      children: [
+        // Consumer(
+        //   builder: (_, final ref, __) {
+        //     final value = ref.watch(this.logic.pCounter);
+        //     return Text("Count: $value", style: G.theme.textStyles.p1);
+        //   },
+        // ),
+        this.logic.pCounter.build((final value) {
+          return Text("Count: $value", style: G.theme.textStyles.p1);
+        }),
+        MyButton(
+          makeup: G.theme.buttonDefault(),
+          label: "INCREMENT COUNTER",
+          onTap: this.logic.incrementCounter,
+        ),
+      ],
+    );
   }
 }

@@ -10,10 +10,10 @@ import '../generate_screen_configurations/generate_screen_configurations.dart';
 Future<void> generateScreen({
   required String outputDirPath,
   required String screenName,
-  String logicTemplateFilePath = "./templates/screen/logic.dart.md",
-  String screenTemplateFilePath = "./templates/screen/screen.dart.md",
-  String stateTemplateFilePath = "./templates/screen/state.dart.md",
-  String configurationTemplateFilePath = "./templates/screen_configuration_template.md",
+  required String logicTemplateFilePath,
+  required String screenTemplateFilePath,
+  required String stateTemplateFilePath,
+  required String configurationTemplateFilePath,
   bool isOnlyAccessibleIfSignedIn = false,
   bool isOnlyAccessibleIfSignedInAndVerified = false,
   bool isOnlyAccessibleIfSignedOut = false,
@@ -93,14 +93,17 @@ Future<void> _writeScreenFile(
   String title = "",
   String navigator = "",
 }) async {
+  final a = internalParameters.entries.map((e) => '"${e.key}": "${e.value}"').join(",");
+  final b = queryParameters.map((v) => '"$v"').join(",");
+  final c = pathSegments.map((v) => '"$v"').join(",");
   final configurationArgs = [
     if (isOnlyAccessibleIfSignedIn) "isOnlyAccessibleIfSignedIn: true",
     if (isOnlyAccessibleIfSignedInAndVerified) "isOnlyAccessibleIfSignedInAndVerified: true",
     if (isOnlyAccessibleIfSignedOut) "isOnlyAccessibleIfSignedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty) "internalParameters: $internalParameters",
-    if (queryParameters.isNotEmpty) "queryParameters: $queryParameters",
-    if (pathSegments.isNotEmpty) "pathSegments: $pathSegments",
+    if (internalParameters.isNotEmpty) "internalParameters: {$a,}",
+    if (queryParameters.isNotEmpty) "queryParameters: {$b,}",
+    if (pathSegments.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
 
   final superArgs = [
@@ -111,8 +114,8 @@ Future<void> _writeScreenFile(
 
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    "___CONFIGURATION_ARGS___": configurationArgs,
-    "___SUPER_ARGS___": superArgs,
+    "___CONFIGURATION_ARGS___": configurationArgs.isNotEmpty ? "$configurationArgs," : "",
+    "___SUPER_ARGS___": superArgs.isNotEmpty ? "$superArgs," : "",
   });
 }
 
