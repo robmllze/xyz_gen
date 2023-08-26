@@ -8,19 +8,12 @@ name: xyz_gen
 version: 0.1.0
 publish_to: none
 
-##
-
 environment:
   sdk: ^3.0.5
 
-##
-
 dependency_overrides:
-
   xyz_utils:
     path: ../xyz_utils
-
-##
 
 dependencies:
   xyz_utils:
@@ -30,8 +23,6 @@ dependencies:
   args:
   path:
   analyzer:
-
-##
 
 dev_dependencies:
   lints:
