@@ -181,9 +181,8 @@ void printUsage(ArgParser parser) {
   print(
     [
       "XYZ Screen Generator",
-      "Usage:",
+      "Example: dart generate_screen.dart -o ../my_xyz_project/lib/screens -s ScreenHome",
       parser.usage,
-      // dart generate_screen.dart -o ../my_xyz_project/lib/screens -s ScreenHello
     ].join("\n"),
   );
 }
