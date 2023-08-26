@@ -10,6 +10,20 @@ import '../generate_screen_configurations/generate_screen_configurations.dart';
 Future<void> generateScreen({
   required String outputDirPath,
   required String screenName,
+  String logicTemplateFilePath = "./templates/screen/logic.dart.md",
+  String screenTemplateFilePath = "./templates/screen/screen.dart.md",
+  String stateTemplateFilePath = "./templates/screen/state.dart.md",
+  String configurationTemplateFilePath = "./templates/screen_configuration_template.md",
+  bool isOnlyAccessibleIfSignedIn = false,
+  bool isOnlyAccessibleIfSignedInAndVerified = false,
+  bool isOnlyAccessibleIfSignedOut = false,
+  bool isRedirectable = false,
+  Map<String, String> internalParameters = const {},
+  Set<String> queryParameters = const {},
+  List<String> pathSegments = const [],
+  String makeup = "",
+  String title = "",
+  String navigator = "",
 }) async {
   final screenClassKey = screenName.toSnakeCase();
   final screenClassName = screenName.toCamelCase();
@@ -24,31 +38,41 @@ Future<void> generateScreen({
     "___SCREEN_FILE___": screenFileName,
     "___STATE_FILE___": logicFileName,
   };
-  final screenFolder = p.join(outputDirPath, screenClassKey);
-  final screenFilePath = p.join(screenFolder, screenFileName);
-  await _writeScreenFile(
-    "./templates/screen/screen.dart.md",
-    screenFilePath,
-    data,
-  );
-  printGreen("Generated `$screenClassName` in `$screenFilePath`");
-  final logicFilePath = p.join(screenFolder, logicFileName);
+  final folderDirPath = p.join(outputDirPath, screenClassKey);
+  final logicFilePath = p.join(folderDirPath, logicFileName);
   await _writeFile(
-    "./templates/screen/logic.dart.md",
+    logicTemplateFilePath,
     logicFilePath,
     data,
   );
   printGreen("Generated `_Logic` in `$logicFilePath`");
-  final stateFilePath = p.join(screenFolder, stateFileName);
+  final screenFilePath = p.join(folderDirPath, screenFileName);
+  await _writeScreenFile(
+    screenTemplateFilePath,
+    screenFilePath,
+    data,
+    isOnlyAccessibleIfSignedIn: isOnlyAccessibleIfSignedIn,
+    isOnlyAccessibleIfSignedInAndVerified: isOnlyAccessibleIfSignedInAndVerified,
+    isOnlyAccessibleIfSignedOut: isOnlyAccessibleIfSignedOut,
+    isRedirectable: isRedirectable,
+    internalParameters: internalParameters,
+    queryParameters: queryParameters,
+    pathSegments: pathSegments,
+    makeup: makeup,
+    title: title,
+    navigator: navigator,
+  );
+  printGreen("Generated `$screenClassName` in `$screenFilePath`");
+  final stateFilePath = p.join(folderDirPath, stateFileName);
   await _writeFile(
-    "./templates/screen/state.dart.md",
+    stateTemplateFilePath,
     stateFilePath,
     data,
   );
   printGreen("Generated `_State` in `$stateFilePath`");
   await generateScreenConfigurations(
-    rootDirPath: screenFolder,
-    templateFilePath: "./templates/screen_configuration_template.md",
+    rootDirPath: folderDirPath,
+    templateFilePath: configurationTemplateFilePath,
   );
 }
 
