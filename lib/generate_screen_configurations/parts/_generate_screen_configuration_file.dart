@@ -70,6 +70,7 @@ Future<void> _generateScreenConfigurationFile(
     final classFileDirPath = getDirPath(fixedFilePath);
     final classKey = getFileNameWithoutExtension(classFileName);
     final screenKey = className.toSnakeCase();
+    final configurationClassName = "${className}Configuration";
     final screenSegment = screenKey.replaceAll("screen_", "");
     final screenPath = "/$screenSegment";
     final screenSegmentKey = screenSegment.toUpperCase();
@@ -89,7 +90,7 @@ Future<void> _generateScreenConfigurationFile(
       template,
       {
         "___CLASS___": className,
-        "___CONFIGURATION_CLASS___": "${className}Configuration",
+        "___CONFIGURATION_CLASS___": configurationClassName,
         "___CLASS_FILE___": classFileName,
         "___SCREEN_KEY___": screenKey,
         "___SCREEN_SEGMENT___": screenSegment,
@@ -119,7 +120,7 @@ Future<void> _generateScreenConfigurationFile(
     await fmtDartFile(outputFilePath);
 
     // Log the generated file.
-    printGreen("Generated `$className` in `$outputFilePath`");
+    printGreen("Generated `$configurationClassName` in `$outputFilePath`");
   }
 
   // ---------------------------------------------------------------------------
