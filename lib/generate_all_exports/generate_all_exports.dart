@@ -18,13 +18,14 @@ Future<void> generateAllExports(
     rootDirPath: rootDirPath,
     pathPatterns: pathPatterns,
     onFileFound: (
-      final dirName,
-      final folderName,
+      _,
+      __,
       final filePath,
     ) async {
-      final allFilePath = p.join(dirName, "all_$folderName.dart");
-      if (dirName != cachedDirName) {
-        cachedDirName = dirName;
+      final folderName = getBaseName(rootDirPath);
+      final allFilePath = p.join(rootDirPath, "all_$folderName.dart");
+      if (rootDirPath != cachedDirName) {
+        cachedDirName = rootDirPath;
         printGreen("Clearing `$allFilePath`...");
         await writeFile(
           allFilePath,
