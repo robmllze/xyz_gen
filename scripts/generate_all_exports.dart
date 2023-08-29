@@ -15,8 +15,17 @@ const ROOT_OPTION = "root";
 
 void main(List<String> arguments) async {
   final parser = ArgParser()
-    ..addOption(ROOT_OPTION, abbr: "r", help: "Path to the root directory.")
-    ..addFlag("help", abbr: "h", negatable: false, help: "Displays the help information.");
+    ..addOption(
+      ROOT_OPTION,
+      abbr: "r",
+      help: "Path to the root directory.",
+    )
+    ..addFlag(
+      "help",
+      abbr: "h",
+      negatable: false,
+      help: "Displays the help information.",
+    );
 
   try {
     late ArgResults results;
@@ -34,7 +43,7 @@ void main(List<String> arguments) async {
     final root = results[ROOT_OPTION] as String?;
 
     if (root == null) {
-      printRed("You must provide the -directory option.");
+      printRed("You must provide the -root option.");
       printUsage(parser);
       return;
     }

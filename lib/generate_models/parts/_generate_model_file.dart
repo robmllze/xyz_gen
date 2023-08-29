@@ -49,7 +49,7 @@ Future<void> _generateModelFile(
   Future<void> onAnnotatedClass(String _, String parentClassName) async {
     // Create the actual values to replace the placeholders with.
     className = className.isEmpty ? "${parentClassName}Model" : className;
-    final classFileName = getFileName(fixedFilePath);
+    final classFileName = getBaseName(fixedFilePath);
 
     // Replace placeholders with the actual values.
     final template = templates.values.first;

@@ -33,7 +33,7 @@ void main(List<String> arguments) async {
     final root = results[ROOT_OPTION] as String?;
 
     if (root == null) {
-      printRed("You must provide the -directory option.");
+      printRed("You must provide the -root option.");
       printUsage(parser);
       return;
     }

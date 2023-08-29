@@ -66,7 +66,7 @@ Future<void> _generateScreenConfigurationFile(
   // Define the function to call for each annotated class.
   Future<void> onAnnotatedClass(String _, String className) async {
     // Create the actual values to replace the placeholders with.
-    final classFileName = getFileName(fixedFilePath);
+    final classFileName = getBaseName(fixedFilePath);
     final classFileDirPath = getDirPath(fixedFilePath);
     final classKey = getFileNameWithoutExtension(classFileName);
     final screenKey = className.toSnakeCase();
