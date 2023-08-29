@@ -131,7 +131,7 @@ Future<void> _writeFile(
   Map<String, String> data,
 ) async {
   final template = await readDartTemplate(templateFilePath);
-  final output = replaceExpressions(template, data);
+  final output = replaceAllData(template, data);
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
 }
