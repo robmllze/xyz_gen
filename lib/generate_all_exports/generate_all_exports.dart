@@ -40,7 +40,9 @@ Future<void> generateAllExports({
         }
         if (filePath != allFilePath) {
           final relativeFilePath = filePath.replaceFirst(r, "");
-          final data = "export '$relativeFilePath';";
+          final fileName = getBaseName(filePath);
+          final private = fileName.startsWith("_");
+          final data = "${private ? "//" : ""}export '$relativeFilePath';";
 
           await writeFile(
             allFilePath,
