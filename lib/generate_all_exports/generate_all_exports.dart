@@ -50,8 +50,10 @@ Future<void> generateAllExports({
             append: true,
           );
           printGreen("Writing `$data` to `$allFilePath`...");
+          return true;
         } else {
           printGreen("Skipping `$filePath`...");
+          return false;
         }
       },
     );

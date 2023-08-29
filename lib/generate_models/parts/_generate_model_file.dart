@@ -9,6 +9,7 @@ part of '../generate_models.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> _generateModelFile(
+  AnalysisContextCollection collection,
   String fixedFilePath,
   Map<String, String> templates,
 ) async {
@@ -87,6 +88,7 @@ Future<void> _generateModelFile(
   // Analyze the annotated class and generate the model file.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
+    collection: collection,
     classAnnotations: {"GenerateModel"},
     onAnnotatedClass: onAnnotatedClass,
     onClassAnnotationField: onClassAnnotationField,

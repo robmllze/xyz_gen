@@ -9,6 +9,7 @@ part of '../generate_screen_configurations.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> _generateScreenConfigurationFile(
+  AnalysisContextCollection collection,
   String fixedFilePath,
   Map<String, String> templates,
 ) async {
@@ -128,6 +129,7 @@ Future<void> _generateScreenConfigurationFile(
   // Analyze the annotated class and generate the screen configuration file.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
+    collection: collection,
     classAnnotations: {"GenerateScreenConfiguration"},
     onAnnotatedClass: onAnnotatedClass,
     onClassAnnotationField: onClassAnnotationField,

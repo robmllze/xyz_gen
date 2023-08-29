@@ -4,6 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
+import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 import 'package:path/path.dart' as p;
@@ -18,12 +19,7 @@ Future<void> generateMakeups({
   required String exportsTemplateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
-  await deleteGeneratedDartFiles(
-    outputDirPath ?? rootDirPath,
-    onDelete: (final filePath) {
-      printLightYellow("Deleted generated file `$filePath`");
-    },
-  );
+  final collection = await createCollectionFromRoot(rootDirPath);
   await generateFromTemplates(
     rootDirPath: rootDirPath,
     templateFilePaths: {
@@ -32,13 +28,22 @@ Future<void> generateMakeups({
       exportsTemplateFilePath,
     },
     pathPatterns: pathPatterns,
-    generateForFiles: (a, b) => _generateMakeupFiles(outputDirPath, a, b),
+    generateForFile: (final fixedFilePath, final templates) async {
+      // await deleteGeneratedDartFile(
+      //   fixedFilePath,
+      //   (final filePath) {
+      //     printLightYellow("Deleted generated file `$filePath`");
+      //   },
+      // );
+      return _generateMakeupFile(collection, outputDirPath, fixedFilePath, templates);
+    },
   );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> _generateMakeupFiles(
+Future<void> _generateMakeupFile(
+  AnalysisContextCollection collection,
   String? outputDirPath,
   String fixedFilePath,
   Map<String, String> templates,
@@ -120,6 +125,7 @@ Future<void> _generateMakeupFiles(
   // Analyze the annotated class and generate the template files.
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
+    collection: collection,
     classAnnotations: {"GenerateMakeups"},
     onAnnotatedClass: onAnnotatedClass,
     onClassAnnotationField: onClassAnnotationField,

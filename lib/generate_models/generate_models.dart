@@ -6,6 +6,7 @@
 
 // ignore_for_file: unnecessary_this, avoid_print
 
+import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart';
@@ -24,13 +25,16 @@ Future<void> generateModels({
   required String templateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
+  final collection = await createCollectionFromRoot(rootDirPath);
   await generateFromTemplates(
     begType: "model",
     rootDirPath: rootDirPath,
     templateFilePaths: {templateFilePath},
     deleteGeneratedFiles: true,
     pathPatterns: pathPatterns,
-    generateForFiles: _generateModelFile,
+    generateForFile: (final fixedFilePath, final templates) async {
+      await _generateModelFile(collection, fixedFilePath, templates);
+    },
     onDelete: (final filePath) {
       printLightYellow("Deleted generated file `$filePath`");
     },
