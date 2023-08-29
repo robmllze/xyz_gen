@@ -46,7 +46,7 @@ Future<void> _generateMakeupFiles(
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.
-  var names = <String>{};
+  var names = <String>{"default"};
   var parameters = <String, TypeCode>{};
 
   // ---------------------------------------------------------------------------
@@ -55,8 +55,9 @@ Future<void> _generateMakeupFiles(
   void onClassAnnotationField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
       case "names":
-        names =
-            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{};
+        names.addAll(
+          fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{},
+        );
         break;
       case "parameters":
         parameters = fieldValue.toMapValue()?.map((k, v) {
