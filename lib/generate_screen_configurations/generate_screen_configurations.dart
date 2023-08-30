@@ -21,7 +21,7 @@ Future<void> generateScreenConfigurations({
   required String templateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
-  final collection = await createCollectionFromRoot(rootDirPath);
+  final collection = await createCollection({rootDirPath});
   await generateFromTemplates(
     begType: "screen",
     rootDirPath: rootDirPath,

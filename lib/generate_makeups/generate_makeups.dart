@@ -19,7 +19,7 @@ Future<void> generateMakeups({
   required String exportsTemplateFilePath,
   Set<String> pathPatterns = const {},
 }) async {
-  final collection = await createCollectionFromRoot(rootDirPath);
+  final collection = await createCollection({rootDirPath});
   await generateFromTemplates(
     rootDirPath: rootDirPath,
     templateFilePaths: {

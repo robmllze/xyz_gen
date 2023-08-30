@@ -20,13 +20,8 @@ Future<void> generateAllExports({
   for (final subDirPath in subDirPaths) {
     final r = _joinPath(rootDirPath, subDirPath);
     await findDartFiles(
-      rootDirPath: r,
-      pathPatterns: pathPatterns,
-      onFileFound: (
-        _,
-        __,
-        final filePath,
-      ) async {
+      r,
+      (_, __, final filePath) async {
         final folderName = getBaseName(r);
         final allFilePath = p.join(r, "all_$folderName.dart");
         if (r != cachedDirName) {
@@ -56,6 +51,7 @@ Future<void> generateAllExports({
           return false;
         }
       },
+      pathPatterns,
     );
   }
 }
