@@ -23,31 +23,37 @@ Future<void> generateAllExports({
       pathPatterns: pathPatterns,
       onFileFound: (_, __, final filePath) async {
         final folderName = getBaseName(path);
-        final allFilePath = join(path, "all_$folderName.dart");
+        final outputFileName = "all_${folderName}_g.dart";
+        final outputFilePath = join(path, outputFileName);
+
         if (path != cachedDirName) {
           cachedDirName = path;
-          printGreen("Clearing `$allFilePath`...");
+          printGreen("Clearing `$outputFileName`...");
           final data = replaceAllData(template, {"___BODY___": ""});
           await writeFile(
-            allFilePath,
+            outputFilePath,
             data,
           );
         }
-        if (filePath != allFilePath) {
-          final relativeFilePath = filePath.replaceFirst(path, "");
+        if (filePath != outputFilePath) {
+          var relativeFilePath = filePath.replaceFirst(path, "");
+          // Remove the initial "/" if present.
+          relativeFilePath = relativeFilePath.startsWith(separator)
+              ? relativeFilePath.substring(1)
+              : relativeFilePath;
           final fileName = getBaseName(filePath);
           final private = fileName.startsWith("_");
           final data = "${private ? "//" : ""}export '$relativeFilePath';";
 
           await writeFile(
-            allFilePath,
+            outputFilePath,
             "$data\n",
             append: true,
           );
-          printGreen("Writing `$data` to `$allFilePath`...");
+          printGreen("Writing `$data` to `$outputFileName`...");
           return true;
         } else {
-          printGreen("Skipping `$filePath`...");
+          printGreen("Skipping `$outputFileName`...");
           return false;
         }
       },
