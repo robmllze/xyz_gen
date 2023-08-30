@@ -7,6 +7,8 @@
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 import 'package:path/path.dart' as p;
 
+export '/basic_console_app.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExports({

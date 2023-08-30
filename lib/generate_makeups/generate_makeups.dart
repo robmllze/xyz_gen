@@ -242,8 +242,8 @@ class GenerateMakeupsArgs extends ValidObject {
         this.builderTemplateFilePath,
         this.exportsTemplateFilePath,
         this.rootPaths,
-        this.subPaths,
-        this.pathPatterns,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
         this.outputDirPath,
       ]);
 }

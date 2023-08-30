@@ -145,7 +145,8 @@ class BasicTemplateArgs extends ValidObject {
   @override
   bool get valid => ValidObject.areValid([
         this.rootPaths,
-        this.pathPatterns,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
         this.templateFilePath,
       ]);
 }
