@@ -11,9 +11,46 @@ import '/_dependencies.dart';
 Future<void> generateScreenAccess({
   required String templateFilePath,
   required String outputFilePath,
-  required Set<String> screenClassNames,
+  Set<String> rootPaths = const {},
+  Set<String> subPaths = const {},
+  Set<String> pathPatterns = const {},
+  Set<String> screenClassNames = const {},
 }) async {
-  final sorted = screenClassNames.toList()..sort();
+  //
+
+  final combinedPaths = combinePaths([rootPaths, subPaths]);
+  final screenClassNames1 = Set.from(screenClassNames);
+
+  //
+
+  for (final path in combinedPaths) {
+    final filePaths = await listFilePaths(path);
+    if (filePaths != null) {
+      filePaths.sort();
+      for (final filePath in filePaths) {
+        if (isGeneratedDartFilePath(filePath, pathPatterns)) {
+          final screenFileName = getBaseName(filePath).replaceAll(".g", "");
+          if (screenFileName.startsWith("screen_")) {
+            final contents = await readFile(filePath);
+            if (contents != null) {
+              final x = RegExp("const +_CLASS += +[\"'](\\w+)[\"'];");
+              final match = x.firstMatch(contents);
+              if (match != null && match.groupCount == 2) {
+                final screenClassName = match.group(1);
+                if (screenClassName != null) {
+                  screenClassNames1.add(screenClassName);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //
+
+  final sorted = screenClassNames1.toList()..sort();
   final keys = sorted.map((e) => e.toSnakeCase().toUpperCase());
   final a = sorted.map((e) => "maker$e").join(",");
   final b = keys.map((e) => "...PATHS_NOT_REDIRECTABLE_$e").join(",");
@@ -34,4 +71,24 @@ Future<void> generateScreenAccess({
   final template = await readDartTemplate(templateFilePath);
   final outputContent = template.replaceAll("___BODY___", all);
   await writeFile(outputFilePath, outputContent);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class GenerateScreenAccessArgs extends ValidObject {
+  final String? templateFilePath;
+  final String? outputFilePath;
+  final Set<String>? screenClassNames;
+  const GenerateScreenAccessArgs({
+    required this.templateFilePath,
+    required this.outputFilePath,
+    required this.screenClassNames,
+  });
+
+  @override
+  bool get valid => ValidObject.areValid([
+        this.templateFilePath,
+        this.outputFilePath,
+        this.screenClassNames,
+      ]);
 }
