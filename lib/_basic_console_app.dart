@@ -4,13 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: depend_on_referenced_packages
-
-import 'dart:async';
-import 'dart:io';
-
-import 'package:args/args.dart';
-import 'package:xyz_utils/xyz_utils_non_web.dart';
+import '_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -94,26 +88,6 @@ FutureOr<void> basicConsoleAppBody<T extends ValidObject>({
 
 Iterable<String>? splitArg(dynamic input, [String separator = SEPARATOR]) {
   return input?.toString().split(separator).map((e) => e.trim());
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-abstract class ValidObject {
-  const ValidObject();
-  bool get valid;
-  static bool areValid(List<dynamic> inputs) {
-    for (final input in inputs) {
-      if (input == null) {
-        return false;
-      }
-      try {
-        if (input.isEmpty) {
-          return false;
-        }
-      } catch (_) {}
-    }
-    return true;
-  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

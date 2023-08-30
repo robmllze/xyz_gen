@@ -4,13 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/dart/constant/value.dart';
-import 'package:xyz_utils/xyz_utils_non_web.dart';
-import 'package:path/path.dart' as p;
-
-import '/basic_console_app.dart';
-export '/basic_console_app.dart';
+import '/_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -85,12 +79,12 @@ Future<void> _generateMakeupFile(
   // Define the function to call for each annotated class.
   Future<void> onAnnotatedClass(String _, String className) async {
     final classFileDirPath = getDirPath(fixedFilePath);
-    final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
+    final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
-    const makeupClassFileName = "__makeup.g.dart";
+    const makeupClassFileName = "__makeug.dart";
     final rootOutputDirPath =
-        outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
+        outputDirPath == null ? defaultOutputDirPath : join(outputDirPath, classKey);
     final templateData = {
       "___MAKEUP_CLASS_FILE___": makeupClassFileName,
       "___MAKEUP_CLASS___": makeupClassName,
@@ -99,7 +93,7 @@ Future<void> _generateMakeupFile(
     };
 
     await _writeClassFile(
-      p.join(rootOutputDirPath, "src", makeupClassFileName),
+      join(rootOutputDirPath, "src", makeupClassFileName),
       templates.values.elementAt(0),
       templateData,
       parameters,
@@ -107,7 +101,7 @@ Future<void> _generateMakeupFile(
 
     final exportFiles = await _writeBuilderFiles(
       makeupClassName,
-      p.join(rootOutputDirPath, "src"),
+      join(rootOutputDirPath, "src"),
       templates.values.elementAt(1),
       templateData,
       parameters,
@@ -178,7 +172,7 @@ Future<Set<String>> _writeBuilderFiles(
     final shortMakeupKey = name.toSnakeCase();
     final longMakeupKey = "${shortMakeupKey}_${classKey}_makeup";
     final outputFileName = "_$longMakeupKey.dart";
-    final outputFilePath = p.join(outputDirPath, outputFileName);
+    final outputFilePath = join(outputDirPath, outputFileName);
     if (await fileExists(outputFilePath)) continue;
     final makeupBuilder = longMakeupKey.toCamelCase();
     final makeupBuilderFunction = shortMakeupKey == "default"
@@ -206,7 +200,7 @@ Future<void> _writeExportsFile(
   Map<String, String> templateData,
   Set<String> exportFiles,
 ) async {
-  final outputFilepath = p.join(outputDirPath, "makeups.dart");
+  final outputFilepath = join(outputDirPath, "makeups.dart");
   final output = replaceAllData(template, {
     ...templateData,
     "___EXPORTS___": exportFiles.map((e) => "export 'src/$e';").join("\n"),

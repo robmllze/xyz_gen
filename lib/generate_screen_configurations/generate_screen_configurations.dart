@@ -4,12 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: constant_identifier_names, avoid_print
-
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/dart/constant/value.dart';
-import 'package:xyz_utils/xyz_utils_non_web.dart';
-import 'package:path/path.dart' as p;
+import '/_dependencies.dart';
 
 part 'parts/_replacements.dart';
 part 'parts/_generate_screen_configuration_file.dart';

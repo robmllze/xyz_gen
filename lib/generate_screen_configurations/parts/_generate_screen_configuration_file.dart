@@ -83,7 +83,7 @@ Future<void> _generateScreenConfigurationFile(
         !isOnlyAccessibleIfSignedOut;
     final la4 = isRedirectable == false;
     final outputFileName = "$classKey.g.dart";
-    final outputFilePath = p.join(classFileDirPath, outputFileName);
+    final outputFilePath = join(classFileDirPath, outputFileName);
 
     // Replace placeholders with the actual values.
     final template = templates.values.first;

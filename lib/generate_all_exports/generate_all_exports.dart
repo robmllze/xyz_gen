@@ -4,10 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:xyz_utils/xyz_utils_non_web.dart';
-import 'package:path/path.dart' as p;
-
-export '/basic_console_app.dart';
+import '/_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -26,7 +23,7 @@ Future<void> generateAllExports({
       pathPatterns: pathPatterns,
       onFileFound: (_, __, final filePath) async {
         final folderName = getBaseName(path);
-        final allFilePath = p.join(path, "all_$folderName.dart");
+        final allFilePath = join(path, "all_$folderName.dart");
         if (path != cachedDirName) {
           cachedDirName = path;
           printGreen("Clearing `$allFilePath`...");

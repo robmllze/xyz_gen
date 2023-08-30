@@ -4,17 +4,10 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: unnecessary_this, avoid_print
-
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/dart/constant/value.dart';
-import 'package:path/path.dart' as p;
-import 'package:xyz_utils/xyz_utils_non_web.dart';
+import '/_dependencies.dart';
 
 export 'annotation.dart';
 export 'model.dart';
-
-export '/basic_console_app.dart';
 
 part 'parts/_generate_model_file.dart';
 part 'parts/_helpers.dart';

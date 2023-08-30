@@ -4,13 +4,8 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-import 'package:path/path.dart' as p;
-import 'package:xyz_utils/xyz_utils_non_web.dart';
-
+import '/_dependencies.dart';
 import '/generate_screen_configurations/generate_screen_configurations.dart';
-
-import '/basic_console_app.dart';
-export '/basic_console_app.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -45,15 +40,15 @@ Future<void> generateScreen({
     "___SCREEN_FILE___": screenFileName,
     "___STATE_FILE___": logicFileName,
   };
-  final folderDirPath = p.join(outputDirPath, screenClassKey);
-  final logicFilePath = p.join(folderDirPath, logicFileName);
+  final folderDirPath = join(outputDirPath, screenClassKey);
+  final logicFilePath = join(folderDirPath, logicFileName);
   await _writeFile(
     logicTemplateFilePath,
     logicFilePath,
     data,
   );
   printGreen("Generated `_Logic` in `$logicFilePath`");
-  final screenFilePath = p.join(folderDirPath, screenFileName);
+  final screenFilePath = join(folderDirPath, screenFileName);
   await _writeScreenFile(
     screenTemplateFilePath,
     screenFilePath,
@@ -70,7 +65,7 @@ Future<void> generateScreen({
     navigator: navigator,
   );
   printGreen("Generated `$screenClassName` in `$screenFilePath`");
-  final stateFilePath = p.join(folderDirPath, stateFileName);
+  final stateFilePath = join(folderDirPath, stateFileName);
   await _writeFile(
     stateTemplateFilePath,
     stateFilePath,

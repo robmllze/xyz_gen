@@ -70,7 +70,7 @@ Future<void> _generateModelFile(
       final classFileDirPath = getDirPath(fixedFilePath);
       final classKey = getFileNameWithoutExtension(classFileName);
       final outputFileName = "$classKey.g.dart";
-      return p.join(classFileDirPath, outputFileName);
+      return join(classFileDirPath, outputFileName);
     }();
 
     // Write the generated Dart file.
