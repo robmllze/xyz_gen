@@ -27,7 +27,7 @@ Future<void> generateAllExports({
         if (path != cachedDirName) {
           cachedDirName = path;
           printGreen("Clearing `$allFilePath`...");
-          final data = replaceAllData(template, {"___EXPORTS___": ""});
+          final data = replaceAllData(template, {"___BODY___": ""});
           await writeFile(
             allFilePath,
             data,

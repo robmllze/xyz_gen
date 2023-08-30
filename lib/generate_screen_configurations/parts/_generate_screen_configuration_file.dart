@@ -71,10 +71,10 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final classFileDirPath = getDirPath(fixedFilePath);
     final classKey = getFileNameWithoutExtension(classFileName);
     final screenKey = className.toSnakeCase();
+    final screenConstKey = screenKey.toUpperCase();
     final configurationClassName = "${className}Configuration";
     final screenSegment = screenKey.replaceAll("screen_", "");
     final screenPath = "/$screenSegment";
-    final screenSegmentKey = screenSegment.toUpperCase();
     final la0 = isOnlyAccessibleIfSignedInAndVerified;
     final la1 = isOnlyAccessibleIfSignedIn;
     final la2 = isOnlyAccessibleIfSignedOut;
@@ -94,8 +94,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___CONFIGURATION_CLASS___": configurationClassName,
         "___CLASS_FILE___": classFileName,
         "___SCREEN_KEY___": screenKey,
+        "___SCREEN_CONST_KEY___": screenConstKey,
         "___SCREEN_SEGMENT___": screenSegment,
-        "___SCREEN_SEGMENT_KEY___": screenSegmentKey,
         "___SCREEN_PATH___": screenPath,
         "___LA0___": la0,
         "___LA1___": la1,
