@@ -72,8 +72,9 @@ Future<void> generateScreenAccess({
     "___PATHS_ACCESSIBLE_ONLY_IF_SIGNED_OUT___": f,
   });
   await writeFile(outputFilePath, outputContent);
+  final joined = sorted.map((e) => "`$e`").joinWithLastSeparator(lastSeparator: " and ");
   printGreen(
-    "Generated screen access for `$sorted` in `${getBaseName(outputFilePath)}`",
+    "Generated screen access for $joined in `${getBaseName(outputFilePath)}`",
   );
 }
 
