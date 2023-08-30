@@ -14,6 +14,8 @@ import 'package:xyz_utils/xyz_utils_non_web.dart';
 export 'annotation.dart';
 export 'model.dart';
 
+export '/basic_console_app.dart';
+
 part 'parts/_generate_model_file.dart';
 part 'parts/_helpers.dart';
 part 'parts/_replacements.dart';
@@ -32,10 +34,10 @@ Future<void> generateModels({
     pathPatterns: pathPatterns,
     begType: "model",
     templateFilePaths: {templateFilePath},
-    deleteGeneratedFiles: true,
+    //deleteGeneratedFiles: true,
     generateForFile: _generateModelFile,
-    onDelete: (final filePath) {
-      printLightYellow("Deleted generated file `$filePath`");
-    },
+    // onDelete: (final filePath) {
+    //   printLightYellow("Deleted generated file `$filePath`");
+    // },
   );
 }

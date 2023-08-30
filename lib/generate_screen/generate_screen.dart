@@ -9,6 +9,9 @@ import 'package:xyz_utils/xyz_utils_non_web.dart';
 
 import '/generate_screen_configurations/generate_screen_configurations.dart';
 
+import '/basic_console_app.dart';
+export '/basic_console_app.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreen({
@@ -134,4 +137,64 @@ Future<void> _writeFile(
   final output = replaceAllData(template, data);
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class GenerateScreenArgs extends ValidObject {
+  final String? outputDirPath;
+  final String? screenName;
+  final String? logicTemplateFilePath;
+  final String? screenTemplateFilePath;
+  final String? stateTemplateFilePath;
+  final String? configurationTemplateFilePath;
+  final bool? isOnlyAccessibleIfSignedIn;
+  final bool? isOnlyAccessibleIfSignedInAndVerified;
+  final bool? isOnlyAccessibleIfSignedOut;
+  final bool? isRedirectable;
+  final Map<String, String>? internalParameters;
+  final Set<String>? queryParameters;
+  final List<String>? pathSegments;
+  final String? makeup;
+  final String? title;
+  final String? navigator;
+
+  const GenerateScreenArgs({
+    required this.outputDirPath,
+    required this.screenName,
+    required this.logicTemplateFilePath,
+    required this.screenTemplateFilePath,
+    required this.stateTemplateFilePath,
+    required this.configurationTemplateFilePath,
+    required this.isOnlyAccessibleIfSignedIn,
+    required this.isOnlyAccessibleIfSignedInAndVerified,
+    required this.isOnlyAccessibleIfSignedOut,
+    required this.isRedirectable,
+    required this.internalParameters,
+    required this.queryParameters,
+    required this.pathSegments,
+    required this.makeup,
+    required this.title,
+    required this.navigator,
+  });
+
+  @override
+  bool get valid => ValidObject.areValid([
+        outputDirPath,
+        screenName,
+        logicTemplateFilePath,
+        screenTemplateFilePath,
+        stateTemplateFilePath,
+        configurationTemplateFilePath,
+        isOnlyAccessibleIfSignedIn,
+        isOnlyAccessibleIfSignedInAndVerified,
+        isOnlyAccessibleIfSignedOut,
+        isRedirectable,
+        internalParameters,
+        queryParameters,
+        pathSegments,
+        makeup,
+        title,
+        navigator,
+      ]);
 }

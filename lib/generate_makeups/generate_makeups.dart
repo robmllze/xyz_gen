@@ -9,6 +9,9 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 import 'package:path/path.dart' as p;
 
+import '/basic_console_app.dart';
+export '/basic_console_app.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateMakeups({
@@ -211,4 +214,36 @@ Future<void> _writeExportsFile(
   await writeFile(outputFilepath, output);
   await fmtDartFile(outputFilepath);
   printGreen("Generated makeup exports `$outputFilepath`");
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class GenerateMakeupsArgs extends ValidObject {
+  final String? classTemplateFilePath;
+  final String? builderTemplateFilePath;
+  final String? exportsTemplateFilePath;
+  final Set<String>? rootPaths;
+  final Set<String>? subPaths;
+  final Set<String>? pathPatterns;
+  final String? outputDirPath;
+  const GenerateMakeupsArgs({
+    required this.classTemplateFilePath,
+    required this.builderTemplateFilePath,
+    required this.exportsTemplateFilePath,
+    required this.rootPaths,
+    required this.subPaths,
+    required this.pathPatterns,
+    required this.outputDirPath,
+  });
+
+  @override
+  bool get valid => ValidObject.areValid([
+        this.classTemplateFilePath,
+        this.builderTemplateFilePath,
+        this.exportsTemplateFilePath,
+        this.rootPaths,
+        this.subPaths,
+        this.pathPatterns,
+        this.outputDirPath,
+      ]);
 }

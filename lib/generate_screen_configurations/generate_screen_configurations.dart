@@ -28,10 +28,10 @@ Future<void> generateScreenConfigurations({
     pathPatterns: pathPatterns,
     begType: "screen",
     templateFilePaths: {templateFilePath},
-    deleteGeneratedFiles: true,
+    //deleteGeneratedFiles: true,
     generateForFile: _generateScreenConfigurationFile,
-    onDelete: (final filePath) {
-      printLightYellow("Deleted generated file `$filePath`");
-    },
+    // onDelete: (final filePath) {
+    //   printLightYellow("Deleted generated file `$filePath`");
+    // },
   );
 }
