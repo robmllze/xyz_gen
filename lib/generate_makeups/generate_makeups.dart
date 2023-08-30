@@ -12,30 +12,30 @@ import 'package:path/path.dart' as p;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateMakeups({
-  required String rootDirPath,
+  required Set<String> rootPaths,
+  Set<String> subPaths = const {},
+  Set<String> pathPatterns = const {},
   required String? outputDirPath,
   required String classTemplateFilePath,
   required String builderTemplateFilePath,
   required String exportsTemplateFilePath,
-  Set<String> pathPatterns = const {},
 }) async {
-  final collection = await createCollection({rootDirPath});
   await generateFromTemplates(
-    rootDirPath: rootDirPath,
+    rootPaths: rootPaths,
+    subPaths: subPaths,
+    pathPatterns: pathPatterns,
     templateFilePaths: {
       classTemplateFilePath,
       builderTemplateFilePath,
       exportsTemplateFilePath,
     },
-    pathPatterns: pathPatterns,
-    generateForFile: (final fixedFilePath, final templates) async {
-      // await deleteGeneratedDartFile(
-      //   fixedFilePath,
-      //   (final filePath) {
-      //     printLightYellow("Deleted generated file `$filePath`");
-      //   },
-      // );
-      return _generateMakeupFile(collection, outputDirPath, fixedFilePath, templates);
+    generateForFile: (final collection, final fixedFilePath, final templates) async {
+      return _generateMakeupFile(
+        collection,
+        fixedFilePath,
+        templates,
+        outputDirPath,
+      );
     },
   );
 }
@@ -44,10 +44,10 @@ Future<void> generateMakeups({
 
 Future<void> _generateMakeupFile(
   AnalysisContextCollection collection,
-  String? outputDirPath,
   String fixedFilePath,
-  Map<String, String> templates,
-) async {
+  Map<String, String> templates, [
+  String? outputDirPath,
+]) async {
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.

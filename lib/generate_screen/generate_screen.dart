@@ -75,7 +75,7 @@ Future<void> generateScreen({
   );
   printGreen("Generated `_State` in `$stateFilePath`");
   await generateScreenConfigurations(
-    rootDirPath: folderDirPath,
+    rootPaths: {folderDirPath},
     templateFilePath: configurationTemplateFilePath,
   );
 }

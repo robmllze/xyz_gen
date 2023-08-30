@@ -21,20 +21,19 @@ part 'parts/_replacements.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateModels({
-  required String rootDirPath,
-  required String templateFilePath,
+  required Set<String> rootPaths,
+  Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
+  required String templateFilePath,
 }) async {
-  final collection = await createCollection({rootDirPath});
   await generateFromTemplates(
+    rootPaths: rootPaths,
+    subPaths: subPaths,
+    pathPatterns: pathPatterns,
     begType: "model",
-    rootDirPath: rootDirPath,
     templateFilePaths: {templateFilePath},
     deleteGeneratedFiles: true,
-    pathPatterns: pathPatterns,
-    generateForFile: (final fixedFilePath, final templates) async {
-      await _generateModelFile(collection, fixedFilePath, templates);
-    },
+    generateForFile: _generateModelFile,
     onDelete: (final filePath) {
       printLightYellow("Deleted generated file `$filePath`");
     },

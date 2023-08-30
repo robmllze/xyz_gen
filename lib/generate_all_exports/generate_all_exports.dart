@@ -10,22 +10,23 @@ import 'package:path/path.dart' as p;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExports({
-  String rootDirPath = "./",
-  Set<String> subDirPaths = const {},
-  required String exportsTemplateFilePath,
+  required String templateFilePath,
+  required Set<String> rootPaths,
+  Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
+  final combinedPaths = combinePaths([rootPaths, subPaths]);
   var cachedDirName = "";
-  final template = await readDartTemplate(exportsTemplateFilePath);
-  for (final subDirPath in subDirPaths) {
-    final r = _joinPath(rootDirPath, subDirPath);
+  final template = await readDartTemplate(templateFilePath);
+  for (final path in combinedPaths) {
     await findDartFiles(
-      r,
-      (_, __, final filePath) async {
-        final folderName = getBaseName(r);
-        final allFilePath = p.join(r, "all_$folderName.dart");
-        if (r != cachedDirName) {
-          cachedDirName = r;
+      path,
+      pathPatterns: pathPatterns,
+      onFileFound: (_, __, final filePath) async {
+        final folderName = getBaseName(path);
+        final allFilePath = p.join(path, "all_$folderName.dart");
+        if (path != cachedDirName) {
+          cachedDirName = path;
           printGreen("Clearing `$allFilePath`...");
           final data = replaceAllData(template, {"___EXPORTS___": ""});
           await writeFile(
@@ -34,7 +35,7 @@ Future<void> generateAllExports({
           );
         }
         if (filePath != allFilePath) {
-          final relativeFilePath = filePath.replaceFirst(r, "");
+          final relativeFilePath = filePath.replaceFirst(path, "");
           final fileName = getBaseName(filePath);
           final private = fileName.startsWith("_");
           final data = "${private ? "//" : ""}export '$relativeFilePath';";
@@ -51,19 +52,6 @@ Future<void> generateAllExports({
           return false;
         }
       },
-      pathPatterns,
     );
   }
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-String _joinPath(String part1, String part2) {
-  final a = () {
-    if (part1.isEmpty) return part2;
-    if (part2.isEmpty) return part1;
-    return p.join(part1, part2);
-  }();
-  final b = a.endsWith(p.separator) ? a : "$a${p.separator}";
-  return b;
 }

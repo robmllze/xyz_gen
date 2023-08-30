@@ -17,20 +17,19 @@ part 'parts/_generate_screen_configuration_file.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenConfigurations({
-  required String rootDirPath,
   required String templateFilePath,
+  required Set<String> rootPaths,
+  Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  final collection = await createCollection({rootDirPath});
   await generateFromTemplates(
+    rootPaths: rootPaths,
+    subPaths: subPaths,
+    pathPatterns: pathPatterns,
     begType: "screen",
-    rootDirPath: rootDirPath,
     templateFilePaths: {templateFilePath},
     deleteGeneratedFiles: true,
-    pathPatterns: pathPatterns,
-    generateForFile: (final fixedFilePath, final templates) async {
-      await _generateScreenConfigurationFile(collection, fixedFilePath, templates);
-    },
+    generateForFile: _generateScreenConfigurationFile,
     onDelete: (final filePath) {
       printLightYellow("Deleted generated file `$filePath`");
     },
