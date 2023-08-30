@@ -11,12 +11,14 @@ part 'parts/_generate_screen_configuration_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateScreenConfigurations({
+/// Note: Returns all the annotated screen class names.
+Future<Set<String>> generateScreenConfigurations({
   required String templateFilePath,
   required Set<String> rootPaths,
   Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
+  final classNames = <String>{};
   await generateFromTemplates(
     rootPaths: rootPaths,
     subPaths: subPaths,
@@ -24,9 +26,13 @@ Future<void> generateScreenConfigurations({
     begType: "screen",
     templateFilePaths: {templateFilePath},
     //deleteGeneratedFiles: true,
-    generateForFile: _generateScreenConfigurationFile,
+    generateForFile: (final collection, final filePath, final templates) async {
+      final temp = await _generateScreenConfigurationFile(collection, filePath, templates);
+      classNames.addAll(temp);
+    },
     // onDelete: (final filePath) {
     //   printLightYellow("Deleted generated file `$filePath`");
     // },
   );
+  return classNames;
 }

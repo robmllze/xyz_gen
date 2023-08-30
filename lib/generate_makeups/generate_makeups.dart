@@ -203,7 +203,7 @@ Future<void> _writeExportsFile(
   final outputFilepath = join(outputDirPath, "makeups.dart");
   final output = replaceAllData(template, {
     ...templateData,
-    "___EXPORTS___": exportFiles.map((e) => "export 'src/$e';").join("\n"),
+    "___BODY___": exportFiles.map((e) => "export 'src/$e';").join("\n"),
   });
   await writeFile(outputFilepath, output);
   await fmtDartFile(outputFilepath);
