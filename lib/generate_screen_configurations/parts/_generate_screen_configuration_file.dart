@@ -121,7 +121,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
     await fmtDartFile(outputFilePath);
 
     // Log the generated file.
-    printGreen("Generated `$configurationClassName` in `$outputFilePath`");
+    printGreen("Generated `$configurationClassName` in `${getBaseName(outputFilePath)}`");
   }
 
   // ---------------------------------------------------------------------------

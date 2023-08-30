@@ -55,12 +55,6 @@ Future<void> generateScreenAccess({
   //
 
   final sorted = screenClassNames1.toList()..sort();
-  {
-    final outputFileName = getBaseName(outputFilePath);
-    for (final screenClassName in sorted) {
-      printGreen("Generating access for screen class `$screenClassName` in `$outputFileName`");
-    }
-  }
   final keys = sorted.map((e) => e.toSnakeCase().toUpperCase());
   final a = sorted.map((e) => "maker$e").join(",");
   final b = keys.map((e) => "...PATH_NOT_REDIRECTABLE_$e").join(",");
@@ -78,6 +72,9 @@ Future<void> generateScreenAccess({
     "___PATHS_ACCESSIBLE_ONLY_IF_SIGNED_OUT___": f,
   });
   await writeFile(outputFilePath, outputContent);
+  printGreen(
+    "Generated screen access for `$sorted` in `${getBaseName(outputFilePath)}`",
+  );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

@@ -80,7 +80,7 @@ Future<void> _generateModelFile(
     await fmtDartFile(outputFilePath);
 
     // Log the generated file.
-    printGreen("Generated `$className` in `$outputFilePath`");
+    printGreen("Generated `$className` in `${getBaseName(outputFilePath)}`");
   }
 
   // ---------------------------------------------------------------------------

@@ -151,7 +151,7 @@ Future<void> _writeClassFile(
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
-  printGreen("Generated makeup class `$outputFilePath`");
+  printGreen("Generated makeup class in `${getBaseName(outputFilePath)}`");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -187,7 +187,7 @@ Future<Set<String>> _writeBuilderFiles(
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
     exportFiles.add(outputFileName);
-    printGreen("Generated makeup builder `$outputFilePath`");
+    printGreen("Generated makeup builder in `${getBaseName(outputFilePath)}`");
   }
   return exportFiles;
 }
@@ -200,14 +200,14 @@ Future<void> _writeExportsFile(
   Map<String, String> templateData,
   Set<String> exportFiles,
 ) async {
-  final outputFilepath = join(outputDirPath, "makeups.dart");
+  final outputFilePath = join(outputDirPath, "makeups.dart");
   final output = replaceAllData(template, {
     ...templateData,
     "___BODY___": exportFiles.map((e) => "export 'src/$e';").join("\n"),
   });
-  await writeFile(outputFilepath, output);
-  await fmtDartFile(outputFilepath);
-  printGreen("Generated makeup exports `$outputFilepath`");
+  await writeFile(outputFilePath, output);
+  await fmtDartFile(outputFilePath);
+  printGreen("Generated makeup exports in `${getBaseName(outputFilePath)}`");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

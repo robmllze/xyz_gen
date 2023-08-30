@@ -47,7 +47,7 @@ Future<void> generateScreen({
     logicFilePath,
     data,
   );
-  printGreen("Generated `_Logic` in `$logicFilePath`");
+  printGreen("Generated `_Logic` in `${getBaseName(logicFilePath)}");
   final screenFilePath = join(folderDirPath, screenFileName);
   await _writeScreenFile(
     screenTemplateFilePath,
@@ -64,14 +64,14 @@ Future<void> generateScreen({
     title: title,
     navigator: navigator,
   );
-  printGreen("Generated `$screenClassName` in `$screenFilePath`");
+  printGreen("Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
   final stateFilePath = join(folderDirPath, stateFileName);
   await _writeFile(
     stateTemplateFilePath,
     stateFilePath,
     data,
   );
-  printGreen("Generated `_State` in `$stateFilePath`");
+  printGreen("Generated `_State` in `${getBaseName(stateFilePath)}`");
   await generateScreenConfigurations(
     rootPaths: {folderDirPath},
     templateFilePath: configurationTemplateFilePath,
