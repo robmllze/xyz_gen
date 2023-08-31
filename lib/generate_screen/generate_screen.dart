@@ -29,7 +29,7 @@ Future<void> generateScreen({
 }) async {
   final screenClassKey = screenName.toSnakeCase();
   final screenClassName = screenName.toCamelCase();
-  final configurationFileName = "_$screenClassKey.g.dart";
+  final configurationFileName = "$screenClassKey.g.dart";
   final logicFileName = "_$screenClassKey.logic.dart";
   final screenFileName = "$screenClassKey.dart";
   final stateFileName = "_$screenClassKey.state.dart";
@@ -38,7 +38,7 @@ Future<void> generateScreen({
     "___CONFIGURATION_FILE___": configurationFileName,
     "___LOGIC_FILE___": logicFileName,
     "___SCREEN_FILE___": screenFileName,
-    "___STATE_FILE___": logicFileName,
+    "___STATE_FILE___": stateFileName,
   };
   final folderDirPath = join(outputDirPath, screenClassKey);
   final logicFilePath = join(folderDirPath, logicFileName);
