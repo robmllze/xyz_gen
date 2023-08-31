@@ -17,3 +17,4 @@ export 'generate_screen_configurations/_annotation.dart';
 export 'generate_screen_configurations/generate_screen_configurations.dart';
 export 'generate_screen/generate_screen.dart';
 export '_basic_console_app.dart';
+export '_paths.dart';
