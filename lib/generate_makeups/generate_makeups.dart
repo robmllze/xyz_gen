@@ -82,7 +82,7 @@ Future<void> _generateMakeupFile(
     final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
-    const makeupClassFileName = "__makeug.dart";
+    const makeupClassFileName = "__makeup.dart";
     final rootOutputDirPath =
         outputDirPath == null ? defaultOutputDirPath : join(outputDirPath, classKey);
     final templateData = {
