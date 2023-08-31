@@ -87,7 +87,7 @@ FutureOr<void> basicConsoleAppBody<T extends ValidObject>({
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Iterable<String>? splitArg(dynamic input, [String separator = SEPARATOR]) {
-  return input?.toString().split(separator).map((e) => e.trim());
+  return input?.toString().split(separator).map((e) => e.trim()).nullIfEmpty;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

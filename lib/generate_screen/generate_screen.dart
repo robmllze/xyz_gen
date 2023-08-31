@@ -95,17 +95,24 @@ Future<void> _writeScreenFile(
   String title = "",
   String navigator = "",
 }) async {
-  final a = internalParameters.entries.map((e) => '"${e.key}": "${e.value}"').join(",");
-  final b = queryParameters.map((v) => '"$v"').join(",");
-  final c = pathSegments.map((v) => '"$v"').join(",");
+  final a = internalParameters.entries
+      .map((e) {
+        final k = e.key;
+        final v = e.value;
+        return k.isNotEmpty && v.isNotEmpty ? '"$k": "$v}"' : null;
+      })
+      .nonNulls
+      .join(",");
+  final b = queryParameters.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
+  final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
     if (isOnlyAccessibleIfSignedIn) "isOnlyAccessibleIfSignedIn: true",
     if (isOnlyAccessibleIfSignedInAndVerified) "isOnlyAccessibleIfSignedInAndVerified: true",
     if (isOnlyAccessibleIfSignedOut) "isOnlyAccessibleIfSignedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty) "internalParameters: {$a,}",
-    if (queryParameters.isNotEmpty) "queryParameters: {$b,}",
-    if (pathSegments.isNotEmpty) "pathSegments: [$c,]",
+    if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
+    if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
+    if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
 
   final superArgs = [
@@ -177,19 +184,19 @@ class GenerateScreenArgs extends ValidObject {
   bool get valid => ValidObject.areValid([
         outputDirPath,
         screenName,
-        logicTemplateFilePath,
-        screenTemplateFilePath,
-        stateTemplateFilePath,
-        configurationTemplateFilePath,
-        isOnlyAccessibleIfSignedIn,
-        isOnlyAccessibleIfSignedInAndVerified,
-        isOnlyAccessibleIfSignedOut,
-        isRedirectable,
-        internalParameters,
-        queryParameters,
-        pathSegments,
-        makeup,
-        title,
-        navigator,
+        // logicTemplateFilePath,
+        // screenTemplateFilePath,
+        // stateTemplateFilePath,
+        // configurationTemplateFilePath,
+        // isOnlyAccessibleIfSignedIn,
+        // isOnlyAccessibleIfSignedInAndVerified,
+        // isOnlyAccessibleIfSignedOut,
+        // isRedirectable,
+        // internalParameters,
+        // queryParameters,
+        // pathSegments,
+        // makeup,
+        // title,
+        // navigator,
       ]);
 }
