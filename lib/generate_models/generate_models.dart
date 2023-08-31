@@ -6,8 +6,8 @@
 
 import '/_dependencies.dart';
 
-export 'annotation.dart';
-export 'model.dart';
+export '_annotation.dart';
+export '_model.dart';
 
 part 'parts/_generate_model_file.dart';
 part 'parts/_helpers.dart';
