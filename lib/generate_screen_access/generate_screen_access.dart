@@ -62,7 +62,7 @@ Future<void> generateScreenAccess({
   final d = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED_$e").join(",");
   final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_$e").join(",");
   final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT_$e").join(",");
-  final g = sorted.map((e) => "...cast$e").join(",");
+  final g = sorted.map((e) => "...cast${e}Configuration").join(",");
   final template = await readDartTemplate(templateFilePath);
   final outputContent = replaceAllData(template, {
     "___SCREEN_MAKERS___": a,
