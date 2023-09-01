@@ -70,7 +70,7 @@ FutureOr<void> basicConsoleAppBody<T extends ValidObject>({
     try {
       results = parser.parse(arguments);
     } catch (e) {
-      printRed("Error: Failed to parse arguments.");
+      printRed("[Error: Failed to parse arguments] $e");
       return;
     }
     if (results["help"]) {

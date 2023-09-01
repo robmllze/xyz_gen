@@ -47,5 +47,4 @@ const SCREEN_LOGIC_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_logic_template
 const SCREEN_STATE_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_state_template.dart.md";
 const SCREEN_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_template.dart.md";
 
-const BODY_TEMPLATE_PATH = "$TEMPLATES_PATH/body_template.dart.md";
-const EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/exports_template.dart.md";
+const ALL_EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/all_exports_template.dart.md";

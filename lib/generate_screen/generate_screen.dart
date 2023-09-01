@@ -99,7 +99,7 @@ Future<void> _writeScreenFile(
       .map((e) {
         final k = e.key;
         final v = e.value;
-        return k.isNotEmpty && v.isNotEmpty ? '"$k": "$v}"' : null;
+        return k.isNotEmpty && v.isNotEmpty ? '"$k": "$v"' : null;
       })
       .nonNulls
       .join(",");
@@ -184,19 +184,19 @@ class GenerateScreenArgs extends ValidObject {
   bool get valid => ValidObject.areValid([
         outputDirPath,
         screenName,
-        // logicTemplateFilePath,
-        // screenTemplateFilePath,
-        // stateTemplateFilePath,
-        // configurationTemplateFilePath,
-        // isOnlyAccessibleIfSignedIn,
-        // isOnlyAccessibleIfSignedInAndVerified,
-        // isOnlyAccessibleIfSignedOut,
-        // isRedirectable,
-        // internalParameters,
-        // queryParameters,
-        // pathSegments,
-        // makeup,
-        // title,
-        // navigator,
+        logicTemplateFilePath,
+        screenTemplateFilePath,
+        stateTemplateFilePath,
+        configurationTemplateFilePath,
+        if (isOnlyAccessibleIfSignedInAndVerified != null) isOnlyAccessibleIfSignedInAndVerified,
+        if (isOnlyAccessibleIfSignedIn != null) isOnlyAccessibleIfSignedIn,
+        if (isOnlyAccessibleIfSignedOut != null) isOnlyAccessibleIfSignedOut,
+        if (isRedirectable != null) isRedirectable,
+        if (internalParameters != null) internalParameters,
+        if (queryParameters != null) queryParameters,
+        if (pathSegments != null) pathSegments,
+        if (makeup != null) makeup,
+        if (title != null) title,
+        if (navigator != null) navigator,
       ]);
 }
