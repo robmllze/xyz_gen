@@ -4,7 +4,9 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-const ROOT_PATH = "../../../..";
+const SCRIPTS_PATH = "..";
+
+const ROOT_PATH = "$SCRIPTS_PATH/../../..";
 const LIB_PATH = "$ROOT_PATH/lib";
 const SHARED_LIB_PATH = "$LIB_PATH/xyz_shared/src";
 
@@ -30,7 +32,7 @@ const SHARED_THEMES_PATH = "$SHARED_LIB_PATH/themes";
 const SHARED_UTILS_PATH = "$SHARED_LIB_PATH/utils";
 const SHARED_WIDGETS_PATH = "$SHARED_LIB_PATH/widgets";
 
-const TEMPLATES_PATH = "../templates";
+const TEMPLATES_PATH = "$SCRIPTS_PATH/templates";
 
 const MAKEUP_BUILDER_TEMPLATE_PATH = "$TEMPLATES_PATH/models/makeup_builder_template.dart.md";
 const MAKEUP_CLASS_TEMPLATE_PATH = "$TEMPLATES_PATH/models/makeup_class_template.dart.md";

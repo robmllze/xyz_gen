@@ -33,25 +33,27 @@ ArgParser argParserForBasicGenerator({
   String? tDefaultsTo,
 }) =>
     argParserWithHelp
-      ..addOption(
-        ROOTS_OPTION,
-        abbr: "r",
-        help: "Root directory paths separated by `$SEPARATOR`.",
-      )
+      ..addOption(ROOTS_OPTION,
+          abbr: "r",
+          help: "Root directory paths separated by `$SEPARATOR`.",
+          defaultsTo: rDefaultsTo)
       ..addOption(
         SUBS_OPTION,
         abbr: "s",
         help: "Sub-directory paths separated by `$SEPARATOR`.",
+        defaultsTo: sDefaultsTo,
       )
       ..addOption(
         PATTERNS_OPTION,
         abbr: "p",
         help: "Path patterns separated by `$SEPARATOR`.",
+        defaultsTo: pDefaultsTo,
       )
       ..addOption(
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
+        defaultsTo: tDefaultsTo,
       );
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
