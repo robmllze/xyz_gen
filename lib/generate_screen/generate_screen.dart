@@ -10,6 +10,7 @@ import '/generate_screen_configurations/generate_screen_configurations.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreen({
+  String? fallbackDartSdkPath,
   required String outputDirPath,
   required String screenName,
   required String logicTemplateFilePath,
@@ -73,6 +74,7 @@ Future<void> generateScreen({
   );
   printGreen("Generated `_State` in `${getBaseName(stateFilePath)}`");
   await generateScreenConfigurations(
+    fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: {folderDirPath},
     templateFilePath: configurationTemplateFilePath,
   );
@@ -144,6 +146,7 @@ Future<void> _writeFile(
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 class GenerateScreenArgs extends ValidObject {
+  final String? fallbackDartSdkPath;
   final String? outputDirPath;
   final String? screenName;
   final String? logicTemplateFilePath;
@@ -162,6 +165,7 @@ class GenerateScreenArgs extends ValidObject {
   final String? navigator;
 
   const GenerateScreenArgs({
+    required this.fallbackDartSdkPath,
     required this.outputDirPath,
     required this.screenName,
     required this.logicTemplateFilePath,
@@ -182,6 +186,7 @@ class GenerateScreenArgs extends ValidObject {
 
   @override
   bool get valid => ValidObject.areValid([
+        if (fallbackDartSdkPath != null) fallbackDartSdkPath,
         outputDirPath,
         screenName,
         logicTemplateFilePath,

@@ -13,6 +13,7 @@ part 'parts/_generate_screen_configuration_file.dart';
 
 /// Note: Returns all the annotated screen class names.
 Future<Set<String>> generateScreenConfigurations({
+  String? fallbackDartSdkPath,
   required String templateFilePath,
   required Set<String> rootPaths,
   Set<String> subPaths = const {},
@@ -20,6 +21,7 @@ Future<Set<String>> generateScreenConfigurations({
 }) async {
   final classNames = <String>{};
   await generateFromTemplates(
+    fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: rootPaths,
     subPaths: subPaths,
     pathPatterns: pathPatterns,

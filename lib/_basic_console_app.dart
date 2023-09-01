@@ -13,48 +13,7 @@ const TEMPLATE_FILE_PATH_OPTION = "template";
 const PATTERNS_OPTION = "patterns";
 const ROOTS_OPTION = "roots";
 const SUBS_OPTION = "subs";
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-final argParserWithHelp = ArgParser()
-  ..addFlag(
-    "help",
-    abbr: "h",
-    negatable: false,
-    help: "Help information.",
-  );
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-ArgParser argParserForBasicGenerator({
-  String? rDefaultsTo,
-  String? sDefaultsTo,
-  String? pDefaultsTo,
-  String? tDefaultsTo,
-}) =>
-    argParserWithHelp
-      ..addOption(ROOTS_OPTION,
-          abbr: "r",
-          help: "Root directory paths separated by `$SEPARATOR`.",
-          defaultsTo: rDefaultsTo)
-      ..addOption(
-        SUBS_OPTION,
-        abbr: "s",
-        help: "Sub-directory paths separated by `$SEPARATOR`.",
-        defaultsTo: sDefaultsTo,
-      )
-      ..addOption(
-        PATTERNS_OPTION,
-        abbr: "p",
-        help: "Path patterns separated by `$SEPARATOR`.",
-        defaultsTo: pDefaultsTo,
-      )
-      ..addOption(
-        TEMPLATE_FILE_PATH_OPTION,
-        abbr: "t",
-        help: "Template file path.",
-        defaultsTo: tDefaultsTo,
-      );
+const DART_SDK_PATH_OPTION = "dart-sdk";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -113,11 +72,13 @@ void printUsage(String appTitle, ArgParser parser) {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 class BasicTemplateArgs extends ValidObject {
+  final String? fallbackDartSdkPath;
   final String? templateFilePath;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
   const BasicTemplateArgs({
+    this.fallbackDartSdkPath,
     required this.templateFilePath,
     required this.rootPaths,
     required this.subPaths,
@@ -126,9 +87,10 @@ class BasicTemplateArgs extends ValidObject {
 
   @override
   bool get valid => ValidObject.areValid([
+        if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
+        this.templateFilePath,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
-        this.templateFilePath,
       ]);
 }

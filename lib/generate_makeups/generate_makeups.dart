@@ -9,6 +9,7 @@ import '/_dependencies.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateMakeups({
+  String? fallbackDartSdkPath,
   required Set<String> rootPaths,
   Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
@@ -18,6 +19,7 @@ Future<void> generateMakeups({
   required String exportsTemplateFilePath,
 }) async {
   await generateFromTemplates(
+    fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: rootPaths,
     subPaths: subPaths,
     pathPatterns: pathPatterns,
@@ -213,6 +215,7 @@ Future<void> _writeExportsFile(
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 class GenerateMakeupsArgs extends ValidObject {
+  final String? fallbackDartSdkPath;
   final String? classTemplateFilePath;
   final String? builderTemplateFilePath;
   final String? exportsTemplateFilePath;
@@ -221,6 +224,7 @@ class GenerateMakeupsArgs extends ValidObject {
   final Set<String>? pathPatterns;
   final String? outputDirPath;
   const GenerateMakeupsArgs({
+    required this.fallbackDartSdkPath,
     required this.classTemplateFilePath,
     required this.builderTemplateFilePath,
     required this.exportsTemplateFilePath,
@@ -232,6 +236,7 @@ class GenerateMakeupsArgs extends ValidObject {
 
   @override
   bool get valid => ValidObject.areValid([
+        if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
         this.classTemplateFilePath,
         this.builderTemplateFilePath,
         this.exportsTemplateFilePath,

@@ -16,12 +16,14 @@ part 'parts/_replacements.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateModels({
+  String? fallbackDartSdkPath,
   required Set<String> rootPaths,
   Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
   await generateFromTemplates(
+    fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: rootPaths,
     subPaths: subPaths,
     pathPatterns: pathPatterns,
