@@ -34,10 +34,11 @@ const SHARED_WIDGETS_PATH = "$SHARED_LIB_PATH/widgets";
 
 const TEMPLATES_PATH = "$SCRIPTS_PATH/templates";
 
-const MAKEUP_BUILDER_TEMPLATE_PATH = "$TEMPLATES_PATH/models/makeup_builder_template.dart.md";
-const MAKEUP_CLASS_TEMPLATE_PATH = "$TEMPLATES_PATH/models/makeup_class_template.dart.md";
+const MAKEUP_BUILDER_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_builder_template.dart.md";
+const MAKEUP_CLASS_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_class_template.dart.md";
+const MAKEUP_EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_exports_template.dart.md";
 
-const MODEL_TEMPLATE_PATH = "$TEMPLATES_PATH/models/model_template.dart.md";
+const MODEL_TEMPLATE_PATH = "$TEMPLATES_PATH/model/model_template.dart.md";
 
 const SCREEN_ACCESS_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_access_template.dart.md";
 const SCREEN_CONFIGURATION_TEMPLATE_PATH =
