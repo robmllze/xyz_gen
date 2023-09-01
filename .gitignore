@@ -1,5 +1,7 @@
-# https://dart.dev/guides/libraries/private-files
-# Created by `dart pub`
-.dart_tool/
-
-.g.dart
+build/
+/.dart_tool/
+*.g.dart
+.DS_Store
+.packages
+pubspec.lock
+package_config.json
