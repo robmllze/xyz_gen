@@ -177,7 +177,7 @@ Future<Set<String>> _writeBuilderFiles(
     exportFiles.add(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
     if (await fileExists(outputFilePath)) continue;
-    final makeupBuilder = longMakeupKey.toCamelCase();
+    final makeupBuilder = longMakeupKey.toPascalCase();
     final makeupBuilderFunction = shortMakeupKey == "default"
         ? makeupClassName
         : "${"default_${classKey}_makeup".toCamelCase()}().copyWith";

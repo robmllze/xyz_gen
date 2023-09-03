@@ -29,7 +29,7 @@ Future<void> generateScreen({
   String navigator = "",
 }) async {
   final screenClassKey = screenName.toSnakeCase();
-  final screenClassName = screenName.toCamelCase();
+  final screenClassName = screenName.toPascalCase();
   final configurationFileName = "$screenClassKey.g.dart";
   final logicFileName = "_$screenClassKey.logic.dart";
   final screenFileName = "$screenClassKey.dart";
