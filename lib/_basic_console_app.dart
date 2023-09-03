@@ -14,6 +14,7 @@ const PATTERNS_OPTION = "patterns";
 const ROOTS_OPTION = "roots";
 const SUBS_OPTION = "subs";
 const DART_SDK_PATH_OPTION = "dart-sdk";
+const OUTPUT_OPTION = "output";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

@@ -174,6 +174,7 @@ Future<Set<String>> _writeBuilderFiles(
     final shortMakeupKey = name.toSnakeCase();
     final longMakeupKey = "${shortMakeupKey}_${classKey}_makeup";
     final outputFileName = "_$longMakeupKey.dart";
+    exportFiles.add(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
     if (await fileExists(outputFilePath)) continue;
     final makeupBuilder = longMakeupKey.toCamelCase();
@@ -188,7 +189,6 @@ Future<Set<String>> _writeBuilderFiles(
     });
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
-    exportFiles.add(outputFileName);
     printGreen("Generated makeup builder in `${getBaseName(outputFilePath)}`");
   }
   return exportFiles;
