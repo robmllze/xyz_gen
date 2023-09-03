@@ -169,10 +169,10 @@ Future<Set<String>> _writeBuilderFiles(
 ) async {
   final exportFiles = <String>{};
   final makeupBuilderArgs = parameters.entries
-      .map((e) => "${e.key}: null,${e.value.nullable ? "" : "// Value required!"}");
+      .map((e) => "${e.key}: null,${e.value.nullable ? "" : "// TODO: Value required!"}");
   for (final name in names) {
     final shortMakeupKey = name.toSnakeCase();
-    final longMakeupKey = "${shortMakeupKey}_${classKey}_makeup";
+    final longMakeupKey = "${classKey}_${shortMakeupKey}_makeup";
     final outputFileName = "_$longMakeupKey.dart";
     exportFiles.add(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
