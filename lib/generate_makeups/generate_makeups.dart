@@ -180,7 +180,7 @@ Future<Set<String>> _writeBuilderFiles(
     final makeupBuilder = longMakeupKey.toPascalCase();
     final makeupBuilderFunction = shortMakeupKey == "default"
         ? makeupClassName
-        : "${"default_${classKey}_makeup".toCamelCase()}().copyWith";
+        : "${"${classKey}_default_makeup".toCamelCase()}().copyWith";
     final output = replaceAllData(template, {
       ...templateData,
       "___BUILDER___": makeupBuilder,
