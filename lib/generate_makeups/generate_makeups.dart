@@ -168,8 +168,7 @@ Future<Set<String>> _writeBuilderFiles(
   String classKey,
 ) async {
   final exportFiles = <String>{};
-  final makeupBuilderArgs = parameters.entries
-      .map((e) => "${e.key}: null,${e.value.nullable ? "" : "// TODO: Value required!"}");
+  final makeupBuilderArgs = parameters.entries.map((e) => "${e.key}: null,");
   for (final name in names) {
     final shortMakeupKey = name.toSnakeCase();
     final longMakeupKey = "${classKey}_${shortMakeupKey}_makeup";
@@ -177,10 +176,10 @@ Future<Set<String>> _writeBuilderFiles(
     exportFiles.add(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
     if (await fileExists(outputFilePath)) continue;
-    final makeupBuilder = longMakeupKey.toPascalCase();
-    final makeupBuilderFunction = shortMakeupKey == "default"
-        ? makeupClassName
-        : "${"${classKey}_default_makeup".toCamelCase()}().copyWith";
+    final makeupBuilder = longMakeupKey.toCamelCase();
+    final defaultMakeupBuilder = "${classKey}_default_makeup".toCamelCase();
+    final makeupBuilderFunction =
+        shortMakeupKey == "default" ? makeupClassName : "$defaultMakeupBuilder().copyWith";
     final output = replaceAllData(template, {
       ...templateData,
       "___BUILDER___": makeupBuilder,
