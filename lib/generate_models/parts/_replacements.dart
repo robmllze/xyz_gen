@@ -38,7 +38,11 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
       ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
-    ["this.id = id;", "this.args = args;"],
+    [
+      "this.id = id;",
+      "this.args = args;",
+      "this.collectionPath = collectionPath;",
+    ],
     // ___P4___
     [
       "String? id,",
