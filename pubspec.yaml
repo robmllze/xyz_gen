@@ -5,15 +5,19 @@
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 name: xyz_gen
-version: 0.2.0
+version: 0.3.0
 publish_to: none
 
 environment:
   sdk: ^3.0.5
 
-# dependency_overrides:
-#   xyz_utils:
-#     path: ../xyz_utils
+dependency_overrides:
+
+  # Comment these dependency overrides if you do not have these packages as part
+  # of your workspace, so that they can load from GitHub instead.
+  
+  # xyz_utils:
+  #   path: ../xyz_utils
 
 dependencies:
   xyz_utils:
