@@ -153,7 +153,7 @@ Future<void> _writeClassFile(
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
-  printGreen("Generated makeup class in `${getBaseName(outputFilePath)}`");
+  printGreen("Generated makeup class in `$outputFilePath`");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -188,7 +188,7 @@ Future<Set<String>> _writeBuilderFiles(
     });
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
-    printGreen("Generated makeup builder in `${getBaseName(outputFilePath)}`");
+    printGreen("Generated makeup builder in `$outputFilePath`");
   }
   return exportFiles;
 }
@@ -208,7 +208,7 @@ Future<void> _writeExportsFile(
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
-  printGreen("Generated makeup exports in `${getBaseName(outputFilePath)}`");
+  printGreen("Generated makeup exports in `$outputFilePath`");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
