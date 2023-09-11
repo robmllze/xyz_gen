@@ -60,7 +60,8 @@ Future<void> _generateModelFile(
         "___PARENT_CLASS___": parentClassName,
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
-        "___DEFAULT_COLLECTION_PATH___": defaultCollectionPath,
+        "___DEFAULT_COLLECTION_PATH___":
+            defaultCollectionPath ?? "${className.toSnakeCase()}_collection",
         ..._replacements(parameters),
       },
     );
