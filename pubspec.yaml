@@ -11,9 +11,9 @@ publish_to: none
 environment:
   sdk: ^3.0.5
 
-dependency_overrides:
-  xyz_utils:
-    path: ../xyz_utils
+# dependency_overrides:
+#   xyz_utils:
+#     path: ../xyz_utils
 
 dependencies:
   xyz_utils:
