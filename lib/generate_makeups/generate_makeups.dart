@@ -83,6 +83,9 @@ Future<void> _generateMakeupFile(
     final classFileDirPath = getDirPath(fixedFilePath);
     final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
+    // print("!!!");
+    // print(className);
+    // print(classKey);
     final makeupClassName = "${className}Makeup";
     const makeupClassFileName = "__makeup.dart";
     final rootOutputDirPath =
