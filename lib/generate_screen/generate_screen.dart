@@ -162,7 +162,7 @@ class GenerateScreenArgs extends ValidObject {
   final List<String>? pathSegments;
   final String? makeup;
   final String? title;
-  final String? navigator;
+  final String? navigationControls;
 
   const GenerateScreenArgs({
     required this.fallbackDartSdkPath,
@@ -181,7 +181,7 @@ class GenerateScreenArgs extends ValidObject {
     required this.pathSegments,
     required this.makeup,
     required this.title,
-    required this.navigator,
+    required this.navigationControls,
   });
 
   @override
@@ -202,6 +202,6 @@ class GenerateScreenArgs extends ValidObject {
         // if (pathSegments != null) pathSegments,
         if (makeup != null) makeup,
         if (title != null) title,
-        if (navigator != null) navigator,
+        if (navigationControls != null) navigationControls,
       ]);
 }
