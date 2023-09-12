@@ -26,7 +26,7 @@ Future<void> generateScreen({
   List<String> pathSegments = const [],
   String makeup = "",
   String title = "",
-  String navigator = "",
+  String navigationControls = "",
 }) async {
   final screenClassKey = screenName.toSnakeCase();
   final screenClassName = screenName.toPascalCase();
@@ -63,7 +63,7 @@ Future<void> generateScreen({
     pathSegments: pathSegments,
     makeup: makeup,
     title: title,
-    navigator: navigator,
+    navigationControls: navigationControls,
   );
   printGreen("Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
   final stateFilePath = join(folderDirPath, stateFileName);
@@ -95,7 +95,7 @@ Future<void> _writeScreenFile(
   List<String> pathSegments = const [],
   String makeup = "",
   String title = "",
-  String navigator = "",
+  String navigationControls = "",
 }) async {
   final a = internalParameters.entries
       .map((e) {
@@ -120,7 +120,7 @@ Future<void> _writeScreenFile(
   final superArgs = [
     if (makeup.isNotEmpty) "makeup: $makeup",
     if (title.isNotEmpty) 'title: "$title||title".screenTr()',
-    if (navigator.isNotEmpty) "navigator: $navigator",
+    if (navigationControls.isNotEmpty) "navigationControls: $navigationControls",
   ].join(",");
 
   await _writeFile(templateFilePath, outputFilePath, {

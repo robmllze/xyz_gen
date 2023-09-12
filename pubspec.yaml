@@ -5,7 +5,7 @@
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 name: xyz_gen
-version: 0.3.0
+version: 0.3.1
 publish_to: none
 
 environment:
@@ -15,7 +15,7 @@ dependency_overrides:
 
   # Comment these dependency overrides if you do not have these packages as part
   # of your workspace, so that they can load from GitHub instead.
-  
+
   # xyz_utils:
   #   path: ../xyz_utils
 
