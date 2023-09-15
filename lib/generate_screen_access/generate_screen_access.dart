@@ -59,18 +59,18 @@ Future<void> generateScreenAccess({
   final a = sorted.map((e) => "maker$e").join(",");
   final b = keys.map((e) => "...PATH_NOT_REDIRECTABLE_$e").join(",");
   final c = keys.map((e) => "...PATH_ACCESSIBLE_$e").join(",");
-  final d = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED_$e").join(",");
-  final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_SIGNED_IN_$e").join(",");
-  final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_SIGNED_OUT_$e").join(",");
+  final d = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e").join(",");
+  final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
+  final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
   final g = sorted.map((e) => "...cast${e}Configuration").join(",");
   final template = await readDartTemplate(templateFilePath);
   final outputContent = replaceAllData(template, {
     "___SCREEN_MAKERS___": a,
     "___PATHS_NOT_REDIRECTABLE___": b,
     "___PATHS_ACCESSIBLE___": c,
-    "___PATHS_ACCESSIBLE_ONLY_IF_SIGNED_IN_AND_VERIFIED___": d,
-    "___PATHS_ACCESSIBLE_ONLY_IF_SIGNED_IN___": e,
-    "___PATHS_ACCESSIBLE_ONLY_IF_SIGNED_OUT___": f,
+    "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___": d,
+    "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": e,
+    "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": f,
     "___SCREEN_CONFIGURATION_CASTS___": g,
   });
   await writeFile(outputFilePath, outputContent);

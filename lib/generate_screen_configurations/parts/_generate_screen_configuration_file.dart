@@ -16,9 +16,9 @@ Future<Set<String>> _generateScreenConfigurationFile(
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.
-  var isOnlyAccessibleIfSignedInAndVerified = false;
-  var isOnlyAccessibleIfSignedIn = false;
-  var isOnlyAccessibleIfSignedOut = false;
+  var isOnlyAccessibleIfLoggedInAndVerified = false;
+  var isOnlyAccessibleIfLoggedIn = false;
+  var isOnlyAccessibleIfLoggedOut = false;
   bool? isRedirectable;
   var internalParameters = const <String, String>{};
   var queryParameters = const <String>{};
@@ -32,14 +32,14 @@ Future<Set<String>> _generateScreenConfigurationFile(
     DartObject fieldValue,
   ) {
     switch (fieldName) {
-      case "isOnlyAccessibleIfSignedInAndVerified":
-        isOnlyAccessibleIfSignedInAndVerified = fieldValue.toBoolValue() ?? false;
+      case "isOnlyAccessibleIfLoggedInAndVerified":
+        isOnlyAccessibleIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
-      case "isOnlyAccessibleIfSignedIn":
-        isOnlyAccessibleIfSignedIn = fieldValue.toBoolValue() ?? false;
+      case "isOnlyAccessibleIfLoggedIn":
+        isOnlyAccessibleIfLoggedIn = fieldValue.toBoolValue() ?? false;
         break;
-      case "isOnlyAccessibleIfSignedOut":
-        isOnlyAccessibleIfSignedOut = fieldValue.toBoolValue() ?? false;
+      case "isOnlyAccessibleIfLoggedOut":
+        isOnlyAccessibleIfLoggedOut = fieldValue.toBoolValue() ?? false;
         break;
       case "isRedirectable":
         isRedirectable = fieldValue.toBoolValue();
@@ -75,12 +75,12 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final configurationClassName = "${className}Configuration";
     final screenSegment = screenKey.replaceAll("screen_", "");
     final screenPath = "/$screenSegment";
-    final la0 = isOnlyAccessibleIfSignedInAndVerified;
-    final la1 = isOnlyAccessibleIfSignedIn;
-    final la2 = isOnlyAccessibleIfSignedOut;
-    final la3 = isOnlyAccessibleIfSignedInAndVerified &&
-        !isOnlyAccessibleIfSignedIn &&
-        !isOnlyAccessibleIfSignedOut;
+    final la0 = isOnlyAccessibleIfLoggedInAndVerified;
+    final la1 = isOnlyAccessibleIfLoggedIn;
+    final la2 = isOnlyAccessibleIfLoggedOut;
+    final la3 = isOnlyAccessibleIfLoggedInAndVerified &&
+        !isOnlyAccessibleIfLoggedIn &&
+        !isOnlyAccessibleIfLoggedOut;
     final la4 = isRedirectable == false;
     final outputFileName = "$classKey.g.dart";
     final outputFilePath = join(classFileDirPath, outputFileName);

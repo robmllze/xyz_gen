@@ -6,16 +6,16 @@
 
 class GenerateScreenConfiguration {
   /// Set to `true` to ensure the screen can only be accessed if the current
-  /// user is signed in and verified.
-  final bool isOnlyAccessibleIfSignedInAndVerified;
+  /// user is logged in and verified.
+  final bool isOnlyAccessibleIfLoggedInAndVerified;
 
   /// Set to `true` to ensure the screen can only be accessed if the current
-  /// user is signed in (and not necessarily verified).
-  final bool isOnlyAccessibleIfSignedIn;
+  /// user is logged in (and not necessarily verified).
+  final bool isOnlyAccessibleIfLoggedIn;
 
   /// Set to `true` to ensure the screen can only be accessed if there are no
-  /// currently signed-in users.
-  final bool isOnlyAccessibleIfSignedOut;
+  /// currently logged-in users.
+  final bool isOnlyAccessibleIfLoggedOut;
 
   /// Set to `false` to ensure that the screen is not redirectable.
   ///
@@ -39,9 +39,9 @@ class GenerateScreenConfiguration {
   /// Generates boiler-plate code for the annotated screen class to make it
   /// accessible.
   const GenerateScreenConfiguration({
-    this.isOnlyAccessibleIfSignedInAndVerified = false,
-    this.isOnlyAccessibleIfSignedIn = false,
-    this.isOnlyAccessibleIfSignedOut = false,
+    this.isOnlyAccessibleIfLoggedInAndVerified = false,
+    this.isOnlyAccessibleIfLoggedIn = false,
+    this.isOnlyAccessibleIfLoggedOut = false,
     this.isRedirectable,
     this.internalParameters = const {},
     this.queryParameters = const {},
