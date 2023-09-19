@@ -8,7 +8,7 @@ import '/_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateReflections({
+Future<void> generatePreps({
   Set<String> rootPaths = const {},
   Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
@@ -18,14 +18,14 @@ Future<void> generateReflections({
     final files = await findDartFiles(path, pathPatterns: pathPatterns);
     for (final file in files) {
       final filePath = file.$3;
-      await generateReflection(filePath);
+      await _generatePrep(filePath);
     }
   }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateReflection(
+Future<void> _generatePrep(
   String filePath, {
   List<String? Function(String)> prepMappers = const [],
 }) async {
