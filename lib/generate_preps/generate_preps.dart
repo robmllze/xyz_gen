@@ -30,18 +30,19 @@ Future<void> _generatePrep(
   List<String? Function(String)> prepMappers = const [],
 }) async {
   try {
-    final file = File(toLocalPathFormat(filePath));
+    final localFilePath = toLocalPathFormat(filePath);
+    final file = File(localFilePath);
     final lines = await file.readAsLines();
+    var changed = false;
     for (var l = 0; l < lines.length; l++) {
       final line = lines[l];
-      final a = RegExp(r"<# *([\w-]+) *(= *[\w-,]+)? *>");
-      a.allMatches(line).forEach((final match) {
+      RegExp(r"<# *([\w-]+) *(= *[\w-,.//\/]+)? *>").allMatches(line).forEach((final match) {
         final c = match.start;
         final c1 = match.end;
         final value = match.group(0);
         if (value != null) {
           final word = match.group(1);
-          if (word != null) {
+          if (word != null && word.isNotEmpty) {
             var result = "";
             if (word.startsWith("_")) {
               for (final prepMapper in prepMappers) {
@@ -53,21 +54,27 @@ Future<void> _generatePrep(
               }
             } else {
               final f = getBaseName(filePath);
-              result
+              result = word
                   .replaceAll("l", l.toString())
                   .replaceAll("c", c.toString())
-                  .replaceAll("F", filePath.toString())
-                  .replaceAll("f", f.toString())
-                  .replaceAll("l", l.toString());
+                  .replaceAll("F", localFilePath)
+                  .replaceAll("f", f);
             }
-            lines[l].replaceRange(c, c1, "<#$word=$result>");
+            final before = lines[l];
+            final after = lines[l].replaceRange(c, c1, "<#$word=$result>");
+            changed = changed || before != after;
+            if (changed) {
+              lines[l] = after;
+            }
           }
         }
       });
     }
-  } catch (_) {
-//
-  }
+    if (changed) {
+      await file.writeAsString(lines.join("\n"));
+      printGreen("File updated: $filePath");
+    }
+  } catch (_) {}
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

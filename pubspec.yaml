@@ -19,6 +19,7 @@ dependencies:
       ref: master
   args:
   path:
+  path_provider:
   analyzer:
 dev_dependencies:
   lints:
