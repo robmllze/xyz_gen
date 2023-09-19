@@ -14,6 +14,7 @@ export 'generate_makeups/generate_makeups.dart';
 export 'generate_models/_annotation.dart';
 export 'generate_models/_model.dart';
 export 'generate_models/generate_models.dart';
+export 'generate_preps/generate_preps.dart';
 export 'generate_screen_access/generate_screen_access.dart';
 export 'generate_screen_configurations/_annotation.dart';
 export 'generate_screen_configurations/generate_screen_configurations.dart';
