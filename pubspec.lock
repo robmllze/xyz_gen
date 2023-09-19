@@ -174,7 +174,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: cc0e7ef018d8b54a6724742906b026366e6e3596
+      resolved-ref: "7d40544b9801db76e4eb7f3b5f0770d625b7f19a"
       url: "https://github.com/robmllze/xyz_utils.git"
     source: git
     version: "0.11.1"

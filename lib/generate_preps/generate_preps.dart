@@ -29,8 +29,9 @@ Future<void> _generatePrep(
   String filePath, {
   List<String? Function(String)> prepMappers = const [],
 }) async {
-  final lines = await readFileLines(filePath);
-  if (lines != null) {
+  try {
+    final file = File(toLocalPathFormat(filePath));
+    final lines = await file.readAsLines();
     for (var l = 0; l < lines.length; l++) {
       final line = lines[l];
       final a = RegExp(r"<# *([\w-]+) *(= *[\w-,]+)? *>");
@@ -64,6 +65,8 @@ Future<void> _generatePrep(
         }
       });
     }
+  } catch (_) {
+//
   }
 }
 
