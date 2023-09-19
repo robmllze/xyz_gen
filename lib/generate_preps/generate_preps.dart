@@ -81,7 +81,7 @@ Future<void> _generatePrep(
 
 extension Prep on String {
   String get prep {
-    final m = RegExp(r"<# *([\w-]+) *(= *[\w-,]+)? *>").firstMatch(this)?[2];
+    final m = RegExp(r"<# *([\w-]+) *(= *([\w-,]+))? *>").firstMatch(this)?[3];
     if (m != null) {
       return m;
     }
