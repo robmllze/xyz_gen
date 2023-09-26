@@ -304,10 +304,10 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "7d40544b9801db76e4eb7f3b5f0770d625b7f19a"
+      resolved-ref: "44cb93292bc5c49da0c005a19c5ab8f0ee3ae727"
       url: "https://github.com/robmllze/xyz_utils.git"
     source: git
-    version: "0.11.1"
+    version: "0.13.1"
   yaml:
     dependency: transitive
     description:
