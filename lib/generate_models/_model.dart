@@ -19,7 +19,7 @@ abstract class Model {
 
   T copy<T extends Model>();
 
-  T copyWith<T extends Model>({T? other});
+  T copyWith<T extends Model>([T? other]);
 
   void updateWith<T extends Model>(T other);
 
