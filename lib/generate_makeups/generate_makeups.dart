@@ -129,7 +129,14 @@ Future<void> _generateMakeupFile(
     filePath: fixedFilePath,
     collection: collection,
     classAnnotations: {"GenerateMakeups"},
-    onAnnotatedClass: onAnnotatedClass,
+    onAnnotatedClass: (final classAnnotationName, final className) async {
+      // Remove the underscores at the start.
+      var temp = className;
+      while (temp.startsWith("_")) {
+        temp = temp.substring(1);
+      }
+      await onAnnotatedClass(classAnnotationName, temp);
+    },
     onClassAnnotationField: onClassAnnotationField,
   );
 }
