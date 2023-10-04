@@ -76,9 +76,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
       return "$keyConst: $value,";
     }),
     // ___P8___
-    allIds.map((e) => 'this.$e = other.$e ?? this.$e;'),
-    // ___P9___
-    allIds.map((e) => 'this.$e = other[${allKeyConsts[e]}] ?? this.$e;'),
+    allIds.map((e) => "this.$e = other.$e ?? this.$e;"),
   ];
 
   final output = <String, String>{};
