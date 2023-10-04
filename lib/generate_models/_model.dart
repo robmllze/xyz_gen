@@ -41,6 +41,12 @@ abstract class Model {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+abstract class ThisModel<T extends Model> extends Model {
+  late final T thisModel = this as T;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 class FirestoreRef {
   final dynamic firestore;
   final String collectionPath;
