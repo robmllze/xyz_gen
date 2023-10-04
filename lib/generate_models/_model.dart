@@ -19,9 +19,9 @@ abstract class Model {
 
   T copy<T extends Model>();
 
-  T copyWith<T extends Model>([T? other]);
+  T copyWith<T extends Model>(T other);
 
-  T copyWithJMap<T extends Model>([JMap? other]);
+  T copyWithJMap<T extends Model>(JMap other);
 
   void updateWith<T extends Model>(T other);
 
