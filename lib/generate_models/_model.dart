@@ -32,7 +32,7 @@ abstract class Model {
 
   bool equals<T extends Model>(T other) => this.toJMap().deep == other.toJMap().deep;
 
-  FirestoreRef? defaultFirestoreRef(dynamic firestore) {
+  FirestoreRef? defaultFsRef(dynamic firestore) {
     return collectionPath != null && this.id != null
         ? FirestoreRef._(firestore, this.collectionPath!, this.id!)
         : null;
