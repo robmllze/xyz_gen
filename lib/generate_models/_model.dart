@@ -21,7 +21,11 @@ abstract class Model {
 
   T copyWith<T extends Model>([T? other]);
 
+  T copyWithJMap<T extends Model>([JMap? other]);
+
   void updateWith<T extends Model>(T other);
+
+  void updateWithJMap<T extends Model>(JMap other);
 
   @override
   String toString() => this.toJMap().toString();
