@@ -10,7 +10,7 @@ class GenerateModel {
   final Map<String, dynamic> parameters;
   const GenerateModel({
     required this.className,
-    this.parameters = const {},
-    this.defaultCollectionPath,
+    required this.defaultCollectionPath,
+    required this.parameters,
   });
 }
