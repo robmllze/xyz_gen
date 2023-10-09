@@ -59,7 +59,7 @@ Future<void> generateScreenAccess({
   final a = sorted.map((e) => "maker$e").join(",");
   final b = keys.map((e) => "...PATH_$e").join(",");
   final c = keys.map((e) => "...PATH_NOT_REDIRECTABLE_$e").join(",");
-  final d = keys.map((e) => "...PATH_ACCESSIBLE_$e").join(",");
+  final d = keys.map((e) => "...PATH_ALWAYS_ACCESSIBLE_$e").join(",");
   final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e").join(",");
   final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
   final g = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");

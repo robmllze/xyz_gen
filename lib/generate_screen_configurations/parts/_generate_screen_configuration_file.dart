@@ -109,7 +109,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___LA1___": isAccessibleOnlyIfLoggedIn,
         "___LA2___": isAccessibleOnlyIfLoggedOut,
         "___LA3___": isAlwaysAccessible,
-        "___LA4___": isRedirectable,
+        "___LA4___": !isRedirectable,
         "___IP0___": _ip0(internalParameters),
         "___IP1___": _ip1(internalParameters),
         "___IP2___": _ip2(internalParameters),
