@@ -76,15 +76,15 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenSegment = screenKey.replaceAll("screen_", "");
     final screenPath = "/$screenSegment";
     assert(
-      isAccessibleOnlyIfLoggedInAndVerified != isAccessibleOnlyIfLoggedIn,
+      isAccessibleOnlyIfLoggedInAndVerified && isAccessibleOnlyIfLoggedIn,
       "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",
     );
     assert(
-      isAccessibleOnlyIfLoggedInAndVerified != isAccessibleOnlyIfLoggedOut,
+      isAccessibleOnlyIfLoggedInAndVerified && isAccessibleOnlyIfLoggedOut,
       "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.",
     );
     assert(
-      isAccessibleOnlyIfLoggedIn != isAccessibleOnlyIfLoggedOut,
+      isAccessibleOnlyIfLoggedIn && isAccessibleOnlyIfLoggedOut,
       "Cannot set both `isAccessibleOnlyIfLoggedIn` and `isAccessibleOnlyIfLoggedOut` to `true`.",
     );
     final isAlwaysAccessible = (!isAccessibleOnlyIfLoggedInAndVerified &&
@@ -95,6 +95,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
 
     // Replace placeholders with the actual values.
     final template = templates.values.first;
+    printLightRed(internalParameters.toString());
     final output = replaceAllData(
       template,
       {
