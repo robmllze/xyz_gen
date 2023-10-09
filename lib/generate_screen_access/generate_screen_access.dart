@@ -69,7 +69,7 @@ Future<void> generateScreenAccess({
     "___SCREEN_MAKERS___": a,
     "___PATHS___": b,
     "___PATHS_NOT_REDIRECTABLE___": c,
-    "___PATHS_ACCESSIBLE___": d,
+    "___PATHS_ALWAYS_ACCESSIBLE___": d,
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___": e,
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": f,
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": g,

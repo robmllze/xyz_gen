@@ -16,10 +16,10 @@ Future<Set<String>> _generateScreenConfigurationFile(
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.
-  bool? isOnlyAccessibleIfLoggedInAndVerified;
-  bool? isOnlyAccessibleIfLoggedIn;
-  bool? isOnlyAccessibleIfLoggedOut;
-  bool? isRedirectable;
+  var isAccessibleOnlyIfLoggedInAndVerified = false;
+  var isAccessibleOnlyIfLoggedIn = false;
+  var isAccessibleOnlyIfLoggedOut = false;
+  var isRedirectable = false;
   var internalParameters = const <String, String>{};
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
@@ -33,16 +33,16 @@ Future<Set<String>> _generateScreenConfigurationFile(
   ) {
     switch (fieldName) {
       case "isOnlyAccessibleIfLoggedInAndVerified":
-        isOnlyAccessibleIfLoggedInAndVerified = fieldValue.toBoolValue();
+        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
       case "isOnlyAccessibleIfLoggedIn":
-        isOnlyAccessibleIfLoggedIn = fieldValue.toBoolValue();
+        isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
         break;
       case "isOnlyAccessibleIfLoggedOut":
-        isOnlyAccessibleIfLoggedOut = fieldValue.toBoolValue();
+        isAccessibleOnlyIfLoggedOut = fieldValue.toBoolValue() ?? false;
         break;
       case "isRedirectable":
-        isRedirectable = fieldValue.toBoolValue();
+        isRedirectable = fieldValue.toBoolValue() ?? false;
         break;
       case "internalParameters":
         internalParameters = fieldValue
@@ -75,13 +75,21 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final configurationClassName = "${className}Configuration";
     final screenSegment = screenKey.replaceAll("screen_", "");
     final screenPath = "/$screenSegment";
-    final la0 = isOnlyAccessibleIfLoggedInAndVerified == true;
-    final la1 = isOnlyAccessibleIfLoggedIn == true;
-    final la2 = isOnlyAccessibleIfLoggedOut == true;
-    final la3 = isOnlyAccessibleIfLoggedInAndVerified == null &&
-        isOnlyAccessibleIfLoggedIn == null &&
-        isOnlyAccessibleIfLoggedOut == null;
-    final la4 = isRedirectable == false;
+    assert(
+      isAccessibleOnlyIfLoggedInAndVerified != isAccessibleOnlyIfLoggedIn,
+      "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",
+    );
+    assert(
+      isAccessibleOnlyIfLoggedInAndVerified != isAccessibleOnlyIfLoggedOut,
+      "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.",
+    );
+    assert(
+      isAccessibleOnlyIfLoggedIn != isAccessibleOnlyIfLoggedOut,
+      "Cannot set both `isAccessibleOnlyIfLoggedIn` and `isAccessibleOnlyIfLoggedOut` to `true`.",
+    );
+    final isAlwaysAccessible = (!isAccessibleOnlyIfLoggedInAndVerified &&
+        !isAccessibleOnlyIfLoggedIn &&
+        !isAccessibleOnlyIfLoggedOut);
     final outputFileName = "$classKey.g.dart";
     final outputFilePath = join(classFileDirPath, outputFileName);
 
@@ -97,11 +105,11 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___SCREEN_CONST_KEY___": screenConstKey,
         "___SCREEN_SEGMENT___": screenSegment,
         "___SCREEN_PATH___": screenPath,
-        "___LA0___": la0,
-        "___LA1___": la1,
-        "___LA2___": la2,
-        "___LA3___": la3,
-        "___LA4___": la4,
+        "___LA0___": isAccessibleOnlyIfLoggedInAndVerified,
+        "___LA1___": isAccessibleOnlyIfLoggedIn,
+        "___LA2___": isAccessibleOnlyIfLoggedOut,
+        "___LA3___": isAlwaysAccessible,
+        "___LA4___": isRedirectable,
         "___IP0___": _ip0(internalParameters),
         "___IP1___": _ip1(internalParameters),
         "___IP2___": _ip2(internalParameters),
