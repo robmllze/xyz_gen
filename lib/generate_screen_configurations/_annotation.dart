@@ -7,22 +7,22 @@
 class GenerateScreenConfiguration {
   /// Set to `true` to ensure the screen can only be accessed if the current
   /// user is logged in and verified.
-  final bool isOnlyAccessibleIfLoggedInAndVerified;
+  final bool? isOnlyAccessibleIfLoggedInAndVerified;
 
   /// Set to `true` to ensure the screen can only be accessed if the current
   /// user is logged in (and not necessarily verified).
-  final bool isOnlyAccessibleIfLoggedIn;
+  final bool? isOnlyAccessibleIfLoggedIn;
 
   /// Set to `true` to ensure the screen can only be accessed if there are no
   /// currently logged-in users.
-  final bool isOnlyAccessibleIfLoggedOut;
+  final bool? isOnlyAccessibleIfLoggedOut;
 
   /// Set to `false` to ensure that the screen is not redirectable.
   ///
   /// Example:
   ///
   /// If your screen's route is `/delete_account`, normally you can access it
-  /// by typing https://medikienct.app/delete_account in the browser. This will
+  /// by typing https://your.app/delete_account in the browser. This will
   /// start the app and redirect to "/delete_account". This can be disabled
   /// by setting [isRedirectable] to `false`.
   final bool? isRedirectable;
@@ -39,9 +39,9 @@ class GenerateScreenConfiguration {
   /// Generates boiler-plate code for the annotated screen class to make it
   /// accessible.
   const GenerateScreenConfiguration({
-    this.isOnlyAccessibleIfLoggedInAndVerified = false,
-    this.isOnlyAccessibleIfLoggedIn = false,
-    this.isOnlyAccessibleIfLoggedOut = false,
+    this.isOnlyAccessibleIfLoggedInAndVerified,
+    this.isOnlyAccessibleIfLoggedIn,
+    this.isOnlyAccessibleIfLoggedOut,
     this.isRedirectable,
     this.internalParameters = const {},
     this.queryParameters = const {},
