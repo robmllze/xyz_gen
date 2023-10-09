@@ -95,7 +95,6 @@ Future<Set<String>> _generateScreenConfigurationFile(
 
     // Replace placeholders with the actual values.
     final template = templates.values.first;
-    printLightRed(internalParameters.toString());
     final output = replaceAllData(
       template,
       {
