@@ -47,15 +47,15 @@ class GenerateScreenConfiguration {
     this.queryParameters = const {},
     this.pathSegments = const [],
   })  : assert(
-          isAccessibleOnlyIfLoggedInAndVerified && isAccessibleOnlyIfLoggedIn,
+          !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",
         ),
         assert(
-          isAccessibleOnlyIfLoggedInAndVerified && isAccessibleOnlyIfLoggedOut,
+          !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedOut,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.",
         ),
         assert(
-          isAccessibleOnlyIfLoggedIn && isAccessibleOnlyIfLoggedOut,
+          !isAccessibleOnlyIfLoggedIn || !isAccessibleOnlyIfLoggedOut,
           "Cannot set both `isAccessibleOnlyIfLoggedIn` and `isAccessibleOnlyIfLoggedOut` to `true`.",
         );
 }
