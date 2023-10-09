@@ -17,9 +17,9 @@ Future<void> generateScreen({
   required String screenTemplateFilePath,
   required String stateTemplateFilePath,
   required String configurationTemplateFilePath,
-  bool isOnlyAccessibleIfLoggedIn = false,
-  bool isOnlyAccessibleIfLoggedInAndVerified = false,
-  bool isOnlyAccessibleIfLoggedOut = false,
+  bool isAccessibleOnlyIfLoggedIn = false,
+  bool isAccessibleOnlyIfLoggedInAndVerified = false,
+  bool isAccessibleOnlyIfLoggedOut = false,
   bool isRedirectable = false,
   Map<String, String> internalParameters = const {},
   Set<String> queryParameters = const {},
@@ -54,9 +54,9 @@ Future<void> generateScreen({
     screenTemplateFilePath,
     screenFilePath,
     data,
-    isOnlyAccessibleIfLoggedIn: isOnlyAccessibleIfLoggedIn,
-    isOnlyAccessibleIfLoggedInAndVerified: isOnlyAccessibleIfLoggedInAndVerified,
-    isOnlyAccessibleIfLoggedOut: isOnlyAccessibleIfLoggedOut,
+    isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
+    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
     queryParameters: queryParameters,
@@ -86,9 +86,9 @@ Future<void> _writeScreenFile(
   String templateFilePath,
   String outputFilePath,
   Map<String, String> data, {
-  bool isOnlyAccessibleIfLoggedIn = false,
-  bool isOnlyAccessibleIfLoggedInAndVerified = false,
-  bool isOnlyAccessibleIfLoggedOut = false,
+  bool isAccessibleOnlyIfLoggedIn = false,
+  bool isAccessibleOnlyIfLoggedInAndVerified = false,
+  bool isAccessibleOnlyIfLoggedOut = false,
   bool isRedirectable = false,
   Map<String, String> internalParameters = const {},
   Set<String> queryParameters = const {},
@@ -108,9 +108,9 @@ Future<void> _writeScreenFile(
   final b = queryParameters.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
-    if (isOnlyAccessibleIfLoggedIn) "isOnlyAccessibleIfLoggedIn: true",
-    if (isOnlyAccessibleIfLoggedInAndVerified) "isOnlyAccessibleIfLoggedInAndVerified: true",
-    if (isOnlyAccessibleIfLoggedOut) "isOnlyAccessibleIfLoggedOut: true",
+    if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
+    if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
+    if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
     if (isRedirectable) "isRedirectable: true",
     if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
@@ -153,9 +153,9 @@ class GenerateScreenArgs extends ValidObject {
   final String? screenTemplateFilePath;
   final String? stateTemplateFilePath;
   final String? configurationTemplateFilePath;
-  final bool? isOnlyAccessibleIfLoggedIn;
-  final bool? isOnlyAccessibleIfLoggedInAndVerified;
-  final bool? isOnlyAccessibleIfLoggedOut;
+  final bool? isAccessibleOnlyIfLoggedIn;
+  final bool? isAccessibleOnlyIfLoggedInAndVerified;
+  final bool? isAccessibleOnlyIfLoggedOut;
   final bool? isRedirectable;
   final Map<String, String>? internalParameters;
   final Set<String>? queryParameters;
@@ -172,9 +172,9 @@ class GenerateScreenArgs extends ValidObject {
     required this.screenTemplateFilePath,
     required this.stateTemplateFilePath,
     required this.configurationTemplateFilePath,
-    required this.isOnlyAccessibleIfLoggedIn,
-    required this.isOnlyAccessibleIfLoggedInAndVerified,
-    required this.isOnlyAccessibleIfLoggedOut,
+    required this.isAccessibleOnlyIfLoggedIn,
+    required this.isAccessibleOnlyIfLoggedInAndVerified,
+    required this.isAccessibleOnlyIfLoggedOut,
     required this.isRedirectable,
     required this.internalParameters,
     required this.queryParameters,
@@ -193,9 +193,9 @@ class GenerateScreenArgs extends ValidObject {
         screenTemplateFilePath,
         stateTemplateFilePath,
         configurationTemplateFilePath,
-        if (isOnlyAccessibleIfLoggedInAndVerified != null) isOnlyAccessibleIfLoggedInAndVerified,
-        if (isOnlyAccessibleIfLoggedIn != null) isOnlyAccessibleIfLoggedIn,
-        if (isOnlyAccessibleIfLoggedOut != null) isOnlyAccessibleIfLoggedOut,
+        if (isAccessibleOnlyIfLoggedInAndVerified != null) isAccessibleOnlyIfLoggedInAndVerified,
+        if (isAccessibleOnlyIfLoggedIn != null) isAccessibleOnlyIfLoggedIn,
+        if (isAccessibleOnlyIfLoggedOut != null) isAccessibleOnlyIfLoggedOut,
         if (isRedirectable != null) isRedirectable,
         // if (internalParameters != null) internalParameters,
         // if (queryParameters != null) queryParameters,

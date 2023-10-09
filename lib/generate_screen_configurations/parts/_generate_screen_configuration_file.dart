@@ -32,13 +32,13 @@ Future<Set<String>> _generateScreenConfigurationFile(
     DartObject fieldValue,
   ) {
     switch (fieldName) {
-      case "isOnlyAccessibleIfLoggedInAndVerified":
+      case "isAccessibleOnlyIfLoggedInAndVerified":
         isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
-      case "isOnlyAccessibleIfLoggedIn":
+      case "isAccessibleOnlyIfLoggedIn":
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
         break;
-      case "isOnlyAccessibleIfLoggedOut":
+      case "isAccessibleOnlyIfLoggedOut":
         isAccessibleOnlyIfLoggedOut = fieldValue.toBoolValue() ?? false;
         break;
       case "isRedirectable":
