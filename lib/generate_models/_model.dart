@@ -19,7 +19,7 @@ abstract class Model {
 
   String getCollectionPath() => _removeLastSegment(this.getDocPath());
 
-  Map<String, dynamic> toJMap();
+  Map<String, dynamic> toJMap({dynamic defaultValue});
 
   T empty<T extends Model>();
 
