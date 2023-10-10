@@ -17,6 +17,8 @@ abstract class Model {
 
   String getDocPath();
 
+  String getCollectionPath() => _removeLastSegment(this.getDocPath());
+
   Map<String, dynamic> toJMap();
 
   T empty<T extends Model>();
@@ -41,4 +43,12 @@ abstract class Model {
 
 abstract class ThisModel<T extends Model> extends Model {
   late final T model = this as T;
+}
+
+String _removeLastSegment(String path) {
+  var lastSlash = path.lastIndexOf("/");
+  if (lastSlash != -1) {
+    return path.substring(0, lastSlash);
+  }
+  return "";
 }
