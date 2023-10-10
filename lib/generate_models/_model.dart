@@ -15,6 +15,8 @@ abstract class Model {
 
   String? docPathPattern;
 
+  String getDocPath();
+
   Map<String, dynamic> toJMap();
 
   T empty<T extends Model>();
