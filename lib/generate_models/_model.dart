@@ -13,7 +13,7 @@ abstract class Model {
 
   dynamic args;
 
-  String? documentPath;
+  String? docPathPattern;
 
   Map<String, dynamic> toJMap();
 
