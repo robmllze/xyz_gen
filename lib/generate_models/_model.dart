@@ -19,7 +19,14 @@ abstract class Model {
 
   String getCollectionPath() => _removeLastSegment(this.getDocPath());
 
-  Map<String, dynamic> toJMap({dynamic defaultValue});
+  JMap toJMap({dynamic defaultValue});
+
+  JMap sortedJMap() {
+    final a = this.toJMap().nonNulls;
+    final b = a.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    final c = {for (var k in b) k: a[k] as dynamic};
+    return c;
+  }
 
   T empty<T extends Model>();
 
@@ -37,6 +44,20 @@ abstract class Model {
   String toString() => this.toJMap().toString();
 
   bool equals<T extends Model>(T other) => this.toJMap().deep == other.toJMap().deep;
+
+  @override
+  bool operator ==(Object? other) {
+    if (other is! Model) {
+      return false;
+    }
+    if (other.runtimeType != this.runtimeType) {
+      return false;
+    }
+    return this.equals(other);
+  }
+
+  @override
+  int get hashCode => this.sortedJMap().toString().hashCode;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
