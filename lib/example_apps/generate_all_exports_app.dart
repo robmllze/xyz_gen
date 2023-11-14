@@ -7,10 +7,12 @@
 //.title~
 
 import '/xyz_gen.dart';
+import '/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExportsApp(List<String> arguments) async {
+  final defaultTemplatesPath = "templates/${await getXyzGenLibPath()}";
   await basicConsoleAppBody<BasicTemplateArgs>(
     appTitle: "XYZ Generate All Exports",
     arguments: arguments,
@@ -42,7 +44,7 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(ALL_EXPORTS_TEMPLATE_PATH),
+        defaultsTo: toLocalPathFormat("$defaultTemplatesPath/all_exports_template.dart.md"),
       ),
     onResults: onResults,
     action: action,

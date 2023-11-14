@@ -7,6 +7,7 @@
 //.title~
 
 import '/xyz_gen.dart';
+import '/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -31,6 +32,7 @@ const _STATE_TEMPLATE_OPTION = "state-template";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenApp(List<String> arguments) async {
+  final defaultTemplatesPath = "templates/${await getXyzGenLibPath()}";
   final parser = ArgParser()
     ..addFlag(
       "help",
@@ -63,22 +65,22 @@ Future<void> generateScreenApp(List<String> arguments) async {
     ..addOption(
       _LOGIC_TEMPLATE_OPTION,
       help: "Logic template file path.",
-      defaultsTo: toLocalPathFormat(SCREEN_LOGIC_TEMPLATE_PATH),
+      defaultsTo: toLocalPathFormat("$defaultTemplatesPath/screen_logic_template.dart.md"),
     )
     ..addOption(
       _SCREEN_TEMPLATE_OPTION,
       help: "Screen template file path.",
-      defaultsTo: toLocalPathFormat(SCREEN_TEMPLATE_PATH),
+      defaultsTo: toLocalPathFormat("$defaultTemplatesPath/screen_template.dart.md"),
     )
     ..addOption(
       _STATE_TEMPLATE_OPTION,
       help: "State template file path.",
-      defaultsTo: toLocalPathFormat(SCREEN_STATE_TEMPLATE_PATH),
+      defaultsTo: toLocalPathFormat("$defaultTemplatesPath/screen_state_template.dart.md"),
     )
     ..addOption(
       _CONFIGURATION_TEMPLATE_OPTION,
       help: "Configuration template file path.",
-      defaultsTo: toLocalPathFormat(SCREEN_CONFIGURATION_TEMPLATE_PATH),
+      defaultsTo: toLocalPathFormat("$defaultTemplatesPath/screen_configuration_template.dart.md"),
     )
     ..addOption(
       _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION,

@@ -6,14 +6,16 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/xyz_gen.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart';
+import '/xyz_gen.dart';
+import '/get_xyz_gen_lib_path.dart';
 
 const _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION = "additional-screen-class-names";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenAccessApp(List<String> arguments) async {
+  final defaultTemplatesPath = "templates/${await getXyzGenLibPath()}";
   await basicConsoleAppBody<GenerateScreenAccessArgs>(
     appTitle: "XYZ Generate Screen Access",
     arguments: arguments,
@@ -55,7 +57,7 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(SCREEN_ACCESS_TEMPLATE_PATH),
+        defaultsTo: toLocalPathFormat("$defaultTemplatesPath/screen_access_template.dart.md"),
       ),
     onResults: onResults,
     action: action,

@@ -34,19 +34,19 @@ const SHARED_THEMES_PATH = "$SHARED_LIB_PATH/themes";
 const SHARED_UTILS_PATH = "$SHARED_LIB_PATH/utils";
 const SHARED_WIDGETS_PATH = "$SHARED_LIB_PATH/widgets";
 
-const TEMPLATES_PATH = "$SCRIPTS_PATH/templates";
+// const TEMPLATES_PATH = "$SCRIPTS_PATH/templates";
 
-const MAKEUP_BUILDER_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_builder_template.dart.md";
-const MAKEUP_CLASS_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_class_template.dart.md";
-const MAKEUP_EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_exports_template.dart.md";
+// const MAKEUP_BUILDER_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_builder_template.dart.md";
+// const MAKEUP_CLASS_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_class_template.dart.md";
+// const MAKEUP_EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/makeup/makeup_exports_template.dart.md";
 
-const MODEL_TEMPLATE_PATH = "$TEMPLATES_PATH/model/model_template.dart.md";
+// const MODEL_TEMPLATE_PATH = "$TEMPLATES_PATH/model/model_template.dart.md";
 
-const SCREEN_ACCESS_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_access_template.dart.md";
-const SCREEN_CONFIGURATION_TEMPLATE_PATH =
-    "$TEMPLATES_PATH/screen/screen_configuration_template.dart.md";
-const SCREEN_LOGIC_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_logic_template.dart.md";
-const SCREEN_STATE_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_state_template.dart.md";
-const SCREEN_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_template.dart.md";
+// const SCREEN_ACCESS_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_access_template.dart.md";
+// const SCREEN_CONFIGURATION_TEMPLATE_PATH =
+//     "$TEMPLATES_PATH/screen/screen_configuration_template.dart.md";
+// const SCREEN_LOGIC_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_logic_template.dart.md";
+// const SCREEN_STATE_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_state_template.dart.md";
+// const SCREEN_TEMPLATE_PATH = "$TEMPLATES_PATH/screen/screen_template.dart.md";
 
-const ALL_EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/all_exports_template.dart.md";
+// const ALL_EXPORTS_TEMPLATE_PATH = "$TEMPLATES_PATH/all_exports_template.dart.md";

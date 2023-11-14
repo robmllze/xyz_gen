@@ -7,10 +7,12 @@
 //.title~
 
 import '/xyz_gen.dart';
+import '/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateModelsApp(List<String> arguments) async {
+  final defaultTemplatesPath = "templates/${await getXyzGenLibPath()}";
   await basicConsoleAppBody<BasicTemplateArgs>(
     appTitle: "XYZ Generate Models",
     arguments: arguments,
@@ -42,7 +44,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(MODEL_TEMPLATE_PATH),
+        defaultsTo: toLocalPathFormat("$defaultTemplatesPath/model_template.dart.md"),
       )
       ..addOption(
         DART_SDK_PATH_OPTION,
