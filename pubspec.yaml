@@ -5,13 +5,13 @@
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 name: xyz_gen
-version: 0.9.0
+version: 0.10.0
 publish_to: none
 environment:
   sdk: ^3.0.5
 dependency_overrides:
-  # xyz_utils:
-  #   path: ../xyz_utils
+  xyz_utils:
+    path: ../xyz_utils
 dependencies:
   xyz_utils:
     git:

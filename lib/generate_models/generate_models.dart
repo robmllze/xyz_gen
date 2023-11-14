@@ -24,6 +24,7 @@ Future<void> generateModels({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
+  printRed("Generating...");
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: rootPaths,
