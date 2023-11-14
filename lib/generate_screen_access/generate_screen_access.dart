@@ -66,6 +66,7 @@ Future<void> generateScreenAccess({
   final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
   final g = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
   final h = sorted.map((e) => "...cast${e}Configuration").join(",");
+  final i = sorted.map((e) => "default${e}Route").join(",");
   final template = await readDartTemplate(templateFilePath);
   final outputContent = replaceAllData(template, {
     "___SCREEN_MAKERS___": a,
@@ -76,6 +77,7 @@ Future<void> generateScreenAccess({
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": f,
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": g,
     "___SCREEN_CONFIGURATION_CASTS___": h,
+    "___DEFAULT_SCREEN_ROUTES___": i,
   });
   await writeFile(outputFilePath, outputContent);
   printGreen(
