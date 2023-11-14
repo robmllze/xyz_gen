@@ -6,6 +6,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:path/path.dart' as p;
 import '/xyz_gen.dart';
 import '/get_xyz_gen_lib_path.dart';
 
@@ -17,7 +18,7 @@ const _OUTPUT_DIR_PATH_OPTION = "output";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateMakeupsApp(List<String> arguments) async {
-  final defaultTemplatesPath = "templates/${await getXyzGenLibPath()}";
+  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates");
   await basicConsoleAppBody<GenerateMakeupsArgs>(
     appTitle: "XYZ Generate Makeups",
     arguments: arguments,
@@ -55,19 +56,19 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         _BUILDER_TEMPLATE_FILE_PATH_OPTION,
         abbr: "b",
         help: "Builder template file path.",
-        defaultsTo: toLocalPathFormat("$defaultTemplatesPath/makeup_builder_template.dart.md"),
+        defaultsTo: p.join(defaultTemplatesPath, "makeup_builder_template.dart.md"),
       )
       ..addOption(
         _CLASS_TEMPLATE_FILE_PATH_OPTION,
         abbr: "c",
         help: "Class template file path.",
-        defaultsTo: toLocalPathFormat("$defaultTemplatesPath/makeup_class_template.dart.md"),
+        defaultsTo: p.join(defaultTemplatesPath, "makeup_class_template.dart.md"),
       )
       ..addOption(
         _EXPORTS_TEMPLATE_FILE_PATH_OPTION,
         abbr: "e",
         help: "Exports template file path.",
-        defaultsTo: toLocalPathFormat("$defaultTemplatesPath/makeup_exports_template.dart.md"),
+        defaultsTo: p.join(defaultTemplatesPath, "makeup_exports_template.dart.md"),
       )
       ..addOption(
         DART_SDK_PATH_OPTION,
