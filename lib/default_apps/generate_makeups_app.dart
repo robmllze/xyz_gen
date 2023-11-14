@@ -18,7 +18,7 @@ const _OUTPUT_DIR_PATH_OPTION = "output";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateMakeupsApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates");
+  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates", "makeup");
   await basicConsoleAppBody<GenerateMakeupsArgs>(
     appTitle: "XYZ Generate Makeups",
     arguments: arguments,

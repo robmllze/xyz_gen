@@ -33,7 +33,7 @@ const _STATE_TEMPLATE_OPTION = "state-template";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates");
+  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates", "screen");
   final parser = ArgParser()
     ..addFlag(
       "help",

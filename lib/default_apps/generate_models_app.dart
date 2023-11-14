@@ -13,7 +13,7 @@ import '/get_xyz_gen_lib_path.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateModelsApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates");
+  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates", "model");
   await basicConsoleAppBody<BasicTemplateArgs>(
     appTitle: "XYZ Generate Models",
     arguments: arguments,

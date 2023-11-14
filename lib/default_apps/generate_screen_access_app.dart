@@ -16,7 +16,7 @@ const _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION = "additional-screen-class-names";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenAccessApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates");
+  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates", "screen");
   await basicConsoleAppBody<GenerateScreenAccessArgs>(
     appTitle: "XYZ Generate Screen Access",
     arguments: arguments,
