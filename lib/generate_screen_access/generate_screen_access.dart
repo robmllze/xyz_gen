@@ -77,7 +77,7 @@ Future<void> generateScreenAccess({
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": f,
     "___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": g,
     "___SCREEN_CONFIGURATION_CASTS___": h,
-    "___DEFAULT_SCREEN_ROUTES___": i,
+    "___GENERATED_SCREEN_ROUTES___": i,
   });
   await writeFile(outputFilePath, outputContent);
   printGreen(
