@@ -113,7 +113,7 @@ Future<void> _writeScreenFile(
   final b = queryParameters.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
-    if (path.isNotEmpty) "path: $path",
+    if (path.isNotEmpty) 'path: "$path"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
     if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
