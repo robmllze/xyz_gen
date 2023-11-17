@@ -48,7 +48,9 @@ Future<void> generateScreen({
     [
       outputDirPath,
       (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
-          .replaceAll("screen_", ""),
+          .split(RegExp(r"[\\/]"))
+          .map((e) => e.startsWith("screen_") ? e : "screen_$e")
+          .join("/"),
       screenClassKey,
     ],
   );
