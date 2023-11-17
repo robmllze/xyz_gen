@@ -30,7 +30,7 @@ class GenerateScreenConfiguration {
   final bool isRedirectable;
 
   /// ...
-  final String? path;
+  final String path;
 
   /// ...
   final Map<String, String> internalParameters;
@@ -44,7 +44,7 @@ class GenerateScreenConfiguration {
   /// Generates boiler-plate code for the annotated screen class to make it
   /// accessible.
   const GenerateScreenConfiguration({
-    this.path,
+    this.path = "",
     this.isAccessibleOnlyIfLoggedInAndVerified = false,
     this.isAccessibleOnlyIfLoggedIn = false,
     this.isAccessibleOnlyIfLoggedOut = false,
