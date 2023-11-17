@@ -17,6 +17,7 @@ const _TITLE_OPTION = "title";
 const _OUTPUT_OPTION = "output";
 const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION =
     "is-only-accessible-if-logged-in-and-verified";
+const _PATH_OPTION = "path";
 const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION = "is-only-accessible-if-logged-in";
 const _IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION = "is-only-accessible-if-logged-out";
 const _IS_REDIRECTABLE_OPTION = "is-redirectable";
@@ -81,7 +82,13 @@ Future<void> generateScreenApp(List<String> arguments) async {
     ..addOption(
       _CONFIGURATION_TEMPLATE_OPTION,
       help: "Configuration template file path.",
-      defaultsTo: toLocalPathFormat(p.join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
+      defaultsTo:
+          toLocalPathFormat(p.join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
+    )
+    ..addOption(
+      _PATH_OPTION,
+      help: "Screen path.",
+      defaultsTo: "",
     )
     ..addOption(
       _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION,
@@ -154,6 +161,7 @@ GenerateScreenArgs onResults(_, dynamic results) {
     screenTemplateFilePath: results[_SCREEN_TEMPLATE_OPTION],
     stateTemplateFilePath: results[_STATE_TEMPLATE_OPTION],
     configurationTemplateFilePath: results[_CONFIGURATION_TEMPLATE_OPTION],
+    path: results[_PATH_OPTION],
     isAccessibleOnlyIfLoggedIn: toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION),
     isAccessibleOnlyIfLoggedInAndVerified:
         toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION),
@@ -178,6 +186,7 @@ Future<void> action(_, __, GenerateScreenArgs args) async {
     logicTemplateFilePath: args.logicTemplateFilePath!,
     screenTemplateFilePath: args.screenTemplateFilePath!,
     stateTemplateFilePath: args.stateTemplateFilePath!,
+    path: args.path!,
     configurationTemplateFilePath: args.configurationTemplateFilePath!,
     isAccessibleOnlyIfLoggedIn: args.isAccessibleOnlyIfLoggedIn!,
     isAccessibleOnlyIfLoggedInAndVerified: args.isAccessibleOnlyIfLoggedInAndVerified!,

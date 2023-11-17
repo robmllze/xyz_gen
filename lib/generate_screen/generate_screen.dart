@@ -19,6 +19,7 @@ Future<void> generateScreen({
   required String screenTemplateFilePath,
   required String stateTemplateFilePath,
   required String configurationTemplateFilePath,
+  String path = "",
   bool isAccessibleOnlyIfLoggedIn = false,
   bool isAccessibleOnlyIfLoggedInAndVerified = false,
   bool isAccessibleOnlyIfLoggedOut = false,
@@ -56,6 +57,7 @@ Future<void> generateScreen({
     screenTemplateFilePath,
     screenFilePath,
     data,
+    path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
     isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
@@ -88,6 +90,7 @@ Future<void> _writeScreenFile(
   String templateFilePath,
   String outputFilePath,
   Map<String, String> data, {
+  String path = "",
   bool isAccessibleOnlyIfLoggedIn = false,
   bool isAccessibleOnlyIfLoggedInAndVerified = false,
   bool isAccessibleOnlyIfLoggedOut = false,
@@ -110,6 +113,7 @@ Future<void> _writeScreenFile(
   final b = queryParameters.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
+    if (path.isNotEmpty) "path: $path,",
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
     if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
@@ -155,6 +159,7 @@ class GenerateScreenArgs extends ValidObject {
   final String? screenTemplateFilePath;
   final String? stateTemplateFilePath;
   final String? configurationTemplateFilePath;
+  final String? path;
   final bool? isAccessibleOnlyIfLoggedIn;
   final bool? isAccessibleOnlyIfLoggedInAndVerified;
   final bool? isAccessibleOnlyIfLoggedOut;
@@ -174,6 +179,7 @@ class GenerateScreenArgs extends ValidObject {
     required this.screenTemplateFilePath,
     required this.stateTemplateFilePath,
     required this.configurationTemplateFilePath,
+    required this.path,
     required this.isAccessibleOnlyIfLoggedIn,
     required this.isAccessibleOnlyIfLoggedInAndVerified,
     required this.isAccessibleOnlyIfLoggedOut,
