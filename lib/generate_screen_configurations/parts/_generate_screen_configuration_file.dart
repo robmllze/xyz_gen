@@ -18,6 +18,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.
+  String? path = "";
   var isAccessibleOnlyIfLoggedInAndVerified = false;
   var isAccessibleOnlyIfLoggedIn = false;
   var isAccessibleOnlyIfLoggedOut = false;
@@ -34,6 +35,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
     DartObject fieldValue,
   ) {
     switch (fieldName) {
+      case "path":
+        path = fieldValue.toStringValue();
       case "isAccessibleOnlyIfLoggedInAndVerified":
         isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
@@ -75,7 +78,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKey = className.toSnakeCase();
     final screenConstKey = screenKey.toUpperCase();
     final configurationClassName = "${className}Configuration";
-    final screenSegment = screenKey.replaceAll("screen_", "");
+    final screenSegment = (path?.startsWith("/") == true ? path?.substring(1) : path) ??
+        screenKey.replaceAll("screen_", "");
     final screenPath = "/$screenSegment";
     assert(
       !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
