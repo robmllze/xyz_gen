@@ -78,9 +78,14 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKey = className.toSnakeCase();
     final screenConstKey = screenKey.toUpperCase();
     final configurationClassName = "${className}Configuration";
-    final screenSegment = path.isNotEmpty
-        ? (path.startsWith("/") == true ? path.substring(1) : path)
-        : screenKey.replaceAll("screen_", "");
+    final screenKeyName = screenKey.replaceAll("screen_", "");
+    final screenSegment = joinAll(
+      [
+        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
+            .replaceAll("screen_", ""),
+        screenKeyName,
+      ],
+    );
     final screenPath = "/$screenSegment";
     assert(
       !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,

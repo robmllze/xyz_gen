@@ -44,7 +44,14 @@ Future<void> generateScreen({
     "___SCREEN_FILE___": screenFileName,
     "___STATE_FILE___": stateFileName,
   };
-  final folderDirPath = join(outputDirPath, screenClassKey);
+  final folderDirPath = joinAll(
+    [
+      outputDirPath,
+      (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
+          .replaceAll("screen_", ""),
+      screenClassKey,
+    ],
+  );
   final logicFilePath = join(folderDirPath, logicFileName);
   await _writeFile(
     logicTemplateFilePath,
