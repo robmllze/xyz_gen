@@ -14,6 +14,6 @@ export 'package:analyzer/dart/constant/value.dart';
 export 'package:args/args.dart';
 export 'package:path/path.dart';
 
-export 'package:xyz_utils/xyz_utils_non_web.dart';
+export 'package:xyz_utils/io.dart';
 
 export '_basic_console_app.dart';

@@ -8,8 +8,7 @@
 
 import 'dart:io';
 import 'package:path/path.dart' as p;
-
-import 'package:xyz_utils/xyz_utils_non_web.dart' show getPackageLibPath;
+import 'package:xyz_utils/io.dart' show getPackageLibPath;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
