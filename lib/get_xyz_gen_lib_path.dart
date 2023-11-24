@@ -21,6 +21,7 @@ Future<String> getXyzGenLibPath() async {
 Future<String> getXyzGenDefaultTemplateFilePath(String templateName) async {
   final libPath = await getXyzGenLibPath();
   final templatePath = p.join(libPath, "templates", templateName);
+  print(templatePath);
   return templatePath;
 }
 
