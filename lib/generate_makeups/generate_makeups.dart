@@ -6,6 +6,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import '../get_xyz_gen_lib_path.dart';
 import '/_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -19,7 +20,9 @@ Future<void> generateMakeups({
   required String classTemplateFilePath,
   required String builderTemplateFilePath,
   required String exportsTemplateFilePath,
+  required String themeTemplateFilePath,
 }) async {
+  final makeupBuilders = <(String, String)>[];
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: rootPaths,
@@ -30,15 +33,37 @@ Future<void> generateMakeups({
       builderTemplateFilePath,
       exportsTemplateFilePath,
     },
-    generateForFile: (final collection, final fixedFilePath, final templates) async {
-      return _generateMakeupFile(
+    generateForFile: (
+      final collection,
+      final fixedFilePath,
+      final templates,
+    ) async {
+      await _generateMakeupFile(
         collection,
         fixedFilePath,
         templates,
         outputDirPath,
+        (final a, final b) {
+          printCyan(a);
+          makeupBuilders.add((a, b));
+        },
       );
     },
   );
+  final a = makeupBuilders
+      .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$2))
+      .map((e) => "late F${e.$2} ${e.$1};");
+  final b = makeupBuilders
+      .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$1))
+      .map((e) => "this.${e.$1} = ${e.$2};");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates");
+  final templateFilePath = toLocalPathFormat(join(defaultTemplatesPath, themeTemplateFilePath));
+  final template = await readDartTemplate(templateFilePath);
+  final output = replaceAllData(template, {
+    "___A___": a.join("\n  "),
+    "___B___": b.join("\n    "),
+  });
+  await writeFile(join(outputDirPath ?? "", "theme_g.dart"), output);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -48,6 +73,7 @@ Future<void> _generateMakeupFile(
   String fixedFilePath,
   Map<String, String> templates, [
   String? outputDirPath,
+  void Function(String, String)? onMakeup,
 ]) async {
   // ---------------------------------------------------------------------------
 
@@ -85,9 +111,6 @@ Future<void> _generateMakeupFile(
     final classFileDirPath = getDirPath(fixedFilePath);
     final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
-    // print("!!!");
-    // print(className);
-    // print(classKey);
     final makeupClassName = "${className}Makeup";
     const makeupClassFileName = "__makeup.dart";
     final rootOutputDirPath =
@@ -114,6 +137,7 @@ Future<void> _generateMakeupFile(
       parameters,
       names,
       classKey,
+      onMakeup,
     );
 
     await _writeExportsFile(
@@ -148,7 +172,7 @@ Future<void> _generateMakeupFile(
 Future<void> _writeClassFile(
   String outputFilePath,
   String template,
-  Map<String, String> tempalteData,
+  Map<String, String> templateData,
   Map<String, TypeCode> parameters,
 ) async {
   final entries = parameters.entries;
@@ -157,7 +181,7 @@ Future<void> _writeClassFile(
   final p2 = entries.map((e) => "${e.value.nullableName} ${e.key},");
   final p3 = entries.map((e) => "${e.key}: ${e.key} ?? this.${e.key},");
   final output = replaceAllData(template, {
-    ...tempalteData,
+    ...templateData,
     "___P0___": p0.join("\n"),
     "___P1___": p1.join("\n"),
     "___P2___": p2.join("\n"),
@@ -178,6 +202,7 @@ Future<Set<String>> _writeBuilderFiles(
   Map<String, TypeCode> parameters,
   Set<String> names,
   String classKey,
+  void Function(String, String)? onMakeup,
 ) async {
   final exportFiles = <String>{};
   final makeupBuilderArgs = parameters.entries.map((e) => "${e.key}: null,");
@@ -187,8 +212,9 @@ Future<Set<String>> _writeBuilderFiles(
     final outputFileName = "_$longMakeupKey.dart";
     exportFiles.add(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
-    if (await fileExists(outputFilePath)) continue;
     final makeupBuilder = longMakeupKey.toCamelCase();
+    onMakeup?.call(makeupBuilder, makeupClassName);
+    if (await fileExists(outputFilePath)) continue;
     final defaultMakeupBuilder = "${classKey}_default_makeup".toCamelCase();
     final makeupBuilderFunction =
         shortMakeupKey == "default" ? makeupClassName : "$defaultMakeupBuilder().copyWith";
@@ -230,6 +256,7 @@ class GenerateMakeupsArgs extends ValidObject {
   final String? classTemplateFilePath;
   final String? builderTemplateFilePath;
   final String? exportsTemplateFilePath;
+  final String? themeTemplateFilePath;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
@@ -239,6 +266,7 @@ class GenerateMakeupsArgs extends ValidObject {
     required this.classTemplateFilePath,
     required this.builderTemplateFilePath,
     required this.exportsTemplateFilePath,
+    required this.themeTemplateFilePath,
     required this.rootPaths,
     required this.subPaths,
     required this.pathPatterns,
@@ -251,6 +279,7 @@ class GenerateMakeupsArgs extends ValidObject {
         this.classTemplateFilePath,
         this.builderTemplateFilePath,
         this.exportsTemplateFilePath,
+        this.themeTemplateFilePath,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
