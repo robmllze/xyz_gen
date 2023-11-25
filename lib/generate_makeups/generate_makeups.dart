@@ -50,16 +50,16 @@ Future<void> generateMakeups({
           makeupBuilders.add((a, b));
 
           (String a) async {
-            final c = a.substring(0, a.length - 6);
-            final d = "${c.toSnakeCase().toUpperCase()}_PARAMETERS";
+            final bb = a.substring(0, a.length - 6);
+            final aa = "${bb.toSnakeCase().toUpperCase()}_PARAMETERS";
             final template = await readDartTemplate(
               toLocalPathFormat(join(defaultTemplatesPath, outlineTemplateFilePath)),
             );
             final output = replaceAllData(template, {
-              "___A___": c,
-              "___B___": d,
+              "___A___": aa,
+              "___B___": bb,
             });
-            await writeFile(join(outputDirPath ?? "", "theme_g.dart"), output);
+            await writeFile(join(outputDirPath ?? "", "_outline.dart"), output);
           }(a);
         },
       );
