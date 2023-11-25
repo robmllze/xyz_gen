@@ -16,10 +16,9 @@ part of '___CLASS_FILE___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const _CLASS = "___CLASS___";
-const _SEGMENT = "___SCREEN_SEGMENT___";
-const _PATH = "/$_SEGMENT";
 const _TR_KEY = "screens.___CLASS___";
+const _PATH = "___SCREEN_PATH___";
+const _CLASS = "___CLASS___";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -45,8 +44,15 @@ const PATH_NOT_REDIRECTABLE____SCREEN_CONST_KEY___ //
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+final cast___CONFIGURATION_CLASS___ =
+  Map<Type, RouteConfiguration Function(RouteConfiguration)>.unmodifiable({
+    ___CONFIGURATION_CLASS___: (RouteConfiguration a) => ___CONFIGURATION_CLASS___.from(a),
+});
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 Screen? maker___CLASS___(
-  ScreenConfiguration configuration,
+  RouteConfiguration configuration,
   bool isLoggedInAndVerified,
   bool isLoggedIn,
   bool isLoggedOut,
@@ -59,7 +65,7 @@ Screen? maker___CLASS___(
         r"^(" + _PATH + r")([?/].*)?$",
       ).hasMatch(
         Uri.decodeComponent(
-          configuration.path,
+          configuration.uri.toString(),
         ),
       )) {
     return ___CLASS___(configuration);
@@ -80,11 +86,10 @@ Screen? maker___CLASS___(
 /// // Use a unique [key] to allow pushing to multiple instances of the screen.
 /// await G.router.push(___CONFIGURATION_CLASS___(key: UniqueKey().toString(), /* OPTIONS */));
 /// ```
-class ___CONFIGURATION_CLASS___ extends ScreenConfiguration {
-  static const CLASS = _CLASS;
-  static const SEGMENT = _SEGMENT;
+class ___CONFIGURATION_CLASS___ extends RouteConfiguration {
   static const PATH = _PATH;
   static const TR_KEY = _TR_KEY;
+  static const CLASS = _CLASS;
   
   ___IP0___
   ___QP0___
@@ -96,34 +101,27 @@ class ___CONFIGURATION_CLASS___ extends ScreenConfiguration {
     ___QP1___
     ___PS1___
   }): super(
-    path: _PATH,
-    arguments: {}, // TODO: Add other arguments
-    isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
-    isAccessibleOnlyIfLoggedIn: ___LA1___,
-    isAccessibleOnlyIfLoggedOut: ___LA2___,
-    isRedirectable: ___LA4___,
+    _PATH,
+    key: key,
+    ___IP2___
+    ___QP2___
+    ___PS2___
   );
 
   ___CONFIGURATION_CLASS___.from(
-    ScreenConfiguration from,
-  ) : super(
-          arguments: from.arguments,
-          path: from.path,
-          isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
-          isAccessibleOnlyIfLoggedIn: ___LA1___,
-          isAccessibleOnlyIfLoggedOut: ___LA2___,
-          isRedirectable: ___LA4___,
+    RouteConfiguration from,
+  ) : super.fromUri(
+          from.uri,
+          key: from.key,
+          internalParameters: from.internalParameters,
         );
-
+  
   @override
-  ScreenConfiguration to() {
-    return ScreenConfiguration(
-      arguments: arguments, // TODO: Add other arguments
-      path: path,
-      isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
-      isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-      isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
-      isRedirectable: isRedirectable,
+  RouteConfiguration to() {
+    return RouteConfiguration.fromUri(
+      this.uri,
+      key: this.key,
+      internalParameters: this.internalParameters,
     );
   }
 }
@@ -134,29 +132,7 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends ScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
+  late final configuration = this.state.configuration;
   _LogicBroker(super.superScreen, super.superState);
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-
-final generated___CLASS___Route = GoRoute(
-  path: _SEGMENT,
-  pageBuilder: (_, final state) {
-    final pageKey = state.pageKey;
-    final configuration = letAs<___CONFIGURATION_CLASS___>(state.extra) ??
-        ScreenConfiguration(
-          path: state.path ?? "",
-          arguments: state.pathParameters,
-          isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
-          isAccessibleOnlyIfLoggedIn: ___LA1___,
-          isAccessibleOnlyIfLoggedOut: ___LA2___,
-          isRedirectable: ___LA4___,
-        );
-    return NoTransitionPage(
-      key: pageKey,
-      child: ___CLASS___(configuration),
-    );
-  },
-);
 ````

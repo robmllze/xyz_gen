@@ -1,3 +1,4 @@
+
 ````dart
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -15,38 +16,46 @@ part of '___SCREEN_FILE___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configuration, _Logic> {
+class _Logic extends _LogicBroker<___SCREEN_CLASS___, _State> {
+  //
+  //
+  //
+
+  _Logic(super.screen, super.state);
+
+  //
+  //
+  //
+
+  final pCounter = Pod<int>(-1);
+
+  //
+  //
+  //
+
+  void incrementCounter() {
+    this.pCounter.update((final value) => value + 1);
+  }
+
   //
   //
   //
 
   @override
-  Widget layout(e) => super.layout(super.defaultHeaderAndScrollableBody(e));
+  void initLogic() {
+    this.pCounter.set(0);
+    super.initLogic();
+  }
 
   //
   //
   //
 
   @override
-  Widget body(_) {
-    return WColumn(
-      divider: SizedBox(height: $20),
-      children: [
-        PodBuilder(
-          pod: this.logic.pCounter,
-          builder: (final state) {
-            return Text(
-              "Count: <<<=value>>>||todo".screenTr({"value": state.value}),
-              style: G.theme.textStyles.p1,
-            );
-          },
-        ),
-        WButton(
-          label: "INCREMENT COUNTER||todo".screenTr(),
-          onTap: this.logic.incrementCounter,
-        ),
-      ],
-    );
+  void dispose() {
+    // Be sure to dispose all pods here.
+    this.pCounter.dispose();
+    super.dispose();
   }
 }
 ````

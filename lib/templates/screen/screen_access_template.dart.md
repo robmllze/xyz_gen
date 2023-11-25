@@ -12,36 +12,31 @@ import '/all.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+final generatedScreenRoutes = [
+  ___GENERATED_SCREEN_ROUTES___,
+];
+
 const SCREEN_MAKERS = [
   ___SCREEN_MAKERS___,
 ];
 
-const PATHS = <String>[
-  ___PATHS___,
-];
-
-const PATHS_NOT_REDIRECTABLE = <String>[
-  ___PATHS_NOT_REDIRECTABLE___,
-];
-
-const PATHS_ALWAYS_ACCESSIBLE = <String>[
-  ___PATHS_ALWAYS_ACCESSIBLE___,
-];
-
-const PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED = <String>[
-  ___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___,
-];
-
-const PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN = <String>[
-  ___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN___,
-];
-
-const PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT = <String>[
-  ___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___,
-];
-
-final screenConfigurationCasts =
-    Map<Type, RouteConfiguration Function(RouteConfiguration)>.unmodifiable({
-  ___SCREEN_CONFIGURATION_CASTS___,
-});
+Screen? findScreenFromConfiguration({
+  required ScreenConfiguration configuration,
+  required bool isEmailVerified,
+  required bool isLoggedIn,
+  required bool isLoggedOut,
+}) {
+  for (final screenMaker in SCREEN_MAKERS) {
+    final screen = screenMaker.call(
+      configuration,
+      isEmailVerified,
+      isLoggedIn,
+      isLoggedOut,
+    );
+    if (screen != null) {
+      return screen;
+    }
+  }
+  return null;
+}
 ````

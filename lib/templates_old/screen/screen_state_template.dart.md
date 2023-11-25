@@ -20,27 +20,45 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
   //
   //
 
-  @override
-  Widget layout(e) => super.layout(super.defaultHeaderAndScrollableBody(e));
+   @override
+   Widget layout(final body) {
+    return super.layout(
+      WMainLayout(
+        header: WHeader(
+          centerLeft: Text(
+            this.widget.title,
+            style: G.theme.textStyles.h3,
+          ),
+        ),
+        body: WScrollable(
+          makeup: G.theme.wScrollableScreen(),
+          child: body,
+        ),
+      ),
+    );
+  }
 
   //
   //
   //
 
   @override
-  Widget body(_) {
+  Widget body(final context) {
     return WColumn(
       divider: SizedBox(height: $20),
       children: [
-        PodBuilder(
-          pod: this.logic.pCounter,
-          builder: (final state) {
-            return Text(
-              "Count: <<<=value>>>||todo".screenTr({"value": state.value}),
-              style: G.theme.textStyles.p1,
-            );
-          },
-        ),
+        // Consumer(
+        //   builder: (_, final ref, __) {
+        //     final value = ref.watch(this.logic.pCounter);
+        //     return Text("Count: $value", style: G.theme.textStyles.p1);
+        //   },
+        // ),
+        this.logic.pCounter.build((final value) {
+          return Text(
+            "Count: (=value)||todo".screenTr({"value": value}),
+            style: G.theme.textStyles.p1,
+          );
+        }),
         WButton(
           label: "INCREMENT COUNTER||todo".screenTr(),
           onTap: this.logic.incrementCounter,

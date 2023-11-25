@@ -11,42 +11,38 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of '___SCREEN_FILE___';
+import '/all.dart';
+
+part '___LOGIC_FILE___';
+part '___STATE_FILE___';
+part '___CONFIGURATION_FILE___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configuration, _Logic> {
+@GenerateScreenConfiguration(___CONFIGURATION_ARGS___)
+class ___SCREEN_CLASS___ extends Screen {
   //
   //
   //
 
+  ___SCREEN_CLASS___(RouteConfiguration configuration)
+      : super(configuration,___SUPER_ARGS___);
+
+  //
+  //
+  //
+
+
+  // Do not modify.
   @override
-  Widget layout(e) => super.layout(super.defaultHeaderAndScrollableBody(e));
+  _State createState() => _State();
 
   //
   //
   //
 
+  // Do not modify.
   @override
-  Widget body(_) {
-    return WColumn(
-      divider: SizedBox(height: $20),
-      children: [
-        PodBuilder(
-          pod: this.logic.pCounter,
-          builder: (final state) {
-            return Text(
-              "Count: <<<=value>>>||todo".screenTr({"value": state.value}),
-              style: G.theme.textStyles.p1,
-            );
-          },
-        ),
-        WButton(
-          label: "INCREMENT COUNTER||todo".screenTr(),
-          onTap: this.logic.incrementCounter,
-        ),
-      ],
-    );
-  }
+  _Logic createLogic(final screen, final state) => _Logic(screen, state);
 }
 ````
