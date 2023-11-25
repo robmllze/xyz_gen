@@ -20,11 +20,9 @@ Future<void> generateMakeups({
   required String classTemplateFilePath,
   required String builderTemplateFilePath,
   required String exportsTemplateFilePath,
-  required String themeTemplateFilePath,
+  required String generatedThemeTemplateFilePath,
   required String outlineTemplateFilePath,
 }) async {
-  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates");
-
   final makeupBuilders = <(String, String)>{};
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
@@ -35,6 +33,8 @@ Future<void> generateMakeups({
       classTemplateFilePath,
       builderTemplateFilePath,
       exportsTemplateFilePath,
+      generatedThemeTemplateFilePath,
+      outlineTemplateFilePath,
     },
     generateForFile: (
       final collection,
@@ -44,28 +44,17 @@ Future<void> generateMakeups({
       await _generateMakeupFile(
         collection,
         fixedFilePath,
+        outlineTemplateFilePath,
         templates,
         outputDirPath,
-        (final a, final b) {
-          makeupBuilders.add((a, b));
-
-          (String a) async {
-            final bb = a.substring(0, a.length - 6);
-            final aa = "${bb.toSnakeCase().toUpperCase()}_PARAMETERS";
-            final template = await readDartTemplate(
-              toLocalPathFormat(join(defaultTemplatesPath, outlineTemplateFilePath)),
-            );
-            final output = replaceAllData(template, {
-              "___A___": aa,
-              "___B___": bb,
-            });
-            await writeFile(join(outputDirPath ?? "", "_outline.dart"), output);
-          }(a);
+        (final makeupBuilder, final makeupClassName) {
+          makeupBuilders.add((makeupBuilder, makeupClassName));
         },
       );
     },
   );
 
+  ///!!!
   {
     final a = makeupBuilders
         .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$2))
@@ -74,9 +63,7 @@ Future<void> generateMakeups({
         .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$1))
         .map((e) => "this.${e.$1} = ${e.$2};");
 
-    final template = await readDartTemplate(
-      toLocalPathFormat(join(defaultTemplatesPath, themeTemplateFilePath)),
-    );
+    final template = await readDartTemplate(generatedThemeTemplateFilePath);
     final output = replaceAllData(template, {
       "___A___": a.join("\n  "),
       "___B___": b.join("\n    "),
@@ -90,6 +77,7 @@ Future<void> generateMakeups({
 Future<void> _generateMakeupFile(
   AnalysisContextCollection collection,
   String fixedFilePath,
+  String outlineTemplateFilePath,
   Map<String, String> templates, [
   String? outputDirPath,
   void Function(String, String)? onMakeup,
@@ -125,6 +113,25 @@ Future<void> _generateMakeupFile(
 
   // ---------------------------------------------------------------------------
 
+  Future<void> generateOutline(
+    String rootOutputDirPath,
+    String outlineTemplateFilePath,
+    String annotatedClassName,
+  ) async {
+    final outputFilePath = join(rootOutputDirPath, "_outline.dart");
+    if (!await fileExists(outputFilePath)) {
+      final template = templates[outlineTemplateFilePath]!;
+      final outputData = replaceAllData(template, {
+        "___A___": "${annotatedClassName.toSnakeCase().toUpperCase()}_PARAMETERS",
+        "___B___": "_$annotatedClassName",
+      });
+
+      await writeFile(outputFilePath, outputData);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+
   // Define the function to call for each annotated class.
   Future<void> onAnnotatedClass(String _, String className) async {
     final classFileDirPath = getDirPath(fixedFilePath);
@@ -140,8 +147,6 @@ Future<void> _generateMakeupFile(
       "___WIDGET___": className,
       "___CLASS_FILE_PATH___": fixedFilePath,
     };
-
-    await _writeEmptyFileOnce(join(rootOutputDirPath, "_template.dart"));
 
     await _writeClassFile(
       join(rootOutputDirPath, "src", makeupClassFileName),
@@ -167,6 +172,12 @@ Future<void> _generateMakeupFile(
       templateData,
       {makeupClassFileName, ...exportFiles},
     );
+
+    await generateOutline(
+      rootOutputDirPath,
+      outlineTemplateFilePath,
+      className,
+    );
   }
 
   // ---------------------------------------------------------------------------
@@ -186,16 +197,6 @@ Future<void> _generateMakeupFile(
     },
     onClassAnnotationField: onClassAnnotationField,
   );
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-Future<void> _writeEmptyFileOnce(
-  String outputFilePath,
-) async {
-  if (!await fileExists(outputFilePath)) {
-    await writeFile(outputFilePath, "");
-  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -264,6 +265,8 @@ Future<Set<String>> _writeBuilderFiles(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+final _allExportsFiles = <String, Set<String>>{};
+
 Future<void> _writeExportsFile(
   String outputDirPath,
   String template,
@@ -271,9 +274,11 @@ Future<void> _writeExportsFile(
   Set<String> exportFiles,
 ) async {
   final outputFilePath = join(outputDirPath, "makeups.dart");
+
+  (_allExportsFiles[outputFilePath] ??= {}).addAll(exportFiles);
   final output = replaceAllData(template, {
     ...templateData,
-    "___BODY___": exportFiles.map((e) => "export 'src/$e';").join("\n"),
+    "___BODY___": _allExportsFiles[outputFilePath]!.map((e) => "export 'src/$e';").join("\n"),
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
@@ -287,7 +292,7 @@ class GenerateMakeupsArgs extends ValidObject {
   final String? classTemplateFilePath;
   final String? builderTemplateFilePath;
   final String? exportsTemplateFilePath;
-  final String? themeTemplateFilePath;
+  final String? generatedThemeTemplateFilePath;
   final String? outlineTemplateFilePath;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
@@ -298,7 +303,7 @@ class GenerateMakeupsArgs extends ValidObject {
     required this.classTemplateFilePath,
     required this.builderTemplateFilePath,
     required this.exportsTemplateFilePath,
-    required this.themeTemplateFilePath,
+    required this.generatedThemeTemplateFilePath,
     required this.outlineTemplateFilePath,
     required this.rootPaths,
     required this.subPaths,
@@ -312,7 +317,7 @@ class GenerateMakeupsArgs extends ValidObject {
         this.classTemplateFilePath,
         this.builderTemplateFilePath,
         this.exportsTemplateFilePath,
-        this.themeTemplateFilePath,
+        this.generatedThemeTemplateFilePath,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,

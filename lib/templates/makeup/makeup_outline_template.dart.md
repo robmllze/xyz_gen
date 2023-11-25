@@ -19,5 +19,5 @@ import '/all.dart';
   parameters: ___A___,
 )
 // ignore: unused_element
-abstract class ___B___ {}
+abstract final class ___B___ {}
 ````

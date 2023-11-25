@@ -106,7 +106,7 @@ GenerateMakeupsArgs onResults(_, dynamic results) {
     classTemplateFilePath: results[_CLASS_TEMPLATE_FILE_PATH_OPTION],
     builderTemplateFilePath: results[_BUILDER_TEMPLATE_FILE_PATH_OPTION],
     exportsTemplateFilePath: results[_EXPORTS_TEMPLATE_FILE_PATH_OPTION],
-    themeTemplateFilePath: results[_GENERATED_THEME_TEMPLATE_FILE_PATH_OPTION],
+    generatedThemeTemplateFilePath: results[_GENERATED_THEME_TEMPLATE_FILE_PATH_OPTION],
     outlineTemplateFilePath: results[_OUTLINE_TEMPLATE_FILE_PATH_OPTION],
     rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
     subPaths: splitArg(results[SUBS_OPTION])?.toSet(),
@@ -127,7 +127,7 @@ Future<void> action(_, __, GenerateMakeupsArgs args) async {
     classTemplateFilePath: args.classTemplateFilePath!,
     builderTemplateFilePath: args.builderTemplateFilePath!,
     exportsTemplateFilePath: args.exportsTemplateFilePath!,
-    themeTemplateFilePath: args.themeTemplateFilePath!,
+    generatedThemeTemplateFilePath: args.generatedThemeTemplateFilePath!,
     outlineTemplateFilePath: args.outlineTemplateFilePath!,
   );
 }
