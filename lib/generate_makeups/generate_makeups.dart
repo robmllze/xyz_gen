@@ -21,7 +21,10 @@ Future<void> generateMakeups({
   required String builderTemplateFilePath,
   required String exportsTemplateFilePath,
   required String themeTemplateFilePath,
+  required String outlineTemplateFilePath,
 }) async {
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates");
+
   final makeupBuilders = <(String, String)>{};
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
@@ -44,26 +47,42 @@ Future<void> generateMakeups({
         templates,
         outputDirPath,
         (final a, final b) {
-          printCyan(a);
           makeupBuilders.add((a, b));
+
+          (String a) async {
+            final c = a.substring(0, a.length - 6);
+            final d = "${c.toSnakeCase().toUpperCase()}_PARAMETERS";
+            final template = await readDartTemplate(
+              toLocalPathFormat(join(defaultTemplatesPath, outlineTemplateFilePath)),
+            );
+            final output = replaceAllData(template, {
+              "___A___": c,
+              "___B___": d,
+            });
+            await writeFile(join(outputDirPath ?? "", "theme_g.dart"), output);
+          }(a);
         },
       );
     },
   );
-  final a = makeupBuilders
-      .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$2))
-      .map((e) => "late F${e.$2} ${e.$1};");
-  final b = makeupBuilders
-      .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$1))
-      .map((e) => "this.${e.$1} = ${e.$2};");
-  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates");
-  final templateFilePath = toLocalPathFormat(join(defaultTemplatesPath, themeTemplateFilePath));
-  final template = await readDartTemplate(templateFilePath);
-  final output = replaceAllData(template, {
-    "___A___": a.join("\n  "),
-    "___B___": b.join("\n    "),
-  });
-  await writeFile(join(outputDirPath ?? "", "theme_g.dart"), output);
+
+  {
+    final a = makeupBuilders
+        .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$2))
+        .map((e) => "late F${e.$2} ${e.$1};");
+    final b = makeupBuilders
+        .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$1))
+        .map((e) => "this.${e.$1} = ${e.$2};");
+
+    final template = await readDartTemplate(
+      toLocalPathFormat(join(defaultTemplatesPath, themeTemplateFilePath)),
+    );
+    final output = replaceAllData(template, {
+      "___A___": a.join("\n  "),
+      "___B___": b.join("\n    "),
+    });
+    await writeFile(join(outputDirPath ?? "", "theme_g.dart"), output);
+  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -122,6 +141,8 @@ Future<void> _generateMakeupFile(
       "___CLASS_FILE_PATH___": fixedFilePath,
     };
 
+    await _writeEmptyFileOnce(join(rootOutputDirPath, "_template.dart"));
+
     await _writeClassFile(
       join(rootOutputDirPath, "src", makeupClassFileName),
       templates.values.elementAt(0),
@@ -165,6 +186,16 @@ Future<void> _generateMakeupFile(
     },
     onClassAnnotationField: onClassAnnotationField,
   );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Future<void> _writeEmptyFileOnce(
+  String outputFilePath,
+) async {
+  if (!await fileExists(outputFilePath)) {
+    await writeFile(outputFilePath, "");
+  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -257,6 +288,7 @@ class GenerateMakeupsArgs extends ValidObject {
   final String? builderTemplateFilePath;
   final String? exportsTemplateFilePath;
   final String? themeTemplateFilePath;
+  final String? outlineTemplateFilePath;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
@@ -267,6 +299,7 @@ class GenerateMakeupsArgs extends ValidObject {
     required this.builderTemplateFilePath,
     required this.exportsTemplateFilePath,
     required this.themeTemplateFilePath,
+    required this.outlineTemplateFilePath,
     required this.rootPaths,
     required this.subPaths,
     required this.pathPatterns,
