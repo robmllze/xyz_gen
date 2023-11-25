@@ -273,7 +273,7 @@ Future<void> _writeExportsFile(
   Map<String, String> templateData,
   Set<String> exportFiles,
 ) async {
-  final outputFilePath = join(outputDirPath, "makeups.dart");
+  final outputFilePath = join(outputDirPath, "makeups.g.dart");
 
   (_allExportsFiles[outputFilePath] ??= {}).addAll(exportFiles);
   final output = replaceAllData(template, {
