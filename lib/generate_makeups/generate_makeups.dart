@@ -68,7 +68,7 @@ Future<void> generateMakeups({
       "___A___": a.join("\n  "),
       "___B___": b.join("\n    "),
     });
-    await writeFile(join(outputDirPath ?? "", "theme_g.dart"), output);
+    await writeFile(join(outputDirPath ?? "", "theme.g.dart"), output);
   }
 }
 
@@ -138,7 +138,7 @@ Future<void> _generateMakeupFile(
     final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
-    const makeupClassFileName = "__makeup_g.dart";
+    const makeupClassFileName = "_makeup.g.dart";
     final rootOutputDirPath =
         outputDirPath == null ? defaultOutputDirPath : join(outputDirPath, classKey);
     final templateData = {
