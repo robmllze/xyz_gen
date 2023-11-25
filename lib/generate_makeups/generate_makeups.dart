@@ -22,7 +22,7 @@ Future<void> generateMakeups({
   required String exportsTemplateFilePath,
   required String themeTemplateFilePath,
 }) async {
-  final makeupBuilders = <(String, String)>[];
+  final makeupBuilders = <(String, String)>{};
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootPaths: rootPaths,
