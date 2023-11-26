@@ -41,7 +41,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         SUBS_OPTION,
         abbr: "s",
         help: "Sub-directory paths separated by `$SEPARATOR`.",
-        defaultsTo: "components:widgets:makeups",
+        defaultsTo: "components:makeups:widgets",
       )
       ..addOption(
         PATTERNS_OPTION,
