@@ -42,14 +42,15 @@ Future<void> generateAllExports({
               : relativeFilePath;
           final fileName = getBaseName(filePath);
           final private = fileName.startsWith("_");
-          final data = "${private ? "//" : ""}export '$relativeFilePath';";
-
-          await writeFile(
-            outputFilePath,
-            "$data\n",
-            append: true,
-          );
-          printGreen("Writing `$data` to `$outputFileName`...");
+          if (!private) {
+            final data = "export '$relativeFilePath';\n";
+            await writeFile(
+              outputFilePath,
+              data,
+              append: true,
+            );
+            printGreen("Writing `$data` to `$outputFileName`...");
+          }
           return true;
         } else {
           printGreen("Skipping `$outputFileName`...");
