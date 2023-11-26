@@ -22,6 +22,7 @@ Future<void> generateMakeups({
   required String generatedThemeTemplateFilePath,
   required String outlineTemplateFilePath,
 }) async {
+  final exportFilesBuffer = <String, Set<String>>{};
   final makeupBuilderNameArgs = <(String, String)>{};
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
@@ -45,6 +46,7 @@ Future<void> generateMakeups({
         fixedFilePath,
         outlineTemplateFilePath,
         templates,
+        exportFilesBuffer,
         outputDirPath,
         (final makeupBuilder, final makeupClassName) {
           makeupBuilderNameArgs.add((makeupBuilder, makeupClassName));
@@ -79,7 +81,8 @@ Future<void> _generateMakeupFile(
   AnalysisContextCollection collection,
   String fixedFilePath,
   String outlineTemplateFilePath,
-  Map<String, String> templates, [
+  Map<String, String> templates,
+  Map<String, Set<String>> exportFilesBuffer, [
   String? outputDirPath,
   void Function(String, String)? onNamingMakeupBuilder,
 ]) async {
@@ -188,8 +191,6 @@ Future<void> _generateMakeupFile(
   }
 
   // ---------------------------------------------------------------------------
-
-  final exportFilesBuffer = <String, Set<String>>{};
 
   // Analyze the annotated class and generate the template files.
   await analyzeAnnotatedClasses(
