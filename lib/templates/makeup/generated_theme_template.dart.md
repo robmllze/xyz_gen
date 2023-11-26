@@ -18,14 +18,14 @@ class GeneratedTheme {
   //
   //
 
-  ___A___
+  ___DECLARTION_PART___
 
   //
   //
   //
   
   void init() {
-    ___B___
+    ___INITIALIZATION_PART___
   }
 }
 
