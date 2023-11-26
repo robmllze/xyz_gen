@@ -24,7 +24,7 @@ String _ip0(Map<String, String> internalParameters) {
       "static const $fieldK = \"$fieldKey\";",
       "/// Returns the **internal parameter** with the key `$fieldKey`",
       "/// or [$fieldK].",
-      "$fieldType get $fieldName => super.arguments<$t>($fieldK)$nullCheck;",
+      "$fieldType get $fieldName => super.arg<$t>($fieldK)$nullCheck;",
     ].join("\n");
   }).toList()
     ..sort();
@@ -70,7 +70,7 @@ String _qp0(Set<String> queryParameters) {
       "static const $fieldK = \"$fieldKey\";",
       "/// Returns the URI **query parameter** with the key `$fieldKey`",
       "/// or [$fieldK].",
-      "String? get $fieldName => super.arguments<String>($fieldK);",
+      "String? get $fieldName => super.arg<String>($fieldK);",
     ].join("\n");
   }).toList()
     ..sort();
