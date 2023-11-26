@@ -102,7 +102,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final isAlwaysAccessible = (!isAccessibleOnlyIfLoggedInAndVerified &&
         !isAccessibleOnlyIfLoggedIn &&
         !isAccessibleOnlyIfLoggedOut);
-    final outputFileName = "$classKey.g.dart";
+    final outputFileName = "_$classKey.g.dart";
     final outputFilePath = join(classFileDirPath, outputFileName);
 
     // Replace placeholders with the actual values.

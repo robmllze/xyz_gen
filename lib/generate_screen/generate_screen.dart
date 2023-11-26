@@ -33,7 +33,7 @@ Future<void> generateScreen({
 }) async {
   final screenClassKey = screenName.toSnakeCase();
   final screenClassName = screenName.toPascalCase();
-  final configurationFileName = "$screenClassKey.g.dart";
+  final configurationFileName = "_$screenClassKey.g.dart";
   final logicFileName = "_$screenClassKey.logic.dart";
   final screenFileName = "$screenClassKey.dart";
   final stateFileName = "_$screenClassKey.state.dart";
