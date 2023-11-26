@@ -20,10 +20,10 @@ environment:
 
 dependencies:
 
-  args:
-  path:
-  path_provider:
   analyzer:
+  args:
+  path_provider:
+  path:
 
   xyz_utils:
     git:

@@ -20,14 +20,14 @@ Future<void> generateAllExports({
   var cachedDirName = "";
   final template = await readDartTemplate(templateFilePath);
   for (final path in combinedPaths) {
+    final folderName = getBaseName(path);
+    final outputFileName = "all_$folderName.g.dart";
+    final outputFilePath = join(path, outputFileName);
+
     await findDartFiles(
       path,
       pathPatterns: pathPatterns,
       onFileFound: (_, __, final filePath) async {
-        final folderName = getBaseName(path);
-        final outputFileName = "all_$folderName.g.dart";
-        final outputFilePath = join(path, outputFileName);
-
         if (path != cachedDirName) {
           cachedDirName = path;
           printGreen("Clearing `$outputFileName`...");
