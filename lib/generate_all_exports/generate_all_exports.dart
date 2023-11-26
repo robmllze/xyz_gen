@@ -25,17 +25,14 @@ Future<void> generateAllExports({
       pathPatterns: pathPatterns,
       onFileFound: (_, __, final filePath) async {
         final folderName = getBaseName(path);
-        final outputFileName = "all_${folderName}_g.dart";
+        final outputFileName = "all_$folderName.g.dart";
         final outputFilePath = join(path, outputFileName);
 
         if (path != cachedDirName) {
           cachedDirName = path;
           printGreen("Clearing `$outputFileName`...");
           final data = replaceAllData(template, {"___BODY___": ""});
-          await writeFile(
-            outputFilePath,
-            data,
-          );
+          await writeFile(outputFilePath, data);
         }
         if (filePath != outputFilePath) {
           var relativeFilePath = filePath.replaceFirst(path, "");

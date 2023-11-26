@@ -72,7 +72,7 @@ Future<void> _generateModelFile(
     final outputFilePath = () {
       final classFileDirPath = getDirPath(fixedFilePath);
       final classKey = getFileNameWithoutExtension(classFileName);
-      final outputFileName = "$classKey.g.dart";
+      final outputFileName = "_$classKey.g.dart";
       return join(classFileDirPath, outputFileName);
     }();
 
