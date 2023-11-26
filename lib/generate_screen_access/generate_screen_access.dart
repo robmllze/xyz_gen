@@ -31,8 +31,9 @@ Future<void> generateScreenAccess({
       filePaths.sort();
       for (final filePath in filePaths) {
         if (isGeneratedDartFilePath(filePath, pathPatterns)) {
-          final screenFileKey = getBaseName(filePath).replaceAll(".g.dart", "");
-          if (screenFileKey.startsWith("screen_")) {
+          var screenFileKey = getBaseName(filePath).replaceAll(".g.dart", "");
+          screenFileKey.startsWith("_") ? screenFileKey.substring(1) : screenFileKey;
+          if (screenFileKey.startsWith("_screen_")) {
             final contents = await readFile(filePath);
             if (contents != null) {
               final x = RegExp("const +_CLASS += +[\"'](\\w+)[\"'];");
@@ -41,9 +42,9 @@ Future<void> generateScreenAccess({
                 final screenClassName = match.group(1);
                 if (screenClassName != null) {
                   final screenClassKey = screenClassName.toSnakeCase();
-                  if (screenFileKey != screenClassKey) {
-                    printLightYellow("Key mismatch $screenFileKey != $screenClassKey");
-                  }
+                  // if (screenFileKey != screenClassKey) {
+                  //   printLightYellow("Key mismatch $screenFileKey != $screenClassKey");
+                  // }
                   screenClassNames1.add(screenClassName);
                 }
               }

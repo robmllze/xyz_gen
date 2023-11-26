@@ -112,7 +112,7 @@ String _ps0(List<String> pathSegments) {
       "static const $fieldK = ${++n};",
       "/// Returns the URI **path segment** at position `$n` AKA the value",
       "/// corresponding to the key `$n` or [$fieldK].",
-      "String? get $fieldName => super.arguments<String>($fieldK)?.nullIfEmpty;",
+      "String? get $fieldName => super.arg<String>($fieldK)?.nullIfEmpty;",
     ].join("\n");
   }).toList()
     ..sort();

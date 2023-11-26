@@ -52,13 +52,14 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         OUTPUT_OPTION,
         abbr: "o",
         help: "Output file path.",
-        defaultsTo: "$SCREENS_PATH/screen_access_g.dart",
+        defaultsTo: "$SCREENS_PATH/screen_access.g.dart",
       )
       ..addOption(
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(p.join(defaultTemplatesPath, "screen_access_template.dart.md")),
+        defaultsTo:
+            toLocalPathFormat(p.join(defaultTemplatesPath, "screen_access_template.dart.md")),
       ),
     onResults: onResults,
     action: action,
