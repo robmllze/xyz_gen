@@ -297,7 +297,7 @@ Future<void> _writeExportsFile(
   (exportFilesBuffer[outputFilePath] ??= {}).addAll(exportFiles);
   final output = replaceAllData(template, {
     ...templateData,
-    "___BODY___": exportFilesBuffer[outputFilePath]!.map((e) => "export 'src/$e';").join("\n"),
+    "___EXPORTS___": exportFilesBuffer[outputFilePath]!.map((e) => "export 'src/$e';").join("\n"),
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);

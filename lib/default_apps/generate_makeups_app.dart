@@ -84,10 +84,10 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
       )
       ..addOption(
         _OUTLINE_TEMPLATE_FILE_PATH_OPTION,
-        abbr: "l",
-        help: "Outline template file path.",
+        abbr: "v",
+        help: "Variants template file path.",
         defaultsTo:
-            toLocalPathFormat(p.join(defaultTemplatesPath, "makeup_outline_template.dart.md")),
+            toLocalPathFormat(p.join(defaultTemplatesPath, "makeup_variants_template.dart.md")),
       )
       ..addOption(
         DART_SDK_PATH_OPTION,
