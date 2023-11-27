@@ -181,6 +181,7 @@ Future<void> _generateMakeupFile(
     );
 
     await _writeExportsFile(
+      classKey,
       rootOutputDirPath,
       templates.values.elementAt(2),
       templateData,
@@ -285,13 +286,14 @@ Future<Set<String>> _writeBuilderFiles(
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> _writeExportsFile(
+  String classKey,
   String outputDirPath,
   String template,
   Map<String, String> templateData,
   Set<String> exportFiles,
   Map<String, Set<String>> exportFilesBuffer,
 ) async {
-  final outputFilePath = join(outputDirPath, "makeups.g.dart");
+  final outputFilePath = join(outputDirPath, "${classKey}_makeups.g.dart");
   (exportFilesBuffer[outputFilePath] ??= {}).addAll(exportFiles);
   final output = replaceAllData(template, {
     ...templateData,
