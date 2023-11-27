@@ -32,7 +32,8 @@ Future<void> generateScreenAccess({
       for (final filePath in filePaths) {
         if (isGeneratedDartFilePath(filePath, pathPatterns)) {
           var screenFileKey = getBaseName(filePath).replaceAll(".g.dart", "");
-          screenFileKey.startsWith("_") ? screenFileKey.substring(1) : screenFileKey;
+          screenFileKey =
+              screenFileKey.startsWith("_") ? screenFileKey.substring(1) : screenFileKey;
           if (screenFileKey.startsWith("screen_")) {
             final contents = await readFile(filePath);
             if (contents != null) {
