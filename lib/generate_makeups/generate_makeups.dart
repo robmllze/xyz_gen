@@ -172,7 +172,7 @@ Future<void> _generateMakeupFile(
 
     final exportFiles = await _writeBuilderFiles(
       makeupClassName,
-      join(rootOutputDirPath, "src"),
+      join(rootOutputDirPath, "all"),
       templates.values.elementAt(1),
       templateData,
       parameters,
