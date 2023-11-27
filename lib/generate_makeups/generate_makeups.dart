@@ -264,7 +264,6 @@ Future<Set<String>> _writeBuilderFiles(
     final longMakeupKey = "${classKey}_${shortMakeupKey}_makeup";
     final outputFileName = "_$longMakeupKey.dart";
     exportFiles.add(outputFileName);
-    printRed(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
     final makeupBuilder = longMakeupKey.toCamelCase();
     onNamingMakeupBuilder?.call(makeupBuilder, makeupClassName);
