@@ -123,7 +123,7 @@ Future<void> _generateMakeupFile(
     String rootOutputDirPath,
     String annotatedClassName,
   ) async {
-    final outputFilePath = join(rootOutputDirPath, "_generate_${classKey}_makeup.dart");
+    final outputFilePath = join(rootOutputDirPath, "_generate_${classKey}_makeups.dart");
     if (!await fileExists(outputFilePath)) {
       final template = templates.values.elementAt(4);
       final outputData = replaceAllData(template, {
