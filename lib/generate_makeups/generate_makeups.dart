@@ -118,7 +118,7 @@ Future<void> _generateMakeupFile(
 
   // ---------------------------------------------------------------------------
 
-  Future<void> writeVariantsFile(
+  Future<void> writeGenerateFile(
     String classKey,
     String rootOutputDirPath,
     String annotatedClassName,
@@ -190,7 +190,7 @@ Future<void> _generateMakeupFile(
       exportFilesBuffer,
     );
 
-    await writeVariantsFile(
+    await writeGenerateFile(
       classKey,
       rootOutputDirPath,
       className,
