@@ -89,7 +89,7 @@ Future<void> _generateMakeupFile(
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.
-  var names = <String>{"default"};
+  var variants = <String>{"default"};
   var parameters = <String, TypeCode>{};
 
   // ---------------------------------------------------------------------------
@@ -97,8 +97,8 @@ Future<void> _generateMakeupFile(
   // Define the function to call for each annotation field.
   void onClassAnnotationField(String fieldName, DartObject fieldValue) {
     switch (fieldName) {
-      case "names":
-        names.addAll(
+      case "variants":
+        variants.addAll(
           fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{},
         );
         break;
@@ -120,12 +120,11 @@ Future<void> _generateMakeupFile(
 
   Future<void> writeVariantsFile(
     String rootOutputDirPath,
-    String outlineTemplateFilePath,
     String annotatedClassName,
   ) async {
     final outputFilePath = join(rootOutputDirPath, "src", "_variants.dart");
     if (!await fileExists(outputFilePath)) {
-      final template = templates[outlineTemplateFilePath]!;
+      final template = templates.values.elementAt(4);
       final outputData = replaceAllData(template, {
         "___PARAMETERS___": "${annotatedClassName.toSnakeCase().toUpperCase()}_PARAMETERS",
         "___CLASS___": "_$annotatedClassName",
@@ -176,7 +175,7 @@ Future<void> _generateMakeupFile(
       templates.values.elementAt(1),
       templateData,
       parameters,
-      names,
+      variants,
       classKey,
       onNamingMakeupBuilder,
     );
@@ -191,7 +190,6 @@ Future<void> _generateMakeupFile(
 
     await writeVariantsFile(
       rootOutputDirPath,
-      outlineTemplateFilePath,
       className,
     );
   }
@@ -263,6 +261,7 @@ Future<Set<String>> _writeBuilderFiles(
     final longMakeupKey = "${classKey}_${shortMakeupKey}_makeup";
     final outputFileName = "_$longMakeupKey.dart";
     exportFiles.add(outputFileName);
+    printRed(outputFileName);
     final outputFilePath = join(outputDirPath, outputFileName);
     final makeupBuilder = longMakeupKey.toCamelCase();
     onNamingMakeupBuilder?.call(makeupBuilder, makeupClassName);
@@ -293,7 +292,6 @@ Future<void> _writeExportsFile(
   Map<String, Set<String>> exportFilesBuffer,
 ) async {
   final outputFilePath = join(outputDirPath, "makeups.g.dart");
-
   (exportFilesBuffer[outputFilePath] ??= {}).addAll(exportFiles);
   final output = replaceAllData(template, {
     ...templateData,
