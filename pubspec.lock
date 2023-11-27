@@ -368,7 +368,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e91127577b95a0a6f1882ccb6e259dc8ebee55d7
+      resolved-ref: "16058da17508160640e19f9626d2833643413b75"
       url: "https://github.com/robmllze/xyz_utils.git"
     source: git
     version: "0.24.0"

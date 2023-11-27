@@ -102,6 +102,7 @@ Future<void> _generateMakeupFile(
           fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{},
         );
         break;
+
       case "parameters":
         parameters = fieldValue.toMapValue()?.map((k, v) {
               final typeCode = v?.toStringValue();
@@ -147,18 +148,18 @@ Future<void> _generateMakeupFile(
     final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
-    const makeupClassFileName = "_makeup.g.dart";
+    final makeupClassFileName = "_${classKey}_makeup.g.dart";
     final rootOutputDirPath =
         outputDirPath == null ? defaultOutputDirPath : join(outputDirPath, classKey);
     final templateData = {
       "___MAKEUP_CLASS_FILE___": makeupClassFileName,
       "___MAKEUP_CLASS___": makeupClassName,
-      "___WIDGET___": className,
+      "___CLASS___": className,
       "___CLASS_FILE_PATH___": fixedFilePath,
     };
 
     await _writeClassFile(
-      join(rootOutputDirPath, "src", makeupClassFileName),
+      join(classFileDirPath, makeupClassFileName),
       templates.values.elementAt(0),
       templateData,
       parameters,

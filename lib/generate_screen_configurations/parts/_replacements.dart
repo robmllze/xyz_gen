@@ -60,6 +60,20 @@ String _ip2(Map<String, String> internalParameters) {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+String _ip3(Map<String, String> internalParameters) {
+  final a = internalParameters.entries.map((final l) {
+    final fieldName = l.key;
+    final fieldType = l.value;
+    final ifNotNull = fieldType.endsWith("?") ? "if ($fieldName != null) " : "";
+    final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
+    return "$ifNotNull $fieldK: $fieldName,";
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 String _qp0(Set<String> queryParameters) {
   final a = queryParameters.map((final l) {
     final fieldName = l;
@@ -102,6 +116,18 @@ String _qp2(Set<String> queryParameters) {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+String _qp3(Set<String> queryParameters) {
+  final a = queryParameters.map((final l) {
+    final fieldName = l;
+    final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
+    return "if ($fieldName != null) $fieldK: $fieldName,";
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 String _ps0(List<String> pathSegments) {
   var n = 0;
   final a = pathSegments.map((final l) {
@@ -139,4 +165,16 @@ String _ps2(List<String> pathSegments) {
   }).toList()
     ..sort();
   return a.isNotEmpty ? "pathSegments: [${a.join("\n")}]," : "";
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+String _ps3(List<String> pathSegments) {
+  final a = pathSegments.map((final l) {
+    final fieldName = l;
+    final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
+    return "if ($fieldName != null) $fieldK: $fieldName,";
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
 }

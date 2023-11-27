@@ -125,12 +125,15 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___IP0___": _ip0(internalParameters),
         "___IP1___": _ip1(internalParameters),
         "___IP2___": _ip2(internalParameters),
+        "___IP3___": _ip3(internalParameters),
         "___QP0___": _qp0(queryParameters),
         "___QP1___": _qp1(queryParameters),
         "___QP2___": _qp2(queryParameters),
+        "___QP3___": _qp3(queryParameters),
         "___PS0___": _ps0(pathSegments),
         "___PS1___": _ps1(pathSegments),
         "___PS2___": _ps2(pathSegments),
+        "___PS3___": _ps3(pathSegments),
       }.nonNulls,
     );
 

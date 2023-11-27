@@ -97,35 +97,16 @@ class ___CONFIGURATION_CLASS___ extends ScreenConfiguration {
     ___PS1___
   }): super(
     path: _PATH,
-    arguments: {}, // TODO: Add other arguments
+    arguments: {
+      ___IP3___
+      ___QP3___
+      ___PS3___
+    },
     isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
     isAccessibleOnlyIfLoggedIn: ___LA1___,
     isAccessibleOnlyIfLoggedOut: ___LA2___,
     isRedirectable: ___LA4___,
   );
-
-  ___CONFIGURATION_CLASS___.from(
-    ScreenConfiguration from,
-  ) : super(
-          arguments: from.arguments,
-          path: from.path,
-          isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
-          isAccessibleOnlyIfLoggedIn: ___LA1___,
-          isAccessibleOnlyIfLoggedOut: ___LA2___,
-          isRedirectable: ___LA4___,
-        );
-
-  @override
-  ScreenConfiguration to() {
-    return ScreenConfiguration(
-      arguments: arguments, // TODO: Add other arguments
-      path: path,
-      isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
-      isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-      isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
-      isRedirectable: isRedirectable,
-    );
-  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -139,23 +120,32 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-
 final generated___CLASS___Route = GoRoute(
   path: _SEGMENT,
   pageBuilder: (_, final state) {
     final pageKey = state.pageKey;
-    final configuration = letAs<___CONFIGURATION_CLASS___>(state.extra) ??
-        ScreenConfiguration(
-          path: state.path ?? "",
-          arguments: state.pathParameters,
-          isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
-          isAccessibleOnlyIfLoggedIn: ___LA1___,
-          isAccessibleOnlyIfLoggedOut: ___LA2___,
-          isRedirectable: ___LA4___,
-        );
+    final a = ScreenConfiguration.fromUri(
+      state.uri,
+      isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
+      isAccessibleOnlyIfLoggedIn: ___LA1___,
+      isAccessibleOnlyIfLoggedOut: ___LA2___,
+      isRedirectable: ___LA4___,
+    );
+    final b = letAs<___CONFIGURATION_CLASS___>(state.extra);
+    final c = a.copyWith(
+      parameters: {
+        ...a.arguments,
+        ...?b?.arguments,
+      },
+      path: b?.path,
+      isAccessibleOnlyIfLoggedInAndVerified: b?.isAccessibleOnlyIfLoggedInAndVerified,
+      isAccessibleOnlyIfLoggedIn: b?.isAccessibleOnlyIfLoggedIn,
+      isAccessibleOnlyIfLoggedOut: b?.isAccessibleOnlyIfLoggedOut,
+      isRedirectable: b?.isRedirectable,
+    );
     return NoTransitionPage(
       key: pageKey,
-      child: ___CLASS___(configuration),
+      child: ___CLASS___(c),
     );
   },
 );
