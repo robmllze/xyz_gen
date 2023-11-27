@@ -119,10 +119,11 @@ Future<void> _generateMakeupFile(
   // ---------------------------------------------------------------------------
 
   Future<void> writeVariantsFile(
+    String classKey,
     String rootOutputDirPath,
     String annotatedClassName,
   ) async {
-    final outputFilePath = join(rootOutputDirPath, "src", "_variants.dart");
+    final outputFilePath = join(rootOutputDirPath, "all", "_generate_$classKey.dart");
     if (!await fileExists(outputFilePath)) {
       final template = templates.values.elementAt(4);
       final outputData = replaceAllData(template, {
@@ -190,6 +191,7 @@ Future<void> _generateMakeupFile(
     );
 
     await writeVariantsFile(
+      classKey,
       rootOutputDirPath,
       className,
     );
@@ -293,11 +295,11 @@ Future<void> _writeExportsFile(
   Set<String> exportFiles,
   Map<String, Set<String>> exportFilesBuffer,
 ) async {
-  final outputFilePath = join(outputDirPath, "${classKey}_makeups.g.dart");
+  final outputFilePath = join(outputDirPath, "all_${classKey}_makeups.g.dart");
   (exportFilesBuffer[outputFilePath] ??= {}).addAll(exportFiles);
   final output = replaceAllData(template, {
     ...templateData,
-    "___EXPORTS___": exportFilesBuffer[outputFilePath]!.map((e) => "export 'src/$e';").join("\n"),
+    "___EXPORTS___": exportFilesBuffer[outputFilePath]!.map((e) => "export 'all/$e';").join("\n"),
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
