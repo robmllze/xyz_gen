@@ -7,10 +7,10 @@
 //.title~
 
 class GenerateMakeups {
-  final Set<String> names;
+  final Set<String> variants;
   final Map<String, String> parameters;
   const GenerateMakeups({
-    this.names = const {},
+    this.variants = const {},
     this.parameters = const {},
   });
 }

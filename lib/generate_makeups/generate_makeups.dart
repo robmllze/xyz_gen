@@ -118,12 +118,12 @@ Future<void> _generateMakeupFile(
 
   // ---------------------------------------------------------------------------
 
-  Future<void> writeOutlineFile(
+  Future<void> writeVariantsFile(
     String rootOutputDirPath,
     String outlineTemplateFilePath,
     String annotatedClassName,
   ) async {
-    final outputFilePath = join(rootOutputDirPath, "_outline.dart");
+    final outputFilePath = join(rootOutputDirPath, "src", "_variants.dart");
     if (!await fileExists(outputFilePath)) {
       final template = templates[outlineTemplateFilePath]!;
       final outputData = replaceAllData(template, {
@@ -148,22 +148,29 @@ Future<void> _generateMakeupFile(
     final defaultOutputDirPath = join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
+    final actualClassFileName = join(fixedFilePath).split(separator).last.toLowerCase();
+    printCyan(actualClassFileName);
+    final desiredClassFileName = "$classKey.dart";
+    printBlue(desiredClassFileName);
+    final hasCorrectFileName = actualClassFileName == desiredClassFileName;
     final makeupClassFileName = "_${classKey}_makeup.g.dart";
     final rootOutputDirPath =
         outputDirPath == null ? defaultOutputDirPath : join(outputDirPath, classKey);
     final templateData = {
       "___MAKEUP_CLASS_FILE___": makeupClassFileName,
+      "___CLASS_FILE___": desiredClassFileName,
       "___MAKEUP_CLASS___": makeupClassName,
       "___CLASS___": className,
-      "___CLASS_FILE_PATH___": fixedFilePath,
     };
 
-    await _writeClassFile(
-      join(classFileDirPath, makeupClassFileName),
-      templates.values.elementAt(0),
-      templateData,
-      parameters,
-    );
+    if (hasCorrectFileName) {
+      await _writeClassFile(
+        join(classFileDirPath, makeupClassFileName),
+        templates.values.elementAt(0),
+        templateData,
+        parameters,
+      );
+    }
 
     final exportFiles = await _writeBuilderFiles(
       makeupClassName,
@@ -184,7 +191,7 @@ Future<void> _generateMakeupFile(
       exportFilesBuffer,
     );
 
-    await writeOutlineFile(
+    await writeVariantsFile(
       rootOutputDirPath,
       outlineTemplateFilePath,
       className,

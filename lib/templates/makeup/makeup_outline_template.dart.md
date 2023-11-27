@@ -13,7 +13,7 @@ import '/all.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 @GenerateMakeups(
-  names: {
+  variants: {
     "default",
   },
   parameters: ___PARAMETERS___,
