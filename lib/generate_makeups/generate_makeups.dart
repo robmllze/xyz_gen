@@ -149,9 +149,7 @@ Future<void> _generateMakeupFile(
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
     final actualClassFileName = join(fixedFilePath).split(separator).last.toLowerCase();
-    printCyan(actualClassFileName);
     final desiredClassFileName = "$classKey.dart";
-    printBlue(desiredClassFileName);
     final hasCorrectFileName = actualClassFileName == desiredClassFileName;
     final makeupClassFileName = "_${classKey}_makeup.g.dart";
     final rootOutputDirPath =
@@ -187,7 +185,7 @@ Future<void> _generateMakeupFile(
       rootOutputDirPath,
       templates.values.elementAt(2),
       templateData,
-      {makeupClassFileName, ...exportFiles},
+      exportFiles,
       exportFilesBuffer,
     );
 

@@ -18,12 +18,8 @@ Future<void> generateScreenAccess({
   Set<String> pathPatterns = const {},
   Set<String> screenClassNames = const {},
 }) async {
-  //
-
   final combinedPaths = combinePaths([rootPaths, subPaths]);
   final screenClassNames1 = Set.of(screenClassNames);
-
-  //
 
   for (final path in combinedPaths) {
     final filePaths = await listFilePaths(path);
