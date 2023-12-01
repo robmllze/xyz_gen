@@ -18,7 +18,19 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
   //
 
   @override
-  Widget layout(e) => super.layout(super.defaultHeaderAndScrollableBody(e));
+  Widget layout(final body) {
+    return super.layout(
+      WScrollable(
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.all($16),
+            child: body,
+          ),
+        ),
+      ),
+    );
+  }
 
   //
   //
@@ -31,10 +43,9 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
       children: [
         PodBuilder(
           pod: this.logic.pCounter,
-          builder: (final state) {
+          builder: (_, final counter) {
             return Text(
-              "Count: <<<=value>>>||todo".screenTr({"value": state.value}),
-              style: G.theme.textStyles.p1,
+              "Count: <<<=counter>>>||todo".screenTr({"counter": counter}),
             );
           },
         ),

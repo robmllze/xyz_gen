@@ -22,8 +22,8 @@ class ___SCREEN_CLASS___ extends Screen {
   //
   //
 
-  ___SCREEN_CLASS___(ScreenConfiguration configuration)
-      : super(configuration,___SUPER_ARGS___);
+  ___SCREEN_CLASS___(super.configuration)
+      : super(___SUPER_ARGS___);
 
   //
   //
