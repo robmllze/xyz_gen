@@ -47,10 +47,11 @@ Future<void> generateScreen({
   final folderDirPath = joinAll(
     [
       outputDirPath,
-      (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
-          .split(RegExp(r"[\\/]"))
-          .map((e) => e.startsWith("screen_") ? e : "screen_$e")
-          .join("/"),
+      if (path.trim().isNotEmpty)
+        (path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
+            .split(RegExp(r"[\\/]"))
+            .map((e) => e.startsWith("screen_") ? e : "screen_$e")
+            .join("/"),
       screenClassKey,
     ],
   );
