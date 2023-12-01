@@ -35,7 +35,7 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
         abbr: "s",
         help: "Sub-directory paths separated by `$SEPARATOR`.",
         defaultsTo:
-            "app:components:configs:makeups:managers:models:routing:screens:services:themes:utils:widgets",
+            "app:components:configs:lib:makeups:managers:models:routing:screens:services:src:themes:utils:widgets",
       )
       ..addOption(
         PATTERNS_OPTION,
