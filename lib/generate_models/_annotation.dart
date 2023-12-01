@@ -12,7 +12,7 @@ class GenerateModel {
   final Map<String, dynamic> parameters;
   const GenerateModel({
     required this.className,
-    required this.docPathPattern,
+    this.docPathPattern,
     required this.parameters,
   });
 }
