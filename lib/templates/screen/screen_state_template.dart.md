@@ -44,14 +44,12 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
         PodBuilder(
           pod: this.logic.pCounter,
           builder: (_, final counter) {
-            return Text(
-              "Count: <<<counter>>>||todo".screenTr({"counter": counter}),
-            );
+            return Text("Count: $counter");
           },
         ),
-        WButton(
-          label: "INCREMENT COUNTER||todo".screenTr(),
-          onTap: this.logic.incrementCounter,
+        TextButton(
+          onPressed: this.logic.incrementCounter,
+          child: const Text("INCREMENT COUNTER"),
         ),
       ],
     );
