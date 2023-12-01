@@ -8,7 +8,7 @@
 
 import 'package:path/path.dart' as p;
 
-import '/xyz_gen.dart';
+import '../all.dart';
 import '/get_xyz_gen_lib_path.dart';
 
 const _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION = "additional-screen-class-names";
