@@ -45,7 +45,7 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
           pod: this.logic.pCounter,
           builder: (_, final counter) {
             return Text(
-              "Count: <<<=counter>>>||todo".screenTr({"counter": counter}),
+              "Count: <<<counter>>>||todo".screenTr({"counter": counter}),
             );
           },
         ),
