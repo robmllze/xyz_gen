@@ -368,10 +368,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "16058da17508160640e19f9626d2833643413b75"
+      resolved-ref: "66e11a6d76ec00652d385b13d9ca04f44db376fa"
       url: "https://github.com/robmllze/xyz_utils.git"
     source: git
-    version: "0.24.0"
+    version: "0.25.0"
   yaml:
     dependency: transitive
     description:
