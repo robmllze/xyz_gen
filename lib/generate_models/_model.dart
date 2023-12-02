@@ -15,8 +15,6 @@ abstract class Model {
 
   dynamic args;
 
-  String? docPathPattern;
-
   String getDocPath();
 
   String getCollectionPath() => _removeLastSegment(this.getDocPath());

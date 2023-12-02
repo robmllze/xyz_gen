@@ -24,8 +24,6 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
   //
   //
-
-  static const DEFAULT_DOC_PATH_PATTERN = "___DEFAULT_DOC_PATH_PATTERN___";
   
   ___P0___
 
@@ -73,20 +71,6 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
       assert(false, e);
       rethrow;
     }
-  }
-
-  //
-  //
-  //
-
-  @override
-  String getDocPath() {
-    return this.docPathPattern?.inlineReplace(
-              this.toJMap(),
-              opening: "{",
-              closing: "}",
-            ) ??
-        "";
   }
 
   //

@@ -15,10 +15,9 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
 
   final id = parameters["id"] ??= const TypeCode("String?");
   final args = parameters["args"] ??= const TypeCode("dynamic");
-  final docPathPattern = parameters["docPathPattern"] ??= const TypeCode("String?");
   final allEntries = parameters.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final allIds = allEntries.map((e) => e.key);
-  final ids = allIds.where((e) => !const ["id", "args", "docPathPattern"].contains(e));
+  final ids = allIds.where((e) => !const ["id", "args"].contains(e));
   final entries = ids.map((i) => MapEntry(i, parameters[i]));
   final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable);
   final allKeys = _getKeyNames(allIds);
@@ -36,20 +35,17 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
         return "${id.nullable ? "" : "required "}${id.name} id,";
       }(),
       "${args.nullable ? "" : "required "}${args.name} args,",
-      "${docPathPattern.nullable ? "" : "required "}${docPathPattern.name} docPathPattern,",
       ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
     [
       "this.id = id;",
       "this.args = args;",
-      "this.docPathPattern = docPathPattern ?? DEFAULT_DOC_PATH_PATTERN;",
     ],
     // ___P4___
     [
       "String? id,",
       "${args.nullableName} args,",
-      "${docPathPattern.nullableName} docPathPattern,",
       ...ids.map((e) => "this.$e,"),
     ],
     // ___P5___

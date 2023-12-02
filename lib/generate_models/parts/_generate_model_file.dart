@@ -19,7 +19,6 @@ Future<void> _generateModelFile(
 
   // Create variables to hold the annotation's field values.
   var className = "";
-  String? docPathPattern;
   var parameters = <String, TypeCode>{};
 
   // ---------------------------------------------------------------------------
@@ -29,9 +28,6 @@ Future<void> _generateModelFile(
     switch (fieldName) {
       case "className":
         className = fieldValue.toStringValue() ?? "";
-        break;
-      case "docPathPattern":
-        docPathPattern = fieldValue.toStringValue();
         break;
       case "parameters":
         parameters = fieldValue.toMapValue()?.map((k, v) {
@@ -62,9 +58,6 @@ Future<void> _generateModelFile(
         "___PARENT_CLASS___": parentClassName,
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
-        "___DEFAULT_DOC_PATH_PATTERN___":
-            docPathPattern ?? "${className.toSnakeCase()}_collection/{id}",
-        ..._replacements(parameters),
       },
     );
 
