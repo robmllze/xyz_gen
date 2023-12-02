@@ -54,7 +54,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
   //
 
-  factory ___CLASS___.from(___CLASS___ other) {
+  factory ___CLASS___.from(
+    ___CLASS___ other,
+  ) {
     return ___CLASS___.unsafe()..updateWith(other);
   }
 
@@ -62,7 +64,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
   //
   
-  factory ___CLASS___.fromJMap(Map<String, dynamic> input) {
+  factory ___CLASS___.fromJMap(
+    Map<String, dynamic> input,
+  ) {
     try {
       return ___CLASS___.unsafe(
         ___P6___
@@ -116,7 +120,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
 
   @override
-  T copyWith<T extends Model>(T other) {
+  T copyWith<T extends Model>(
+    T other,
+  ) {
     if (other is ___CLASS___) {
        return this.copy()..updateWith(other);
     }
@@ -129,7 +135,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
 
   @override
-  T copyWithJMap<T extends Model>(JMap other) {
+  T copyWithJMap<T extends Model>(
+    JMap other,
+  ) {
     if (other.isNotEmpty) {
        return this.copy()..updateWithJMap(other);
     }
@@ -141,7 +149,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
 
   @override
-  void updateWith<T extends Model>(T other) {
+  void updateWith<T extends Model>(
+    T other,
+  ) {
     if (other is ___CLASS___) {
     ___P8___
     } else {
@@ -154,7 +164,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
   //
 
   @override
-  void updateWithJMap<T extends Model>(JMap other) {
+  void updateWithJMap<T extends Model>(
+    JMap other,
+  ) {
    this.updateWith(___CLASS___.fromJMap(other));
   }
 }
