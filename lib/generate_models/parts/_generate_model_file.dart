@@ -58,6 +58,7 @@ Future<void> _generateModelFile(
         "___PARENT_CLASS___": parentClassName,
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
+        ..._replacements(parameters),
       },
     );
 
