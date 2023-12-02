@@ -15,10 +15,6 @@ abstract class Model {
 
   dynamic args;
 
-  String getDocPath();
-
-  String getCollectionPath() => _removeLastSegment(this.getDocPath());
-
   JMap toJMap({dynamic defaultValue, bool includeNulls = false});
 
   JMap sortedJMap({dynamic defaultValue, bool includeNulls = false}) {
@@ -64,12 +60,4 @@ abstract class Model {
 
 abstract class ThisModel<T extends Model> extends Model {
   late final T model = this as T;
-}
-
-String _removeLastSegment(String path) {
-  var lastSlash = path.lastIndexOf("/");
-  if (lastSlash != -1) {
-    return path.substring(0, lastSlash);
-  }
-  return "";
 }
