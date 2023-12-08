@@ -61,3 +61,34 @@ abstract class Model {
 abstract class ThisModel<T extends Model> extends Model {
   late final T model = this as T;
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class GenericModel extends Model {
+  final JMap data;
+
+  GenericModel(this.data);
+
+  @override
+  JMap toJMap({dynamic defaultValue, bool includeNulls = false}) {
+    return includeNulls ? data.nonNulls : data.map((k, v) => MapEntry(k, v ?? defaultValue));
+  }
+
+  @override
+  T empty<T extends Model>() => GenericModel({}) as T;
+
+  @override
+  T copy<T extends Model>() => this as T;
+
+  @override
+  T copyWith<T extends Model>(T other) => this.copyWithJMap(other.toJMap());
+
+  @override
+  T copyWithJMap<T extends Model>(JMap other) => GenericModel({...this.data, ...other}) as T;
+
+  @override
+  void updateWith<T extends Model>(T other) => this.updateWithJMap(other.toJMap());
+
+  @override
+  void updateWithJMap<T extends Model>(JMap other) => this.data.addAll(other);
+}
