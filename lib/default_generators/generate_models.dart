@@ -29,7 +29,7 @@ void main(List<String> arguments) async {
       ].join(":"),
       "-s",
       "models",
-    ]
+    ],
   ]);
   // STEP 2 - MAKE THE MODELS FILES AVAILABLE TO THE APP
   generateAllExportsApp([
@@ -40,6 +40,6 @@ void main(List<String> arguments) async {
       "$APP_NAME/lib",
       "-s",
       "models",
-    ]
+    ],
   ]);
 }

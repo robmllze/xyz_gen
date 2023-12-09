@@ -22,6 +22,6 @@ void main(List<String> arguments) async {
         // TODO: Add your app name here:
         "YOUR_APP_NAME/lib",
       ].join(":"),
-    ]
+    ],
   ]);
 }

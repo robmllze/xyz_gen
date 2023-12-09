@@ -31,7 +31,7 @@ void main(List<String> arguments) async {
       "screens",
       "-o",
       "$APP_NAME/lib/screens/screen_access.g.dart",
-    ]
+    ],
   ]);
   await generateAllExportsApp([
     if (arguments.isNotEmpty)
@@ -41,6 +41,6 @@ void main(List<String> arguments) async {
       libs,
       "-s",
       "screens",
-    ]
+    ],
   ]);
 }

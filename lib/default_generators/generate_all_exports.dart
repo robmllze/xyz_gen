@@ -42,6 +42,6 @@ void main(List<String> arguments) async {
         "utils",
         "widgets",
       ].join(":"),
-    ]
+    ],
   ]);
 }

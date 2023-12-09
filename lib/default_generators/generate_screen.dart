@@ -91,7 +91,7 @@ void main(List<String> arguments) async {
       QUERY_PARAMETERS.join(":"),
       "--path-segments",
       PATH_SEGMENTS.join(":"),
-    ]
+    ],
   ]);
 
   // STEP 2 - CONNECT THE SCREEN TO THE ROUTER
@@ -107,7 +107,7 @@ void main(List<String> arguments) async {
       "screens",
       "-o",
       "$APP_NAME/lib/screens/screen_access.g.dart",
-    ]
+    ],
   ]);
 
   // STEP 3 - MAKE THE SCREEN FILES AVAILABLE TO THE APP
@@ -119,6 +119,6 @@ void main(List<String> arguments) async {
       "$APP_NAME/lib",
       "-s",
       "screens",
-    ]
+    ],
   ]);
 }

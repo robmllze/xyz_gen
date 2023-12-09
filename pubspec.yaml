@@ -7,28 +7,28 @@
 #.title~
 
 name: xyz_gen
+description: A package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
 version: 0.17.0
 
 ## -----------------------------------------------------------------------------
 
 environment:
 
-  sdk: ^3.0.5
+  sdk: ^3.0.0
 
 ## -----------------------------------------------------------------------------
 
 dependencies:
 
-  analyzer:
-  args:
-  path_provider:
-  path:
-  collection:
+  analyzer: ^6.3.0
+  args: ^2.4.2
+  path: ^1.9.0
+  collection: ^1.18.0
 
 ## -----------------------------------------------------------------------------
 
 dev_dependencies:
 
-  lints:
+  lints: ^3.0.0
   
 

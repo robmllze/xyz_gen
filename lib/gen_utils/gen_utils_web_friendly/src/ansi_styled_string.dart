@@ -146,7 +146,7 @@ class AnsiStyle {
 extension AnsiStyledString on String {
   String withAnsiStyleCode(int? code) {
     if (code == null) return this;
-    return "\u001b[${code}m${this}\u001b[0m";
+    return "\u001b[${code}m$this\u001b[0m";
   }
 
   String withAnsiStyle(AnsiStyle? style) {

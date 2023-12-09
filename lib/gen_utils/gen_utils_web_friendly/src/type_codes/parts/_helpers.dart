@@ -112,7 +112,7 @@ String toGenericTypeCode(String typeCode) {
     "Map": "Map<dynamic, dynamic>",
     "List": "List<dynamic>",
     "Set": "Set<dynamic>",
-    "Iterable": "Iterable<dynamic>"
+    "Iterable": "Iterable<dynamic>",
   };
   for (final key in TRANSFORMATIONS.keys) {
     // This regex looks for the key (like "Map") that is not immediately
