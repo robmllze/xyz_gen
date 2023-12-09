@@ -10,5 +10,5 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  xyz_gen: ^0.17.0
+  xyz_gen: ^{{version}}
 ```
