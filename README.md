@@ -12,3 +12,18 @@ Add this to your package's `pubspec.yaml` file:
 dependencies:
   xyz_gen: ^{{version}}
 ```
+
+## Contributing
+
+Contributions to XYZ Gen are welcome.
+
+## License
+
+XYZ Gen is released under the MIT License.
+
+## Contact
+
+Author: robmllze
+Email: robmllze@gmail.com
+
+For more information, questions, or feedback, feel free to contact me.
