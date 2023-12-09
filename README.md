@@ -10,7 +10,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  xyz_gen: ^{{version}}
+  xyz_gen: ^0.18.1
 ```
 
 ## Contributing

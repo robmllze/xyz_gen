@@ -70,21 +70,25 @@ dynamic mergeDataDeep(
       a,
       b,
       value: (final a, final b) {
-        if (a is Map && b is Map) return mergeDataDeep(a, b, elseFilter);
-        if (a is List || a is Set)
+        if (a is Map && b is Map) {
+          return mergeDataDeep(a, b, elseFilter);
+        }
+        if (a is List || a is Set) {
           return mergeListsOrSets<Iterable>(a as Iterable, b);
-//         if (a is List) return mergeIterables(a, b).toList();
-//         if (a is Set) return mergeIterables(a, b).toSet();
-//         if (a is Iterable) return mergeIterables(a, b);
+        }
+        if (a is Iterable) {
+          return mergeIterables(a, b);
+        }
         return elseFilter?.call(b) ?? b;
       },
     );
   }
-  if (a is List || a is Set)
+  if (a is List || a is Set) {
     return mergeListsOrSets<Iterable>(a as Iterable, b);
-//   if (a is List) return mergeIterables(a, b).toList();
-//   if (a is Set) return mergeIterables(a, b).toSet();
-//   if (a is Iterable) return mergeIterables(a, b);
+  }
+  if (a is Iterable) {
+    return mergeIterables(a, b);
+  }
   return elseFilter?.call(b) ?? b;
 }
 
@@ -190,8 +194,7 @@ extension SetMapI<A> on Set<A> {
 }
 
 extension MapMapI<A1, A2> on Map<A1, A2> {
-  Map<B1, B2> mapi<B1, B2, C>(
-      MapEntry<B1, B2> Function(A1 x1, A2 x2, int index, C? option) mapper,
+  Map<B1, B2> mapi<B1, B2, C>(MapEntry<B1, B2> Function(A1 x1, A2 x2, int index, C? option) mapper,
       {List<C> options = const []}) {
     var index = 0;
     return this.map((final x1, final x2) {
@@ -327,8 +330,7 @@ class _VarArgsFunction<T> {
       inv.namedArguments.map(
         (final key, final value) {
           final keyAsString = key.toString();
-          return MapEntry(
-              keyAsString.substring(_OFFSET, keyAsString.length - 2), value);
+          return MapEntry(keyAsString.substring(_OFFSET, keyAsString.length - 2), value);
         },
       ),
     );
@@ -486,11 +488,9 @@ extension TryReduce<T> on Iterable<T> {
 }
 
 extension TryMerge<T> on Iterable<Iterable<T>?> {
-  Iterable<T>? tryMerge(
-      [Iterable<T> Function(Iterable<T>?, Iterable<T>?)? merge]) {
+  Iterable<T>? tryMerge([Iterable<T> Function(Iterable<T>?, Iterable<T>?)? merge]) {
     try {
-      return this
-          .reduce(merge ?? (final a, final b) => <T>[...a ?? [], ...b ?? []]);
+      return this.reduce(merge ?? (final a, final b) => <T>[...a ?? [], ...b ?? []]);
     } catch (_) {
       return null;
     }
@@ -512,40 +512,34 @@ extension MapFilterExtension<K, V> on Map<K, V> {
   /// [defaultValue] for all values that are null. If [defaultValue] is null,
   /// it simply returns a copy of the original map.
   Map<K, dynamic> mapWithDefault(dynamic defaultValue) {
-    return defaultValue != null
-        ? this.map((k, v) => MapEntry(k, v ?? defaultValue))
-        : Map.of(this);
+    return defaultValue != null ? this.map((k, v) => MapEntry(k, v ?? defaultValue)) : Map.of(this);
   }
 
   /// Filters the map's entries based on a list of included values.
   /// Returns a new map containing only the key-value pairs where the value
   /// is found within the [includedValues].
   Map<K, V> filterByIncludedValues(List<V> includedValues) {
-    return Map.fromEntries(
-        this.entries.where((e) => includedValues.contains(e.value)));
+    return Map.fromEntries(this.entries.where((e) => includedValues.contains(e.value)));
   }
 
   /// Filters the map's entries based on a list of excluded values.
   /// Returns a new map excluding the key-value pairs where the value
   /// is found within the [excludedValues].
   Map<K, V> filterByExcludedValues(List<V> excludedValues) {
-    return Map.fromEntries(
-        this.entries.where((e) => !excludedValues.contains(e.value)));
+    return Map.fromEntries(this.entries.where((e) => !excludedValues.contains(e.value)));
   }
 
   /// Filters the map's entries based on a list of included keys.
   /// Returns a new map containing only the key-value pairs where the key
   /// is found within the [includedKeys].
   Map<K, V> filterByIncludedKeys(List<K> includedKeys) {
-    return Map.fromEntries(
-        this.entries.where((e) => includedKeys.contains(e.key)));
+    return Map.fromEntries(this.entries.where((e) => includedKeys.contains(e.key)));
   }
 
   /// Filters the map's entries based on a list of excluded keys.
   /// Returns a new map excluding the key-value pairs where the key
   /// is found within the [excludedKeys].
   Map<K, V> filterByExcludedKeys(List<K> excludedKeys) {
-    return Map.fromEntries(
-        this.entries.where((e) => !excludedKeys.contains(e.key)));
+    return Map.fromEntries(this.entries.where((e) => !excludedKeys.contains(e.key)));
   }
 }

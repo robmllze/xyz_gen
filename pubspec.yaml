@@ -9,7 +9,7 @@
 name: xyz_gen
 description: A package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
 repository: https://github.com/robmllze/xyz_gen
-version: 0.18.0
+version: 0.18.1
 
 ## -----------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ environment:
 
 dependencies:
 
-  analyzer: ^6.3.0
+  analyzer: ^6.2.0
   args: ^2.4.2
   path: ^1.9.0
   collection: ^1.18.0

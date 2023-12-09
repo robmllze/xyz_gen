@@ -18,3 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added an `example.dart` file to the project.
+
+## [0.18.1] - [2023-12-09]
+
+### Fixed
+
+- Style fixes.

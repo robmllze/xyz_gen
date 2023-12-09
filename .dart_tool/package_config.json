@@ -3,13 +3,13 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-65.0.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-64.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/analyzer-6.3.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/analyzer-6.2.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -63,7 +63,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/meta-1.11.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/meta-1.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -128,7 +128,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-12-09T11:40:33.870907Z",
+  "generated": "2023-12-09T12:08:46.209617Z",
   "generator": "pub",
-  "generatorVersion": "3.2.2"
+  "generatorVersion": "3.2.3"
 }
