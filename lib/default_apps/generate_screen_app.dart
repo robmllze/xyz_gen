@@ -6,9 +6,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
-import '../all.dart';
-import '/get_xyz_gen_lib_path.dart';
+import '/all.dart';
+
+import '../_internal_dependencies.dart';
+import '../utils/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -34,7 +35,7 @@ const _STATE_TEMPLATE_OPTION = "state-template";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates", "screen");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "screen");
   final parser = ArgParser()
     ..addFlag(
       "help",
@@ -45,7 +46,7 @@ Future<void> generateScreenApp(List<String> arguments) async {
     ..addOption(
       _OUTPUT_OPTION,
       help: "Output directory path.",
-      defaultsTo: toLocalPathFormat(SCREENS_PATH),
+      defaultsTo: toLocalPathFormat("/lib/screens"),
     )
     ..addOption(
       _NAME_OPTION,
@@ -67,23 +68,23 @@ Future<void> generateScreenApp(List<String> arguments) async {
     ..addOption(
       _LOGIC_TEMPLATE_OPTION,
       help: "Logic template file path.",
-      defaultsTo: toLocalPathFormat(p.join(defaultTemplatesPath, "screen_logic_template.dart.md")),
+      defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_logic_template.dart.md")),
     )
     ..addOption(
       _SCREEN_TEMPLATE_OPTION,
       help: "Screen template file path.",
-      defaultsTo: toLocalPathFormat(p.join(defaultTemplatesPath, "screen_template.dart.md")),
+      defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_template.dart.md")),
     )
     ..addOption(
       _STATE_TEMPLATE_OPTION,
       help: "State template file path.",
-      defaultsTo: toLocalPathFormat(p.join(defaultTemplatesPath, "screen_state_template.dart.md")),
+      defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_state_template.dart.md")),
     )
     ..addOption(
       _CONFIGURATION_TEMPLATE_OPTION,
       help: "Configuration template file path.",
       defaultsTo:
-          toLocalPathFormat(p.join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
+          toLocalPathFormat(join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
     )
     ..addOption(
       _PATH_OPTION,

@@ -7,8 +7,7 @@
 #.title~
 
 name: xyz_gen
-version: 0.16.0
-publish_to: none
+version: 0.17.0
 
 ## -----------------------------------------------------------------------------
 
@@ -24,10 +23,7 @@ dependencies:
   args:
   path_provider:
   path:
-
-  xyz_utils:
-    git:
-      url: https://github.com/robmllze/xyz_utils.git
+  collection:
 
 ## -----------------------------------------------------------------------------
 

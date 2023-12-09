@@ -6,7 +6,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '../all.dart';
+import '../_internal_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -25,7 +25,7 @@ Future<void> deleteGeneratedDartFilesApp(List<String> arguments) async {
         ROOTS_OPTION,
         abbr: "r",
         help: "Root directory paths separated by `$SEPARATOR`.",
-        defaultsTo: toLocalPathFormat(LIB_PATH),
+        defaultsTo: toLocalPathFormat("/lib"),
       ),
     onResults: onResults,
     action: action,

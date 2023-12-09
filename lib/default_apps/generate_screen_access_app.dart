@@ -6,17 +6,17 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
+import '/all.dart';
 
-import '../all.dart';
-import '/get_xyz_gen_lib_path.dart';
+import '../_internal_dependencies.dart';
+import '../utils/get_xyz_gen_lib_path.dart';
 
 const _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION = "additional-screen-class-names";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenAccessApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates", "screen");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "screen");
   await basicConsoleAppBody<GenerateScreenAccessArgs>(
     appTitle: "XYZ Generate Screen Access",
     arguments: arguments,
@@ -31,7 +31,7 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         ROOTS_OPTION,
         abbr: "r",
         help: "Root directory paths separated by `$SEPARATOR`.",
-        defaultsTo: "${toLocalPathFormat(LIB_PATH)}:${toLocalPathFormat(SHARED_LIB_PATH)}",
+        defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         SUBS_OPTION,
@@ -52,14 +52,13 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         OUTPUT_OPTION,
         abbr: "o",
         help: "Output file path.",
-        defaultsTo: "$SCREENS_PATH/screen_access.g.dart",
+        defaultsTo: toLocalPathFormat("/lib/screen_access.g.dart"),
       )
       ..addOption(
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo:
-            toLocalPathFormat(p.join(defaultTemplatesPath, "screen_access_template.dart.md")),
+        defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_access_template.dart.md")),
       ),
     onResults: onResults,
     action: action,

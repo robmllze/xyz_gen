@@ -6,14 +6,15 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
-import '../all.dart';
-import '/get_xyz_gen_lib_path.dart';
+import '/all.dart';
+
+import '../_internal_dependencies.dart';
+import '../utils/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateAllExportsApp(List<String> arguments) async {
-  final defaultTemplatesPath = p.join(await getXyzGenLibPath(), "templates");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates");
   await basicConsoleAppBody<BasicTemplateArgs>(
     appTitle: "XYZ Generate All Exports",
     arguments: arguments,
@@ -28,7 +29,7 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
         ROOTS_OPTION,
         abbr: "r",
         help: "Root directory paths separated by `$SEPARATOR`.",
-        defaultsTo: "${toLocalPathFormat(LIB_PATH)}:${toLocalPathFormat(SHARED_LIB_PATH)}",
+        defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         SUBS_OPTION,
@@ -46,7 +47,7 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(p.join(defaultTemplatesPath, "all_exports_template.dart.md")),
+        defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "all_exports_template.dart.md")),
       ),
     onResults: onResults,
     action: action,

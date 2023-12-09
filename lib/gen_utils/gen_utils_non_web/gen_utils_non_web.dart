@@ -1,14 +1,15 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Gen
+// XYZ Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-library xyz_gen;
+export '../gen_utils_web_friendly/gen_utils_web_friendly.dart';
 
-export 'package:args/args.dart';
-
-export 'utils/basic_console_app.dart';
-export 'generate/generate.dart';
+export 'src/file_system.dart';
+export 'src/generate.dart';
+export 'src/analyze_annotated_classes.dart';
+export 'src/list_file_paths.dart';
+export 'src/dart_files.dart';
