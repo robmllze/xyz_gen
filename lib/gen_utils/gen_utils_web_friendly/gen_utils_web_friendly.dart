@@ -8,9 +8,12 @@
 
 export 'src/ansi_styled_string.dart';
 export 'src/data.dart';
+export 'src/firestore_timestamp.dart';
 export 'src/fix_dart_file.dart';
 export 'src/fmt_dart_file.dart';
 export 'src/get_package_lib_path.dart';
+export 'src/let.dart';
+export 'src/parse_duration.dart';
 export 'src/paths/combine_paths.dart';
 export 'src/paths/paths.dart';
 export 'src/replace_data.dart';
