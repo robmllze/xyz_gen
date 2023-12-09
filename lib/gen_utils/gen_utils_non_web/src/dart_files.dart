@@ -29,7 +29,8 @@ Future<List<(String, String, String)>> findDartFiles(
       if (isDartFilePath(filePath, pathPatterns)) {
         final dirPath = getDirPath(filePath);
         final folderName = getBaseName(dirPath);
-        final add = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
+        final add =
+            (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
         if (add) {
           results.add((dirPath, folderName, filePath));
         }
@@ -58,7 +59,8 @@ Future<List<(String, String, String)>> findGeneratedDartFiles(
       if (isGeneratedDartFilePath(filePath, pathPatterns)) {
         final dirPath = getDirPath(filePath);
         final folderName = getBaseName(dirPath);
-        final add = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
+        final add =
+            (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
         if (add) {
           results.add((dirPath, folderName, filePath));
         }
@@ -73,7 +75,8 @@ Future<List<(String, String, String)>> findGeneratedDartFiles(
 Future<String> readDartTemplate(String filePath) async {
   final file = File(filePath);
   final input = await file.readAsString();
-  final output = input.replaceFirst("````dart", "").replaceLast("````", "").trim();
+  final output =
+      input.replaceFirst("````dart", "").replaceLast("````", "").trim();
   return output;
 }
 
@@ -119,12 +122,14 @@ Future<bool> sourceAndGeneratedDartFileExists(
 ]) async {
   if (isSourceDartFilePath(filePath, pathPatterns)) {
     final a = await fileExists(filePath);
-    final b = await fileExists("${filePath.substring(0, filePath.length - ".dart".length)}.g.dart");
+    final b = await fileExists(
+        "${filePath.substring(0, filePath.length - ".dart".length)}.g.dart");
     return a && b;
   }
   if (isGeneratedDartFilePath(filePath, pathPatterns)) {
     final a = await fileExists(filePath);
-    final b = await fileExists("${filePath.substring(0, filePath.length - ".g.dart".length)}.dart");
+    final b = await fileExists(
+        "${filePath.substring(0, filePath.length - ".g.dart".length)}.dart");
     return a && b;
   }
   return false;

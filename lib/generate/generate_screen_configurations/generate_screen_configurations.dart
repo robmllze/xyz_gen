@@ -31,7 +31,8 @@ Future<Set<String>> generateScreenConfigurations({
     templateFilePaths: {templateFilePath},
     //deleteGeneratedFiles: true,
     generateForFile: (final collection, final filePath, final templates) async {
-      final temp = await _generateScreenConfigurationFile(collection, filePath, templates);
+      final temp = await _generateScreenConfigurationFile(
+          collection, filePath, templates);
       classNames.addAll(temp);
     },
     // onDelete: (final filePath) {

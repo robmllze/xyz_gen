@@ -11,4 +11,5 @@ import 'package:xyz_gen/default_apps/delete_generated_dart_files_app.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main(List<String> arguments) async => deleteGeneratedDartFilesApp(arguments);
+void main(List<String> arguments) async =>
+    deleteGeneratedDartFilesApp(arguments);

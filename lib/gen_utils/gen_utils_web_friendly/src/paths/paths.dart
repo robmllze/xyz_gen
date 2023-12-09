@@ -16,7 +16,8 @@ bool isDartFilePath(
   String filePath, [
   Set<String> pathPatterns = const {},
 ]) {
-  final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+  final a =
+      pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
   final b = filePath.toLowerCase().endsWith(".dart");
   final c = a && b;
   return c;
@@ -29,7 +30,8 @@ bool isSourceDartFilePath(
   Set<String> pathPatterns = const {},
 ]) {
   final lowerCasefilePath = filePath.toLowerCase();
-  final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+  final a =
+      pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
   final b = lowerCasefilePath.endsWith(".dart");
   final c = lowerCasefilePath.endsWith(".g.dart");
   return a && b && !c;
@@ -41,7 +43,8 @@ bool isGeneratedDartFilePath(
   String filePath, [
   Set<String> pathPatterns = const {},
 ]) {
-  final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+  final a =
+      pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
   final b = filePath.toLowerCase().endsWith(".g.dart");
   final c = a && b;
   return c;
@@ -54,7 +57,8 @@ String? getSourcePath(String filePath) {
   final dirName = p.dirname(fixedPath);
   final baseName = p.basename(fixedPath);
   if (baseName.endsWith(".g.dart")) {
-    return p.join(dirName, "${baseName.substring(0, baseName.length - ".g.dart".length)}.dart");
+    return p.join(dirName,
+        "${baseName.substring(0, baseName.length - ".g.dart".length)}.dart");
   }
   if (baseName.endsWith(".dart")) {
     return fixedPath;
@@ -108,10 +112,13 @@ bool isPrivateFileName(String filePath) {
 
 /// Checks if the file name matches the specified beginning and ending types.
 /// Returns a tuple with the match status and the file name.
-(bool, String) isMatchingFileName(String filePath, String begType, String endType) {
+(bool, String) isMatchingFileName(
+    String filePath, String begType, String endType) {
   final fileName = getBaseName(filePath);
-  final a = begType.isEmpty ? true : fileName.startsWith("${begType.toLowerCase()}_");
-  final b = endType.isEmpty ? true : fileName.endsWith(".$endType".toLowerCase());
+  final a =
+      begType.isEmpty ? true : fileName.startsWith("${begType.toLowerCase()}_");
+  final b =
+      endType.isEmpty ? true : fileName.endsWith(".$endType".toLowerCase());
   final c = a && b;
   return (c, fileName);
 }

@@ -69,7 +69,8 @@ Future<void> generateScreen({
     data,
     path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedInAndVerified:
+        isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
@@ -79,7 +80,8 @@ Future<void> generateScreen({
     title: title,
     navigationControls: navigationControls,
   );
-  printGreen("Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
+  printGreen(
+      "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
   final stateFilePath = join(folderDirPath, stateFileName);
   await _writeFile(
     stateTemplateFilePath,
@@ -120,15 +122,21 @@ Future<void> _writeScreenFile(
       })
       .nonNulls
       .join(",");
-  final b = queryParameters.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
-  final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
+  final b = queryParameters
+      .map((v) => v.isNotEmpty ? '"$v"' : null)
+      .nonNulls
+      .join(",");
+  final c =
+      pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
     if (path.isNotEmpty) 'path: "$path"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
-    if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
+    if (isAccessibleOnlyIfLoggedInAndVerified)
+      "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
+    if (internalParameters.isNotEmpty && a.isNotEmpty)
+      "internalParameters: {$a,}",
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
     if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
@@ -136,12 +144,14 @@ Future<void> _writeScreenFile(
   final superArgs = [
     if (makeup.isNotEmpty) "makeup: $makeup",
     if (title.isNotEmpty) 'title: "$title||title".screenTr()',
-    if (navigationControls.isNotEmpty) "navigationControls: $navigationControls",
+    if (navigationControls.isNotEmpty)
+      "navigationControls: $navigationControls",
   ].join(",");
 
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    "___CONFIGURATION_ARGS___": configurationArgs.isNotEmpty ? "$configurationArgs," : "",
+    "___CONFIGURATION_ARGS___":
+        configurationArgs.isNotEmpty ? "$configurationArgs," : "",
     "___SUPER_ARGS___": superArgs.isNotEmpty ? "$superArgs," : "",
   });
 }
@@ -211,7 +221,8 @@ class GenerateScreenArgs extends ValidObject {
         screenTemplateFilePath,
         stateTemplateFilePath,
         configurationTemplateFilePath,
-        if (isAccessibleOnlyIfLoggedInAndVerified != null) isAccessibleOnlyIfLoggedInAndVerified,
+        if (isAccessibleOnlyIfLoggedInAndVerified != null)
+          isAccessibleOnlyIfLoggedInAndVerified,
         if (isAccessibleOnlyIfLoggedIn != null) isAccessibleOnlyIfLoggedIn,
         if (isAccessibleOnlyIfLoggedOut != null) isAccessibleOnlyIfLoggedOut,
         if (isRedirectable != null) isRedirectable,

@@ -15,11 +15,15 @@ abstract class Model {
 
   dynamic args;
 
-  Map<String, dynamic> toJMap({dynamic defaultValue, bool includeNulls = false});
+  Map<String, dynamic> toJMap(
+      {dynamic defaultValue, bool includeNulls = false});
 
-  Map<String, dynamic> sortedJMap({dynamic defaultValue, bool includeNulls = false}) {
-    final a = this.toJMap(defaultValue: defaultValue, includeNulls: includeNulls);
-    final b = a.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+  Map<String, dynamic> sortedJMap(
+      {dynamic defaultValue, bool includeNulls = false}) {
+    final a =
+        this.toJMap(defaultValue: defaultValue, includeNulls: includeNulls);
+    final b = a.keys.toList(growable: false)
+      ..sort((k1, k2) => k1.compareTo(k2));
     final c = {for (var k in b) k: a[k] as dynamic};
     return c;
   }
@@ -72,9 +76,11 @@ class GenericModel extends Model {
   GenericModel(this.data);
 
   @override
-  Map<String, dynamic> toJMap({dynamic defaultValue, bool includeNulls = false}) {
+  Map<String, dynamic> toJMap(
+      {dynamic defaultValue, bool includeNulls = false}) {
     return includeNulls
-        ? Map.fromEntries(data.entries.where((e) => e.value != null)).map((k, v) => MapEntry(k, v!))
+        ? Map.fromEntries(data.entries.where((e) => e.value != null))
+            .map((k, v) => MapEntry(k, v!))
         : data.map((k, v) => MapEntry(k, v ?? defaultValue));
   }
 
@@ -92,8 +98,10 @@ class GenericModel extends Model {
       GenericModel({...this.data, ...other}) as T;
 
   @override
-  void updateWith<T extends Model>(T other) => this.updateWithJMap(other.toJMap());
+  void updateWith<T extends Model>(T other) =>
+      this.updateWithJMap(other.toJMap());
 
   @override
-  void updateWithJMap<T extends Model>(Map<String, dynamic> other) => this.data.addAll(other);
+  void updateWithJMap<T extends Model>(Map<String, dynamic> other) =>
+      this.data.addAll(other);
 }

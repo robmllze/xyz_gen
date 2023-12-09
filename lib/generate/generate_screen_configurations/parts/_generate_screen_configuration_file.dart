@@ -38,7 +38,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "path":
         path = fieldValue.toStringValue() ?? "";
       case "isAccessibleOnlyIfLoggedInAndVerified":
-        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
+        isAccessibleOnlyIfLoggedInAndVerified =
+            fieldValue.toBoolValue() ?? false;
         break;
       case "isAccessibleOnlyIfLoggedIn":
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
@@ -52,17 +53,26 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "internalParameters":
         internalParameters = fieldValue
                 .toMapValue()
-                ?.map((final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()))
+                ?.map((final k, final v) =>
+                    MapEntry(k?.toStringValue(), v?.toStringValue()))
                 .nonNulls ??
             const {};
         break;
       case "queryParameters":
-        queryParameters =
-            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
+        queryParameters = fieldValue
+                .toSetValue()
+                ?.map((e) => e.toStringValue())
+                .nonNulls
+                .toSet() ??
+            {};
         break;
       case "pathSegments":
-        pathSegments =
-            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        pathSegments = fieldValue
+                .toListValue()
+                ?.map((e) => e.toStringValue())
+                .nonNulls
+                .toList() ??
+            [];
         break;
     }
   }
@@ -81,7 +91,9 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKeyName = screenKey.replaceAll("screen_", "");
     final screenSegment = joinAll(
       [
-        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
+        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]"))
+                ? path.substring(1)
+                : path)
             .replaceAll("screen_", ""),
         screenKeyName,
       ],
@@ -144,7 +156,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
     await fmtDartFile(outputFilePath);
 
     // Log the generated file.
-    printGreen("Generated `$configurationClassName` in `${getBaseName(outputFilePath)}`");
+    printGreen(
+        "Generated `$configurationClassName` in `${getBaseName(outputFilePath)}`");
   }
 
   // ---------------------------------------------------------------------------

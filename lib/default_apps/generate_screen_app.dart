@@ -19,8 +19,10 @@ const _OUTPUT_OPTION = "output";
 const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION =
     "is-only-accessible-if-logged-in-and-verified";
 const _PATH_OPTION = "path";
-const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION = "is-only-accessible-if-logged-in";
-const _IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION = "is-only-accessible-if-logged-out";
+const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION =
+    "is-only-accessible-if-logged-in";
+const _IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION =
+    "is-only-accessible-if-logged-out";
 const _IS_REDIRECTABLE_OPTION = "is-redirectable";
 const _INTERNAL_PARAMETERS_OPTION = "internal-parameters";
 const _PATH_SEGMENTS_OPTION = "path-segments";
@@ -35,7 +37,8 @@ const _STATE_TEMPLATE_OPTION = "state-template";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenApp(List<String> arguments) async {
-  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "screen");
+  final defaultTemplatesPath =
+      join(await getXyzGenLibPath(), "templates", "screen");
   final parser = ArgParser()
     ..addFlag(
       "help",
@@ -68,23 +71,26 @@ Future<void> generateScreenApp(List<String> arguments) async {
     ..addOption(
       _LOGIC_TEMPLATE_OPTION,
       help: "Logic template file path.",
-      defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_logic_template.dart.md")),
+      defaultsTo: toLocalPathFormat(
+          join(defaultTemplatesPath, "screen_logic_template.dart.md")),
     )
     ..addOption(
       _SCREEN_TEMPLATE_OPTION,
       help: "Screen template file path.",
-      defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_template.dart.md")),
+      defaultsTo: toLocalPathFormat(
+          join(defaultTemplatesPath, "screen_template.dart.md")),
     )
     ..addOption(
       _STATE_TEMPLATE_OPTION,
       help: "State template file path.",
-      defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_state_template.dart.md")),
+      defaultsTo: toLocalPathFormat(
+          join(defaultTemplatesPath, "screen_state_template.dart.md")),
     )
     ..addOption(
       _CONFIGURATION_TEMPLATE_OPTION,
       help: "Configuration template file path.",
-      defaultsTo:
-          toLocalPathFormat(join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
+      defaultsTo: toLocalPathFormat(
+          join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
     )
     ..addOption(
       _PATH_OPTION,
@@ -140,13 +146,14 @@ Future<void> generateScreenApp(List<String> arguments) async {
 
 GenerateScreenArgs onResults(_, dynamic results) {
   Map<String, String>? toOptionsMap(String option) {
-    final entries = splitArg(results[_INTERNAL_PARAMETERS_OPTION], "$SEPARATOR$SEPARATOR")
-        ?.map((e) {
-          final a = e.split(SEPARATOR);
-          return a.length == 2 ? MapEntry(a[0], a[1]) : null;
-        })
-        .nonNulls
-        .toSet();
+    final entries =
+        splitArg(results[_INTERNAL_PARAMETERS_OPTION], "$SEPARATOR$SEPARATOR")
+            ?.map((e) {
+              final a = e.split(SEPARATOR);
+              return a.length == 2 ? MapEntry(a[0], a[1]) : null;
+            })
+            .nonNulls
+            .toSet();
     return entries != null ? Map<String, String>.fromEntries(entries) : null;
   }
 
@@ -166,7 +173,8 @@ GenerateScreenArgs onResults(_, dynamic results) {
     isAccessibleOnlyIfLoggedIn: toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION),
     isAccessibleOnlyIfLoggedInAndVerified:
         toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION),
-    isAccessibleOnlyIfLoggedOut: toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION),
+    isAccessibleOnlyIfLoggedOut:
+        toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION),
     isRedirectable: toBool(_IS_REDIRECTABLE_OPTION),
     internalParameters: toOptionsMap(_INTERNAL_PARAMETERS_OPTION),
     queryParameters: splitArg(results[_QUERY_PARAMETERS_OPTION])?.toSet(),
@@ -190,7 +198,8 @@ Future<void> action(_, __, GenerateScreenArgs args) async {
     path: args.path!,
     configurationTemplateFilePath: args.configurationTemplateFilePath!,
     isAccessibleOnlyIfLoggedIn: args.isAccessibleOnlyIfLoggedIn!,
-    isAccessibleOnlyIfLoggedInAndVerified: args.isAccessibleOnlyIfLoggedInAndVerified!,
+    isAccessibleOnlyIfLoggedInAndVerified:
+        args.isAccessibleOnlyIfLoggedInAndVerified!,
     isAccessibleOnlyIfLoggedOut: args.isAccessibleOnlyIfLoggedOut!,
     isRedirectable: args.isRedirectable!,
     internalParameters: args.internalParameters ?? const {},

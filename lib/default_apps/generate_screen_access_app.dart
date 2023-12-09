@@ -16,7 +16,8 @@ const _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION = "additional-screen-class-names";
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenAccessApp(List<String> arguments) async {
-  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "screen");
+  final defaultTemplatesPath =
+      join(await getXyzGenLibPath(), "templates", "screen");
   await basicConsoleAppBody<GenerateScreenAccessArgs>(
     appTitle: "XYZ Generate Screen Access",
     arguments: arguments,
@@ -58,7 +59,8 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(join(defaultTemplatesPath, "screen_access_template.dart.md")),
+        defaultsTo: toLocalPathFormat(
+            join(defaultTemplatesPath, "screen_access_template.dart.md")),
       ),
     onResults: onResults,
     action: action,
@@ -72,7 +74,8 @@ GenerateScreenAccessArgs onResults(_, dynamic results) {
     rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
     subPaths: splitArg(results[SUBS_OPTION])?.toSet(),
     pathPatterns: splitArg(results[PATTERNS_OPTION])?.toSet(),
-    screenClassNames: splitArg(results[_ADDITIONAL_SCREEN_CLASS_NAMES_OPTION])?.toSet(),
+    screenClassNames:
+        splitArg(results[_ADDITIONAL_SCREEN_CLASS_NAMES_OPTION])?.toSet(),
     templateFilePath: results[TEMPLATE_FILE_PATH_OPTION],
     outputFilePath: results[OUTPUT_OPTION],
   );

@@ -17,7 +17,8 @@ String _ip0(Map<String, String> internalParameters) {
     final fieldKey = fieldName.toSnakeCase();
     final nullable = fieldType.endsWith("?");
     final nullCheck = nullable ? "" : "!";
-    final t = nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
+    final t =
+        nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
     final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
     return [
       "/// Key corresponding to the value `$fieldName`",
