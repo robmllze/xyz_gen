@@ -12,3 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.17.0] - [2023-12-09]
 
 - Initial release of the project.
+
+## [0.10.0] - [2023-12-09]
+
+### Added
+
+- Added an `example.dart` file to the project.
