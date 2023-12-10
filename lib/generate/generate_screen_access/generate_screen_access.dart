@@ -42,7 +42,8 @@ Future<void> generateScreenAccess({
                   final screenClassKey = screenClassName.toSnakeCase();
                   if (screenFileKey != screenClassKey) {
                     printLightYellow(
-                        "Key mismatch $screenFileKey != $screenClassKey");
+                      "Key mismatch $screenFileKey != $screenClassKey",
+                    );
                   }
                   screenClassNames1.add(screenClassName);
                 }

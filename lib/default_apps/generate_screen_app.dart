@@ -72,25 +72,29 @@ Future<void> generateScreenApp(List<String> arguments) async {
       _LOGIC_TEMPLATE_OPTION,
       help: "Logic template file path.",
       defaultsTo: toLocalPathFormat(
-          join(defaultTemplatesPath, "screen_logic_template.dart.md")),
+        join(defaultTemplatesPath, "screen_logic_template.dart.md"),
+      ),
     )
     ..addOption(
       _SCREEN_TEMPLATE_OPTION,
       help: "Screen template file path.",
       defaultsTo: toLocalPathFormat(
-          join(defaultTemplatesPath, "screen_template.dart.md")),
+        join(defaultTemplatesPath, "screen_template.dart.md"),
+      ),
     )
     ..addOption(
       _STATE_TEMPLATE_OPTION,
       help: "State template file path.",
       defaultsTo: toLocalPathFormat(
-          join(defaultTemplatesPath, "screen_state_template.dart.md")),
+        join(defaultTemplatesPath, "screen_state_template.dart.md"),
+      ),
     )
     ..addOption(
       _CONFIGURATION_TEMPLATE_OPTION,
       help: "Configuration template file path.",
       defaultsTo: toLocalPathFormat(
-          join(defaultTemplatesPath, "screen_configuration_template.dart.md")),
+        join(defaultTemplatesPath, "screen_configuration_template.dart.md"),
+      ),
     )
     ..addOption(
       _PATH_OPTION,

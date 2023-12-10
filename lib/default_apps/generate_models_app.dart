@@ -48,7 +48,8 @@ Future<void> generateModelsApp(List<String> arguments) async {
         abbr: "t",
         help: "Template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "model_template.dart.md")),
+          join(defaultTemplatesPath, "model_template.dart.md"),
+        ),
       )
       ..addOption(
         DART_SDK_PATH_OPTION,

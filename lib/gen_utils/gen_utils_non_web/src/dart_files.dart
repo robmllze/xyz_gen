@@ -123,13 +123,15 @@ Future<bool> sourceAndGeneratedDartFileExists(
   if (isSourceDartFilePath(filePath, pathPatterns)) {
     final a = await fileExists(filePath);
     final b = await fileExists(
-        "${filePath.substring(0, filePath.length - ".dart".length)}.g.dart");
+      "${filePath.substring(0, filePath.length - ".dart".length)}.g.dart",
+    );
     return a && b;
   }
   if (isGeneratedDartFilePath(filePath, pathPatterns)) {
     final a = await fileExists(filePath);
     final b = await fileExists(
-        "${filePath.substring(0, filePath.length - ".g.dart".length)}.dart");
+      "${filePath.substring(0, filePath.length - ".g.dart".length)}.dart",
+    );
     return a && b;
   }
   return false;

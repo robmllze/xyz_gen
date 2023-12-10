@@ -130,8 +130,10 @@ String? trimmedOrNull(Object? input) {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 extension JoinWithLastSeparator on Iterable {
-  String joinWithLastSeparator(
-      {String separator = ", ", String lastSeparator = " & "}) {
+  String joinWithLastSeparator({
+    String separator = ", ",
+    String lastSeparator = " & ",
+  }) {
     if (this.isEmpty) {
       return "";
     }

@@ -61,35 +61,40 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         abbr: "b",
         help: "Builder template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "makeup_builder_template.dart.md")),
+          join(defaultTemplatesPath, "makeup_builder_template.dart.md"),
+        ),
       )
       ..addOption(
         _CLASS_TEMPLATE_FILE_PATH_OPTION,
         abbr: "c",
         help: "Class template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "makeup_class_template.dart.md")),
+          join(defaultTemplatesPath, "makeup_class_template.dart.md"),
+        ),
       )
       ..addOption(
         _EXPORTS_TEMPLATE_FILE_PATH_OPTION,
         abbr: "e",
         help: "Exports template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "makeup_exports_template.dart.md")),
+          join(defaultTemplatesPath, "makeup_exports_template.dart.md"),
+        ),
       )
       ..addOption(
         _GENERATED_THEME_TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Theme template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "generated_theme_template.dart.md")),
+          join(defaultTemplatesPath, "generated_theme_template.dart.md"),
+        ),
       )
       ..addOption(
         _OUTLINE_TEMPLATE_FILE_PATH_OPTION,
         abbr: "g",
         help: "Generate template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "makeup_generate_template.dart.md")),
+          join(defaultTemplatesPath, "makeup_generate_template.dart.md"),
+        ),
       )
       ..addOption(
         DART_SDK_PATH_OPTION,

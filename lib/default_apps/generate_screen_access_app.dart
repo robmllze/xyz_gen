@@ -60,7 +60,8 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         abbr: "t",
         help: "Template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "screen_access_template.dart.md")),
+          join(defaultTemplatesPath, "screen_access_template.dart.md"),
+        ),
       ),
     onResults: onResults,
     action: action,

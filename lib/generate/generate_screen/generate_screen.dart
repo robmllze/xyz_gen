@@ -81,7 +81,8 @@ Future<void> generateScreen({
     navigationControls: navigationControls,
   );
   printGreen(
-      "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
+    "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`",
+  );
   final stateFilePath = join(folderDirPath, stateFileName);
   await _writeFile(
     stateTemplateFilePath,

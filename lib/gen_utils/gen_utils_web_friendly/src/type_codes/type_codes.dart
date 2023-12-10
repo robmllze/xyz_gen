@@ -17,8 +17,10 @@ part 'parts/_type_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-String mapWithLooseToMappers(
-    {required String fieldName, required String typeCode}) {
+String mapWithLooseToMappers({
+  required String fieldName,
+  required String typeCode,
+}) {
   final mappers = LooseTypeMappers.instance.toMappers;
   return TypeCodeMapper(mappers).map(
     fieldName: fieldName,
@@ -26,8 +28,10 @@ String mapWithLooseToMappers(
   );
 }
 
-String mapWithLooseFromMappers(
-    {required String fieldName, required String typeCode}) {
+String mapWithLooseFromMappers({
+  required String fieldName,
+  required String typeCode,
+}) {
   final mappers = LooseTypeMappers.instance.fromMappers;
   return TypeCodeMapper(mappers).map(
     fieldName: fieldName,

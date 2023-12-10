@@ -48,7 +48,8 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
         abbr: "t",
         help: "Template file path.",
         defaultsTo: toLocalPathFormat(
-            join(defaultTemplatesPath, "all_exports_template.dart.md")),
+          join(defaultTemplatesPath, "all_exports_template.dart.md"),
+        ),
       ),
     onResults: onResults,
     action: action,

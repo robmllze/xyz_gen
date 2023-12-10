@@ -57,8 +57,10 @@ String? getSourcePath(String filePath) {
   final dirName = p.dirname(fixedPath);
   final baseName = p.basename(fixedPath);
   if (baseName.endsWith(".g.dart")) {
-    return p.join(dirName,
-        "${baseName.substring(0, baseName.length - ".g.dart".length)}.dart");
+    return p.join(
+      dirName,
+      "${baseName.substring(0, baseName.length - ".g.dart".length)}.dart",
+    );
   }
   if (baseName.endsWith(".dart")) {
     return fixedPath;
@@ -113,7 +115,10 @@ bool isPrivateFileName(String filePath) {
 /// Checks if the file name matches the specified beginning and ending types.
 /// Returns a tuple with the match status and the file name.
 (bool, String) isMatchingFileName(
-    String filePath, String begType, String endType) {
+  String filePath,
+  String begType,
+  String endType,
+) {
   final fileName = getBaseName(filePath);
   final a =
       begType.isEmpty ? true : fileName.startsWith("${begType.toLowerCase()}_");

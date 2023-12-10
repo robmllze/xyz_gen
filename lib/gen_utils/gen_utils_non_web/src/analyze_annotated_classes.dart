@@ -132,7 +132,9 @@ FutureOr<void> _processClassAnnotations(
         }
       }
       await onAnnotatedClass?.call(
-          classAnnotationName, classElement.displayName);
+        classAnnotationName,
+        classElement.displayName,
+      );
     }
   }
 }

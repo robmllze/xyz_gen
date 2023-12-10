@@ -47,8 +47,12 @@ Future<void> generateScreenConfigurationsApp(List<String> arguments) async {
         TEMPLATE_FILE_PATH_OPTION,
         abbr: "t",
         help: "Template file path.",
-        defaultsTo: toLocalPathFormat(join(
-            defaultTemplatesPath, "screen_configuration_template.dart.md")),
+        defaultsTo: toLocalPathFormat(
+          join(
+            defaultTemplatesPath,
+            "screen_configuration_template.dart.md",
+          ),
+        ),
       )
       ..addOption(
         DART_SDK_PATH_OPTION,

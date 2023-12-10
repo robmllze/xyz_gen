@@ -53,8 +53,10 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "internalParameters":
         internalParameters = fieldValue
                 .toMapValue()
-                ?.map((final k, final v) =>
-                    MapEntry(k?.toStringValue(), v?.toStringValue()))
+                ?.map(
+                  (final k, final v) =>
+                      MapEntry(k?.toStringValue(), v?.toStringValue()),
+                )
                 .nonNulls ??
             const {};
         break;
@@ -157,7 +159,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
 
     // Log the generated file.
     printGreen(
-        "Generated `$configurationClassName` in `${getBaseName(outputFilePath)}`");
+      "Generated `$configurationClassName` in `${getBaseName(outputFilePath)}`",
+    );
   }
 
   // ---------------------------------------------------------------------------

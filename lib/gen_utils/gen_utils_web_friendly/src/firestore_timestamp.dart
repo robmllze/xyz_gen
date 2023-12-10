@@ -54,7 +54,8 @@ class FirestoreTimestamp implements Comparable<FirestoreTimestamp> {
   /// Create a [FirestoreTimestamp] from [DateTime] instance
   factory FirestoreTimestamp.fromDate(DateTime date) {
     return FirestoreTimestamp.fromMicrosecondsSinceEpoch(
-        date.microsecondsSinceEpoch);
+      date.microsecondsSinceEpoch,
+    );
   }
 
   // ignore: unused_element
