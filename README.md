@@ -13,7 +13,7 @@ dependencies:
   xyz_gen: ^0.20.0
 ```
 
-### Usage
+## Usage
 
 No usage information is available at this time. Please contact the author or check back later.
 
