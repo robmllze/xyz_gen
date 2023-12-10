@@ -9,24 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial planning and design of the project.
 
-## [0.17.0] - [2023-12-09]
+## [0.17.0]
 
 - Initial release of the project.
 
-## [0.18.0] - [2023-12-09]
+## [0.18.0]
 
 ### Added
 
 - Added an `example.dart` file to the project.
 
-## [0.18.1] - [2023-12-09]
+## [0.18.1]
 
 ### Fixed
 
 - Style fixes.
 
-## [0.19.0] - [2023-12-09]
+## [0.19.0]
 
 ### Fixed
 
 - Dependency fixes.
+
+## [0.20.0]
+
+### Updated
+
+- Updated screen template to reflect lates changes to the `xyz_pod` package.
+

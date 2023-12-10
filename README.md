@@ -10,8 +10,12 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  xyz_gen: ^0.19.0
+  xyz_gen: ^0.20.0
 ```
+
+### Usage
+
+No usage information is available at this time. Please contact the author or check back later.
 
 ## Contributing
 
@@ -19,11 +23,12 @@ Contributions to XYZ Gen are welcome.
 
 ## License
 
-XYZ Gen is released under the MIT License.
+This package is released under the MIT License.
 
 ## Contact
 
-Author: robmllze
-Email: robmllze@gmail.com
+**Author:** Robert Mollentze
+
+**Email:** robmllze@gmail.com
 
 For more information, questions, or feedback, feel free to contact me.

@@ -43,7 +43,7 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
       children: [
         PodBuilder(
           pod: this.logic.pCounter,
-          builder: (_, __, final counter) {
+          builder: (final counter) {
             return Text("Count: $counter");
           },
         ),
