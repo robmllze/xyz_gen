@@ -41,9 +41,6 @@ class GenerateScreenConfiguration {
   /// ...
   final List<String> pathSegments;
 
-  /// ...
-  final String routerInstance;
-
   /// Generates boiler-plate code for the annotated screen class to make it
   /// accessible.
   const GenerateScreenConfiguration({
@@ -55,7 +52,6 @@ class GenerateScreenConfiguration {
     this.internalParameters = const {},
     this.queryParameters = const {},
     this.pathSegments = const [],
-    this.routerInstance = "routeManager.config",
   })  : assert(
           !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",

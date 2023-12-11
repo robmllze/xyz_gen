@@ -26,7 +26,6 @@ Future<Set<String>> _generateScreenConfigurationFile(
   var internalParameters = const <String, String>{};
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
-  var routerInstance = "";
 
   // ---------------------------------------------------------------------------
 
@@ -66,9 +65,6 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "pathSegments":
         pathSegments =
             fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
-        break;
-      case "routerInstance":
-        routerInstance = fieldValue.toStringValue() ?? "routeManager.config";
         break;
     }
   }
@@ -123,7 +119,6 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___SCREEN_CONST_KEY___": screenConstKey,
         "___SCREEN_SEGMENT___": screenSegment,
         "___SCREEN_PATH___": screenPath,
-        "___ROUTER_INSTANCE___": routerInstance,
         "___LA0___": isAccessibleOnlyIfLoggedInAndVerified,
         "___LA1___": isAccessibleOnlyIfLoggedIn,
         "___LA2___": isAccessibleOnlyIfLoggedOut,

@@ -40,6 +40,6 @@ class ___SCREEN_CLASS___ extends Screen {
 
   // Do not modify.
   @override
-  _Logic createLogic(final screen, final state) => _Logic(screen, state, ___ROUTER_INSTANCE___);
+  _Logic createLogic(final screen, final state) => _Logic(screen, state);
 }
 ````
