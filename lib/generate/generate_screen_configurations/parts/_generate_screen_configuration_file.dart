@@ -26,6 +26,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
   var internalParameters = const <String, String>{};
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
+  var routerInstance = "";
 
   // ---------------------------------------------------------------------------
 
@@ -38,8 +39,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "path":
         path = fieldValue.toStringValue() ?? "";
       case "isAccessibleOnlyIfLoggedInAndVerified":
-        isAccessibleOnlyIfLoggedInAndVerified =
-            fieldValue.toBoolValue() ?? false;
+        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
       case "isAccessibleOnlyIfLoggedIn":
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
@@ -54,27 +54,21 @@ Future<Set<String>> _generateScreenConfigurationFile(
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map(
-                  (final k, final v) =>
-                      MapEntry(k?.toStringValue(), v?.toStringValue()),
+                  (final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()),
                 )
                 .nonNulls ??
             const {};
         break;
       case "queryParameters":
-        queryParameters = fieldValue
-                .toSetValue()
-                ?.map((e) => e.toStringValue())
-                .nonNulls
-                .toSet() ??
-            {};
+        queryParameters =
+            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
         break;
       case "pathSegments":
-        pathSegments = fieldValue
-                .toListValue()
-                ?.map((e) => e.toStringValue())
-                .nonNulls
-                .toList() ??
-            [];
+        pathSegments =
+            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        break;
+      case "routerInstance":
+        routerInstance = fieldValue.toStringValue() ?? "routeManager.config";
         break;
     }
   }
@@ -93,9 +87,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKeyName = screenKey.replaceAll("screen_", "");
     final screenSegment = joinAll(
       [
-        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]"))
-                ? path.substring(1)
-                : path)
+        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
             .replaceAll("screen_", ""),
         screenKeyName,
       ],
@@ -131,6 +123,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___SCREEN_CONST_KEY___": screenConstKey,
         "___SCREEN_SEGMENT___": screenSegment,
         "___SCREEN_PATH___": screenPath,
+        "___ROUTER_INSTANCE___": routerInstance,
         "___LA0___": isAccessibleOnlyIfLoggedInAndVerified,
         "___LA1___": isAccessibleOnlyIfLoggedIn,
         "___LA2___": isAccessibleOnlyIfLoggedOut,

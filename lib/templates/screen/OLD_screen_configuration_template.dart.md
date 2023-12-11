@@ -31,6 +31,20 @@ extension _ScreenTr on String {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+const PATH____SCREEN_CONST_KEY___ = [_PATH];
+const PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED____SCREEN_CONST_KEY___ //
+  = ___LA0___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN____SCREEN_CONST_KEY___ //
+  = ___LA1___ ? [_PATH]: [];
+const PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT____SCREEN_CONST_KEY___ //
+  = ___LA2___ ? [_PATH]: [];
+const PATH_ALWAYS_ACCESSIBLE____SCREEN_CONST_KEY___ //
+  = ___LA3___ ? [_PATH]: [];
+const PATH_NOT_REDIRECTABLE____SCREEN_CONST_KEY___ //
+  = ___LA4___ ? [_PATH]: [];
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 Screen? maker___CLASS___(
   ScreenConfiguration configuration,
   bool isLoggedInAndVerified,
@@ -101,7 +115,7 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends ScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
-  _LogicBroker(super.superScreen, super.superState, super.router);
+  _LogicBroker(super.superScreen, super.superState);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -109,13 +123,13 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
 final generated___CLASS___Route = GoRoute(
   path: _SEGMENT,
   pageBuilder: (_, final state) {
-    final temp = ___CONFIGURATION_CLASS___();
+    final pageKey = state.pageKey;
     final a = ScreenConfiguration.fromUri(
       state.uri,
-      isAccessibleOnlyIfLoggedInAndVerified: temp.isAccessibleOnlyIfLoggedInAndVerified,
-      isAccessibleOnlyIfLoggedIn: temp.isAccessibleOnlyIfLoggedIn,
-      isAccessibleOnlyIfLoggedOut: temp.isAccessibleOnlyIfLoggedOut,
-      isRedirectable: temp.isRedirectable,
+      isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
+      isAccessibleOnlyIfLoggedIn: ___LA1___,
+      isAccessibleOnlyIfLoggedOut: ___LA2___,
+      isRedirectable: ___LA4___,
     );
     final b = letAs<___CONFIGURATION_CLASS___>(state.extra);
     final c = a.copyWith(
@@ -130,7 +144,7 @@ final generated___CLASS___Route = GoRoute(
       isRedirectable: b?.isRedirectable,
     );
     return NoTransitionPage(
-      key: state.pageKey,
+      key: pageKey,
       child: ___CLASS___(c),
     );
   },
