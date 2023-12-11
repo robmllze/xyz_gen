@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated screen template to reflect lates changes to the `xyz_pod` package.
 
-## [0.21.0]
+## [0.19.0]
 
 ### Updated
 
