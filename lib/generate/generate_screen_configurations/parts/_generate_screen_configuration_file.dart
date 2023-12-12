@@ -38,7 +38,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "path":
         path = fieldValue.toStringValue() ?? "";
       case "isAccessibleOnlyIfLoggedInAndVerified":
-        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
+        isAccessibleOnlyIfLoggedInAndVerified =
+            fieldValue.toBoolValue() ?? false;
         break;
       case "isAccessibleOnlyIfLoggedIn":
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
@@ -53,18 +54,27 @@ Future<Set<String>> _generateScreenConfigurationFile(
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map(
-                  (final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()),
+                  (final k, final v) =>
+                      MapEntry(k?.toStringValue(), v?.toStringValue()),
                 )
                 .nonNulls ??
             const {};
         break;
       case "queryParameters":
-        queryParameters =
-            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
+        queryParameters = fieldValue
+                .toSetValue()
+                ?.map((e) => e.toStringValue())
+                .nonNulls
+                .toSet() ??
+            {};
         break;
       case "pathSegments":
-        pathSegments =
-            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        pathSegments = fieldValue
+                .toListValue()
+                ?.map((e) => e.toStringValue())
+                .nonNulls
+                .toList() ??
+            [];
         break;
     }
   }
@@ -83,7 +93,9 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKeyName = screenKey.replaceAll("screen_", "");
     final screenSegment = joinAll(
       [
-        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
+        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]"))
+                ? path.substring(1)
+                : path)
             .replaceAll("screen_", ""),
         screenKeyName,
       ],
@@ -119,7 +131,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___SCREEN_CONST_KEY___": screenConstKey,
         "___SCREEN_SEGMENT___": screenSegment,
         "___SCREEN_PATH___": screenPath,
-        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___": isAccessibleOnlyIfLoggedInAndVerified,
+        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___":
+            isAccessibleOnlyIfLoggedInAndVerified,
         "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": isAccessibleOnlyIfLoggedIn,
         "___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": isAccessibleOnlyIfLoggedOut,
         "___IS_ALWAYS_ACCESSIBLE___": isAlwaysAccessible,

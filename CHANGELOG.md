@@ -50,3 +50,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated screen configuration generator to reflect latest changes to the XYZ Framework.
 - Updated screen configuration template.
 
+## [0.23.0]
+
+### Updated
+
+- Updated screen configuration generator again.
+- Updated sseveral templates.
+

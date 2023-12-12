@@ -17,7 +17,8 @@ String _ip0(Map<String, String> internalParameters) {
     final fieldKey = fieldName.toSnakeCase();
     final nullable = fieldType.endsWith("?");
     final nullCheck = nullable ? "" : "!";
-    final t = nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
+    final t =
+        nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
     final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
     return [
       "/// Key corresponding to the value `$fieldName`",
@@ -64,7 +65,8 @@ String _qp0(Set<String> queryParameters) {
   final a = queryParameters.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith("?");
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     final fieldKey = fieldName.toSnakeCase();
     final nullCheck = nullable ? "" : "!";
     final nullableCheck = nullable ? "?" : "";
@@ -100,7 +102,8 @@ String _ps0(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith("?");
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     final nullCheck = nullable ? "" : "!";
     final nullableCheck = nullable ? "?" : "";
     final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
@@ -122,7 +125,8 @@ String _ps1(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith("?");
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     return "${nullable ? "String?" : "required String"} $fieldName,";
   }).toList()
     ..sort();
@@ -135,7 +139,8 @@ String _ps3(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith("?");
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
     return "${nullable ? "if ($fieldName != null) " : ""}$fieldK: $fieldName,";
   }).toList()
