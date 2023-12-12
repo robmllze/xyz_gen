@@ -114,8 +114,9 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends ScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
-  late final configuration =
-      ___CONFIGURATION_CLASS___.fromArgs(screen.configuration?.arguments ?? {});
+  late final configuration = ___CONFIGURATION_CLASS___.fromArgs(
+    screen.configuration?.arguments ?? {},
+  );
   _LogicBroker(super.superScreen, super.superState);
 }
 

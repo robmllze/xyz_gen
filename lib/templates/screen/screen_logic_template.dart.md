@@ -24,13 +24,6 @@ class _Logic extends _LogicBroker<___SCREEN_CLASS___, _State> {
   //
   //
 
-  // late final configuration = routeManager.configuration(this);
-  // late final someField = configuration.someField!;
-
-  //
-  //
-  //
-
   final pCounter = Pod<int>(-1);
 
   //
