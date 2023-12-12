@@ -124,10 +124,10 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
     T other,
   ) {
     if (other is ___CLASS___) {
-       return this.copy()..updateWith(other);
+       return this.copy<T>()..updateWith(other);
     }
     assert(false);
-    return this.copy() as T;
+    return this.copy<T>();
   }
 
   //
@@ -139,9 +139,9 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
     JMap other,
   ) {
     if (other.isNotEmpty) {
-       return this.copy()..updateWithJMap(other);
+       return this.copy<T>()..updateWithJMap(other);
     }
-    return this.copy() as T;
+    return this.copy<T>();
   }
 
   //

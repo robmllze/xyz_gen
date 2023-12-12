@@ -16,6 +16,14 @@ part of '___CLASS_FILE___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+// If the generator is unavailable, we can manually adjust these constants to
+// configure the screen's accessibility settings.
+
+const _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED = ___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___;
+const _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN = ___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___;
+const _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT = ___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___;
+const _IS_REDIRECTABLE = ___IS_REDIRECTABLE___;
+
 const _CLASS = "___CLASS___";
 const _SEGMENT = "___SCREEN_SEGMENT___";
 const _PATH = "/$_SEGMENT";
@@ -37,7 +45,7 @@ Screen? maker___CLASS___(
   bool isLoggedIn,
   bool isLoggedOut,
 ) {
-  if ((___LA0___ && !isLoggedInAndVerified) || (___LA1___ && !isLoggedIn) || (___LA2___ && !isLoggedOut)) {
+  if ((_IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED && !isLoggedInAndVerified) || (_IS_ACCESSIBLE_ONLY_IF_LOGGED_IN && !isLoggedIn) || (_IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT && !isLoggedOut)) {
     return null;
   }
   if (configuration is ___CONFIGURATION_CLASS___ ||
@@ -60,6 +68,10 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
   static const SEGMENT = _SEGMENT;
   static const PATH = _PATH;
   static const TR_KEY = _TR_KEY;
+  static const IS_ACCESSIBLE_ONLY_IF_LOGGED_IN = _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN;
+    static const IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED = _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED;
+  static const IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT = _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT;
+  static const IS_REDIRECTABLE = _IS_REDIRECTABLE;
   
   ___IP0___
   ___QP0___
@@ -70,18 +82,30 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     ___IP1___
     ___QP1___
     ___PS1___
+    Map<dynamic, dynamic>? $arguments,
   }): super(
     path: _PATH,
     arguments: {
       ___IP3___
       ___QP3___
       ___PS3___
+      ...?$arguments,
     },
-    isAccessibleOnlyIfLoggedInAndVerified: ___LA0___,
-    isAccessibleOnlyIfLoggedIn: ___LA1___,
-    isAccessibleOnlyIfLoggedOut: ___LA2___,
-    isRedirectable: ___LA4___,
+    isAccessibleOnlyIfLoggedInAndVerified: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED,
+    isAccessibleOnlyIfLoggedIn: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
+    isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
+    isRedirectable: _IS_REDIRECTABLE,
   );
+
+  ___CONFIGURATION_CLASS___.fromArgs(Map<dynamic, dynamic>? args)
+      : super(
+          path: _PATH,
+          arguments: args,
+          isAccessibleOnlyIfLoggedInAndVerified: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED,
+          isAccessibleOnlyIfLoggedIn: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
+          isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
+          isRedirectable: _IS_REDIRECTABLE,
+        );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -90,7 +114,8 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends ScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
-  late final configuration = ___CONFIGURATION_CLASS___().copyWithJMap<___CONFIGURATION_CLASS___>(screen.configuration?.toJMap() ?? {});
+  late final configuration =
+      ___CONFIGURATION_CLASS___.fromArgs(screen.configuration?.arguments ?? {});
   _LogicBroker(super.superScreen, super.superState);
 }
 
@@ -99,11 +124,17 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
 final generated___CLASS___Route = GoRoute(
   path: _SEGMENT,
   pageBuilder: (_, final state) {
+    final extraConfiguration = letAs<ModelScreenConfiguration>(state.extra);
+    final urlConfiguration = urlToScreenConfiguration(
+      url: state.uri,
+      isAccessibleOnlyIfLoggedIn: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
+      isAccessibleOnlyIfLoggedInAndVerified: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED,
+      isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
+      isRedirectable: _IS_REDIRECTABLE,
+    );
     return NoTransitionPage(
       key: state.pageKey,
-      child: ___CLASS___(
-       letAs<ModelScreenConfiguration>(state.extra) ?? urlToScreenConfiguration(state.uri),
-      ),
+      child: ___CLASS___(extraConfiguration ?? urlConfiguration),
     );
   },
 );
