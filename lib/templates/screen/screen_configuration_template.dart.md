@@ -32,7 +32,7 @@ extension _ScreenTr on String {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Screen? maker___CLASS___(
-  ScreenConfiguration configuration,
+  ModelScreenConfiguration configuration,
   bool isLoggedInAndVerified,
   bool isLoggedIn,
   bool isLoggedOut,
@@ -45,7 +45,7 @@ Screen? maker___CLASS___(
         r"^(" + _PATH + r")([?/].*)?$",
       ).hasMatch(
         Uri.decodeComponent(
-          configuration.path,
+          configuration.path ?? "",
         ),
       )) {
     return ___CLASS___(configuration);
@@ -55,18 +55,7 @@ Screen? maker___CLASS___(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Configuration object for [___CLASS___].
-///
-/// ### Usage examples:
-///
-/// ```dart
-/// // Push the screen to the app.
-/// await G.router.push(___CONFIGURATION_CLASS___(/* OPTIONS */));
-///
-/// // Use a unique [key] to allow pushing to multiple instances of the screen.
-/// await G.router.push(___CONFIGURATION_CLASS___(key: UniqueKey().toString(), /* OPTIONS */));
-/// ```
-class ___CONFIGURATION_CLASS___ extends ScreenConfiguration {
+class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
   static const CLASS = _CLASS;
   static const SEGMENT = _SEGMENT;
   static const PATH = _PATH;
@@ -101,6 +90,7 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends ScreenLogic<___CONFIGURATION_CLASS___> {
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
+  late final configuration = ___CONFIGURATION_CLASS___().copyWithJMap<___CONFIGURATION_CLASS___>(screen.configuration?.toJMap() ?? {});
   _LogicBroker(super.superScreen, super.superState);
 }
 
@@ -109,29 +99,11 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
 final generated___CLASS___Route = GoRoute(
   path: _SEGMENT,
   pageBuilder: (_, final state) {
-    final temp = ___CONFIGURATION_CLASS___();
-    final a = ScreenConfiguration.fromUri(
-      state.uri,
-      isAccessibleOnlyIfLoggedInAndVerified: temp.isAccessibleOnlyIfLoggedInAndVerified,
-      isAccessibleOnlyIfLoggedIn: temp.isAccessibleOnlyIfLoggedIn,
-      isAccessibleOnlyIfLoggedOut: temp.isAccessibleOnlyIfLoggedOut,
-      isRedirectable: temp.isRedirectable,
-    );
-    final b = letAs<___CONFIGURATION_CLASS___>(state.extra);
-    final c = a.copyWith(
-      parameters: {
-        ...a.arguments,
-        ...?b?.arguments,
-      },
-      path: b?.path,
-      isAccessibleOnlyIfLoggedInAndVerified: b?.isAccessibleOnlyIfLoggedInAndVerified,
-      isAccessibleOnlyIfLoggedIn: b?.isAccessibleOnlyIfLoggedIn,
-      isAccessibleOnlyIfLoggedOut: b?.isAccessibleOnlyIfLoggedOut,
-      isRedirectable: b?.isRedirectable,
-    );
     return NoTransitionPage(
       key: state.pageKey,
-      child: ___CLASS___(c),
+      child: ___CLASS___(
+       letAs<ModelScreenConfiguration>(state.extra) ?? urlToScreenConfiguration(state.uri),
+      ),
     );
   },
 );

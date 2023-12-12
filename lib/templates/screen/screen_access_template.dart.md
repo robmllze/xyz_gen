@@ -21,7 +21,7 @@ const SCREEN_MAKERS = [
 ];
 
 Screen? findScreenFromConfiguration({
-  required ScreenConfiguration configuration,
+  required ModelScreenConfiguration configuration,
   required bool isEmailVerified,
   required bool isLoggedIn,
   required bool isLoggedOut,

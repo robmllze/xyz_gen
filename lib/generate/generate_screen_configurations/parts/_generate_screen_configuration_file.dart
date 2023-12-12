@@ -38,7 +38,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "path":
         path = fieldValue.toStringValue() ?? "";
       case "isAccessibleOnlyIfLoggedInAndVerified":
-        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
+        isAccessibleOnlyIfLoggedInAndVerified =
+            fieldValue.toBoolValue() ?? false;
         break;
       case "isAccessibleOnlyIfLoggedIn":
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
@@ -53,18 +54,27 @@ Future<Set<String>> _generateScreenConfigurationFile(
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map(
-                  (final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()),
+                  (final k, final v) =>
+                      MapEntry(k?.toStringValue(), v?.toStringValue()),
                 )
                 .nonNulls ??
             const {};
         break;
       case "queryParameters":
-        queryParameters =
-            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
+        queryParameters = fieldValue
+                .toSetValue()
+                ?.map((e) => e.toStringValue())
+                .nonNulls
+                .toSet() ??
+            {};
         break;
       case "pathSegments":
-        pathSegments =
-            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        pathSegments = fieldValue
+                .toListValue()
+                ?.map((e) => e.toStringValue())
+                .nonNulls
+                .toList() ??
+            [];
         break;
     }
   }
@@ -83,7 +93,9 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKeyName = screenKey.replaceAll("screen_", "");
     final screenSegment = joinAll(
       [
-        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
+        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]"))
+                ? path.substring(1)
+                : path)
             .replaceAll("screen_", ""),
         screenKeyName,
       ],
@@ -128,14 +140,17 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___IP1___": _ip1(internalParameters),
         "___IP2___": _ip2(internalParameters),
         "___IP3___": _ip3(internalParameters),
+        "___IP4___": _ip4(internalParameters),
         "___QP0___": _qp0(queryParameters),
         "___QP1___": _qp1(queryParameters),
         "___QP2___": _qp2(queryParameters),
         "___QP3___": _qp3(queryParameters),
+        "___QP4___": _qp4(queryParameters),
         "___PS0___": _ps0(pathSegments),
         "___PS1___": _ps1(pathSegments),
         "___PS2___": _ps2(pathSegments),
         "___PS3___": _ps3(pathSegments),
+        "___PS4___": _ps4(pathSegments),
       }.nonNulls,
     );
 

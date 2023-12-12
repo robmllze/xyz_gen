@@ -179,3 +179,46 @@ String _ps3(List<String> pathSegments) {
     ..sort();
   return a.isNotEmpty ? a.join("\n") : "";
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+String _ps4(List<String> pathSegments) {
+  final a = pathSegments.map((final l) {
+    final fieldName = l;
+    final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
+    return [
+      "$fieldName => other.arg<String>($fieldK)?.nullIfEmpty,",
+    ].join("\n");
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
+}
+
+String _ip4(Map<String, String> internalParameters) {
+  final a = internalParameters.entries.map((final l) {
+    final fieldName = l.key;
+    final fieldType = l.value;
+    final nullable = fieldType.endsWith("?");
+    final nullCheck = nullable ? "" : "!";
+    final t =
+        nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
+    final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
+    return [
+      "$fieldName: other.arg<$t>($fieldK)$nullCheck,",
+    ].join("\n");
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
+}
+
+String _qp4(Set<String> queryParameters) {
+  final a = queryParameters.map((final l) {
+    final fieldName = l;
+    final fieldK = "_K_${fieldName.toSnakeCase().toUpperCase()}";
+    return [
+      " $fieldName: other.arg<String>($fieldK),",
+    ].join("\n");
+  }).toList()
+    ..sort();
+  return a.isNotEmpty ? a.join("\n") : "";
+}
