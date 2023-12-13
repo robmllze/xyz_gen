@@ -37,7 +37,7 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
   //
 
   @override
-  Widget body(_) {
+  Widget body(BuildContext context) {
     return WColumn(
       divider: SizedBox(height: $20),
       children: [
