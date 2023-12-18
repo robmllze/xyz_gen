@@ -26,6 +26,9 @@ Future<Set<String>> _generateScreenConfigurationFile(
   var internalParameters = const <String, String>{};
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
+  var navigationControlWidget = "null";
+  var title = "\"\"";
+  var makeup = "null";
 
   // ---------------------------------------------------------------------------
 
@@ -38,8 +41,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
       case "path":
         path = fieldValue.toStringValue() ?? "";
       case "isAccessibleOnlyIfLoggedInAndVerified":
-        isAccessibleOnlyIfLoggedInAndVerified =
-            fieldValue.toBoolValue() ?? false;
+        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
         break;
       case "isAccessibleOnlyIfLoggedIn":
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
@@ -54,27 +56,28 @@ Future<Set<String>> _generateScreenConfigurationFile(
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map(
-                  (final k, final v) =>
-                      MapEntry(k?.toStringValue(), v?.toStringValue()),
+                  (final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()),
                 )
                 .nonNulls ??
             const {};
         break;
       case "queryParameters":
-        queryParameters = fieldValue
-                .toSetValue()
-                ?.map((e) => e.toStringValue())
-                .nonNulls
-                .toSet() ??
-            {};
+        queryParameters =
+            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
         break;
       case "pathSegments":
-        pathSegments = fieldValue
-                .toListValue()
-                ?.map((e) => e.toStringValue())
-                .nonNulls
-                .toList() ??
-            [];
+        pathSegments =
+            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        break;
+      case "navigationControlWidget":
+        navigationControlWidget =
+            fieldValue.toStringValue()?.nullIfEmpty ?? navigationControlWidget;
+        break;
+      case "title":
+        title = fieldValue.toStringValue()?.nullIfEmpty ?? title;
+        break;
+      case "makeup":
+        makeup = fieldValue.toStringValue()?.nullIfEmpty ?? makeup;
         break;
     }
   }
@@ -93,9 +96,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
     final screenKeyName = screenKey.replaceAll("screen_", "");
     final screenSegment = joinAll(
       [
-        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]"))
-                ? path.substring(1)
-                : path)
+        (path.isNotEmpty && path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
             .replaceAll("screen_", ""),
         screenKeyName,
       ],
@@ -131,8 +132,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___SCREEN_CONST_KEY___": screenConstKey,
         "___SCREEN_SEGMENT___": screenSegment,
         "___SCREEN_PATH___": screenPath,
-        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___":
-            isAccessibleOnlyIfLoggedInAndVerified,
+        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___": isAccessibleOnlyIfLoggedInAndVerified,
         "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": isAccessibleOnlyIfLoggedIn,
         "___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": isAccessibleOnlyIfLoggedOut,
         "___IS_ALWAYS_ACCESSIBLE___": isAlwaysAccessible,
@@ -146,6 +146,9 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___PS0___": _ps0(pathSegments),
         "___PS1___": _ps1(pathSegments),
         "___PS3___": _ps3(pathSegments),
+        "___NAVIGATION_CONTROLS_WIDGET___": navigationControlWidget,
+        "___TITLE___": title,
+        "___MAKEUP___": makeup,
       }.nonNulls,
     );
 

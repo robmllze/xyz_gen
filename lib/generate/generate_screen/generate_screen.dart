@@ -141,19 +141,10 @@ Future<void> _writeScreenFile(
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
     if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
-
-  final superArgs = [
-    if (makeup.isNotEmpty) "makeup: $makeup",
-    if (title.isNotEmpty) 'title: "$title||title".screenTr()',
-    if (navigationControls.isNotEmpty)
-      "navigationControls: $navigationControls",
-  ].join(",");
-
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
     "___CONFIGURATION_ARGS___":
         configurationArgs.isNotEmpty ? "$configurationArgs," : "",
-    "___SUPER_ARGS___": superArgs.isNotEmpty ? "$superArgs," : "",
   });
 }
 

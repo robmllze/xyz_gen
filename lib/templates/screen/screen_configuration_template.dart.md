@@ -95,7 +95,11 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     isAccessibleOnlyIfLoggedIn: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
     isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
     isRedirectable: _IS_REDIRECTABLE,
-  );
+  ) {
+    super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
+    super.title = ___TITLE___;
+    super.makeup = ___MAKEUP___;
+  }
 
   ___CONFIGURATION_CLASS___.fromArgs(Map<dynamic, dynamic>? args)
       : super(
@@ -105,18 +109,24 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
           isAccessibleOnlyIfLoggedIn: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
           isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
           isRedirectable: _IS_REDIRECTABLE,
-        );
+        ) {
+    super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
+    super.title = ___TITLE___;
+    super.makeup = ___MAKEUP___;
+  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     extends ScreenLogic<___CONFIGURATION_CLASS___> {
+
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
   late final configuration = ___CONFIGURATION_CLASS___.fromArgs(
     screen.configuration?.arguments ?? {},
   );
+  
   _LogicBroker(super.superScreen, super.superState);
 }
 

@@ -41,6 +41,15 @@ class GenerateScreenConfiguration {
   /// ...
   final List<String> pathSegments;
 
+  /// ...
+  final String navigationControlWidget;
+
+  /// ...
+  final String title;
+
+  /// ...
+  final String makeup;
+
   /// Generates boiler-plate code for the annotated screen class to make it
   /// accessible.
   const GenerateScreenConfiguration({
@@ -52,13 +61,15 @@ class GenerateScreenConfiguration {
     this.internalParameters = const {},
     this.queryParameters = const {},
     this.pathSegments = const [],
+    this.navigationControlWidget = "null",
+    this.title = "\"\"",
+    this.makeup = "null",
   })  : assert(
           !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",
         ),
         assert(
-          !isAccessibleOnlyIfLoggedInAndVerified ||
-              !isAccessibleOnlyIfLoggedOut,
+          !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedOut,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.",
         ),
         assert(

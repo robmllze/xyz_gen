@@ -55,5 +55,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Updated screen configuration generator again.
-- Updated sseveral templates.
+- Updated several templates.
+
+## [0.24.0]
+
+### Changed
+
+- Changed the way screens are generated.
+- Updated templates.
 
