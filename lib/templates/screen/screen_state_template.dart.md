@@ -20,14 +20,24 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
   @override
   Widget layout(final body) {
     return super.layout(
-      WScrollable(
-        child: SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.all($16),
-            child: body,
+      Column(
+        children: [
+          MyHeader(
+            title: this.widget.configuration?.title,
+            onBackButtonPressed: app.routeManager.goBack,
           ),
-        ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all($20),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: body,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
