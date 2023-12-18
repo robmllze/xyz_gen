@@ -56,18 +56,26 @@ Future<Set<String>> _generateScreenConfigurationFile(
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map(
-                  (final k, final v) => MapEntry(k?.toStringValue(), v?.toStringValue()),
+                  (k, v) => MapEntry(
+                    k?.toStringValue()?.nullIfEmpty,
+                    v?.toStringValue()?.nullIfEmpty,
+                  ),
                 )
                 .nonNulls ??
             const {};
         break;
       case "queryParameters":
         queryParameters =
-            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? {};
+            fieldValue.toSetValue()?.map((e) => e.toStringValue()?.nullIfEmpty).nonNulls.toSet() ??
+                {};
         break;
       case "pathSegments":
-        pathSegments =
-            fieldValue.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList() ?? [];
+        pathSegments = fieldValue
+                .toListValue()
+                ?.map((e) => e.toStringValue()?.nullIfEmpty)
+                .nonNulls
+                .toList() ??
+            [];
         break;
       case "navigationControlWidget":
         navigationControlWidget =

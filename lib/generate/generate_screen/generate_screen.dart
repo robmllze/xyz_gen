@@ -126,7 +126,7 @@ Future<void> _writeScreenFile(
   final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
     if (path.isNotEmpty) 'path: "$path"',
-    if (title.isNotEmpty) 'title: "$title"',
+    if (title.isNotEmpty) 'defaultTitle: "$title"',
     if (navigationControlWidget.isNotEmpty) 'navigationControlWidget: "$navigationControlWidget"',
     if (makeup.isNotEmpty) 'makeup: "$makeup"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
