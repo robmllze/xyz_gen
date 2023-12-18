@@ -100,7 +100,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     isRedirectable: _IS_REDIRECTABLE,
   ) {
     super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
-    super.title = ___TITLE___;
+    super.title = "___TITLE___".screenTr();
     super.makeup = ___MAKEUP___;
   }
 
@@ -114,7 +114,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
           isRedirectable: _IS_REDIRECTABLE,
         ) {
     super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
-    super.title = ___TITLE___;
+    super.title = "___TITLE___".screenTr();
     super.makeup = ___MAKEUP___;
   }
 }
@@ -146,6 +146,7 @@ final generated___CLASS___Route = GoRoute(
       isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
       isRedirectable: _IS_REDIRECTABLE,
     );
+    final configuration = extraConfiguration ?? urlConfiguration;
     return NoTransitionPage(
       key: state.pageKey,
       child: ___CLASS___(
