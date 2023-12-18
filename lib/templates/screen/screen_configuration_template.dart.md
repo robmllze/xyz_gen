@@ -151,7 +151,7 @@ final generated___CLASS___Route = GoRoute(
       isRedirectable: ___CONFIGURATION_CLASS___.IS_REDIRECTABLE,
       makeup: ___CONFIGURATION_CLASS___.screenMakeup,
       navigationControlsWidget: ___CONFIGURATION_CLASS___.NAVIGATION_CONTROLS_WIDGET,
-      title: ___CONFIGURATION_CLASS___.TITLE.screenTr()
+      title: ___CONFIGURATION_CLASS___.TITLE.screenTr(),
     );
     final configuration = extraConfiguration ?? urlConfiguration;
     return NoTransitionPage(
