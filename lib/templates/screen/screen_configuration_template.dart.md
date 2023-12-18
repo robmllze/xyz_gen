@@ -76,6 +76,9 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
   static const IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT = _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT;
   static const IS_REDIRECTABLE = _IS_REDIRECTABLE;
   static const NAVIGATION_CONTROLS_WIDGET = ___NAVIGATION_CONTROLS_WIDGET___;
+  static const TITLE = "___DEFAULT_TITLE___||title";
+  // ignore: prefer_const_declarations
+  static final ScreenMakeup? screenMakeup = ___MAKEUP___;
   
   ___IP0___
   ___QP0___
@@ -101,8 +104,8 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     isRedirectable: _IS_REDIRECTABLE,
   ) {
     super.navigationControlsWidget = NAVIGATION_CONTROLS_WIDGET;
-    super.title = "___TITLE___||title".screenTr();
-    super.makeup = ___MAKEUP___;
+    super.title = TITLE.screenTr();
+    super.makeup = screenMakeup;
   }
 
   ___CONFIGURATION_CLASS___.fromArgs(Map<dynamic, dynamic>? args)
@@ -115,8 +118,8 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
           isRedirectable: _IS_REDIRECTABLE,
         ) {
     super.navigationControlsWidget = NAVIGATION_CONTROLS_WIDGET;
-    super.title = "___TITLE___||title".screenTr();
-    super.makeup = ___MAKEUP___;
+    super.title = TITLE.screenTr();
+    super.makeup = screenMakeup;
   }
 }
 
@@ -142,10 +145,13 @@ final generated___CLASS___Route = GoRoute(
     final extraConfiguration = letAs<ModelScreenConfiguration>(state.extra);
     final urlConfiguration = urlToScreenConfiguration(
       url: state.uri,
-      isAccessibleOnlyIfLoggedIn: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
-      isAccessibleOnlyIfLoggedInAndVerified: _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED,
-      isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
-      isRedirectable: _IS_REDIRECTABLE,
+      isAccessibleOnlyIfLoggedIn: ___CONFIGURATION_CLASS___.IS_ACCESSIBLE_ONLY_IF_LOGGED_IN,
+      isAccessibleOnlyIfLoggedInAndVerified: ___CONFIGURATION_CLASS___.IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED,
+      isAccessibleOnlyIfLoggedOut: ___CONFIGURATION_CLASS___.IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
+      isRedirectable: ___CONFIGURATION_CLASS___.IS_REDIRECTABLE,
+      makeup: ___CONFIGURATION_CLASS___.screenMakeup,
+      navigationControlsWidget: ___CONFIGURATION_CLASS___.NAVIGATION_CONTROLS_WIDGET,
+      title: ___CONFIGURATION_CLASS___.TITLE,
     );
     final configuration = extraConfiguration ?? urlConfiguration;
     return NoTransitionPage(

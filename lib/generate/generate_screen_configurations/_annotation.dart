@@ -45,7 +45,7 @@ class GenerateScreenConfiguration {
   final String navigationControlWidget;
 
   /// The title of the screen, e.g. "Delete Account".
-  final String title;
+  final String defaultTitle;
 
   /// ...
   final String makeup;
@@ -62,15 +62,14 @@ class GenerateScreenConfiguration {
     this.queryParameters = const {},
     this.pathSegments = const [],
     this.navigationControlWidget = "null",
-    this.title = "...",
+    this.defaultTitle = "...",
     this.makeup = "null",
   })  : assert(
           !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",
         ),
         assert(
-          !isAccessibleOnlyIfLoggedInAndVerified ||
-              !isAccessibleOnlyIfLoggedOut,
+          !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedOut,
           "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.",
         ),
         assert(

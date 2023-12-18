@@ -27,7 +27,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
   var navigationControlWidget = "null";
-  var title = "...";
+  var defaultTitle = "...";
   var makeup = "null";
 
   // ---------------------------------------------------------------------------
@@ -73,8 +73,8 @@ Future<Set<String>> _generateScreenConfigurationFile(
         navigationControlWidget =
             fieldValue.toStringValue()?.nullIfEmpty ?? navigationControlWidget;
         break;
-      case "title":
-        title = fieldValue.toStringValue()?.nullIfEmpty ?? title;
+      case "defaultTitle":
+        defaultTitle = fieldValue.toStringValue()?.nullIfEmpty ?? defaultTitle;
         break;
       case "makeup":
         makeup = fieldValue.toStringValue()?.nullIfEmpty ?? makeup;
@@ -147,7 +147,7 @@ Future<Set<String>> _generateScreenConfigurationFile(
         "___PS1___": _ps1(pathSegments),
         "___PS3___": _ps3(pathSegments),
         "___NAVIGATION_CONTROLS_WIDGET___": navigationControlWidget,
-        "___TITLE___": title,
+        "___DEFAULT_TITLE___": defaultTitle,
         "___MAKEUP___": makeup,
       }.nonNulls,
     );
