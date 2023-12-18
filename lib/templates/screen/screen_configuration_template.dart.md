@@ -56,7 +56,10 @@ Screen? maker___CLASS___(
           configuration.path ?? "",
         ),
       )) {
-    return ___CLASS___(configuration);
+    return ___CLASS___(
+      key: ValueKey<String?>(configuration.path),
+      configuration: configuration,
+    );
   }
   return null;
 }
@@ -145,7 +148,10 @@ final generated___CLASS___Route = GoRoute(
     );
     return NoTransitionPage(
       key: state.pageKey,
-      child: ___CLASS___(extraConfiguration ?? urlConfiguration),
+      child: ___CLASS___(
+        key: ValueKey<String?>(configuration.path),
+        configuration: configuration,
+      ),
     );
   },
 );

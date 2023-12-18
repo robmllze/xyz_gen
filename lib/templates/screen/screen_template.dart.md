@@ -18,26 +18,11 @@ part '___CONFIGURATION_FILE___';
 
 @GenerateScreenConfiguration(___CONFIGURATION_ARGS___)
 class ___SCREEN_CLASS___ extends Screen {
-  //
-  //
-  //
+  ___SCREEN_CLASS___({super.key, super.configuration});
 
-  ___SCREEN_CLASS___(super.configuration);
-
-  //
-  //
-  //
-
-
-  // Do not modify.
   @override
   _State createState() => _State();
 
-  //
-  //
-  //
-
-  // Do not modify.
   @override
   _Logic createLogic(final screen, final state) => _Logic(screen, state);
 }
