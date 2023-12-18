@@ -28,19 +28,19 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
       ..addOption(
         BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Root directory paths separated by `:`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Sub-directory paths separated by `:`.",
         defaultsTo: "components:makeups:widgets",
       )
       ..addOption(
         BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
+        help: "Path patterns separated by `:`.",
       )
       ..addOption(
         BasicConsoleAppOptions.OUTPUT,

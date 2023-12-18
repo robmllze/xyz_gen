@@ -46,7 +46,7 @@ FutureOr<void> basicConsoleAppBody<T extends ValidObject>({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Iterable<String>? splitArg(dynamic input, [String separator = PARAM_SEPARATOR]) {
+Iterable<String>? splitArg(dynamic input, [String separator = ":"]) {
   return input?.toString().split(separator).map((e) => e.trim()).nullIfEmpty;
 }
 
@@ -89,8 +89,6 @@ class BasicTemplateArgs extends ValidObject {
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-const PARAM_SEPARATOR = ":";
 
 abstract final class BasicConsoleAppOptions {
   static const TEMPLATE_FILE_PATH = "template";

@@ -126,10 +126,9 @@ Future<void> generateScreenApp(List<String> arguments) async {
 
 GenerateScreenArgs onResults(_, dynamic results) {
   Map<String, String>? toOptionsMap(String option) {
-    final entries = splitArg(results[GenerateScreenAppOptions.INTERNAL_PARAMETERS],
-            "$PARAM_SEPARATOR$PARAM_SEPARATOR")
+    final entries = splitArg(results[GenerateScreenAppOptions.INTERNAL_PARAMETERS], "::")
         ?.map((e) {
-          final a = e.split(PARAM_SEPARATOR);
+          final a = e.split(":");
           return a.length == 2 ? MapEntry(a[0], a[1]) : null;
         })
         .nonNulls

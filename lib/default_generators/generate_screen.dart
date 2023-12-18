@@ -105,17 +105,15 @@ void main(List<String> arguments) async {
             ),
             ..._option(
               GenerateScreenAppOptions.INTERNAL_PARAMETERS,
-              INTERNAL_PARAMETERS.entries
-                  .map((e) => "${e.key}$PARAM_SEPARATOR${e.value}")
-                  .join(PARAM_SEPARATOR * 2),
+              INTERNAL_PARAMETERS.entries.map((e) => "${e.key}:${e.value}").join(":" * 2),
             ),
             ..._option(
               GenerateScreenAppOptions.QUERY_PARAMETERS,
-              QUERY_PARAMETERS.join(PARAM_SEPARATOR),
+              QUERY_PARAMETERS.join(":"),
             ),
             ..._option(
               GenerateScreenAppOptions.PATH_SEGMENTS,
-              PATH_SEGMENTS.join(PARAM_SEPARATOR),
+              PATH_SEGMENTS.join(":"),
             ),
           ],
   );

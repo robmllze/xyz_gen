@@ -28,23 +28,23 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
       ..addOption(
         BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Root directory paths separated by `:`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Sub-directory paths separated by `:`.",
         defaultsTo: "screens",
       )
       ..addOption(
         BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
+        help: "Path patterns separated by `:`.",
       )
       ..addOption(
         GenerateScreenAccessAppOptions.ADDITIONAL_SCREEN_CLASS_NAMES,
-        help: "Additional screen class names separated by `$PARAM_SEPARATOR`.",
+        help: "Additional screen class names separated by `:`.",
       )
       ..addOption(
         BasicConsoleAppOptions.OUTPUT,

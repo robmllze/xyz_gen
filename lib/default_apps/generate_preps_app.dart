@@ -26,18 +26,18 @@ Future<void> generatePrepsApp(List<String> arguments) async {
       ..addOption(
         BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Root directory paths separated by `:`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Sub-directory paths separated by `:`.",
       )
       ..addOption(
         BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
+        help: "Path patterns separated by `:`.",
       ),
     onResults: onResults,
     action: action,

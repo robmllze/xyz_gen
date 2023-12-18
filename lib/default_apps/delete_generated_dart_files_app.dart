@@ -24,7 +24,7 @@ Future<void> deleteGeneratedDartFilesApp(List<String> arguments) async {
       ..addOption(
         BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
+        help: "Root directory paths separated by `:`.",
         defaultsTo: toLocalPathFormat("/lib"),
       ),
     onResults: onResults,
