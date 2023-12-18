@@ -6,14 +6,11 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:io';
-
 // ignore_for_file: prefer_relative_imports
+import 'package:xyz_gen/_internal_dependencies.dart';
 import 'package:xyz_gen/default_apps/generate_all_exports_app.dart';
 import 'package:xyz_gen/default_apps/generate_screen_access_app.dart';
 import 'package:xyz_gen/default_apps/generate_screen_app.dart';
-
-import '/all.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
