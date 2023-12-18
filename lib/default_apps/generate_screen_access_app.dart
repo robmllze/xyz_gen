@@ -8,16 +8,13 @@
 
 import '/all.dart';
 
-import '../_internal_dependencies.dart';
-import '../utils/get_xyz_gen_lib_path.dart';
-
-const _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION = "additional-screen-class-names";
+import '/_internal_dependencies.dart';
+import '/utils/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenAccessApp(List<String> arguments) async {
-  final defaultTemplatesPath =
-      join(await getXyzGenLibPath(), "templates", "screen");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "screen");
   await basicConsoleAppBody<GenerateScreenAccessArgs>(
     appTitle: "XYZ Generate Screen Access",
     arguments: arguments,
@@ -29,34 +26,34 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         help: "Help information.",
       )
       ..addOption(
-        ROOTS_OPTION,
+        BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$SEPARATOR`.",
+        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
-        SUBS_OPTION,
+        BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$SEPARATOR`.",
+        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: "screens",
       )
       ..addOption(
-        PATTERNS_OPTION,
+        BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$SEPARATOR`.",
+        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
       )
       ..addOption(
-        _ADDITIONAL_SCREEN_CLASS_NAMES_OPTION,
-        help: "Additional screen class names separated by `$SEPARATOR`.",
+        GenerateScreenAccessAppOptions.ADDITIONAL_SCREEN_CLASS_NAMES,
+        help: "Additional screen class names separated by `$PARAM_SEPARATOR`.",
       )
       ..addOption(
-        OUTPUT_OPTION,
+        BasicConsoleAppOptions.OUTPUT,
         abbr: "o",
         help: "Output file path.",
         defaultsTo: toLocalPathFormat("/lib/screen_access.g.dart"),
       )
       ..addOption(
-        TEMPLATE_FILE_PATH_OPTION,
+        BasicConsoleAppOptions.TEMPLATE_FILE_PATH,
         abbr: "t",
         help: "Template file path.",
         defaultsTo: toLocalPathFormat(
@@ -72,13 +69,13 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
 
 GenerateScreenAccessArgs onResults(_, dynamic results) {
   return GenerateScreenAccessArgs(
-    rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
-    subPaths: splitArg(results[SUBS_OPTION])?.toSet(),
-    pathPatterns: splitArg(results[PATTERNS_OPTION])?.toSet(),
+    rootPaths: splitArg(results[BasicConsoleAppOptions.ROOTS])?.toSet(),
+    subPaths: splitArg(results[BasicConsoleAppOptions.SUBS])?.toSet(),
+    pathPatterns: splitArg(results[BasicConsoleAppOptions.PATTERNS])?.toSet(),
     screenClassNames:
-        splitArg(results[_ADDITIONAL_SCREEN_CLASS_NAMES_OPTION])?.toSet(),
-    templateFilePath: results[TEMPLATE_FILE_PATH_OPTION],
-    outputFilePath: results[OUTPUT_OPTION],
+        splitArg(results[GenerateScreenAccessAppOptions.ADDITIONAL_SCREEN_CLASS_NAMES])?.toSet(),
+    templateFilePath: results[BasicConsoleAppOptions.TEMPLATE_FILE_PATH],
+    outputFilePath: results[BasicConsoleAppOptions.OUTPUT],
   );
 }
 
@@ -95,4 +92,10 @@ Future<void> action(_, __, GenerateScreenAccessArgs args) async {
     outputFilePath: outputFilePath,
   );
   await fmtDartFile(outputFilePath);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract final class GenerateScreenAccessAppOptions {
+  static const ADDITIONAL_SCREEN_CLASS_NAMES = "additional-screen-class-names";
 }

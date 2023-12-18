@@ -100,7 +100,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     isRedirectable: _IS_REDIRECTABLE,
   ) {
     super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
-    super.title = "___TITLE___".screenTr();
+    super.title = "___TITLE___||title".screenTr();
     super.makeup = ___MAKEUP___;
   }
 
@@ -114,7 +114,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
           isRedirectable: _IS_REDIRECTABLE,
         ) {
     super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
-    super.title = "___TITLE___".screenTr();
+    super.title = "___TITLE___||title".screenTr();
     super.makeup = ___MAKEUP___;
   }
 }

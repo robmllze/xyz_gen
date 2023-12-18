@@ -8,21 +8,13 @@
 
 import '/all.dart';
 
-import '../_internal_dependencies.dart';
-import '../utils/get_xyz_gen_lib_path.dart';
-
-const _BUILDER_TEMPLATE_FILE_PATH_OPTION = "builder-template";
-const _CLASS_TEMPLATE_FILE_PATH_OPTION = "class-template";
-const _EXPORTS_TEMPLATE_FILE_PATH_OPTION = "exports-template";
-const _GENERATED_THEME_TEMPLATE_FILE_PATH_OPTION = "theme-template";
-const _OUTLINE_TEMPLATE_FILE_PATH_OPTION = "outline-template";
-const _OUTPUT_DIR_PATH_OPTION = "output";
+import '/_internal_dependencies.dart';
+import '/utils/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateMakeupsApp(List<String> arguments) async {
-  final defaultTemplatesPath =
-      join(await getXyzGenLibPath(), "templates", "makeup");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "makeup");
   await basicConsoleAppBody<GenerateMakeupsArgs>(
     appTitle: "XYZ Generate Makeups",
     arguments: arguments,
@@ -34,30 +26,30 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         help: "Help information.",
       )
       ..addOption(
-        ROOTS_OPTION,
+        BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$SEPARATOR`.",
+        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
-        SUBS_OPTION,
+        BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$SEPARATOR`.",
+        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: "components:makeups:widgets",
       )
       ..addOption(
-        PATTERNS_OPTION,
+        BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$SEPARATOR`.",
+        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
       )
       ..addOption(
-        _OUTPUT_DIR_PATH_OPTION,
+        BasicConsoleAppOptions.OUTPUT,
         abbr: "o",
         help: "Output directory path.",
         defaultsTo: toLocalPathFormat("/lib/makeups"),
       )
       ..addOption(
-        _BUILDER_TEMPLATE_FILE_PATH_OPTION,
+        GenerateMakeupsAppOptions.BUILDER_TEMPLATE_FILE_PATH,
         abbr: "b",
         help: "Builder template file path.",
         defaultsTo: toLocalPathFormat(
@@ -65,7 +57,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
-        _CLASS_TEMPLATE_FILE_PATH_OPTION,
+        GenerateMakeupsAppOptions.CLASS_TEMPLATE_FILE_PATH,
         abbr: "c",
         help: "Class template file path.",
         defaultsTo: toLocalPathFormat(
@@ -73,7 +65,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
-        _EXPORTS_TEMPLATE_FILE_PATH_OPTION,
+        GenerateMakeupsAppOptions.EXPORTS_TEMPLATE_FILE_PATH,
         abbr: "e",
         help: "Exports template file path.",
         defaultsTo: toLocalPathFormat(
@@ -81,7 +73,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
-        _GENERATED_THEME_TEMPLATE_FILE_PATH_OPTION,
+        GenerateMakeupsAppOptions.GENERATED_THEME_TEMPLATE_FILE_PATH,
         abbr: "t",
         help: "Theme template file path.",
         defaultsTo: toLocalPathFormat(
@@ -89,7 +81,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
-        _OUTLINE_TEMPLATE_FILE_PATH_OPTION,
+        GenerateMakeupsAppOptions.OUTLINE_TEMPLATE_FILE_PATH,
         abbr: "g",
         help: "Generate template file path.",
         defaultsTo: toLocalPathFormat(
@@ -97,7 +89,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
-        DART_SDK_PATH_OPTION,
+        BasicConsoleAppOptions.DART_SDK_PATH,
         help: "Dart SDK path.",
       ),
     onResults: onResults,
@@ -109,17 +101,17 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
 
 GenerateMakeupsArgs onResults(_, dynamic results) {
   return GenerateMakeupsArgs(
-    fallbackDartSdkPath: results[DART_SDK_PATH_OPTION],
-    classTemplateFilePath: results[_CLASS_TEMPLATE_FILE_PATH_OPTION],
-    builderTemplateFilePath: results[_BUILDER_TEMPLATE_FILE_PATH_OPTION],
-    exportsTemplateFilePath: results[_EXPORTS_TEMPLATE_FILE_PATH_OPTION],
+    fallbackDartSdkPath: results[BasicConsoleAppOptions.DART_SDK_PATH],
+    classTemplateFilePath: results[GenerateMakeupsAppOptions.CLASS_TEMPLATE_FILE_PATH],
+    builderTemplateFilePath: results[GenerateMakeupsAppOptions.BUILDER_TEMPLATE_FILE_PATH],
+    exportsTemplateFilePath: results[GenerateMakeupsAppOptions.EXPORTS_TEMPLATE_FILE_PATH],
     generatedThemeTemplateFilePath:
-        results[_GENERATED_THEME_TEMPLATE_FILE_PATH_OPTION],
-    outlineTemplateFilePath: results[_OUTLINE_TEMPLATE_FILE_PATH_OPTION],
-    rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
-    subPaths: splitArg(results[SUBS_OPTION])?.toSet(),
-    pathPatterns: splitArg(results[PATTERNS_OPTION])?.toSet(),
-    outputDirPath: results[_OUTPUT_DIR_PATH_OPTION],
+        results[GenerateMakeupsAppOptions.GENERATED_THEME_TEMPLATE_FILE_PATH],
+    outlineTemplateFilePath: results[GenerateMakeupsAppOptions.OUTLINE_TEMPLATE_FILE_PATH],
+    rootPaths: splitArg(results[BasicConsoleAppOptions.ROOTS])?.toSet(),
+    subPaths: splitArg(results[BasicConsoleAppOptions.SUBS])?.toSet(),
+    pathPatterns: splitArg(results[BasicConsoleAppOptions.PATTERNS])?.toSet(),
+    outputDirPath: results[BasicConsoleAppOptions.OUTPUT],
   );
 }
 
@@ -138,4 +130,14 @@ Future<void> action(_, __, GenerateMakeupsArgs args) async {
     generatedThemeTemplateFilePath: args.generatedThemeTemplateFilePath!,
     outlineTemplateFilePath: args.outlineTemplateFilePath!,
   );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract final class GenerateMakeupsAppOptions {
+  static const BUILDER_TEMPLATE_FILE_PATH = "builder-template";
+  static const CLASS_TEMPLATE_FILE_PATH = "class-template";
+  static const EXPORTS_TEMPLATE_FILE_PATH = "exports-template";
+  static const GENERATED_THEME_TEMPLATE_FILE_PATH = "theme-template";
+  static const OUTLINE_TEMPLATE_FILE_PATH = "outline-template";
 }

@@ -8,8 +8,8 @@
 
 import '/all.dart';
 
-import '../_internal_dependencies.dart';
-import '../utils/get_xyz_gen_lib_path.dart';
+import '/_internal_dependencies.dart';
+import '/utils/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -26,25 +26,25 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
         help: "Help information.",
       )
       ..addOption(
-        ROOTS_OPTION,
+        BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$SEPARATOR`.",
+        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
-        SUBS_OPTION,
+        BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$SEPARATOR`.",
+        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo:
             "app:components:configs:lib:makeups:managers:models:routing:screens:services:src:themes:utils:widgets",
       )
       ..addOption(
-        PATTERNS_OPTION,
+        BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$SEPARATOR`.",
+        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
       )
       ..addOption(
-        TEMPLATE_FILE_PATH_OPTION,
+        BasicConsoleAppOptions.TEMPLATE_FILE_PATH,
         abbr: "t",
         help: "Template file path.",
         defaultsTo: toLocalPathFormat(
@@ -60,10 +60,10 @@ Future<void> generateAllExportsApp(List<String> arguments) async {
 
 BasicTemplateArgs onResults(_, dynamic results) {
   return BasicTemplateArgs(
-    templateFilePath: results[TEMPLATE_FILE_PATH_OPTION],
-    rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
-    subPaths: splitArg(results[SUBS_OPTION])?.toSet(),
-    pathPatterns: splitArg(results[PATTERNS_OPTION])?.toSet(),
+    templateFilePath: results[BasicConsoleAppOptions.TEMPLATE_FILE_PATH],
+    rootPaths: splitArg(results[BasicConsoleAppOptions.ROOTS])?.toSet(),
+    subPaths: splitArg(results[BasicConsoleAppOptions.SUBS])?.toSet(),
+    pathPatterns: splitArg(results[BasicConsoleAppOptions.PATTERNS])?.toSet(),
   );
 }
 

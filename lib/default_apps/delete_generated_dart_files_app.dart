@@ -6,7 +6,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '../_internal_dependencies.dart';
+import '/_internal_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -22,9 +22,9 @@ Future<void> deleteGeneratedDartFilesApp(List<String> arguments) async {
         help: "Help information.",
       )
       ..addOption(
-        ROOTS_OPTION,
+        BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$SEPARATOR`.",
+        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: toLocalPathFormat("/lib"),
       ),
     onResults: onResults,
@@ -36,7 +36,7 @@ Future<void> deleteGeneratedDartFilesApp(List<String> arguments) async {
 
 Args onResults(_, dynamic results) {
   return Args(
-    rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
+    rootPaths: splitArg(results[BasicConsoleAppOptions.ROOTS])?.toSet(),
   );
 }
 

@@ -29,7 +29,7 @@ Future<void> generateScreen({
   List<String> pathSegments = const [],
   String makeup = "",
   String title = "",
-  String navigationControls = "",
+  String navigationControlWidget = "",
 }) async {
   final screenClassKey = screenName.toSnakeCase();
   final screenClassName = screenName.toPascalCase();
@@ -69,8 +69,7 @@ Future<void> generateScreen({
     data,
     path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-    isAccessibleOnlyIfLoggedInAndVerified:
-        isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
@@ -78,7 +77,7 @@ Future<void> generateScreen({
     pathSegments: pathSegments,
     makeup: makeup,
     title: title,
-    navigationControls: navigationControls,
+    navigationControlWidget: navigationControlWidget,
   );
   printGreen(
     "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`",
@@ -113,7 +112,7 @@ Future<void> _writeScreenFile(
   List<String> pathSegments = const [],
   String makeup = "",
   String title = "",
-  String navigationControls = "",
+  String navigationControlWidget = "",
 }) async {
   final a = internalParameters.entries
       .map((e) {
@@ -123,28 +122,24 @@ Future<void> _writeScreenFile(
       })
       .nonNulls
       .join(",");
-  final b = queryParameters
-      .map((v) => v.isNotEmpty ? '"$v"' : null)
-      .nonNulls
-      .join(",");
-  final c =
-      pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
+  final b = queryParameters.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
+  final c = pathSegments.map((v) => v.isNotEmpty ? '"$v"' : null).nonNulls.join(",");
   final configurationArgs = [
     if (path.isNotEmpty) 'path: "$path"',
+    if (title.isNotEmpty) 'title: "$title"',
+    if (navigationControlWidget.isNotEmpty) 'navigationControlWidget: "$navigationControlWidget"',
+    if (makeup.isNotEmpty) 'makeup: "$makeup"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
-    if (isAccessibleOnlyIfLoggedInAndVerified)
-      "isAccessibleOnlyIfLoggedInAndVerified: true",
+    if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty && a.isNotEmpty)
-      "internalParameters: {$a,}",
+    if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
     if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    "___CONFIGURATION_ARGS___":
-        configurationArgs.isNotEmpty ? "$configurationArgs," : "",
+    "___CONFIGURATION_ARGS___": configurationArgs.isNotEmpty ? "$configurationArgs," : "",
   });
 }
 
@@ -181,7 +176,7 @@ class GenerateScreenArgs extends ValidObject {
   final List<String>? pathSegments;
   final String? makeup;
   final String? title;
-  final String? navigationControls;
+  final String? navigationControlWidget;
 
   const GenerateScreenArgs({
     required this.fallbackDartSdkPath,
@@ -201,7 +196,7 @@ class GenerateScreenArgs extends ValidObject {
     required this.pathSegments,
     required this.makeup,
     required this.title,
-    required this.navigationControls,
+    required this.navigationControlWidget,
   });
 
   @override
@@ -213,8 +208,7 @@ class GenerateScreenArgs extends ValidObject {
         screenTemplateFilePath,
         stateTemplateFilePath,
         configurationTemplateFilePath,
-        if (isAccessibleOnlyIfLoggedInAndVerified != null)
-          isAccessibleOnlyIfLoggedInAndVerified,
+        if (isAccessibleOnlyIfLoggedInAndVerified != null) isAccessibleOnlyIfLoggedInAndVerified,
         if (isAccessibleOnlyIfLoggedIn != null) isAccessibleOnlyIfLoggedIn,
         if (isAccessibleOnlyIfLoggedOut != null) isAccessibleOnlyIfLoggedOut,
         if (isRedirectable != null) isRedirectable,
@@ -223,6 +217,6 @@ class GenerateScreenArgs extends ValidObject {
         // if (pathSegments != null) pathSegments,
         if (makeup != null) makeup,
         if (title != null) title,
-        if (navigationControls != null) navigationControls,
+        if (navigationControlWidget != null) navigationControlWidget,
       ]);
 }

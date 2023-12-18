@@ -18,7 +18,7 @@ part '___CONFIGURATION_FILE___';
 
 @GenerateScreenConfiguration(___CONFIGURATION_ARGS___)
 class ___SCREEN_CLASS___ extends Screen {
-  ___SCREEN_CLASS___({super.key, super.configuration});
+  const ___SCREEN_CLASS___({super.key, super.configuration});
 
   @override
   _State createState() => _State();

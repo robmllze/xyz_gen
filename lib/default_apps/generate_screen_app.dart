@@ -8,37 +8,13 @@
 
 import '/all.dart';
 
-import '../_internal_dependencies.dart';
-import '../utils/get_xyz_gen_lib_path.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-const _NAME_OPTION = "name";
-const _TITLE_OPTION = "title";
-const _OUTPUT_OPTION = "output";
-const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION =
-    "is-only-accessible-if-logged-in-and-verified";
-const _PATH_OPTION = "path";
-const _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION =
-    "is-only-accessible-if-logged-in";
-const _IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION =
-    "is-only-accessible-if-logged-out";
-const _IS_REDIRECTABLE_OPTION = "is-redirectable";
-const _INTERNAL_PARAMETERS_OPTION = "internal-parameters";
-const _PATH_SEGMENTS_OPTION = "path-segments";
-const _QUERY_PARAMETERS_OPTION = "query-parameters";
-const _MAKEUP_OPTION = "makeup";
-const _NAVIGATION_CONTROLS_OPTION = "navigation-controls";
-const _CONFIGURATION_TEMPLATE_OPTION = "configuration-template";
-const _LOGIC_TEMPLATE_OPTION = "logic-template";
-const _SCREEN_TEMPLATE_OPTION = "screen-template";
-const _STATE_TEMPLATE_OPTION = "state-template";
+import '/_internal_dependencies.dart';
+import '/utils/get_xyz_gen_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateScreenApp(List<String> arguments) async {
-  final defaultTemplatesPath =
-      join(await getXyzGenLibPath(), "templates", "screen");
+  final defaultTemplatesPath = join(await getXyzGenLibPath(), "templates", "screen");
   final parser = ArgParser()
     ..addFlag(
       "help",
@@ -47,94 +23,94 @@ Future<void> generateScreenApp(List<String> arguments) async {
       help: "Help information.",
     )
     ..addOption(
-      _OUTPUT_OPTION,
+      GenerateScreenAppOptions.OUTPUT,
       help: "Output directory path.",
       defaultsTo: toLocalPathFormat("/lib/screens"),
     )
     ..addOption(
-      _NAME_OPTION,
+      GenerateScreenAppOptions.CLASS_NAME,
       help: "Screen name.",
       defaultsTo: "ScreenTemplate",
     )
     ..addOption(
-      _INTERNAL_PARAMETERS_OPTION,
+      GenerateScreenAppOptions.INTERNAL_PARAMETERS,
       help: "Internal parameters.",
     )
     ..addOption(
-      _QUERY_PARAMETERS_OPTION,
+      GenerateScreenAppOptions.QUERY_PARAMETERS,
       help: "Query parameters.",
     )
     ..addOption(
-      _PATH_SEGMENTS_OPTION,
+      GenerateScreenAppOptions.PATH_SEGMENTS,
       help: "Path segments.",
     )
     ..addOption(
-      _LOGIC_TEMPLATE_OPTION,
+      GenerateScreenAppOptions.LOGIC_TEMPLATE,
       help: "Logic template file path.",
       defaultsTo: toLocalPathFormat(
         join(defaultTemplatesPath, "screen_logic_template.dart.md"),
       ),
     )
     ..addOption(
-      _SCREEN_TEMPLATE_OPTION,
+      GenerateScreenAppOptions.SCREEN_TEMPLATE,
       help: "Screen template file path.",
       defaultsTo: toLocalPathFormat(
         join(defaultTemplatesPath, "screen_template.dart.md"),
       ),
     )
     ..addOption(
-      _STATE_TEMPLATE_OPTION,
+      GenerateScreenAppOptions.STATE_TEMPLATE,
       help: "State template file path.",
       defaultsTo: toLocalPathFormat(
         join(defaultTemplatesPath, "screen_state_template.dart.md"),
       ),
     )
     ..addOption(
-      _CONFIGURATION_TEMPLATE_OPTION,
+      GenerateScreenAppOptions.CONFIGURATION_TEMPLATE,
       help: "Configuration template file path.",
       defaultsTo: toLocalPathFormat(
         join(defaultTemplatesPath, "screen_configuration_template.dart.md"),
       ),
     )
     ..addOption(
-      _PATH_OPTION,
+      GenerateScreenAppOptions.PATH,
       help: "Screen path.",
       defaultsTo: "",
     )
     ..addOption(
-      _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION,
+      GenerateScreenAppOptions.IS_ONLY_ACCESSIBLE_IF_LOGGED_IN,
       help: "Is screen accessible if logged in?",
       defaultsTo: false.toString(),
     )
     ..addOption(
-      _IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION,
+      GenerateScreenAppOptions.IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED,
       help: "Is screen accessible if logged in and verified?",
       defaultsTo: false.toString(),
     )
     ..addOption(
-      _IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION,
+      GenerateScreenAppOptions.IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT,
       help: "Is screen accessible if logged out?",
       defaultsTo: false.toString(),
     )
     ..addOption(
-      _IS_REDIRECTABLE_OPTION,
+      GenerateScreenAppOptions.IS_REDIRECTABLE,
       help: "Is screen redirectable?",
       defaultsTo: false.toString(),
     )
     ..addOption(
-      _MAKEUP_OPTION,
+      GenerateScreenAppOptions.MAKEUP,
       help: "Screen makeup.",
     )
     ..addOption(
-      _TITLE_OPTION,
+      GenerateScreenAppOptions.DEFAULT_TITLE,
       help: "Screen title.",
     )
     ..addOption(
-      _NAVIGATION_CONTROLS_OPTION,
+      GenerateScreenAppOptions.NAVIGATION_CONTROL_WIDGET,
       help: "Screen navigator.",
     )
     ..addOption(
-      DART_SDK_PATH_OPTION,
+      BasicConsoleAppOptions.DART_SDK_PATH,
       help: "Dart SDK path.",
     );
   await basicConsoleAppBody<GenerateScreenArgs>(
@@ -150,14 +126,14 @@ Future<void> generateScreenApp(List<String> arguments) async {
 
 GenerateScreenArgs onResults(_, dynamic results) {
   Map<String, String>? toOptionsMap(String option) {
-    final entries =
-        splitArg(results[_INTERNAL_PARAMETERS_OPTION], "$SEPARATOR$SEPARATOR")
-            ?.map((e) {
-              final a = e.split(SEPARATOR);
-              return a.length == 2 ? MapEntry(a[0], a[1]) : null;
-            })
-            .nonNulls
-            .toSet();
+    final entries = splitArg(results[GenerateScreenAppOptions.INTERNAL_PARAMETERS],
+            "$PARAM_SEPARATOR$PARAM_SEPARATOR")
+        ?.map((e) {
+          final a = e.split(PARAM_SEPARATOR);
+          return a.length == 2 ? MapEntry(a[0], a[1]) : null;
+        })
+        .nonNulls
+        .toSet();
     return entries != null ? Map<String, String>.fromEntries(entries) : null;
   }
 
@@ -166,26 +142,25 @@ GenerateScreenArgs onResults(_, dynamic results) {
   }
 
   return GenerateScreenArgs(
-    fallbackDartSdkPath: results[DART_SDK_PATH_OPTION],
-    outputDirPath: results[_OUTPUT_OPTION],
-    screenName: results[_NAME_OPTION],
-    logicTemplateFilePath: results[_LOGIC_TEMPLATE_OPTION],
-    screenTemplateFilePath: results[_SCREEN_TEMPLATE_OPTION],
-    stateTemplateFilePath: results[_STATE_TEMPLATE_OPTION],
-    configurationTemplateFilePath: results[_CONFIGURATION_TEMPLATE_OPTION],
-    path: results[_PATH_OPTION],
-    isAccessibleOnlyIfLoggedIn: toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_OPTION),
+    fallbackDartSdkPath: results[BasicConsoleAppOptions.DART_SDK_PATH],
+    outputDirPath: results[GenerateScreenAppOptions.OUTPUT],
+    screenName: results[GenerateScreenAppOptions.CLASS_NAME],
+    logicTemplateFilePath: results[GenerateScreenAppOptions.LOGIC_TEMPLATE],
+    screenTemplateFilePath: results[GenerateScreenAppOptions.SCREEN_TEMPLATE],
+    stateTemplateFilePath: results[GenerateScreenAppOptions.STATE_TEMPLATE],
+    configurationTemplateFilePath: results[GenerateScreenAppOptions.CONFIGURATION_TEMPLATE],
+    path: results[GenerateScreenAppOptions.PATH],
+    isAccessibleOnlyIfLoggedIn: toBool(GenerateScreenAppOptions.IS_ONLY_ACCESSIBLE_IF_LOGGED_IN),
     isAccessibleOnlyIfLoggedInAndVerified:
-        toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED_OPTION),
-    isAccessibleOnlyIfLoggedOut:
-        toBool(_IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT_OPTION),
-    isRedirectable: toBool(_IS_REDIRECTABLE_OPTION),
-    internalParameters: toOptionsMap(_INTERNAL_PARAMETERS_OPTION),
-    queryParameters: splitArg(results[_QUERY_PARAMETERS_OPTION])?.toSet(),
-    pathSegments: splitArg(results[_PATH_SEGMENTS_OPTION])?.toList(),
-    makeup: results[_MAKEUP_OPTION],
-    title: results[_TITLE_OPTION],
-    navigationControls: results[_NAVIGATION_CONTROLS_OPTION],
+        toBool(GenerateScreenAppOptions.IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED),
+    isAccessibleOnlyIfLoggedOut: toBool(GenerateScreenAppOptions.IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT),
+    isRedirectable: toBool(GenerateScreenAppOptions.IS_REDIRECTABLE),
+    internalParameters: toOptionsMap(GenerateScreenAppOptions.INTERNAL_PARAMETERS),
+    queryParameters: splitArg(results[GenerateScreenAppOptions.QUERY_PARAMETERS])?.toSet(),
+    pathSegments: splitArg(results[GenerateScreenAppOptions.PATH_SEGMENTS])?.toList(),
+    makeup: results[GenerateScreenAppOptions.MAKEUP],
+    title: results[GenerateScreenAppOptions.DEFAULT_TITLE],
+    navigationControlWidget: results[GenerateScreenAppOptions.NAVIGATION_CONTROL_WIDGET],
   );
 }
 
@@ -202,8 +177,7 @@ Future<void> action(_, __, GenerateScreenArgs args) async {
     path: args.path!,
     configurationTemplateFilePath: args.configurationTemplateFilePath!,
     isAccessibleOnlyIfLoggedIn: args.isAccessibleOnlyIfLoggedIn!,
-    isAccessibleOnlyIfLoggedInAndVerified:
-        args.isAccessibleOnlyIfLoggedInAndVerified!,
+    isAccessibleOnlyIfLoggedInAndVerified: args.isAccessibleOnlyIfLoggedInAndVerified!,
     isAccessibleOnlyIfLoggedOut: args.isAccessibleOnlyIfLoggedOut!,
     isRedirectable: args.isRedirectable!,
     internalParameters: args.internalParameters ?? const {},
@@ -211,6 +185,30 @@ Future<void> action(_, __, GenerateScreenArgs args) async {
     pathSegments: args.pathSegments ?? const [],
     makeup: args.makeup ?? "",
     title: args.title ?? "",
-    navigationControls: args.navigationControls ?? "",
+    navigationControlWidget: args.navigationControlWidget ?? "",
   );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract final class GenerateScreenAppOptions {
+  static const DART_SDK_PATH = "dart-sdk";
+  static const OUTPUT = "output";
+  static const CLASS_NAME = "class-name";
+  static const DEFAULT_TITLE = "default-title";
+  static const IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED =
+      "is-only-accessible-if-logged-in-and-verified";
+  static const PATH = "path";
+  static const IS_ONLY_ACCESSIBLE_IF_LOGGED_IN = "is-only-accessible-if-logged-in";
+  static const IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT = "is-only-accessible-if-logged-out";
+  static const IS_REDIRECTABLE = "is-redirectable";
+  static const INTERNAL_PARAMETERS = "internal-parameters";
+  static const PATH_SEGMENTS = "path-segments";
+  static const QUERY_PARAMETERS = "query-parameters";
+  static const MAKEUP = "makeup";
+  static const NAVIGATION_CONTROL_WIDGET = "navigation-control-widget";
+  static const CONFIGURATION_TEMPLATE = "configuration-template";
+  static const LOGIC_TEMPLATE = "logic-template";
+  static const SCREEN_TEMPLATE = "screen-template";
+  static const STATE_TEMPLATE = "state-template";
 }

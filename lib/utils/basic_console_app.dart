@@ -6,17 +6,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '../_internal_dependencies.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-const SEPARATOR = ":";
-const TEMPLATE_FILE_PATH_OPTION = "template";
-const PATTERNS_OPTION = "patterns";
-const ROOTS_OPTION = "roots";
-const SUBS_OPTION = "subs";
-const DART_SDK_PATH_OPTION = "dart-sdk";
-const OUTPUT_OPTION = "output";
+import '/_internal_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -56,7 +46,7 @@ FutureOr<void> basicConsoleAppBody<T extends ValidObject>({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Iterable<String>? splitArg(dynamic input, [String separator = SEPARATOR]) {
+Iterable<String>? splitArg(dynamic input, [String separator = PARAM_SEPARATOR]) {
   return input?.toString().split(separator).map((e) => e.trim()).nullIfEmpty;
 }
 
@@ -96,4 +86,17 @@ class BasicTemplateArgs extends ValidObject {
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
       ]);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+const PARAM_SEPARATOR = ":";
+
+abstract final class BasicConsoleAppOptions {
+  static const TEMPLATE_FILE_PATH = "template";
+  static const PATTERNS = "patterns";
+  static const ROOTS = "roots";
+  static const SUBS = "subs";
+  static const DART_SDK_PATH = "dart-sdk";
+  static const OUTPUT = "output";
 }

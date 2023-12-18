@@ -8,7 +8,7 @@
 
 import '/all.dart';
 
-import '../_internal_dependencies.dart';
+import '/_internal_dependencies.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,20 +24,20 @@ Future<void> generatePrepsApp(List<String> arguments) async {
         help: "Help information.",
       )
       ..addOption(
-        ROOTS_OPTION,
+        BasicConsoleAppOptions.ROOTS,
         abbr: "r",
-        help: "Root directory paths separated by `$SEPARATOR`.",
+        help: "Root directory paths separated by `$PARAM_SEPARATOR`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
-        SUBS_OPTION,
+        BasicConsoleAppOptions.SUBS,
         abbr: "s",
-        help: "Sub-directory paths separated by `$SEPARATOR`.",
+        help: "Sub-directory paths separated by `$PARAM_SEPARATOR`.",
       )
       ..addOption(
-        PATTERNS_OPTION,
+        BasicConsoleAppOptions.PATTERNS,
         abbr: "p",
-        help: "Path patterns separated by `$SEPARATOR`.",
+        help: "Path patterns separated by `$PARAM_SEPARATOR`.",
       ),
     onResults: onResults,
     action: action,
@@ -48,9 +48,9 @@ Future<void> generatePrepsApp(List<String> arguments) async {
 
 PrepTemplateArgs onResults(_, dynamic results) {
   return PrepTemplateArgs(
-    rootPaths: splitArg(results[ROOTS_OPTION])?.toSet(),
-    subPaths: splitArg(results[SUBS_OPTION])?.toSet(),
-    pathPatterns: splitArg(results[PATTERNS_OPTION])?.toSet(),
+    rootPaths: splitArg(results[BasicConsoleAppOptions.ROOTS])?.toSet(),
+    subPaths: splitArg(results[BasicConsoleAppOptions.SUBS])?.toSet(),
+    pathPatterns: splitArg(results[BasicConsoleAppOptions.PATTERNS])?.toSet(),
   );
 }
 
