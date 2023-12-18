@@ -29,7 +29,7 @@ class GenerateScreenConfiguration {
   /// by setting [isRedirectable] to `false`.
   final bool isRedirectable;
 
-  /// ...
+  /// The path to the screen, e.g. "/delete_account".
   final String path;
 
   /// ...
@@ -44,7 +44,7 @@ class GenerateScreenConfiguration {
   /// ...
   final String navigationControlWidget;
 
-  /// ...
+  /// The title of the screen, e.g. "Delete Account".
   final String title;
 
   /// ...
@@ -62,7 +62,7 @@ class GenerateScreenConfiguration {
     this.queryParameters = const {},
     this.pathSegments = const [],
     this.navigationControlWidget = "null",
-    this.title = "\"\"",
+    this.title = "...",
     this.makeup = "null",
   })  : assert(
           !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
