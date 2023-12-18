@@ -75,6 +75,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     static const IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED = _IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED;
   static const IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT = _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT;
   static const IS_REDIRECTABLE = _IS_REDIRECTABLE;
+  static const NAVIGATION_CONTROLS_WIDGET = ___NAVIGATION_CONTROLS_WIDGET___;
   
   ___IP0___
   ___QP0___
@@ -99,7 +100,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
     isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
     isRedirectable: _IS_REDIRECTABLE,
   ) {
-    super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
+    super.navigationControlsWidget = NAVIGATION_CONTROLS_WIDGET;
     super.title = "___TITLE___||title".screenTr();
     super.makeup = ___MAKEUP___;
   }
@@ -113,7 +114,7 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
           isAccessibleOnlyIfLoggedOut: _IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT,
           isRedirectable: _IS_REDIRECTABLE,
         ) {
-    super.navigationControlsWidget = ___NAVIGATION_CONTROLS_WIDGET___;
+    super.navigationControlsWidget = NAVIGATION_CONTROLS_WIDGET;
     super.title = "___TITLE___||title".screenTr();
     super.makeup = ___MAKEUP___;
   }
