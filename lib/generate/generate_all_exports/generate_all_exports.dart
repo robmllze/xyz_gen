@@ -16,7 +16,7 @@ Future<void> generateAllExports({
   Set<String> subPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  final combinedPaths = combinePaths([rootPaths, subPaths]);
+  final combinedPaths = getAllPathCombinations([rootPaths, subPaths]);
   var cachedDirName = "";
   final template = await readDartTemplate(templateFilePath);
   for (final path in combinedPaths) {

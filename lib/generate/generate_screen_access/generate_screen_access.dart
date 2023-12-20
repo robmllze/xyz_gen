@@ -18,7 +18,7 @@ Future<void> generateScreenAccess({
   Set<String> pathPatterns = const {},
   Set<String> screenClassNames = const {},
 }) async {
-  final combinedPaths = combinePaths([rootPaths, subPaths]);
+  final combinedPaths = getAllPathCombinations([rootPaths, subPaths]);
   final screenClassNames1 = Set.of(screenClassNames);
 
   for (final path in combinedPaths) {
@@ -28,9 +28,8 @@ Future<void> generateScreenAccess({
       for (final filePath in filePaths) {
         if (isGeneratedDartFilePath(filePath, pathPatterns)) {
           var screenFileKey = getBaseName(filePath).replaceAll(".g.dart", "");
-          screenFileKey = screenFileKey.startsWith("_")
-              ? screenFileKey.substring(1)
-              : screenFileKey;
+          screenFileKey =
+              screenFileKey.startsWith("_") ? screenFileKey.substring(1) : screenFileKey;
           if (screenFileKey.startsWith("screen_")) {
             final contents = await readFile(filePath);
             if (contents != null) {
@@ -63,13 +62,9 @@ Future<void> generateScreenAccess({
   final b = keys.map((e) => "...PATH_$e").join(",");
   final c = keys.map((e) => "...PATH_NOT_REDIRECTABLE_$e").join(",");
   final d = keys.map((e) => "...PATH_ALWAYS_ACCESSIBLE_$e").join(",");
-  final e = keys
-      .map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e")
-      .join(",");
-  final f =
-      keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
-  final g =
-      keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
+  final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e").join(",");
+  final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
+  final g = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
   final h = sorted.map((e) => "...cast${e}Configuration").join(",");
   final i = sorted.map((e) => "generated${e}Route").join(",");
   final template = await readDartTemplate(templateFilePath);

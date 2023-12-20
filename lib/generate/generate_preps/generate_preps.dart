@@ -18,7 +18,7 @@ Future<void> generatePreps({
   Set<String> pathPatterns = const {},
   List<String? Function(String, String?)> prepMappers = const [],
 }) async {
-  final combinedPaths = combinePaths([rootPaths, subPaths]);
+  final combinedPaths = getAllPathCombinations([rootPaths, subPaths]);
   for (final path in combinedPaths) {
     final files = await findDartFiles(path, pathPatterns: pathPatterns);
     for (final file in files) {

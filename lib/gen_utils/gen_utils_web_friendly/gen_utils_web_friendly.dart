@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Gen / Utils
+// XYZ Gen / XYZ Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -11,10 +11,10 @@ export 'src/data.dart';
 export 'src/firestore_timestamp.dart';
 export 'src/fix_dart_file.dart';
 export 'src/fmt_dart_file.dart';
-export 'src/get_package_lib_path.dart';
 export 'src/let.dart';
 export 'src/parse_duration.dart';
-export 'src/paths/combine_paths.dart';
+export 'src/paths/get_all_path_combinations.dart';
+export 'src/paths/get_package_lib_path.dart';
 export 'src/paths/paths.dart';
 export 'src/replace_data.dart';
 export 'src/string_extensions.dart';

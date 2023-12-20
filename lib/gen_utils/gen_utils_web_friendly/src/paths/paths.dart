@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Gen / Utils
+// XYZ Gen / XYZ Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -123,7 +123,8 @@ bool isPrivateFileName(String filePath) {
   return (c, fileName);
 }
 
-/// Extracts nested scopes from a source string based on opening and closing delimiters.
+/// Extracts nested scopes from a source string based on opening and closing\
+/// delimiters.
 List<dynamic> extractScopes(String source, String open, String close) {
   var index = 0;
   dynamic parse() {

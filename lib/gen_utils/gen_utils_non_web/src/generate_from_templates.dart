@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Gen / Utils
+// XYZ Gen / XYZ Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -34,7 +34,7 @@ Future<void> generateFromTemplates({
   void Function(String filePath)? onDelete,
 }) async {
   printYellow("Starting generator. Please wait...");
-  final combinedPaths = combinePaths([rootPaths, subPaths]);
+  final combinedPaths = getAllPathCombinations([rootPaths, subPaths]);
   final collection = _createCollection(
     combinedPaths,
     fallbackDartSdkPath,
