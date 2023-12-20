@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -79,12 +79,10 @@ class FirestoreTimestamp implements Comparable<FirestoreTimestamp> {
   int get nanoseconds => _nanoseconds;
 
   // ignore: public_member_api_docs
-  int get millisecondsSinceEpoch =>
-      seconds * _kThousand + nanoseconds ~/ _kMillion;
+  int get millisecondsSinceEpoch => seconds * _kThousand + nanoseconds ~/ _kMillion;
 
   // ignore: public_member_api_docs
-  int get microsecondsSinceEpoch =>
-      seconds * _kMillion + nanoseconds ~/ _kThousand;
+  int get microsecondsSinceEpoch => seconds * _kMillion + nanoseconds ~/ _kThousand;
 
   /// Converts [FirestoreTimestamp] to [DateTime]
   DateTime toDate() {
@@ -96,9 +94,7 @@ class FirestoreTimestamp implements Comparable<FirestoreTimestamp> {
 
   @override
   bool operator ==(Object other) =>
-      other is FirestoreTimestamp &&
-      other.seconds == seconds &&
-      other.nanoseconds == nanoseconds;
+      other is FirestoreTimestamp && other.seconds == seconds && other.nanoseconds == nanoseconds;
 
   @override
   int compareTo(FirestoreTimestamp other) {

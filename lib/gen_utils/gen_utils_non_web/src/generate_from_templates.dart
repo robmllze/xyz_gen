@@ -1,14 +1,18 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/file_system/physical_file_system.dart';
+
+import 'package:path/path.dart' as p;
 
 import '../gen_utils_non_web.dart';
 
@@ -31,18 +35,20 @@ Future<void> generateFromTemplates({
 }) async {
   printYellow("Starting generator. Please wait...");
   final combinedPaths = combinePaths([rootPaths, subPaths]);
-  final collection = createCollection(
+  final collection = _createCollection(
     combinedPaths,
     fallbackDartSdkPath,
   );
-  for (final path in combinedPaths) {
-    if (deleteGeneratedFiles) {
+  if (deleteGeneratedFiles) {
+    for (final path in combinedPaths) {
       await deleteGeneratedDartFiles(
         path,
         onDelete: onDelete,
         pathPatterns: pathPatterns,
       );
     }
+  }
+  for (final path in combinedPaths) {
     final templates = <String, String>{};
     for (final templateFilePath in templateFilePaths) {
       templates[templateFilePath] = await readDartTemplate(templateFilePath);
@@ -65,4 +71,23 @@ Future<void> generateFromTemplates({
     }
   }
   printYellow("[DONE]");
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+// Creates an [AnalysisContextCollection] from a set of paths. This is used to
+// analyze Dart files. The [fallbackDartSdkPath] is used if the `DART_SDK`
+// environment variable is not set.
+AnalysisContextCollection _createCollection(
+  Set<String> paths,
+  String? fallbackDartSdkPath,
+) {
+  final sdkPath = Platform.environment["DART_SDK"] ?? fallbackDartSdkPath;
+  final includePaths = paths.map((e) => p.normalize(p.absolute(e))).toList();
+  final collection = AnalysisContextCollection(
+    includedPaths: includePaths,
+    resourceProvider: PhysicalResourceProvider.INSTANCE,
+    sdkPath: sdkPath,
+  );
+  return collection;
 }

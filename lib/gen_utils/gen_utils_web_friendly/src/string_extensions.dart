@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -37,10 +37,8 @@ extension XyzUtilsStringExtensions on String {
   //
 
   bool get isDigit => "0".compareTo(this) <= 0 && "9".compareTo(this) >= 0;
-  bool get isUpperCase =>
-      this == this.toUpperCase() && this != this.toLowerCase();
-  bool get isLowerCase =>
-      this == this.toLowerCase() && this != this.toUpperCase();
+  bool get isUpperCase => this == this.toUpperCase() && this != this.toLowerCase();
+  bool get isLowerCase => this == this.toLowerCase() && this != this.toUpperCase();
   bool get isLetter => this.toLowerCase() != this.toUpperCase();
 
   //
@@ -93,9 +91,7 @@ extension XyzUtilsStringExtensions on String {
   //
 
   String lineToLength(int length) {
-    return (this.length > length
-        ? "${this.substring(0, length).trim()}..."
-        : this);
+    return (this.length > length ? "${this.substring(0, length).trim()}..." : this);
   }
 
   //

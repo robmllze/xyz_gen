@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -29,8 +29,7 @@ T? let<T>(dynamic input) {
       return letBool(input) as T;
     } else if (typeEquality<T, DateTime>() || typeEquality<T, DateTime?>()) {
       return letDateTime(input) as T;
-    } else if (typeEquality<T, FirestoreTimestamp>() ||
-        typeEquality<T, FirestoreTimestamp?>()) {
+    } else if (typeEquality<T, FirestoreTimestamp>() || typeEquality<T, FirestoreTimestamp?>()) {
       return letFirestoreTimestamp(input) as T;
     } else if (typeEquality<T, Duration>() || typeEquality<T, Duration?>()) {
       return letDuration(input) as T;
@@ -255,8 +254,7 @@ class MapConverter<K, V> extends _Converter<Map<K, V>> {
         final temp = decoded.entries
             .map((final entry) {
               final convertedKey = let<K>(entry.key);
-              final convertedValue =
-                  let<V>(entry.value) ?? let<V?>(nullFallback);
+              final convertedValue = let<V>(entry.value) ?? let<V?>(nullFallback);
               if (filterNulls) {
                 if (!isNullable<K>() && convertedKey == null) {
                   return const _Empty();
@@ -377,8 +375,7 @@ T? tryCast<T>(dynamic input) {
 Map<T1, T2> nullFilteredMap<T1, T2>(Map input) {
   final filtered = input.entries.toList()
     ..retainWhere(
-      (final l) =>
-          (null is T1 || l.key != null) && (null is T2 || l.value != null),
+      (final l) => (null is T1 || l.key != null) && (null is T2 || l.value != null),
     );
   final mapped = filtered.map((final l) => MapEntry<T1, T2>(l.key, l.value));
   final result = Map.fromEntries(mapped);
@@ -387,14 +384,12 @@ Map<T1, T2> nullFilteredMap<T1, T2>(Map input) {
 
 /// Converts [input] to a List with non-null elements if `T` is non-null.
 List<T> nullFilteredList<T>(Iterable input) {
-  final filtered = input.toList()
-    ..retainWhere((final l) => (null is T || l != null));
+  final filtered = input.toList()..retainWhere((final l) => (null is T || l != null));
   return filtered.cast();
 }
 
 /// Converts [input] to a Set with non-null elements if `T` is non-null.
 Set<T> nullFilteredSet<T>(Iterable input) {
-  final filtered = input.toSet()
-    ..retainWhere((final l) => (null is T || l != null));
+  final filtered = input.toSet()..retainWhere((final l) => (null is T || l != null));
   return filtered.cast();
 }

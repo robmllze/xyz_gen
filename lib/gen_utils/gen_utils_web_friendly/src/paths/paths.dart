@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -16,8 +16,7 @@ bool isDartFilePath(
   String filePath, [
   Set<String> pathPatterns = const {},
 ]) {
-  final a =
-      pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+  final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
   final b = filePath.toLowerCase().endsWith(".dart");
   final c = a && b;
   return c;
@@ -30,8 +29,7 @@ bool isSourceDartFilePath(
   Set<String> pathPatterns = const {},
 ]) {
   final lowerCasefilePath = filePath.toLowerCase();
-  final a =
-      pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+  final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
   final b = lowerCasefilePath.endsWith(".dart");
   final c = lowerCasefilePath.endsWith(".g.dart");
   return a && b && !c;
@@ -43,8 +41,7 @@ bool isGeneratedDartFilePath(
   String filePath, [
   Set<String> pathPatterns = const {},
 ]) {
-  final a =
-      pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
+  final a = pathPatterns.isEmpty || pathContainsPatterns(filePath, pathPatterns);
   final b = filePath.toLowerCase().endsWith(".g.dart");
   final c = a && b;
   return c;
@@ -120,10 +117,8 @@ bool isPrivateFileName(String filePath) {
   String endType,
 ) {
   final fileName = getBaseName(filePath);
-  final a =
-      begType.isEmpty ? true : fileName.startsWith("${begType.toLowerCase()}_");
-  final b =
-      endType.isEmpty ? true : fileName.endsWith(".$endType".toLowerCase());
+  final a = begType.isEmpty ? true : fileName.startsWith("${begType.toLowerCase()}_");
+  final b = endType.isEmpty ? true : fileName.endsWith(".$endType".toLowerCase());
   final c = a && b;
   return (c, fileName);
 }

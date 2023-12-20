@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -43,9 +43,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
     final mappingEntries = matches.map((e) {
       final longType = e.group(0)!; // e.g. "List<String,int>"
       final shortType = e.group(1)!; // // e.g. "List"
-      final subtypes = e
-          .group(2)!
-          .split(","); // e.g. ["String", "int"] in "List<String,int>"
+      final subtypes = e.group(2)!.split(","); // e.g. ["String", "int"] in "List<String,int>"
       final nullableSymbol = e.group(5) ?? ""; // "?" or ""
       final index = e.start; // index in [input] where the match starts
       return MapEntry(

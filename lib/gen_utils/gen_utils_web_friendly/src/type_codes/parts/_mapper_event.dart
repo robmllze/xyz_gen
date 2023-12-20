@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Utils
+// XYZ Gen / Utils
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -14,8 +14,7 @@ part of '../type_codes.dart';
 
 abstract class MapperEvent {
   /// The name of the field, e.g. "firstName" or "p3".
-  String? get name =>
-      this._name ?? (this._nameIndex != null ? "p${this._nameIndex}" : null);
+  String? get name => this._name ?? (this._nameIndex != null ? "p${this._nameIndex}" : null);
 
   // The index of the generated field name, e.g. "p3" = 3.
   int? get nameIndex => this._nameIndex;
