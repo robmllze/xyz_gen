@@ -9,12 +9,31 @@ It comes with a set of generators that can be used as-is, or modified to suit yo
 ## Included Generators
 
 ### generate_exports.dart
+Looks through a folder for all Dart files and creates an exports file that includes them all, simplifying your project.
 
-This generator will search for all Dart files in a given directory, and generate an `exports.dart` file that exports all of the files in that directory.
+### generate_license_headers.dart
+Adds license headers to your files, helping to protect your work.
+
+### generate_makeups.dart
+Generates Makeups for widgets, giving them extra styles or features with ease.
 
 ### generate_models.dart
+Creates model classes from class annotations, handling types better than `json_serializable``.
 
-This generator generates model classes. It's a bit more robust than `json_serializable`. 
+### generate_preps.dart
+Inserts helpful information like line numbers and file names to keep things organized.
+
+### generate_screen.dart (only used in XYZ apps)
+
+Creates Screens for your app, including the boilerplate code needed to get them up and running.
+
+### generate_screen_access.dart (only used in XYZ apps)
+
+Connects your Screens to the navigator.
+
+### generate_configurations.dart (only used in XYZ apps)
+
+Generates code to connect your Screens to your app.
 
 ## Getting Started
 

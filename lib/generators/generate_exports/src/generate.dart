@@ -21,7 +21,8 @@ Future<void> generateExports({
 }) async {
   var cachedDirPath = "";
   // Get the template to use.
-  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template =
+      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
     // Determine the output file name from dirPath.

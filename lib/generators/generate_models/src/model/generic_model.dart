@@ -33,7 +33,8 @@ class GenericModel extends Model {
     bool includeNulls = false,
   }) {
     return includeNulls
-        ? Map.fromEntries(data.entries.where((e) => e.value != null)).map((k, v) => MapEntry(k, v!))
+        ? Map.fromEntries(data.entries.where((e) => e.value != null))
+            .map((k, v) => MapEntry(k, v!))
         : data.map((k, v) => MapEntry(k, v ?? defaultValue));
   }
 
@@ -71,12 +72,14 @@ class GenericModel extends Model {
   //
 
   @override
-  void updateWith<T extends Model>(T other) => this.updateWithJMap(other.toJMap());
+  void updateWith<T extends Model>(T other) =>
+      this.updateWithJMap(other.toJMap());
 
   //
   //
   //
 
   @override
-  void updateWithJMap<T extends Model>(Map<String, dynamic> other) => this.data.addAll(other);
+  void updateWithJMap<T extends Model>(Map<String, dynamic> other) =>
+      this.data.addAll(other);
 }

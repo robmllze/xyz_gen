@@ -101,7 +101,8 @@ class _VarArgsFunction<T> {
       inv.namedArguments.map(
         (k, v) {
           final keyAsString = k.toString();
-          return MapEntry(keyAsString.substring(_OFFSET, keyAsString.length - 2), v);
+          return MapEntry(
+              keyAsString.substring(_OFFSET, keyAsString.length - 2), v);
         },
       ),
     );

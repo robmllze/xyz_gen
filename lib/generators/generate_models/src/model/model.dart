@@ -45,8 +45,10 @@ abstract class Model {
     dynamic defaultValue,
     bool includeNulls = false,
   }) {
-    final a = this.toJMap(defaultValue: defaultValue, includeNulls: includeNulls);
-    final b = a.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    final a =
+        this.toJMap(defaultValue: defaultValue, includeNulls: includeNulls);
+    final b = a.keys.toList(growable: false)
+      ..sort((k1, k2) => k1.compareTo(k2));
     final c = {for (var k in b) k: a[k] as dynamic};
     return c;
   }

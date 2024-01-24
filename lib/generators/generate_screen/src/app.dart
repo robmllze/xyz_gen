@@ -82,7 +82,8 @@ Future<void> generateScreensApp(List<String> arguments) async {
         "configuration-template",
         help: "Configuration template file path.",
         defaultsTo: toLocalPathFormat(
-          p.join(defaultTemplatesPath, "default_screen_configuration_template.dart.md"),
+          p.join(defaultTemplatesPath,
+              "default_screen_configuration_template.dart.md"),
         ),
       )
       ..addOption(
@@ -135,11 +136,14 @@ Future<void> generateScreensApp(List<String> arguments) async {
             })
             .nonNulls
             .toSet();
-        return entries != null ? Map<String, String>.fromEntries(entries) : null;
+        return entries != null
+            ? Map<String, String>.fromEntries(entries)
+            : null;
       }
 
       bool toBool(String option) {
-        return results[option]?.toString().toLowerCase().trim() == true.toString();
+        return results[option]?.toString().toLowerCase().trim() ==
+            true.toString();
       }
 
       return GenerateScreenArgs(
@@ -175,7 +179,8 @@ Future<void> generateScreensApp(List<String> arguments) async {
         path: args.path!,
         configurationTemplateFilePath: args.configurationTemplateFilePath!,
         isAccessibleOnlyIfLoggedIn: args.isAccessibleOnlyIfLoggedIn!,
-        isAccessibleOnlyIfLoggedInAndVerified: args.isAccessibleOnlyIfLoggedInAndVerified!,
+        isAccessibleOnlyIfLoggedInAndVerified:
+            args.isAccessibleOnlyIfLoggedInAndVerified!,
         isAccessibleOnlyIfLoggedOut: args.isAccessibleOnlyIfLoggedOut!,
         isRedirectable: args.isRedirectable!,
         internalParameters: args.internalParameters ?? const {},
