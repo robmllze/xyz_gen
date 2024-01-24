@@ -1,0 +1,61 @@
+//.title
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//
+// XYZ Gen
+//
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//.title~
+
+import 'package:args/args.dart';
+
+import '/utils/all_utils.g.dart';
+import '/xyz_utils/all_xyz_utils.g.dart';
+
+import 'args.dart';
+import 'generate.dart';
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Future<void> generateForFilesTestApp(List<String> arguments) async {
+  await basicApp<GenerateForFilesArgs>(
+    appTitle: "XYZ Generate For Files Test",
+    arguments: arguments,
+    parser: ArgParser()
+      ..addFlag(
+        "help",
+        abbr: "h",
+        negatable: false,
+        help: "Help information.",
+      )
+      ..addOption(
+        "roots",
+        abbr: "r",
+        help: "Root directory paths separated by `:`.",
+        defaultsTo: toLocalPathFormat("/lib"),
+      )
+      ..addOption(
+        "subs",
+        abbr: "s",
+        help: "Sub-directory paths separated by `:`.",
+      )
+      ..addOption(
+        "patterns",
+        abbr: "p",
+        help: "Path patterns separated by `:`.",
+      ),
+    onResults: (parser, results) {
+      return GenerateForFilesArgs(
+        rootPaths: splitArg(results["roots"])?.toSet(),
+        subPaths: splitArg(results["subs"])?.toSet(),
+        pathPatterns: splitArg(results["patterns"])?.toSet(),
+      );
+    },
+    action: (parser, results, args) async {
+      await generateForFiles(
+        rootDirPaths: args.rootPaths ?? {},
+        subDirPaths: args.subPaths ?? {},
+        pathPatterns: args.pathPatterns ?? {},
+      );
+    },
+  );
+}

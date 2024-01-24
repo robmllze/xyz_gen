@@ -6,16 +6,21 @@
 
 ### Installation
 
-Add this to your package's `pubspec.yaml` file:
+1. Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
   xyz_gen: any
 ```
 
-## Usage
+2. Download the generator scripts here https://github.com/robmllze/xyz_gen/blob/main/___generators.zip and extract them to your project's root directory.
 
-No usage information is available at this time. Please contact the author or check back later.
+3. Modify the generators as needed. You may also wish to change the generator templates to suit your needs.
+
+4. If you're using VS Code, you can right-click one of the generators, such as `generate_exports.dart`, and select "Run Code".
+
+5. If you're using another IDE, you can run the generators from the command line, e.g. `dart generate_exports.dart`.
+
 
 ## Contributing
 
