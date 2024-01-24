@@ -4,6 +4,18 @@
 
 `xyz_gen` is a Dart package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
 
+It comes with a set of generators that can be used as-is, or modified to suit your needs. You can also create your own generators by cloning repository (here)[https://github.com/robmllze/xyz_gen] and modifying the existing generators.
+
+## Included Generators
+
+### generate_exports.dart
+
+This generator will search for all Dart files in a given directory, and generate an `exports.dart` file that exports all of the files in that directory.
+
+### generate_models.dart
+
+This generator generates model classes. It's a bit more robust than `json_serializable`. 
+
 ## Getting Started
 
 ### Installation

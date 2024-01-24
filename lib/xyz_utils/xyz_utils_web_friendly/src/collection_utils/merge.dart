@@ -72,16 +72,16 @@ dynamic mergeDataDeep(
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 dynamic mergeDataDeepIncludeCallsToJson(dynamic a, dynamic b) {
-  return mergeDataDeep(a, b, tryCallingOnObject_toJson);
+  return mergeDataDeep(a, b, tryCallingOnObjectToJson);
 }
 
 dynamic mergeDataDeepIncludeCallsToMap(dynamic a, dynamic b) {
-  return mergeDataDeep(a, b, tryCallingOnObject_toMap);
+  return mergeDataDeep(a, b, tryCallingOnObjectToMap);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-dynamic tryCallingOnObject_toJson(dynamic object) {
+dynamic tryCallingOnObjectToJson(dynamic object) {
   try {
     return object?.toJson();
   } catch (_) {
@@ -89,7 +89,7 @@ dynamic tryCallingOnObject_toJson(dynamic object) {
   }
 }
 
-dynamic tryCallingOnObject_toMap(dynamic object) {
+dynamic tryCallingOnObjectToMap(dynamic object) {
   try {
     return object?.toMap();
   } catch (_) {

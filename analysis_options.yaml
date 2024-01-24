@@ -24,7 +24,7 @@ linter:
     prefer_single_quotes: false
     require_trailing_commas: true
     unnecessary_this: false
-    camel_case_types: false
+    camel_case_types: true
 
 analyzer:
   exclude: 
