@@ -17,22 +17,19 @@ Adds license headers to your files, helping to protect your work.
 ### generate_makeups.dart
 Generates Makeups for widgets, giving them extra styles or features with ease.
 
-### generate_models.dart
+### generate_models.dart (requires additional dependencies)
 Creates model classes from class annotations, handling types better than `json_serializable``.
 
 ### generate_preps.dart
 Inserts helpful information like line numbers and file names to keep things organized.
 
-### generate_screen.dart (only used in XYZ apps)
-
+### generate_screen.dart (for XYZ configured apps only)
 Creates Screens for your app, including the boilerplate code needed to get them up and running.
 
-### generate_screen_access.dart (only used in XYZ apps)
-
+### generate_screen_access.dart (for XYZ configured apps only)
 Connects your Screens to the navigator.
 
-### generate_configurations.dart (only used in XYZ apps)
-
+### generate_configurations.dart (for XYZ configured apps only)
 Generates code to connect your Screens to your app.
 
 ## Getting Started
