@@ -45,7 +45,7 @@ extension StringExtensions on String {
     if (this.isEmpty) return [this];
     final words = <String>[];
     var currentWord = StringBuffer();
-    String? a = null;
+    String? a;
     for (var n = 0; n < this.length; n++) {
       final b = this[n];
       if (b.isLetter || b.isDigit) {

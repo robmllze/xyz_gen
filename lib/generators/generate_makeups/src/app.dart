@@ -9,9 +9,9 @@
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
-import 'package:xyz_gen/generators/generate_makeups/src/generate.dart';
-import 'package:xyz_gen/utils/all_utils.g.dart';
-import 'package:xyz_gen/xyz_utils/all_xyz_utils.g.dart';
+import 'generate.dart';
+import '../../../utils/all_utils.g.dart';
+import '../../../xyz_utils/all_xyz_utils.g.dart';
 
 import 'args.dart';
 

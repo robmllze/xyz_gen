@@ -25,6 +25,6 @@ void main(List<String> arguments) {
       [
         "$APP_FOLDER/lib",
       ].join(":"),
-    ]
+    ],
   ]);
 }

@@ -37,7 +37,7 @@ Future<void> generateLicenseHeaders({
 Future<void> _generateForFile(String filePath, String template) async {
   final lines = (await readFileAsLines(filePath))!;
   if (lines.isNotEmpty) {
-    int n = 0;
+    var n = 0;
     for (n; n < lines.length; n++) {
       final line = lines[n].trim();
       if (line.isNotEmpty && !line.startsWith("//")) {
