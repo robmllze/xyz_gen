@@ -1,6 +1,6 @@
 # XYZ Gen
 
-[![pub package](https://img.shields.io/pub/v/xyz_pod.svg)](https://pub.dev/packages/xyz_gen)
+[![pub package](https://img.shields.io/pub/v/xyz_gen.svg)](https://pub.dev/packages/xyz_gen)
 
 `xyz_gen` is a Dart package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
 
