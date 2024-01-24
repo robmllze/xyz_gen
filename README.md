@@ -13,7 +13,7 @@ dependencies:
   xyz_gen: any
 ```
 
-2. Download the generator scripts here https://github.com/robmllze/xyz_gen/blob/main/___generators.zip and extract them to your project's root directory.
+2. Download the generator scripts here https://github.com/robmllze/xyz_gen/raw/main/___generators.zip and extract them to your project's root directory.
 
 3. Modify the generators as needed. You may also wish to change the generator templates to suit your needs.
 
