@@ -4,7 +4,7 @@
 
 `xyz_gen` is a Dart package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
 
-It comes with a set of generators that can be used as-is, or modified to suit your needs. You can also create your own generators by cloning repository (here)[https://github.com/robmllze/xyz_gen] and modifying the existing generators.
+It comes with a set of generators that can be used as-is, or modified to suit your needs. You can also create your own generators by cloning repository [here](https://github.com/robmllze/xyz_gen) and modifying the existing generators.
 
 ## Included Generators
 
