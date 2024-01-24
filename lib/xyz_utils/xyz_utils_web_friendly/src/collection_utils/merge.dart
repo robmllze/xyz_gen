@@ -71,11 +71,11 @@ dynamic mergeDataDeep(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-dynamic mergeDataDeepIncludeCalls_toJson(dynamic a, dynamic b) {
+dynamic mergeDataDeepIncludeCallsToJson(dynamic a, dynamic b) {
   return mergeDataDeep(a, b, tryCallingOnObject_toJson);
 }
 
-dynamic mergeDataDeepIncludeCalls_toMap(dynamic a, dynamic b) {
+dynamic mergeDataDeepIncludeCallsToMap(dynamic a, dynamic b) {
   return mergeDataDeep(a, b, tryCallingOnObject_toMap);
 }
 
