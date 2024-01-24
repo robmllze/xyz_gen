@@ -17,7 +17,7 @@ import 'generate.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateForFilesTestApp(List<String> arguments) async {
-  await basicApp<GenerateForFilesArgs>(
+  await basicCmdAppHelper<GenerateForFilesArgs>(
     appTitle: "XYZ Generate For Files Test",
     arguments: arguments,
     parser: ArgParser()

@@ -17,6 +17,7 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A command line app for generating screens.
 Future<void> generateScreensApp(List<String> arguments) async {
   final defaultTemplatesPath = p.join(
     await getXyzGenLibPath(),
@@ -24,7 +25,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
     "generate_screen",
     "templates",
   );
-  await basicApp<GenerateScreenArgs>(
+  await basicCmdAppHelper<GenerateScreenArgs>(
     appTitle: "XYZ Generate Screen",
     arguments: arguments,
     parser: ArgParser()

@@ -63,17 +63,18 @@ class Version {
   //
   //
 
+  /// Changes the version by the given amounts.
   Version change({
-    int major = 0,
-    int minor = 0,
-    int patch = 0,
-    int build = 0,
+    int? major,
+    int? minor,
+    int? patch,
+    int? build,
   }) {
     return Version(
-      major: this.major + major,
-      minor: this.minor + minor,
-      patch: this.patch + patch,
-      build: this.build + build,
+      major: major ?? this.major,
+      minor: minor ?? this.minor,
+      patch: patch ?? this.patch,
+      build: build ?? this.build,
     );
   }
 
@@ -81,6 +82,7 @@ class Version {
   //
   //
 
+  /// Increases the version by the given amounts.
   Version increase({
     int major = 0,
     int minor = 0,
@@ -99,6 +101,7 @@ class Version {
   //
   //
 
+  /// Decreases the version by the given amounts.
   Version decrease({
     int major = 0,
     int minor = 0,
@@ -117,14 +120,20 @@ class Version {
   //
   //
 
+  /// Returns the version components as a list.
   List<int> get components => [this.major, this.minor, this.patch, this.build];
 
   //
   //
   //
 
+  /// Returns true if this version is higher than the given version.
   bool isHigherThan(Version other) => this._compareTo(other) == 1;
+
+  /// Returns true if this version is lower than the given version.
   bool isLowerThan(Version other) => this._compareTo(other) == -1;
+
+  /// Returns true if this version is equal to the given version.
   bool isEqualTo(Version other) => this._compareTo(other) == 0;
 
   //

@@ -1,4 +1,6 @@
-# xyz_gen
+# XYZ Gen
+
+[![pub package](https://img.shields.io/pub/v/xyz_pod.svg)](https://pub.dev/packages/xyz_gen)
 
 `xyz_gen` is a Dart package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
 
@@ -14,13 +16,9 @@ dependencies:
 ```
 
 2. Download the generator scripts here https://github.com/robmllze/xyz_gen/raw/main/___generators.zip and extract them to your project's root directory.
-
 3. Modify the generators as needed. You may also wish to change the generator templates to suit your needs.
-
 4. If you're using VS Code, you can right-click one of the generators, such as `generate_exports.dart`, and select "Run Code".
-
 5. If you're using another IDE, you can run the generators from the command line, e.g. `dart generate_exports.dart`.
-
 
 ## Contributing
 

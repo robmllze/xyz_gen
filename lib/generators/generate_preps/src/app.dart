@@ -16,8 +16,9 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A command line app for generating preps.
 Future<void> generatePrepsApp(List<String> arguments) async {
-  await basicApp<PrepTemplateArgs>(
+  await basicCmdAppHelper<PrepTemplateArgs>(
     appTitle: "XYZ Generate Preps",
     arguments: arguments,
     parser: ArgParser()

@@ -8,6 +8,8 @@
 
 import '/xyz_utils/xyz_utils_web_friendly/all_xyz_utils_web_friendly.g.dart';
 
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 /// Extracts nested scopes from a source string based on opening and closing\
 /// delimiters.
 Iterable<String> extractScopes(

@@ -17,7 +17,7 @@ import 'generate.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateForAnnotationTestApp(List<String> arguments) async {
-  await basicApp<GenerateForAnnotationTestApp>(
+  await basicCmdAppHelper<GenerateForAnnotationTestApp>(
     appTitle: "XYZ Generate For Annotation Test",
     arguments: arguments,
     parser: ArgParser()

@@ -17,8 +17,9 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A command line app for generating screen access.
 Future<void> generateScreenAccessApp(List<String> arguments) async {
-  await basicApp<GenerateScreenAccessArgs>(
+  await basicCmdAppHelper<GenerateScreenAccessArgs>(
     appTitle: "XYZ Generate Screen Access",
     arguments: arguments,
     parser: ArgParser()

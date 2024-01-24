@@ -14,7 +14,8 @@ import '/xyz_utils/xyz_utils_web_friendly/all_xyz_utils_web_friendly.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> basicApp<T extends ValidObject>({
+/// A helper for creating a basic command-line app.
+Future<void> basicCmdAppHelper<T extends ValidObject>({
   required String appTitle,
   required List<String> arguments,
   required ArgParser parser,
@@ -47,7 +48,8 @@ Future<void> basicApp<T extends ValidObject>({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class BasicAppTemplateArgs extends ValidObject {
+/// An arguments model for a basic command-line app.
+class BasicCmdAppArgs extends ValidObject {
   //
   //
   //
@@ -62,7 +64,7 @@ class BasicAppTemplateArgs extends ValidObject {
   //
   //
 
-  const BasicAppTemplateArgs({
+  const BasicCmdAppArgs({
     this.fallbackDartSdkPath,
     required this.templateFilePath,
     required this.rootPaths,
@@ -86,12 +88,14 @@ class BasicAppTemplateArgs extends ValidObject {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Splits the given [input] string by the given [separator] and trims each part.
 Iterable<String>? splitArg(dynamic input, [String separator = ":"]) {
   return input?.toString().split(separator).map((e) => e.trim()).nullIfEmpty;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Prints the usage information for the given [parser].
 void printUsage(String appTitle, ArgParser parser) {
   printLightCyan(
     [

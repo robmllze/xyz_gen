@@ -16,8 +16,9 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A command line app for generating models.
 Future<void> generateModelsApp(List<String> arguments) async {
-  await basicApp<BasicAppTemplateArgs>(
+  await basicCmdAppHelper<BasicCmdAppArgs>(
     appTitle: "XYZ Generate Models",
     arguments: arguments,
     parser: ArgParser()
@@ -61,7 +62,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
         help: "Dart SDK path.",
       ),
     onResults: (parser, results) {
-      return BasicAppTemplateArgs(
+      return BasicCmdAppArgs(
         fallbackDartSdkPath: results["dart-sdk"],
         templateFilePath: results["template"],
         rootPaths: splitArg(results["roots"])?.toSet(),

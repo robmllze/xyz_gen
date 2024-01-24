@@ -6,6 +6,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+/// Replaces the keys of [data] in [input] with the corresponding values.
 String replaceAllData(String input, Map<Pattern, dynamic> data) {
   var output = input;
   for (final entry in data.entries) {
@@ -19,5 +20,6 @@ String replaceAllData(String input, Map<Pattern, dynamic> data) {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 extension ReplaceDataExtension on String {
+  /// Replaces the keys of [data] in this String with the corresponding values.
   String replaceData(Map<String, dynamic> data) => replaceAllData(this, data);
 }

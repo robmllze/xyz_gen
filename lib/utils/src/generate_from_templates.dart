@@ -19,6 +19,19 @@ import '/xyz_utils/all_xyz_utils.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A helper for generating code from templates.
+///
+/// - [fallbackDartSdkPath] is used if the `DART_SDK` environment variable is not
+/// automatically detected.
+/// - [rootDirPaths] is a set of paths to search for Dart files.
+/// - [subDirPaths] is a subset of paths to search for Dart files.
+/// - [generateForFile] is a function that is called for each Dart file found.
+/// - [templateFilePaths] is a set of paths to Markdown files that contain
+/// templates used by [generateForFile].
+/// - [begType] is a string that is used to filter the Dart files found.
+/// - [pathPatterns] is a set of patterns used to filter the Dart files found.
+/// - [deleteGeneratedFiles] can be set to `true` to delete generated files.
+/// - [onDelete] is a callback that is called when a file is deleted.
 Future<void> generateFromTemplates({
   String? fallbackDartSdkPath,
   required Set<String> rootDirPaths,
@@ -77,9 +90,9 @@ Future<void> generateFromTemplates({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// Creates an [AnalysisContextCollection] from a set of paths. This is used to
-// analyze Dart files. The [fallbackDartSdkPath] is used if the `DART_SDK`
-// environment variable is not set.
+/// Creates an [AnalysisContextCollection] from a set of paths. This is used to
+/// analyze Dart files. The [fallbackDartSdkPath] is used if the `DART_SDK`
+/// environment variable is not set.
 AnalysisContextCollection createAnalysisContextCollection(
   Set<String> paths,
   String? fallbackDartSdkPath,

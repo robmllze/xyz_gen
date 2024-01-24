@@ -16,8 +16,9 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A command line app for generating exports.
 Future<void> generateExportsApp(List<String> arguments) async {
-  await basicApp<BasicAppTemplateArgs>(
+  await basicCmdAppHelper<BasicCmdAppArgs>(
     appTitle: "XYZ Generate Exports",
     arguments: arguments,
     parser: ArgParser()
@@ -56,7 +57,7 @@ Future<void> generateExportsApp(List<String> arguments) async {
         ),
       ),
     onResults: (parser, results) {
-      return BasicAppTemplateArgs(
+      return BasicCmdAppArgs(
         templateFilePath: results["template"],
         rootPaths: splitArg(results["roots"])?.toSet(),
         subPaths: splitArg(results["subs"])?.toSet(),

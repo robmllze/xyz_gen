@@ -9,14 +9,15 @@
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
-import 'generate.dart';
-import '../../../utils/all_utils.g.dart';
-import '../../../xyz_utils/all_xyz_utils.g.dart';
+import '/utils/all_utils.g.dart';
+import '/xyz_utils/all_xyz_utils.g.dart';
 
 import 'args.dart';
+import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// A command line app for generating makeups.
 Future<void> generateMakeupsApp(List<String> arguments) async {
   final defaultTemplatesPath = p.join(
     await getXyzGenLibPath(),
@@ -24,7 +25,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
     "generate_makeups",
     "templates",
   );
-  await basicApp<GenerateMakeupsArgs>(
+  await basicCmdAppHelper<GenerateMakeupsArgs>(
     appTitle: "XYZ Generate Makeups",
     arguments: arguments,
     parser: ArgParser()
