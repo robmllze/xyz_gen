@@ -148,9 +148,11 @@ packages:
   xyz_gen:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "09ef978516907fbc27ae3828789d03311742634d"
+      url: "https://github.com/robmllze/xyz_gen"
+    source: git
     version: "0.30.0"
   yaml:
     dependency: transitive

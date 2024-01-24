@@ -111,7 +111,7 @@
     },
     {
       "name": "xyz_gen",
-      "rootUri": "../../",
+      "rootUri": "file:///Users/robmllze/.pub-cache/git/xyz_gen-09ef978516907fbc27ae3828789d03311742634d/",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -128,7 +128,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-01-24T08:58:07.643887Z",
+  "generated": "2024-01-24T08:59:35.979391Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }
