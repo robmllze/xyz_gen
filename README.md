@@ -17,7 +17,7 @@ Adds license headers to your files, helping to protect your work.
 ### generate_makeups.dart
 Generates Makeups for widgets, giving them extra styles or features with ease.
 
-### generate_models.dart (requires additional dependencies)
+### generate_models.dart
 Creates model classes from class annotations, handling types better than `json_serializable``.
 
 ### generate_preps.dart

@@ -91,6 +91,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Searches [mappers] for mappers that match the given [type] and returns them.
 TTypeMappers filterMappersByType(
   TTypeMappers mappers,
   String type,
@@ -105,17 +106,36 @@ TTypeMappers filterMappersByType(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Expands non-generic Dart collection types (like "Map") to their generic forms
-/// (e.g. Map<dynamic, dynamic>).
+/// Expands some non-generic Dart collection types to their generic forms
+/// (e.g. Map to Map<dynamic, dynamic>). It processes types separated by "|"
+/// and skips over collections that already specify types.
 ///
-/// Handles cases followed by "|" and ignores already typed collections.
+/// This only works for the following types:
+///
+/// - Map
+/// - List
+/// - Set
+/// - Iterable
+/// - Queue
+/// - LinkedList
+/// - HashSet
+/// - LinkedHashSet
+/// - HashMap
+/// - LinkedHashMap
 String toGenericTypeCode(String typeCode) {
   const TRANSFORMATIONS = {
     "Map": "Map<dynamic, dynamic>",
     "List": "List<dynamic>",
     "Set": "Set<dynamic>",
     "Iterable": "Iterable<dynamic>",
+    "Queue": "Queue<dynamic>",
+    "LinkedList": "LinkedList<dynamic>",
+    "HashSet": "HashSet<dynamic>",
+    "LinkedHashSet": "LinkedHashSet<dynamic>",
+    "HashMap": "HashMap<dynamic, dynamic>",
+    "LinkedHashMap": "LinkedHashMap<dynamic, dynamic>",
   };
+
   for (final key in TRANSFORMATIONS.keys) {
     // This regex looks for the key (like "Map") that is not immediately
     // followed by a "<", but it will also match if the key is followed by "|"

@@ -190,7 +190,7 @@ Future<void> _generateMakeupFile(
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
     collection: collection,
-    memberAnnotations: {"MakeupParameter"},
+    memberAnnotations: {"Parameter"},
     onAnnotatedMember:
         (final memberAnnotationName, final memberName, final memberType) async {
       parameters.addAll({

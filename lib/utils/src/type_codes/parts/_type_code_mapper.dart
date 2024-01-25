@@ -27,7 +27,10 @@ class TypeCodeMapper {
   //
   //
 
-  String map({required String fieldName, required String typeCode}) {
+  String map({
+    required String fieldName,
+    required String typeCode,
+  }) {
     final genericTypeCode = toGenericTypeCode(typeCode);
     var result = this.mapCollection(
       fieldName: fieldName,

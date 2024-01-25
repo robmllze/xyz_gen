@@ -12,7 +12,6 @@ part of '../generate.dart';
 
 Map<String, String> _replacements(Map<String, TypeCode> input) {
   final parameters = Map<String, TypeCode>.from(input);
-
   final id = parameters["id"] ??= const TypeCode("String?");
   final args = parameters["args"] ??= const TypeCode("dynamic");
   final allEntries = parameters.entries.toList()

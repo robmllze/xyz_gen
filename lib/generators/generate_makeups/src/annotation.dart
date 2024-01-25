@@ -14,9 +14,3 @@ class GenerateMakeups {
     this.parameters = const {},
   });
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-class MakeupParameter {
-  const MakeupParameter();
-}

@@ -12,22 +12,23 @@ part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Mapper event base class.
 abstract class MapperEvent {
   /// The name of the field, e.g. "firstName" or "p3".
   String? get name =>
       this._name ?? (this._nameIndex != null ? "p${this._nameIndex}" : null);
-
-  // The index of the generated field name, e.g. "p3" = 3.
-  int? get nameIndex => this._nameIndex;
-
-  // The field type, e.g. "String?".
-  String? get type => this._type;
-
-  Iterable<String>? get matchGroups => this._matchGroups;
-
   String? _name;
+
+  /// The index of the generated field name, e.g. "p3" = 3.
+  int? get nameIndex => this._nameIndex;
   int? _nameIndex;
+
+  /// The field type, e.g. "String?".
+  String? get type => this._type;
   String? _type;
+
+  /// Regex match groups.
+  Iterable<String>? get matchGroups => this._matchGroups;
   Iterable<String>? _matchGroups;
 }
 
@@ -54,6 +55,7 @@ class CollectionMapperEvent extends MapperEvent {
 /// Mapper event for non-collection types, e.g. int, String, DateTime.
 class ObjectMapperEvent extends MapperEvent {
   ObjectMapperEvent();
+
   ObjectMapperEvent.custom(String name, Iterable<String> matchGroups) {
     this._name = name;
     this._matchGroups = matchGroups;

@@ -57,9 +57,7 @@ class TypeCode {
   //
 
   static String _typeCodeToName(String value) {
-    var temp = value //
-        .replaceAll(" ", "")
-        .replaceAll("|let", "");
+    var temp = value.replaceAll(" ", "").replaceAll("|let", "");
     while (true) {
       final match = RegExp(r"\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>")
           .firstMatch(temp);
@@ -76,10 +74,7 @@ class TypeCode {
             .replaceAll(",", "+"),
       );
     }
-    return temp //
-        .replaceAll("[", "<")
-        .replaceAll("]", ">")
-        .replaceAll("+", ", ");
+    return temp.replaceAll("[", "<").replaceAll("]", ">").replaceAll("+", ", ");
   }
 
   //
