@@ -153,7 +153,7 @@
     },
     {
       "name": "xyz_utils",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/xyz_utils-0.29.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/xyz_utils-0.29.2",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -170,7 +170,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-01-27T01:01:44.574090Z",
+  "generated": "2024-01-27T01:07:58.472902Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }
