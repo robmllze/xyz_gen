@@ -21,7 +21,8 @@ Future<void> generateForFiles({
     final results = await findDartFiles(
       dirPath,
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async =>
+          !isGeneratedDartFilePath(filePath),
     );
     for (final result in results) {
       final filePath = result.filePath;

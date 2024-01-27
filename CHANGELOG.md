@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release of the project.
 
-## [0.29.0]
+## [0.29.1]
 
 - Current release of the project.
 - Extracted some utilities to the separate package, `xyz_utils`.
