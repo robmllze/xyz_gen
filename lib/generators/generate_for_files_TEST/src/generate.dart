@@ -8,7 +8,7 @@
 
 import '/utils/src/dart_files.dart';
 import '/utils/all_utils.g.dart';
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,8 +21,7 @@ Future<void> generateForFiles({
     final results = await findDartFiles(
       dirPath,
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async =>
-          !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
     );
     for (final result in results) {
       final filePath = result.filePath;

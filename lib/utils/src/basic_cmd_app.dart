@@ -9,8 +9,7 @@
 import 'dart:io' show exit;
 
 import 'package:args/args.dart';
-
-import '/xyz_utils/xyz_utils_web_friendly/all_xyz_utils_web_friendly.g.dart';
+import 'package:xyz_utils/shared/web_friendly/all_xyz_utils_web_friendly.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

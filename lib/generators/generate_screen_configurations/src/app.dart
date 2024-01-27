@@ -10,7 +10,7 @@ import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
 import '/utils/all_utils.g.dart';
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 import 'generate.dart';
 

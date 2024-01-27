@@ -3,13 +3,13 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-64.0.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-66.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/analyzer-6.2.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/analyzer-6.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -24,6 +24,12 @@
       "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/async-2.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "clock",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/clock-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "collection",
@@ -44,6 +50,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "equatable",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/equatable-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "file",
       "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/file-7.0.0",
       "packageUri": "lib/",
@@ -56,6 +68,24 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "http",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/http-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
@@ -63,7 +93,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/meta-1.10.0",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/meta-1.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -116,6 +146,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "web",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/web-0.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "xyz_utils",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/xyz_utils-0.29.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "yaml",
       "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/yaml-3.1.2",
       "packageUri": "lib/",
@@ -128,7 +170,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-01-26T09:16:03.558172Z",
+  "generated": "2024-01-27T00:52:45.561495Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

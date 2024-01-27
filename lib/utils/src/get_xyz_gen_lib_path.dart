@@ -9,8 +9,7 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
-
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/non_web/src/get_package_lib_path.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

@@ -9,7 +9,7 @@
 import 'package:path/path.dart' as p;
 
 import '/utils/all_utils.g.dart';
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,8 +21,7 @@ Future<void> generateExports({
 }) async {
   var cachedDirPath = "";
   // Get the template to use.
-  final template =
-      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
     // Determine the output file name from dirPath.

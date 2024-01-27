@@ -11,7 +11,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 
 import '/utils/all_utils.g.dart';
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 part 'generate_parts/_generate_screen_configuration_file.dart';
 

@@ -10,7 +10,7 @@ import 'dart:io';
 
 import '/utils/src/dart_files.dart';
 import '/utils/all_utils.g.dart';
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

@@ -10,7 +10,7 @@ import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
 import '/utils/all_utils.g.dart';
-import '/xyz_utils/all_xyz_utils.g.dart';
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 import 'args.dart';
 import 'generate.dart';
@@ -72,8 +72,7 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         rootPaths: splitArg(results["roots"])?.toSet(),
         subPaths: splitArg(results["subs"])?.toSet(),
         pathPatterns: splitArg(results["patterns"])?.toSet(),
-        screenClassNames:
-            splitArg(results["additional-screen-class-names"])?.toSet(),
+        screenClassNames: splitArg(results["additional-screen-class-names"])?.toSet(),
         templateFilePath: results["template"],
         outputFilePath: results["output"],
       );
