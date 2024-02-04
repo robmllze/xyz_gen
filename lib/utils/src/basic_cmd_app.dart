@@ -88,7 +88,7 @@ class BasicCmdAppArgs extends ValidObject {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Splits the given [input] string by the given [separator] and trims each part.
-Iterable<String>? splitArg(dynamic input, [String separator = ":"]) {
+Iterable<String>? splitArg(dynamic input, [Pattern separator = "&"]) {
   return input?.toString().split(separator).map((e) => e.trim()).nullIfEmpty;
 }
 

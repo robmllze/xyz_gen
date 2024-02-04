@@ -27,7 +27,7 @@ void main(List<String> arguments) async {
       "-r",
       [
         APP_FOLDER,
-      ].join(":"),
+      ].join("&"),
       // Sub-directories.
       "-s",
       [
@@ -44,7 +44,7 @@ void main(List<String> arguments) async {
         "xyz_utils",
         "xyz_utils/xyz_utils_non_web",
         "xyz_utils/xyz_utils_web_friendly",
-      ].join(":"),
+      ].join("&"),
     ],
   ]);
 }

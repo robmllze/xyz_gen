@@ -26,12 +26,12 @@ void main() async {
     "-r",
     [
       "$APP_FOLDER/lib",
-    ].join(":"),
+    ].join("&"),
     // Sub-directories.
     "-s",
     [
       "models",
-    ].join(":"),
+    ].join("&"),
   ]);
   // STEP 2 - INCLUDE MODEL FILES TO DART EXPORTS
   generateExportsApp([
@@ -40,10 +40,10 @@ void main() async {
     "-r",
     [
       "$APP_FOLDER/lib",
-    ].join(":"),
+    ].join("&"),
     "-s",
     [
       "models",
-    ].join(":"),
+    ].join("&"),
   ]);
 }

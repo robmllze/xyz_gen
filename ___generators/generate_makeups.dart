@@ -11,7 +11,7 @@ import 'package:xyz_gen/generators/generate_makeups/all_generate_makeups.g.dart'
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 // Specify the root folder in your project to start generating from.
-const APP_FOLDER = "app";
+const APP_FOLDER = "test_app";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -32,13 +32,13 @@ void main() async {
     "-r",
     [
       "$APP_FOLDER/lib",
-    ].join(":"),
+    ].join("&"),
     // Sub-directories.
     "-s",
     [
       "widgets",
       "components",
-    ].join(":"),
+    ].join("&"),
     // Output directory.
     "--output",
     "$APP_FOLDER/lib/makeups",

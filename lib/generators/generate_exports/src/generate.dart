@@ -21,19 +21,24 @@ Future<void> generateExports({
 }) async {
   var cachedDirPath = "";
   // Get the template to use.
-  final template =
-      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
-  for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
+  for (final dirPath
+      in combinePathSets([rootDirPaths, subDirPaths]).map((e) => e.replaceAll("\\", "/"))) {
     // Determine the output file name from dirPath.
-    final folderName = getBaseName(dirPath);
+    final folderName = p.basename(dirPath.replaceAll("\\", "/"));
+
     final outputFileName = "all_$folderName.g.dart";
-    final outputFilePath = p.join(dirPath, outputFileName);
+    final outputFilePath = [dirPath, outputFileName].join("/");
+
+    print("Looking in $dirPath...");
+
     // Find all Dart files in dirPath.
     await findDartFiles(
       dirPath,
       pathPatterns: pathPatterns,
       onFileFound: (_, __, filePath) async {
+        filePath = filePath.replaceAll("\\", "/");
         // Create the file if it doesn't exist.
         if (dirPath != cachedDirPath) {
           cachedDirPath = dirPath;
@@ -45,11 +50,10 @@ Future<void> generateExports({
           // Get the relative file path.
           var relativeFilePath = filePath.replaceFirst(dirPath, "");
           // Remove the initial "/" from the relative file path if present.
-          relativeFilePath = relativeFilePath.startsWith(p.separator)
-              ? relativeFilePath.substring(1)
-              : relativeFilePath;
+          relativeFilePath =
+              relativeFilePath.startsWith("/") ? relativeFilePath.substring(1) : relativeFilePath;
           // Get the file name from the file path.
-          final fileName = getBaseName(filePath);
+          final fileName = p.basename(filePath.replaceAll("\\", "/"));
           // Check if the file is private / if it starts with "_".
           final private = fileName.startsWith("_");
           // Write the export statement to the output file if it's not private.

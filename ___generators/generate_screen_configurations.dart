@@ -11,7 +11,7 @@ import 'package:xyz_gen/generators/generate_screen_configurations/all_generate_s
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 // Specify the root folder in your project to start generating from.
-const APP_FOLDER = "test";
+const APP_FOLDER = "test_app";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -27,12 +27,12 @@ void main(List<String> arguments) async {
       "-r",
       [
         "$APP_FOLDER/lib",
-      ].join(":"),
+      ].join("&"),
       // Sub-directories.
       "-s",
       [
         "screens",
-      ].join(":"),
+      ].join("&"),
     ],
   ]);
 }

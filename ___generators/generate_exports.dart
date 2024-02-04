@@ -6,28 +6,31 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:io';
+
 import 'package:xyz_gen/generators/generate_exports/all_generate_exports.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 // Specify the root folder in your project to start generating from.
-const APP_FOLDER = "app";
+const APP_FOLDER = "test_app";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main(List<String> arguments) async {
+  final workingDirectory = Directory.fromUri(Platform.script).parent.path;
   await generateExportsApp([
     if (arguments.isNotEmpty)
       ...arguments
     else ...[
       // Template file path.
       "-t",
-      "___generators/templates/generate_exports/default_exports_template.dart.md",
+      "$workingDirectory/templates/generate_exports/default_exports_template.dart.md",
       // Root directories.
       "-r",
       [
-        APP_FOLDER,
-      ].join(":"),
+        "$workingDirectory/../$APP_FOLDER",
+      ].join("&"),
       // Sub-directories.
       "-s",
       [
@@ -54,7 +57,7 @@ void main(List<String> arguments) async {
         "types",
         "utils",
         "widgets",
-      ].join(":"),
+      ].join("&"),
     ],
   ]);
 }
