@@ -10,33 +10,33 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const TARGET = "test_app";
+// To-Do: Specify your apps/root folders to generate for.
+const targetApps = <String>[
+  "test_app",
+];
+
+// To-Do: Specify the directories in your apps/root folders to generate for.
+const subDirectories = <String>[
+  "screens",
+];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//
+// DO NOT MODIFY BELOW
+//
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main([List<String> arguments = const []]) async {
-  await generateScreenAccessApp([
-    if (arguments.isNotEmpty)
-      ...arguments
-    else ...[
-      // Template file path.
+void main() async {
+  for (final targetApp in targetApps) {
+    await generateScreenAccessApp([
       "-t",
       "$currentScriptDir/templates/generate_screen_access/default_screen_access_template.dart.md",
-      // Root directories.
       "-r",
-      [
-        "$TARGET/lib",
-      ].map((e) => "$currentScriptDir/../$e").join("&"),
-      // Sub-directories.
+      targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
       "-s",
-      [
-        "screens",
-      ].join("&"),
-      // Output.
+      subDirectories.join("&"),
       "--output",
-      [
-        "$TARGET/lib/screens/screen_access.g.dart",
-      ].map((e) => "$currentScriptDir/../$e").join("&"),
-    ],
-  ]);
+      "$currentScriptDir/../$targetApp/lib/makeups",
+    ]);
+  }
 }

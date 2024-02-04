@@ -10,12 +10,12 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// To-Do: Specify your apps/root folders to generate exports for.
+// To-Do: Specify your apps/root folders to generate for.
 const targetApps = <String>[
   "test_app",
 ];
 
-// To-Do: Specify the directories in your apps/root folders to generate exports for.
+// To-Do: Specify the directories in your apps/root folders to generate for.
 const subDirectories = <String>[
   "",
   "generators",
@@ -50,20 +50,13 @@ const subDirectories = <String>[
 //
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main([List<String> arguments = const []]) async {
+void main() async {
   await generateExportsApp([
-    if (arguments.isNotEmpty)
-      ...arguments
-    else ...[
-      // Template file.
-      "-t",
-      "$currentScriptDir/templates/generate_exports/default_license_header_template.dart.md",
-      // Root directories.
-      "-r",
-      targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
-      // Sub-directories.
-      "-s",
-      subDirectories.join("&"),
-    ],
+    "-t",
+    "$currentScriptDir/templates/generate_exports/default_license_header_template.dart.md",
+    "-r",
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    "-s",
+    subDirectories.join("&"),
   ]);
 }

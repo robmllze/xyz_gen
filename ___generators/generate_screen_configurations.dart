@@ -10,30 +10,29 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const TARGET = "test_app";
+// To-Do: Specify your apps/root folders to generate for.
+const targetApps = <String>[
+  "test_app",
+];
+
+// To-Do: Specify the directories in your apps/root folders to generate for.
+const subDirectories = <String>[
+  "screens",
+];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//
+// DO NOT MODIFY BELOW
+//
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main([List<String> arguments = const []]) async {
+void main() async {
   await generateScreenConfigurationsApp([
-    if (arguments.isNotEmpty)
-      ...arguments
-    else ...[
-      // Template file path.
-      "-t",
-      "$currentScriptDir/templates/generate_screen_configurations/default_screen_configuration_template.dart.md",
-      // Root directories.
-      "-r",
-      [
-        "$TARGET/lib",
-        // Tip: Add more root directories here.
-      ].map((e) => "$currentScriptDir/../$e").join("&"),
-      // Sub-directories.
-      "-s",
-      [
-        "screens",
-        // Tip: Add more sub-directories here.
-      ].join("&"),
-    ],
+    "-t",
+    "$currentScriptDir/templates/generate_screen_configurations/default_screen_configuration_template.dart.md",
+    "-r",
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    "-s",
+    subDirectories.join("&"),
   ]);
 }

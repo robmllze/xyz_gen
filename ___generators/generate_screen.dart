@@ -11,34 +11,34 @@ import 'package:xyz_utils/xyz_utils.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// 1. Specify your app's folder from the root of the project.
-const TARGET = "test_app";
+// To-Do: Specify your app/root folder to generate for.
+const TARGET_APP = "test_app";
 
-// 2. Give the screen class a name. NB: It must start it with "Screen",
+// To-Do: Give the screen class a name. NB: It must start it with "Screen",
 // e.g. "ScreenTest".
 const CLASS_NAME = "ScreenTest";
 
-// 3. Provide a title for the Screen.
+// To-Do: Provide a title for the Screen.
 const DEFAULT_TITLE = "Test";
 
-// 4. Specify the Screen's access settings:
+// To-Do: Specify the Screen's access settings:
 const bool? IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED = false;
 const bool? IS_ONLY_ACCESSIBLE_IF_LOGGED_IN = false;
 const bool? IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT = true;
 const bool? IS_REDIRECTABLE = true;
 
-// 5. Provide a makeup class for the Screen, or leave empty:
+// To-Do: Provide a makeup class for the Screen, or leave empty:
 const String? MAKEUP = "";
 
-// 6. Provide a navigation control widget for the Screen, or leave empty:
+// To-Do: Provide a navigation control widget for the Screen, or leave empty:
 const String? NAVIGATION_CONTROL_WIDGET = "";
 
-// 7. Specify parameters for the Screen, or leave empty:
+// To-Do: Specify parameters for the Screen, or leave empty:
 const INTERNAL_PARAMETERS = <String, String>{
   // e.g. "chatId": "String",
 };
 
-// 8. Specify query parameters for the Screen, or leave empty:
+// To-Do: Specify query parameters for the Screen, or leave empty:
 const QUERY_PARAMETERS = <String>{
   // e.g. "chatId",
 };
@@ -50,7 +50,7 @@ const QUERY_PARAMETERS = <String>{
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main() async {
-  final screensDir = "$currentScriptDir/../$TARGET/lib/screens";
+  final screensDir = "$currentScriptDir/../$TARGET_APP/lib/screens";
   await _generateScreens(screensDir);
   await _generateScreenAccess(screensDir);
   await _generateExports(screensDir);

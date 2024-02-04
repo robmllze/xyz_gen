@@ -10,7 +10,7 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// To-Do: Specify your apps/root folders to generate exports for.
+// To-Do: Specify your apps/root folders to generate for.
 const targetApps = <String>[
   "test_app",
 ];
@@ -21,18 +21,11 @@ const targetApps = <String>[
 //
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main([List<String> arguments = const []]) async {
-  print(targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"));
+void main() async {
   await generateLicenseHeadersApp([
-    if (arguments.isNotEmpty)
-      ...arguments
-    else ...[
-      // Template file.
-      "-t",
-      "$currentScriptDir/templates/generate_license_headers/default_license_header_template.dart.md",
-      // Root directories.
-      "-r",
-      targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
-    ],
+    "-t",
+    "$currentScriptDir/templates/generate_license_headers/default_license_header_template.dart.md",
+    "-r",
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
   ]);
 }

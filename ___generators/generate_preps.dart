@@ -10,20 +10,20 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const TARGET = "test_app";
+// To-Do: Specify your apps/root folders to generate exports for.
+const targetApps = <String>[
+  "test_app",
+];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//
+// DO NOT MODIFY BELOW
+//
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main([List<String> arguments = const []]) async {
+void main() async {
   await generatePrepsApp([
-    if (arguments.isNotEmpty)
-      ...arguments
-    else ...[
-      // Root directories.
-      "-r",
-      [
-        "$TARGET/lib",
-      ].map((e) => "$currentScriptDir/../$e").join("&"),
-    ]
+    "-r",
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
   ]);
 }

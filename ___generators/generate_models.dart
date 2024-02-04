@@ -10,38 +10,49 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const TARGET = "test_app";
+// To-Do: Specify your apps/root folders to generate for.
+const targetApps = <String>[
+  "test_app",
+];
+
+// To-Do: Specify the directories in your apps/root folders to generate for.
+const subDirectories = <String>[
+  "models",
+];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//
+// DO NOT MODIFY BELOW
+//
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main([List<String> arguments = const []]) async {
-  // STEP 1 - GENERATE THE MODELS
-  await generateModelsApp([
-    // Template file path.
-    "-t",
-    "$currentScriptDir/templates/generate_models/default_model_template.dart.md",
-    // Root directories.
-    "-r",
-    [
-      "$TARGET/lib",
-    ].map((e) => "$currentScriptDir/../$e").join("&"),
-    // Sub-directories.
-    "-s",
-    [
-      "models",
-    ].join("&"),
-  ]);
-  // STEP 2 - INCLUDE MODEL FILES TO DART EXPORTS
-  await generateExportsApp([
+void main() async {
+  await _generateModels();
+  await _generateExports();
+}
+
+// -----------------------------------------------------------------------------
+
+Future<void> _generateExports() {
+  return generateExportsApp([
     "-t",
     "$currentScriptDir/templates/generate_exports/default_exports_template.dart.md",
     "-r",
-    [
-      "$TARGET/lib",
-    ].map((e) => "$currentScriptDir/../$e").join("&"),
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
     "-s",
-    [
-      "models",
-    ].join("&"),
+    subDirectories.join("&"),
+  ]);
+}
+
+// -----------------------------------------------------------------------------
+
+Future<void> _generateModels() {
+  return generateModelsApp([
+    "-t",
+    "$currentScriptDir/templates/generate_models/default_model_template.dart.md",
+    "-r",
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    "-s",
+    subDirectories.join("&"),
   ]);
 }
