@@ -8,9 +8,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/all.dart';
-
-import 'package:xyz_gen/generators/generate_screen_configurations/src/annotation.dart';
+import '/_common.dart';
 
 part '___LOGIC_FILE___';
 part '___STATE_FILE___';

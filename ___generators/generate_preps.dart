@@ -6,25 +6,24 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/generators/generate_preps/src/app.dart';
+import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// Specify the root folder in your project to start generating from.
-const APP_FOLDER = "test_app";
+const TARGET = "test_app";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main(List<String> arguments) {
-  generatePrepsApp([
+void main([List<String> arguments = const []]) async {
+  await generatePrepsApp([
     if (arguments.isNotEmpty)
       ...arguments
     else ...[
       // Root directories.
       "-r",
       [
-        "$APP_FOLDER/lib",
-      ].join("&"),
-    ],
+        "$TARGET/lib",
+      ].map((e) => "$currentScriptDir/../$e").join("&"),
+    ]
   ]);
 }

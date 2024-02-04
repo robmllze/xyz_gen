@@ -6,33 +6,32 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/generators/generate_makeups/all_generate_makeups.g.dart';
+import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// Specify the root folder in your project to start generating from.
-const APP_FOLDER = "test_app";
+const TARGET = "test_app";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main() async {
+void main([List<String> arguments = const []]) async {
   await generateMakeupsApp([
     // Template file path.
     "--builder-template",
-    "___generators/templates/generate_makeups/default_makeup_builder_template.dart.md",
+    "$currentScriptDir/templates/generate_makeups/default_makeup_builder_template.dart.md",
     "--class-template",
-    "___generators/templates/generate_makeups/default_makeup_class_template.dart.md",
+    "$currentScriptDir/templates/generate_makeups/default_makeup_class_template.dart.md",
     "--exports-template",
-    "___generators/templates/generate_makeups/default_makeup_exports_template.dart.md",
+    "$currentScriptDir/templates/generate_makeups/default_makeup_exports_template.dart.md",
     "--theme-template",
-    "___generators/templates/generate_makeups/default_generated_theme_template.dart.md",
+    "$currentScriptDir/templates/generate_makeups/default_generated_theme_template.dart.md",
     "--generate-template",
-    "___generators/templates/generate_makeups/default_makeup_generate_template.dart.md",
+    "$currentScriptDir/templates/generate_makeups/default_makeup_generate_template.dart.md",
     // Root directories.
     "-r",
     [
-      "$APP_FOLDER/lib",
-    ].join("&"),
+      "$TARGET/lib",
+    ].map((e) => "$currentScriptDir/../$e").join("&"),
     // Sub-directories.
     "-s",
     [
@@ -41,6 +40,8 @@ void main() async {
     ].join("&"),
     // Output directory.
     "--output",
-    "$APP_FOLDER/lib/makeups",
+    [
+      "$TARGET/lib/makeups",
+    ].map((e) => "$currentScriptDir/../$e").join("&"),
   ]);
 }

@@ -6,28 +6,33 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/generators/generate_license_headers/all_generate_license_headers.g.dart';
+import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// Specify the root folder in your project to start generating from.
-const APP_FOLDER = "test_app";
+// To-Do: Specify your apps/root folders to generate exports for.
+const targetApps = <String>[
+  "test_app",
+];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+//
+// DO NOT MODIFY BELOW
+//
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void main(List<String> arguments) {
-  generateLicenseHeadersApp([
+void main([List<String> arguments = const []]) async {
+  print(targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"));
+  await generateLicenseHeadersApp([
     if (arguments.isNotEmpty)
       ...arguments
     else ...[
-      // Template file path.
+      // Template file.
       "-t",
-      "___generators/templates/generate_license_headers/default_license_header_template.dart.md",
+      "$currentScriptDir/templates/generate_license_headers/default_license_header_template.dart.md",
       // Root directories.
       "-r",
-      [
-        "$APP_FOLDER/lib",
-      ].join("&"),
+      targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
     ],
   ]);
 }

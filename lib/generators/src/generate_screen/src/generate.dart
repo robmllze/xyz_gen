@@ -11,7 +11,7 @@ import 'package:path/path.dart' as p;
 import '/utils/src/dart_files.dart';
 import 'package:xyz_utils/shared/all_shared.g.dart';
 
-import '/generators/generate_screen_configurations/src/generate.dart';
+import '/generators/src/generate_screen_configurations/src/generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -73,8 +73,7 @@ Future<void> generateScreen({
     data,
     path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-    isAccessibleOnlyIfLoggedInAndVerified:
-        isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
@@ -84,8 +83,7 @@ Future<void> generateScreen({
     title: title,
     navigationControlWidget: navigationControlWidget,
   );
-  printGreen(
-      "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
+  printGreen("Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
   final stateFilePath = p.join(folderDirPath, stateFileName);
   await _writeFile(
     stateTemplateFilePath,
@@ -126,32 +124,24 @@ Future<void> _writeScreenFile(
       })
       .nonNulls
       .join(",");
-  final b = queryParameters
-      .map((e) => e.isNotEmpty ? '"$e"' : null)
-      .nonNulls
-      .join(",");
-  final c =
-      pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
+  final b = queryParameters.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
+  final c = pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
   final configurationArgs = [
     if (path.isNotEmpty) 'path: "$path"',
     if (title.isNotEmpty) 'defaultTitle: "$title"',
-    if (navigationControlWidget.isNotEmpty)
-      'navigationControlWidget: "$navigationControlWidget"',
+    if (navigationControlWidget.isNotEmpty) 'navigationControlWidget: "$navigationControlWidget"',
     if (makeup.isNotEmpty) 'makeup: "$makeup"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
-    if (isAccessibleOnlyIfLoggedInAndVerified)
-      "isAccessibleOnlyIfLoggedInAndVerified: true",
+    if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty && a.isNotEmpty)
-      "internalParameters: {$a,}",
+    if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
     if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    "___CONFIGURATION_ARGS___":
-        configurationArgs.isNotEmpty ? "$configurationArgs," : "",
+    "___CONFIGURATION_ARGS___": configurationArgs.isNotEmpty ? "$configurationArgs," : "",
   });
 }
 
@@ -162,8 +152,7 @@ Future<void> _writeFile(
   String outputFilePath,
   Map<String, String> data,
 ) async {
-  final template =
-      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   final output = replaceAllData(template, data);
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);

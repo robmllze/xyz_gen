@@ -19,10 +19,9 @@ environment:
 
 dependencies:
 
-  xyz_utils: any
-
-  xyz_gen:
-    path: ../
+   xyz_gen:
+      path: ../
+   xyz_utils: any
 
 
 

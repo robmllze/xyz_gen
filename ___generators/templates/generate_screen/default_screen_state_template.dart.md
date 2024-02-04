@@ -23,13 +23,14 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
       Column(
         children: [
           MyHeader(
+            breadCrumbBar: const MyActiveBreadCrumbBar(),
             title: this.widget.configuration?.title,
             onBackButtonPressed: app.routeManager.goBack,
           ),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all($20),
+                padding: EdgeInsets.all(20.sc),
                 child: SizedBox(
                   width: double.infinity,
                   child: body,
@@ -49,7 +50,7 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
   @override
   Widget body(BuildContext context) {
     return WColumn(
-      divider: SizedBox(height: $20),
+      divider: SizedBox(height: 20.sc),
       children: [
         PodBuilder(
           pod: this.logic.pCounter,

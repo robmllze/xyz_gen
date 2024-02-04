@@ -1,12 +1,12 @@
 ````dart
 //.title
-// ─────────────────────────────────────────────────────────────────────────────
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 // 
-// Copyright (C) 2024 - [YOUR NAME HERE]
+// Your Project Name
+// Copyright Ⓒ Your Name
 // 
-// This source code is licensed under the [LICENSE NAME] found in the
-// LICENSE file in the root directory of this source tree.
+// Licensing details can be found in the LICENSE file in the root directory.
 // 
-// ─────────────────────────────────────────────────────────────────────────────
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 ````
