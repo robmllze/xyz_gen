@@ -40,8 +40,7 @@ Future<void> _generatePrep(
   List<String? Function(String, String?)> prepMappers,
 ) async {
   try {
-    final localFilePath = toLocalPathFormat(filePath);
-    final file = File(localFilePath);
+    final file = File(filePath);
     final lines = await file.readAsLines();
     var changed = false;
     for (var l = 0; l < lines.length; ++l) {
@@ -69,7 +68,7 @@ Future<void> _generatePrep(
               result = key
                   .replaceAll("&l", l.toString())
                   .replaceAll("&c", c.toString())
-                  .replaceAll("&F", localFilePath)
+                  .replaceAll("&F", filePath)
                   .replaceAll("&f", f);
             }
             final before = lines[l];

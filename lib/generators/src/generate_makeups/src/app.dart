@@ -26,7 +26,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
     "templates",
   );
   await basicCmdAppHelper<GenerateMakeupsArgs>(
-    appTitle: "XYZ Generate Makeups",
+    appTitle: "XYZ Gen - Generate Makeups",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -38,19 +38,19 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
       ..addOption(
         "roots",
         abbr: "r",
-        help: "Root directory paths separated by `:`.",
-        defaultsTo: toLocalPathFormat("/lib"),
+        help: "Root directory paths separated by `&`.",
+        defaultsTo: "lib",
       )
       ..addOption(
         "subs",
         abbr: "s",
-        help: "Sub-directory paths separated by `:`.",
-        defaultsTo: "components:makeups:widgets",
+        help: "Sub-directory paths separated by `&`.",
+        defaultsTo: "components&widgets",
       )
       ..addOption(
         "patterns",
         abbr: "p",
-        help: "Path patterns separated by `:`.",
+        help: "Path patterns separated by `&`.",
       )
       ..addOption(
         "output",
@@ -62,44 +62,45 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         "builder-template",
         abbr: "b",
         help: "Builder template file path.",
-        defaultsTo: toLocalPathFormat(
-          p.join(
-              defaultTemplatesPath, "default_makeup_builder_template.dart.md"),
+        defaultsTo: p.join(
+          toLocalPathFormat(defaultTemplatesPath),
+          "default_makeup_builder_template.dart.md",
         ),
       )
       ..addOption(
         "class-template",
         abbr: "c",
         help: "Class template file path.",
-        defaultsTo: toLocalPathFormat(
-          p.join(defaultTemplatesPath, "default_makeup_class_template.dart.md"),
+        defaultsTo: p.join(
+          toLocalPathFormat(defaultTemplatesPath),
+          "default_makeup_class_template.dart.md",
         ),
       )
       ..addOption(
         "exports-template",
         abbr: "e",
         help: "Exports template file path.",
-        defaultsTo: toLocalPathFormat(
-          p.join(
-              defaultTemplatesPath, "default_makeup_exports_template.dart.md"),
+        defaultsTo: p.join(
+          toLocalPathFormat(defaultTemplatesPath),
+          "default_makeup_exports_template.dart.md",
         ),
       )
       ..addOption(
         "theme-template",
         abbr: "t",
         help: "Theme template file path.",
-        defaultsTo: toLocalPathFormat(
-          p.join(
-              defaultTemplatesPath, "default_generated_theme_template.dart.md"),
+        defaultsTo: p.join(
+          toLocalPathFormat(defaultTemplatesPath),
+          "default_generated_theme_template.dart.md",
         ),
       )
       ..addOption(
         "generate-template",
         abbr: "g",
         help: "Generate template file path.",
-        defaultsTo: toLocalPathFormat(
-          p.join(
-              defaultTemplatesPath, "default_makeup_generate_template.dart.md"),
+        defaultsTo: p.join(
+          toLocalPathFormat(defaultTemplatesPath),
+          "default_makeup_generate_template.dart.md",
         ),
       )
       ..addOption(

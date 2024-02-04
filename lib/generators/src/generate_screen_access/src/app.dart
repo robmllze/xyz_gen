@@ -20,7 +20,7 @@ import 'generate.dart';
 /// A command line app for generating screen access.
 Future<void> generateScreenAccessApp(List<String> arguments) async {
   await basicCmdAppHelper<GenerateScreenAccessArgs>(
-    appTitle: "XYZ Generate Screen Access",
+    appTitle: "XYZ Gen - Generate Screen Access",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -32,22 +32,22 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
       ..addOption(
         "roots",
         abbr: "r",
-        help: "Root directory paths separated by `:`.",
+        help: "Root directory paths separated by `&`.",
         defaultsTo: toLocalPathFormat("/lib/screens"),
       )
       ..addOption(
         "subs",
         abbr: "s",
-        help: "Sub-directory paths separated by `:`.",
+        help: "Sub-directory paths separated by `&`.",
       )
       ..addOption(
         "patterns",
         abbr: "p",
-        help: "Path patterns separated by `:`.",
+        help: "Path patterns separated by `&`.",
       )
       ..addOption(
         "additional-screen-class-names",
-        help: "Additional screen class names separated by `:`.",
+        help: "Additional screen class names separated by `&`.",
       )
       ..addOption(
         "template",
@@ -72,8 +72,7 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         rootPaths: splitArg(results["roots"])?.toSet(),
         subPaths: splitArg(results["subs"])?.toSet(),
         pathPatterns: splitArg(results["patterns"])?.toSet(),
-        screenClassNames:
-            splitArg(results["additional-screen-class-names"])?.toSet(),
+        screenClassNames: splitArg(results["additional-screen-class-names"])?.toSet(),
         templateFilePath: results["template"],
         outputFilePath: results["output"],
       );

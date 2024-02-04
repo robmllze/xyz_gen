@@ -31,8 +31,6 @@ Future<void> generateExports({
     final outputFileName = "all_$folderName.g.dart";
     final outputFilePath = [dirPath, outputFileName].join("/");
 
-    print("Looking in $dirPath...");
-
     // Find all Dart files in dirPath.
     await findDartFiles(
       dirPath,

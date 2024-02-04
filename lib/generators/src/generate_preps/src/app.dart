@@ -19,7 +19,7 @@ import 'generate.dart';
 /// A command line app for generating preps.
 Future<void> generatePrepsApp(List<String> arguments) async {
   await basicCmdAppHelper<PrepTemplateArgs>(
-    appTitle: "XYZ Generate Preps",
+    appTitle: "XYZ Gen - Generate Preps",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -31,18 +31,18 @@ Future<void> generatePrepsApp(List<String> arguments) async {
       ..addOption(
         "roots",
         abbr: "r",
-        help: "Root directory paths separated by `:`.",
-        defaultsTo: toLocalPathFormat("/lib"),
+        help: "Root directory paths separated by `&`.",
+        defaultsTo: "lib",
       )
       ..addOption(
         "subs",
         abbr: "s",
-        help: "Sub-directory paths separated by `:`.",
+        help: "Sub-directory paths separated by `&`.",
       )
       ..addOption(
         "patterns",
         abbr: "p",
-        help: "Path patterns separated by `:`.",
+        help: "Path patterns separated by `&`.",
       ),
     onResults: (parser, results) {
       return PrepTemplateArgs(

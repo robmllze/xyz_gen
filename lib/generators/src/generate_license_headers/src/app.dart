@@ -10,7 +10,6 @@ import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
 import '/utils/all_utils.g.dart';
-import 'package:xyz_utils/shared/all_shared.g.dart';
 
 import 'generate.dart';
 
@@ -19,7 +18,7 @@ import 'generate.dart';
 /// A command line app for generating license headers.
 Future<void> generateLicenseHeadersApp(List<String> arguments) async {
   await basicCmdAppHelper<BasicCmdAppArgs>(
-    appTitle: "XYZ Generate License Headers",
+    appTitle: "XYZ Gen - Generate License Headers",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -31,18 +30,18 @@ Future<void> generateLicenseHeadersApp(List<String> arguments) async {
       ..addOption(
         "roots",
         abbr: "r",
-        help: "Root directory paths separated by `:`.",
-        defaultsTo: toLocalPathFormat("/lib"),
+        help: "Root directory paths separated by `&`.",
+        defaultsTo: "lib",
       )
       ..addOption(
         "subs",
         abbr: "s",
-        help: "Sub-directory paths separated by `:`.",
+        help: "Sub-directory paths separated by `&`.",
       )
       ..addOption(
         "patterns",
         abbr: "p",
-        help: "Path patterns separated by `:`.",
+        help: "Path patterns separated by `&`.",
       )
       ..addOption(
         "template",

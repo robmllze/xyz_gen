@@ -18,7 +18,7 @@ import 'generate.dart';
 
 Future<void> generateForAnnotationTestApp(List<String> arguments) async {
   await basicCmdAppHelper<GenerateForAnnotationTestApp>(
-    appTitle: "XYZ Generate For Annotation Test",
+    appTitle: "XYZ Gen - Generate For Annotation Test",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -30,18 +30,18 @@ Future<void> generateForAnnotationTestApp(List<String> arguments) async {
       ..addOption(
         "roots",
         abbr: "r",
-        help: "Root directory paths separated by `:`.",
+        help: "Root directory paths separated by `&`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         "subs",
         abbr: "s",
-        help: "Sub-directory paths separated by `:`.",
+        help: "Sub-directory paths separated by `&`.",
       )
       ..addOption(
         "patterns",
         abbr: "p",
-        help: "Path patterns separated by `:`.",
+        help: "Path patterns separated by `&`.",
       )
       ..addOption(
         "dart-sdk",

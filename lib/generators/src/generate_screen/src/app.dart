@@ -26,7 +26,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
     "templates",
   );
   await basicCmdAppHelper<GenerateScreenArgs>(
-    appTitle: "XYZ Generate Screen",
+    appTitle: "XYZ Gen - Generate Screen",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -37,6 +37,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
       )
       ..addOption(
         "output",
+        abbr: "o",
         help: "Output directory path.",
         defaultsTo: toLocalPathFormat("/lib/screens"),
       )

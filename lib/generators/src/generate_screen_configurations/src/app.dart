@@ -19,7 +19,7 @@ import 'generate.dart';
 /// A command line app for generating screen configurations.
 Future<void> generateScreenConfigurationsApp(List<String> arguments) async {
   await basicCmdAppHelper<BasicCmdAppArgs>(
-    appTitle: "XYZ Generate Screen Configurations",
+    appTitle: "XYZ Gen - Generate Screen Configurations",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -31,19 +31,19 @@ Future<void> generateScreenConfigurationsApp(List<String> arguments) async {
       ..addOption(
         "roots",
         abbr: "r",
-        help: "Root directory paths separated by `:`.",
+        help: "Root directory paths separated by `&`.",
         defaultsTo: toLocalPathFormat("/lib"),
       )
       ..addOption(
         "subs",
         abbr: "s",
-        help: "Sub-directory paths separated by `:`.",
+        help: "Sub-directory paths separated by `&`.",
         defaultsTo: "screens",
       )
       ..addOption(
         "patterns",
         abbr: "p",
-        help: "Path patterns separated by `:`.",
+        help: "Path patterns separated by `&`.",
       )
       ..addOption(
         "template",
