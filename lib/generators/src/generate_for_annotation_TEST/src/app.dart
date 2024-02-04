@@ -9,7 +9,6 @@
 import 'package:args/args.dart';
 
 import '/utils/all_utils.g.dart';
-import 'package:xyz_utils/shared/all_shared.g.dart';
 
 import 'args.dart';
 import 'generate.dart';
@@ -31,7 +30,7 @@ Future<void> generateForAnnotationTestApp(List<String> arguments) async {
         "roots",
         abbr: "r",
         help: "Root directory paths separated by `&`.",
-        defaultsTo: toLocalPathFormat("/lib"),
+        defaultsTo: "lib",
       )
       ..addOption(
         "subs",
