@@ -12,7 +12,7 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // To-Do: Specify your apps/root folders to generate for.
 const targetApps = <String>[
-  "test_app",
+  "example_app",
 ];
 
 // To-Do: Specify the directories in your apps/root folders to generate for.
@@ -53,7 +53,7 @@ const subDirectories = <String>[
 void main() async {
   await generateExportsApp([
     "-t",
-    "$currentScriptDir/templates/generate_exports/default_license_header_template.dart.md",
+    "$currentScriptDir/templates/generate_exports/default_exports_template.dart.md",
     "-r",
     targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
     "-s",

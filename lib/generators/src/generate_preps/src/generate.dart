@@ -66,7 +66,7 @@ Future<void> _generatePrep(
             } else {
               final f = getBaseName(filePath);
               result = key
-                  .replaceAll("&l", l.toString())
+                  .replaceAll("&l", (l + 1).toString())
                   .replaceAll("&c", c.toString())
                   .replaceAll("&F", filePath)
                   .replaceAll("&f", f);

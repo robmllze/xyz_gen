@@ -7,19 +7,18 @@
 //.title~
 
 import 'package:xyz_gen/xyz_gen.dart';
-import 'package:xyz_utils/xyz_utils.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 // To-Do: Specify your app/root folder to generate for.
-const TARGET_APP = "test_app";
+const TARGET_APP = "example_app";
 
 // To-Do: Give the screen class a name. NB: It must start it with "Screen",
 // e.g. "ScreenTest".
-const CLASS_NAME = "ScreenTest";
+const CLASS_NAME = "ScreenExample";
 
 // To-Do: Provide a title for the Screen.
-const DEFAULT_TITLE = "Test";
+const DEFAULT_TITLE = "Example";
 
 // To-Do: Specify the Screen's access settings:
 const bool? IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED = false;

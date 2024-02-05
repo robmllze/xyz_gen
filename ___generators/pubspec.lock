@@ -203,11 +203,12 @@ packages:
   xyz_utils:
     dependency: "direct main"
     description:
-      name: xyz_utils
-      sha256: "707094e5a9294640a8c8653a02b66549a6ac2f389930ecf57578acbde7cd06ce"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.30.2"
+      path: "."
+      ref: HEAD
+      resolved-ref: ba85e36c6d21a9b831f892d5fd7294e81a511ba7
+      url: "https://github.com/robmllze/xyz_utils"
+    source: git
+    version: "0.31.1"
   yaml:
     dependency: transitive
     description:
