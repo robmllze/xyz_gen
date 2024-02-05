@@ -147,7 +147,7 @@
     },
     {
       "name": "xyz_gen",
-      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/xyz_gen-0.28.1",
+      "rootUri": "file:///Users/robmllze/.pub-cache/hosted/pub.dev/xyz_gen-0.31.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -170,7 +170,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-02-05T03:25:05.682518Z",
+  "generated": "2024-02-05T03:26:13.637914Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-99.0.dev"
 }

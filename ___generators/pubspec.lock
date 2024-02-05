@@ -197,10 +197,10 @@ packages:
     dependency: "direct main"
     description:
       name: xyz_gen
-      sha256: "6e8ffedefb83158c4dd21ea9060c1ad40f8c1d2a4466a08eec80c583576c26b1"
+      sha256: "83940b44cd8d071d83ecf1e35fd414fb63ed3442a05212ebbedcaf64f70d4a88"
       url: "https://pub.dev"
     source: hosted
-    version: "0.28.1"
+    version: "0.31.0"
   xyz_utils:
     dependency: "direct main"
     description:
