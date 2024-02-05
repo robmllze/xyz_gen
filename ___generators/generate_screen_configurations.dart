@@ -31,7 +31,9 @@ void main() async {
     "-t",
     "$currentScriptDir/templates/generate_screen_configurations/default_screen_configuration_template.dart.md",
     "-r",
-    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    targetApps
+        .map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib")
+        .join("&"),
     "-s",
     subDirectories.join("&"),
   ]);

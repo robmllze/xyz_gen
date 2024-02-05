@@ -32,7 +32,9 @@ void main() async {
       "-t",
       "$currentScriptDir/templates/generate_screen_access/default_screen_access_template.dart.md",
       "-r",
-      targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+      targetApps
+          .map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib")
+          .join("&"),
       "-s",
       subDirectories.join("&"),
       "--output",

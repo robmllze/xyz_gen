@@ -26,6 +26,8 @@ void main() async {
     "-t",
     "$currentScriptDir/templates/generate_license_headers/default_license_header_template.dart.md",
     "-r",
-    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    targetApps
+        .map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib")
+        .join("&"),
   ]);
 }

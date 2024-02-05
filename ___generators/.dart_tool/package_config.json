@@ -147,13 +147,13 @@
     },
     {
       "name": "xyz_gen",
-      "rootUri": "../../",
+      "rootUri": "file:///C:/Users/gvwco/AppData/Local/Pub/Cache/hosted/pub.dev/xyz_gen-0.28.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "xyz_utils",
-      "rootUri": "file:///C:/Users/gvwco/AppData/Local/Pub/Cache/git/xyz_utils-ba85e36c6d21a9b831f892d5fd7294e81a511ba7/",
+      "rootUri": "file:///C:/Users/gvwco/AppData/Local/Pub/Cache/hosted/pub.dev/xyz_utils-0.31.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -170,7 +170,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-02-05T02:04:04.564326Z",
+  "generated": "2024-02-05T03:20:16.818758Z",
   "generator": "pub",
   "generatorVersion": "3.2.2"
 }
