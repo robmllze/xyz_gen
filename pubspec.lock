@@ -205,10 +205,10 @@ packages:
     dependency: "direct main"
     description:
       name: xyz_utils
-      sha256: "707094e5a9294640a8c8653a02b66549a6ac2f389930ecf57578acbde7cd06ce"
+      sha256: "90ecf8c0c06ea7fed7a7bb5bf2e4b3bd5b5384a2a7ef56933ce4672eaaa8d0be"
       url: "https://pub.dev"
     source: hosted
-    version: "0.30.2"
+    version: "0.31.1"
   yaml:
     dependency: transitive
     description:

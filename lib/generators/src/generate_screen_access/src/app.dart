@@ -33,7 +33,7 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         "roots",
         abbr: "r",
         help: "Root directory paths separated by `&`.",
-        defaultsTo: toLocalPathFormat("/lib/screens"),
+        defaultsTo: toLocalSystemPathFormat("/lib/screens"),
       )
       ..addOption(
         "subs",
@@ -65,7 +65,7 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         "output",
         abbr: "o",
         help: "Output file path.",
-        defaultsTo: toLocalPathFormat("/lib/screen_access.g.dart"),
+        defaultsTo: toLocalSystemPathFormat("/lib/screen_access.g.dart"),
       ),
     onResults: (parser, results) {
       return GenerateScreenAccessArgs(

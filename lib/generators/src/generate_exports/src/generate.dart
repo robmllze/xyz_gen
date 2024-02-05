@@ -7,9 +7,9 @@
 //.title~
 
 import 'package:path/path.dart' as p;
+import 'package:xyz_utils/shared/all_shared.g.dart';
 
 import '/utils/all_utils.g.dart';
-import 'package:xyz_utils/shared/all_shared.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -23,14 +23,12 @@ Future<void> generateExports({
   // Get the template to use.
   final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
-  for (final dirPath
-      in combinePathSets([rootDirPaths, subDirPaths]).map((e) => e.replaceAll("\\", "/"))) {
-    // Determine the output file name from dirPath.
-    final folderName = p.basename(dirPath.replaceAll("\\", "/"));
-
+  final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
+  for (final dirPath in combinedDirPaths) {
+    // Determine the output file path from dirPath.
+    final folderName = p.basename(dirPath).toLowerCase();
     final outputFileName = "all_$folderName.g.dart";
-    final outputFilePath = [dirPath, outputFileName].join("/");
-
+    final outputFilePath = p.join(dirPath, outputFileName);
     // Find all Dart files in dirPath.
     await findDartFiles(
       dirPath,
@@ -48,10 +46,12 @@ Future<void> generateExports({
           // Get the relative file path.
           var relativeFilePath = filePath.replaceFirst(dirPath, "");
           // Remove the initial "/" from the relative file path if present.
-          relativeFilePath =
-              relativeFilePath.startsWith("/") ? relativeFilePath.substring(1) : relativeFilePath;
+          relativeFilePath = relativeFilePath.startsWith(p.separator)
+              ? relativeFilePath.substring(1)
+              : relativeFilePath;
+          relativeFilePath = toUnixSystemPathFormat(relativeFilePath);
           // Get the file name from the file path.
-          final fileName = p.basename(filePath.replaceAll("\\", "/"));
+          final fileName = p.basename(filePath);
           // Check if the file is private / if it starts with "_".
           final private = fileName.startsWith("_");
           // Write the export statement to the output file if it's not private.

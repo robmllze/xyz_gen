@@ -16,16 +16,16 @@ import 'package:xyz_utils/shared/all_shared.g.dart';
 /// Formats the dart file at [filePath].
 Future<void> fmtDartFile(String filePath) async {
   try {
-    final fixedPath = toLocalPathFormat(filePath);
-    await Process.run("dart", ["format", fixedPath]);
+    final localFilePath = toLocalSystemPathFormat(filePath);
+    await Process.run("dart", ["format", localFilePath]);
   } catch (_) {}
 }
 
 /// Applies fixes to the dart file at [filePath].
 Future<void> fixDartFile(String filePath) async {
   try {
-    final fixedPath = toLocalPathFormat(filePath);
-    await Process.run("dart", ["fix", "--apply", fixedPath]);
+    final localFilePath = toLocalSystemPathFormat(filePath);
+    await Process.run("dart", ["fix", "--apply", localFilePath]);
   } catch (_) {}
 }
 
@@ -113,9 +113,9 @@ class DartFileResult {
 /// Returns the associated source Dart file path of a generated Dart file or
 /// null if not a Dart file (the file path without the ".g" if present).
 String? getSourcePath(String filePath) {
-  final fixedPath = toLocalPathFormat(filePath);
-  final dirName = p.dirname(fixedPath);
-  final baseName = p.basename(fixedPath);
+  final localSystemFilePath = toLocalSystemPathFormat(filePath);
+  final dirName = p.dirname(localSystemFilePath);
+  final baseName = p.basename(localSystemFilePath);
   if (baseName.endsWith(".g.dart")) {
     return p.join(
       dirName,
@@ -123,7 +123,7 @@ String? getSourcePath(String filePath) {
     );
   }
   if (baseName.endsWith(".dart")) {
-    return fixedPath;
+    return localSystemFilePath;
   }
   return null;
 }

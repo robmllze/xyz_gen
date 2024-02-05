@@ -56,14 +56,14 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         "output",
         abbr: "o",
         help: "Output directory path.",
-        defaultsTo: toLocalPathFormat("/lib/makeups"),
+        defaultsTo: toLocalSystemPathFormat("/lib/makeups"),
       )
       ..addOption(
         "builder-template",
         abbr: "b",
         help: "Builder template file path.",
         defaultsTo: p.join(
-          toLocalPathFormat(defaultTemplatesPath),
+          toLocalSystemPathFormat(defaultTemplatesPath),
           "default_makeup_builder_template.dart.md",
         ),
       )
@@ -72,7 +72,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         abbr: "c",
         help: "Class template file path.",
         defaultsTo: p.join(
-          toLocalPathFormat(defaultTemplatesPath),
+          toLocalSystemPathFormat(defaultTemplatesPath),
           "default_makeup_class_template.dart.md",
         ),
       )
@@ -81,7 +81,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         abbr: "e",
         help: "Exports template file path.",
         defaultsTo: p.join(
-          toLocalPathFormat(defaultTemplatesPath),
+          toLocalSystemPathFormat(defaultTemplatesPath),
           "default_makeup_exports_template.dart.md",
         ),
       )
@@ -90,7 +90,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         abbr: "t",
         help: "Theme template file path.",
         defaultsTo: p.join(
-          toLocalPathFormat(defaultTemplatesPath),
+          toLocalSystemPathFormat(defaultTemplatesPath),
           "default_generated_theme_template.dart.md",
         ),
       )
@@ -99,7 +99,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         abbr: "g",
         help: "Generate template file path.",
         defaultsTo: p.join(
-          toLocalPathFormat(defaultTemplatesPath),
+          toLocalSystemPathFormat(defaultTemplatesPath),
           "default_makeup_generate_template.dart.md",
         ),
       )

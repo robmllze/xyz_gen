@@ -39,7 +39,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
         "output",
         abbr: "o",
         help: "Output directory path.",
-        defaultsTo: toLocalPathFormat("/lib/screens"),
+        defaultsTo: toLocalSystemPathFormat("/lib/screens"),
       )
       ..addOption(
         "class-name",
@@ -61,28 +61,28 @@ Future<void> generateScreensApp(List<String> arguments) async {
       ..addOption(
         "logic-template",
         help: "Logic template file path.",
-        defaultsTo: toLocalPathFormat(
+        defaultsTo: toLocalSystemPathFormat(
           p.join(defaultTemplatesPath, "default_screen_logic_template.dart.md"),
         ),
       )
       ..addOption(
         "screen-template",
         help: "Screen template file path.",
-        defaultsTo: toLocalPathFormat(
+        defaultsTo: toLocalSystemPathFormat(
           p.join(defaultTemplatesPath, "default_screen_template.dart.md"),
         ),
       )
       ..addOption(
         "state-template",
         help: "State template file path.",
-        defaultsTo: toLocalPathFormat(
+        defaultsTo: toLocalSystemPathFormat(
           p.join(defaultTemplatesPath, "default_screen_state_template.dart.md"),
         ),
       )
       ..addOption(
         "configuration-template",
         help: "Configuration template file path.",
-        defaultsTo: toLocalPathFormat(
+        defaultsTo: toLocalSystemPathFormat(
           p.join(defaultTemplatesPath, "default_screen_configuration_template.dart.md"),
         ),
       )
