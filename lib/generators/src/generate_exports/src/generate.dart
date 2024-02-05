@@ -34,7 +34,6 @@ Future<void> generateExports({
       dirPath,
       pathPatterns: pathPatterns,
       onFileFound: (_, __, filePath) async {
-        filePath = filePath.replaceAll("\\", "/");
         // Create the file if it doesn't exist.
         if (dirPath != cachedDirPath) {
           cachedDirPath = dirPath;
