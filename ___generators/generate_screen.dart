@@ -34,7 +34,7 @@ const String? NAVIGATION_CONTROL_WIDGET = "";
 
 // To-Do: Specify parameters for the Screen, or leave empty:
 const INTERNAL_PARAMETERS = <String, String>{
-  // e.g. "chatId": "String",
+  "chatId": "String",
 };
 
 // To-Do: Specify query parameters for the Screen, or leave empty:

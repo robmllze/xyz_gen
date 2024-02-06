@@ -18,7 +18,7 @@ class _State extends ScreenState<___SCREEN_CLASS___, ___SCREEN_CLASS___Configura
   //
 
   @override
-  Widget layout(final body) {
+  Widget layout(Widget body) {
     return super.layout(
       Column(
         children: [
