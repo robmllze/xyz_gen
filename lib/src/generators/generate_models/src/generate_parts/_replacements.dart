@@ -10,17 +10,19 @@ part of '../generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Map<String, String> _replacements(Map<String, TypeCode> input) {
-  final parameters = Map<String, TypeCode>.from(input);
-  final id = parameters["id"] ??= const TypeCode("String?");
-  final args = parameters["args"] ??= const TypeCode("dynamic");
-  final allEntries = parameters.entries.toList()
-    ..sort((a, b) => a.key.compareTo(b.key));
+Map<String, String> _replacements(
+  Map<String, TypeCode> input,
+  StringCaseType keyStringCaseType,
+) {
+  final fields = input.map((k, v) => MapEntry(k.toCamelCase(), v));
+  final id = fields["id"] ??= const TypeCode("String?");
+  final args = fields["args"] ??= const TypeCode("dynamic");
+  final allEntries = fields.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final allIds = allEntries.map((e) => e.key);
   final ids = allIds.where((e) => !const ["id", "args"].contains(e));
-  final entries = ids.map((i) => MapEntry(i, parameters[i]));
-  final nonNullableIds = allIds.where((e) => !parameters[e]!.nullable);
-  final allKeys = _getKeyNames(allIds);
+  final entries = ids.map((i) => MapEntry(i, fields[i]));
+  final nonNullableIds = allIds.where((e) => !fields[e]!.nullable);
+  final allKeys = _getKeyNames(allIds, keyStringCaseType);
   final allKeyConsts = _getKeyConstNames(allIds);
 
   final p = <Iterable>[
@@ -35,8 +37,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
         return "${id.nullable ? "" : "required "}${id.name} id,";
       }(),
       "${args.nullable ? "" : "required "}${args.name} args,",
-      ...entries
-          .map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
+      ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
     [
@@ -54,7 +55,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
     // ___P6___
     allIds.map((e) {
       final fieldName = "input[${allKeyConsts[e]}]";
-      final parameter = parameters[e]!;
+      final parameter = fields[e]!;
       final typeCode = parameter.value;
       final value = mapWithFromMappers(
         typeMappers: LooseTypeMappers.instance,
@@ -67,7 +68,7 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
     // ___P7___
     allIds.map((e) {
       final keyConst = allKeyConsts[e];
-      final parameter = parameters[e]!;
+      final parameter = fields[e]!;
       final typeCode = parameter.value;
       final value = mapWithToMappers(
         typeMappers: LooseTypeMappers.instance,

@@ -15,8 +15,10 @@ part '_model_user.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-@GenerateModel()
+@GenerateModel(
+  keyStringCase: KEBAB_CASE,
+)
 abstract class _ModelUser extends Model {
-  @Parameter()
+  @Field()
   late Map<String, Map<int, Set<bool>>> nameData;
 }

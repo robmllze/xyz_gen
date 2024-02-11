@@ -22,6 +22,7 @@ Future<void> _generateForFile(
   final fields = <String, TypeCode>{};
   var shouldInherit = false;
   var inheritanceConstructor = "";
+  var keyStringCaseType = StringCaseType.LOWER_SNAKE_CASE;
 
   // ---------------------------------------------------------------------------
 
@@ -49,16 +50,26 @@ Future<void> _generateForFile(
       case "inheritanceConstructor":
         inheritanceConstructor = fieldValue.toStringValue() ?? "";
         break;
+      case "keyStringCase":
+        keyStringCaseType =
+            nameToStringCaseType(fieldValue.toStringValue()) ?? StringCaseType.LOWER_SNAKE_CASE;
+        break;
     }
   }
 
   // ---------------------------------------------------------------------------
 
   // Define the function to call for each annotated member.
-  Future<void> onAnnotatedMember(_, String memberName, String memberType) async {
-    fields.addAll({
-      memberName: TypeCode(memberType),
-    });
+  Future<void> onAnnotatedMember(
+    String memberAnnotationName,
+    String memberName,
+    String memberType,
+  ) async {
+    if (memberAnnotationName == "Field") {
+      fields.addAll({
+        memberName: TypeCode(memberType),
+      });
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -86,7 +97,7 @@ Future<void> _generateForFile(
             : "",
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
-        ..._replacements(fields),
+        ..._replacements(fields, keyStringCaseType),
       },
     );
 
@@ -117,7 +128,7 @@ Future<void> _generateForFile(
     classAnnotations: {"GenerateModel"},
     onAnnotatedClass: onAnnotatedClass,
     onClassAnnotationField: onClassAnnotationField,
-    memberAnnotations: {"Parameter"},
+    memberAnnotations: {"Field"},
     onAnnotatedMember: onAnnotatedMember,
   );
 }

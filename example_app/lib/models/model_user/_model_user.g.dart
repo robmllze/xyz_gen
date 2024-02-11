@@ -26,7 +26,7 @@ class ModelUser extends Model {
 
   static const K_ARGS = "args";
   static const K_ID = "id";
-  static const K_NAME_DATA = "name_data";
+  static const K_NAME_DATA = "name-data";
 
   Map<String, Map<int, Set<bool>>>? nameData;
 
