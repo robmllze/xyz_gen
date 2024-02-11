@@ -98,12 +98,12 @@ class ModelUser extends _ModelUser {
   //
   //
 
-  factory ModelUser.fromJson(
+  factory ModelUser.fromJsonString(
     String source,
   ) {
     try {
       final decoded = jsonDecode(source);
-      return ModelUser.fromJMap(decoded);
+      return ModelUser.fromJson(decoded);
     } catch (e) {
       assert(false, e);
       rethrow;
@@ -114,7 +114,7 @@ class ModelUser extends _ModelUser {
   //
   //
 
-  factory ModelUser.fromJMap(
+  factory ModelUser.fromJson(
     Map<String, dynamic> input,
   ) {
     try {
@@ -179,7 +179,7 @@ class ModelUser extends _ModelUser {
   //
 
   @override
-  Map<String, dynamic> toJMap({
+  Map<String, dynamic> toJson({
     dynamic defaultValue,
     bool includeNulls = false,
   }) {
@@ -271,11 +271,11 @@ class ModelUser extends _ModelUser {
   //
 
   @override
-  T copyWithJMap<T extends Model>(
-    JMap other,
+  T copyWithJson<T extends Model>(
+    Map<String, dynamic> other,
   ) {
     if (other.isNotEmpty) {
-      return this.copy<T>()..updateWithJMap(other);
+      return this.copy<T>()..updateWithJson(other);
     }
     return this.copy<T>();
   }
@@ -312,9 +312,9 @@ class ModelUser extends _ModelUser {
   //
 
   @override
-  void updateWithJMap<T extends Model>(
-    JMap other,
+  void updateWithJson<T extends Model>(
+    Map<String, dynamic> other,
   ) {
-    this.updateWith(ModelUser.fromJMap(other));
+    this.updateWith(ModelUser.fromJson(other));
   }
 }
