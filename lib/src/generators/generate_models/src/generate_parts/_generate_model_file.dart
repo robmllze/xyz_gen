@@ -19,7 +19,9 @@ Future<void> _generateForFile(
 
   // Create variables to hold the annotation's field values.
   var className = "";
-  var parameters = <String, TypeCode>{};
+  final fields = <String, TypeCode>{};
+  var shouldInherit = false;
+  var inheritanceConstructor = "";
 
   // ---------------------------------------------------------------------------
 
@@ -29,25 +31,46 @@ Future<void> _generateForFile(
       case "className":
         className = fieldValue.toStringValue() ?? "";
         break;
-      case "parameters":
-        parameters = fieldValue.toMapValue()?.map((k, v) {
-              final t = v?.toStringValue();
-              return MapEntry(
-                k?.toStringValue(),
-                t != null ? TypeCode(t) : null,
-              );
-            }).nonNulls ??
-            {};
+      case "fields":
+        fields.addAll(
+          fieldValue.toMapValue()?.map((k, v) {
+                final typeCode = v?.toStringValue();
+                return MapEntry(
+                  k?.toStringValue(),
+                  typeCode != null ? TypeCode(typeCode) : null,
+                );
+              }).nonNulls ??
+              {},
+        );
+        break;
+      case "shouldInherit":
+        shouldInherit = fieldValue.toBoolValue() ?? false;
+        break;
+      case "inheritanceConstructor":
+        inheritanceConstructor = fieldValue.toStringValue() ?? "";
         break;
     }
   }
 
   // ---------------------------------------------------------------------------
 
+  // Define the function to call for each annotated member.
+  Future<void> onAnnotatedMember(_, String memberName, String memberType) async {
+    fields.addAll({
+      memberName: TypeCode(memberType),
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+
   // Define the function to call for each annotated class.
-  Future<void> onAnnotatedClass(String _, String parentClassName) async {
-    // Create the actual values to replace the placeholders with.
-    className = className.isEmpty ? "${parentClassName}Model" : className;
+  Future<void> onAnnotatedClass(String _, String superClassName) async {
+    // Decide on the class name.
+    final a = superClassName.replaceFirst(RegExp(r"^_+"), "");
+    final b = a != superClassName ? a : "${superClassName}Model";
+    className = className.isEmpty ? b : className;
+
+    // Get the class file name from the file path.
     final classFileName = getBaseName(fixedFilePath);
 
     // Replace placeholders with the actual values.
@@ -55,10 +78,15 @@ Future<void> _generateForFile(
     final output = replaceAllData(
       template,
       {
-        "___PARENT_CLASS___": parentClassName,
+        "___SUPER_CLASS___": shouldInherit ? superClassName : "Model",
+        "___SUPER_CONSTRUCTOR___": shouldInherit
+            ? inheritanceConstructor.isNotEmpty
+                ? ": super.$inheritanceConstructor()"
+                : ": super()"
+            : "",
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
-        ..._replacements(parameters),
+        ..._replacements(fields),
       },
     );
 
@@ -89,5 +117,7 @@ Future<void> _generateForFile(
     classAnnotations: {"GenerateModel"},
     onAnnotatedClass: onAnnotatedClass,
     onClassAnnotationField: onClassAnnotationField,
+    memberAnnotations: {"Parameter"},
+    onAnnotatedMember: onAnnotatedMember,
   );
 }

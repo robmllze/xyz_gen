@@ -10,7 +10,6 @@ import 'package:args/args.dart';
 
 import '/_common.dart';
 
-
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateForFilesTestApp(List<String> arguments) async {

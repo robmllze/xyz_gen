@@ -10,30 +10,6 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-String mapWithLooseToMappers({
-  required String fieldName,
-  required String typeCode,
-}) {
-  final mappers = LooseTypeMappers.instance.toMappers;
-  return TypeCodeMapper(mappers).map(
-    fieldName: fieldName,
-    typeCode: typeCode,
-  );
-}
-
-String mapWithLooseFromMappers({
-  required String fieldName,
-  required String typeCode,
-}) {
-  final mappers = LooseTypeMappers.instance.fromMappers;
-  return TypeCodeMapper(mappers).map(
-    fieldName: fieldName,
-    typeCode: typeCode,
-  );
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 class LooseTypeMappers extends TypeMappers {
   //
   //
@@ -141,7 +117,7 @@ class LooseTypeMappers extends TypeMappers {
         r"^(Model\w+)[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
-          return "() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJMap(a): null; }()";
+          return "() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()";
         },
         r"^\w+[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
@@ -177,7 +153,7 @@ class LooseTypeMappers extends TypeMappers {
         },
         r"^(Model\w+)[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
-          return "${e.name}?.toJMap()";
+          return "${e.name}?.toJson()";
         },
         r"^\w+[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();

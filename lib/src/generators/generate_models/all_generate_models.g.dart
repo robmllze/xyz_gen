@@ -9,4 +9,5 @@
 
 export 'src/app.dart';
 export 'src/generate.dart';
-export 'src/loose_type_mappers.dart';
+export 'src/map_with.dart';
+export 'src/type_mappers/loose_type_mappers.dart';

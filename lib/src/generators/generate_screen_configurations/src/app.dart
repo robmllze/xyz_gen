@@ -11,7 +11,6 @@ import 'package:path/path.dart' as p;
 
 import '/_common.dart';
 
-
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating screen configurations.

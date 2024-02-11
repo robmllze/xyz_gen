@@ -12,24 +12,12 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // To-Do: Specify your apps/root folders to generate for.
 const targetApps = <String>[
-  "",
+  "example_app",
 ];
 
 // To-Do: Specify the directories in your apps/root folders to generate for.
 const subDirectories = <String>[
   "",
-  "src/generators/generate_exports",
-  "src/generators/generate_for_annotation_TEST",
-  "src/generators/generate_for_annotation_TEST",
-  "src/generators/generate_for_files_TEST",
-  "src/generators/generate_license_headers",
-  "src/generators/generate_makeups",
-  "src/generators/generate_models",
-  "src/generators/generate_preps",
-  "src/generators/generate_screen_access",
-  "src/generators/generate_screen_configurations",
-  "src/generators/generate_screen",
-  "src/generators/generate_widgets",
   "generators",
   "accessibility",
   "app_services",
@@ -67,7 +55,9 @@ void main() async {
     "-t",
     "$currentScriptDir/templates/generate_exports/default_exports_template.dart.md",
     "-r",
-    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    targetApps
+        .map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib")
+        .join("&"),
     "-s",
     subDirectories.join("&"),
   ]);

@@ -1,48 +1,33 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Gen
+// Your Project Name
+// Copyright Ⓒ Your Name
+//
+// Licensing details can be found in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/xyz_gen.dart';
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
+
+part '_model_user.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// Specify the root folder in your project to start generating from.
-const APP_FOLDER = "test";
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-void main() async {
-  // STEP 1 - GENERATE THE MODELS
-  await generateModelsApp([
-    // Template file path.
-    "-t",
-    "___generators/templates/generate_models/default_model_template.dart.md",
-    // Root directories.
-    "-r",
-    [
-      "$APP_FOLDER/lib",
-    ].join("&"),
-    // Sub-directories.
-    "-s",
-    [
-      "models",
-    ].join("&"),
-  ]);
-  // STEP 2 - INCLUDE MODEL FILES TO DART EXPORTS
-  generateExportsApp([
-    "-t",
-    "___generators/templates/generate_exports/default_exports_template.dart.md",
-    "-r",
-    [
-      "$APP_FOLDER/lib",
-    ].join("&"),
-    "-s",
-    [
-      "models",
-    ].join("&"),
-  ]);
+@GenerateModel(
+  className: "ModelUser",
+  fields: {
+    "whenLastLoggedIn": "DateTime?",
+    "userPubId": "String?",
+    "connectionUids": "Set<String>?",
+    "relationshipIds": "Set<String>?",
+    "didSendWelcomeEmail": "bool?",
+    "emailSubscriptions": "Set<String>?",
+    "pushSubscriptions": "Set<String>?",
+    "smsSubscriptions": "Set<String>?",
+  },
+)
+abstract class _ModelUser extends ThisModel<ModelUser> {
+  _ModelUser._();
 }

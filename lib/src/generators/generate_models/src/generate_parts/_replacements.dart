@@ -56,7 +56,8 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
       final fieldName = "input[${allKeyConsts[e]}]";
       final parameter = parameters[e]!;
       final typeCode = parameter.value;
-      final value = mapWithLooseFromMappers(
+      final value = mapWithFromMappers(
+        typeMappers: LooseTypeMappers.instance,
         fieldName: fieldName,
         typeCode: typeCode,
       );
@@ -68,7 +69,8 @@ Map<String, String> _replacements(Map<String, TypeCode> input) {
       final keyConst = allKeyConsts[e];
       final parameter = parameters[e]!;
       final typeCode = parameter.value;
-      final value = mapWithLooseToMappers(
+      final value = mapWithToMappers(
+        typeMappers: LooseTypeMappers.instance,
         fieldName: e,
         typeCode: typeCode,
       );

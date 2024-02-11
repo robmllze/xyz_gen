@@ -73,13 +73,16 @@ Future<void> _generateScreens(String screensDir) {
       "--default-title": DEFAULT_TITLE,
       "--is-only-accessible-if-logged-in-and-verified":
           IS_ONLY_ACCESSIBLE_IF_LOGGED_IN_AND_VERIFIED?.toString(),
-      "--is-only-accessible-if-logged-in": IS_ONLY_ACCESSIBLE_IF_LOGGED_IN?.toString(),
-      "--is-only-accessible-if-logged-out": IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT?.toString(),
+      "--is-only-accessible-if-logged-in":
+          IS_ONLY_ACCESSIBLE_IF_LOGGED_IN?.toString(),
+      "--is-only-accessible-if-logged-out":
+          IS_ONLY_ACCESSIBLE_IF_LOGGED_OUT?.toString(),
       "--is-redirectable": IS_REDIRECTABLE?.toString(),
       "--makeup": MAKEUP,
       "--navigation-control-widget": NAVIGATION_CONTROL_WIDGET,
-      "--internal-parameters":
-          INTERNAL_PARAMETERS.entries.map((e) => "${e.key}:${e.value}").join("::"),
+      "--internal-parameters": INTERNAL_PARAMETERS.entries
+          .map((e) => "${e.key}:${e.value}")
+          .join("::"),
       "--query-parameters": QUERY_PARAMETERS.join("&"),
     }
         .map((k, v) => MapEntry(k, v?.nullIfEmpty))
