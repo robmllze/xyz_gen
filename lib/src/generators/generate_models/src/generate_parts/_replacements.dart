@@ -10,18 +10,20 @@ part of '../generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Map<String, String> _replacements(
-  Map<String, TypeCode> input,
-  StringCaseType keyStringCaseType,
-) {
-  final fields = input.map((k, v) => MapEntry(k.toCamelCase(), v));
-  final id = fields["id"] ??= const TypeCode("String?");
-  final args = fields["args"] ??= const TypeCode("dynamic");
-  final allEntries = fields.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+Map<String, String> _replacements({
+  required Map<String, TypeCode> fields,
+  required StringCaseType keyStringCaseType,
+  required bool includeId,
+  required bool includeArgs,
+}) {
+  final camelCaseFields = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
+  final id = includeId ? camelCaseFields["id"] ??= const TypeCode("String?") : null;
+  final args = includeArgs ? camelCaseFields["args"] ??= const TypeCode("dynamic") : null;
+  final allEntries = camelCaseFields.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final allIds = allEntries.map((e) => e.key);
   final ids = allIds.where((e) => !const ["id", "args"].contains(e));
-  final entries = ids.map((i) => MapEntry(i, fields[i]));
-  final nonNullableIds = allIds.where((e) => !fields[e]!.nullable);
+  final entries = ids.map((i) => MapEntry(i, camelCaseFields[i]));
+  final nonNullableIds = allIds.where((e) => !camelCaseFields[e]!.nullable);
   final allKeys = _getKeyNames(allIds, keyStringCaseType);
   final allKeyConsts = _getKeyConstNames(allIds);
 
@@ -32,22 +34,26 @@ Map<String, String> _replacements(
     entries.map((e) => "${e.value!.nullableName} ${e.key};"),
     // ___P2___
     [
-      () {
-        assert(id.nullableName == "String?");
-        return "${id.nullable ? "" : "required "}${id.getName()} id,";
-      }(),
-      "${args.nullable ? "" : "required "}${args.getName()} args,",
+      if (id != null)
+        () {
+          assert(id.nullableName == "String?");
+          return "${id.nullable ? "" : "required "}${id.getName()} id,";
+        }(),
+      if (args != null)
+        () {
+          return "${args.nullable ? "" : "required "}${args.getName()} args,";
+        }(),
       ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
     [
-      "this.id = id;",
-      "this.args = args;",
+      if (id != null) "this.id = id;",
+      if (args != null) "this.args = args;",
     ],
     // ___P4___
     [
-      "String? id,",
-      "${args.nullableName} args,",
+      if (id != null) "String? id,",
+      if (args != null) "${args.nullableName} args,",
       ...ids.map((e) => "this.$e,"),
     ],
     // ___P5___
@@ -55,7 +61,7 @@ Map<String, String> _replacements(
     // ___P6___
     allIds.map((e) {
       final fieldName = "input[${allKeyConsts[e]}]";
-      final parameter = fields[e]!;
+      final parameter = camelCaseFields[e]!;
       final typeCode = parameter.value;
       final value = mapWithFromMappers(
         typeMappers: LooseTypeMappers.instance,
@@ -68,7 +74,7 @@ Map<String, String> _replacements(
     // ___P7___
     allIds.map((e) {
       final keyConst = allKeyConsts[e];
-      final parameter = fields[e]!;
+      final parameter = camelCaseFields[e]!;
       final typeCode = parameter.value;
       final value = mapWithToMappers(
         typeMappers: LooseTypeMappers.instance,

@@ -23,6 +23,8 @@ Future<void> _generateForFile(
   var shouldInherit = false;
   var inheritanceConstructor = "";
   var keyStringCaseType = StringCaseType.LOWER_SNAKE_CASE;
+  var includeId = true;
+  var includeArgs = true;
 
   // ---------------------------------------------------------------------------
 
@@ -53,6 +55,12 @@ Future<void> _generateForFile(
       case "keyStringCase":
         keyStringCaseType =
             nameToStringCaseType(fieldValue.toStringValue()) ?? StringCaseType.LOWER_SNAKE_CASE;
+        break;
+      case "includeId":
+        includeId = fieldValue.toBoolValue() ?? true;
+        break;
+      case "includeArgs":
+        includeArgs = fieldValue.toBoolValue() ?? true;
         break;
     }
   }
@@ -97,7 +105,12 @@ Future<void> _generateForFile(
             : "",
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
-        ..._replacements(fields, keyStringCaseType),
+        ..._replacements(
+          fields: fields,
+          keyStringCaseType: keyStringCaseType,
+          includeId: includeId,
+          includeArgs: includeArgs,
+        ),
       },
     );
 

@@ -26,28 +26,17 @@ part '_model_user.g.dart';
     "display_name": "String?",
     "type": $UpperSnakeCaseString,
   },
-  shouldInherit: true,
+  shouldInherit: false,
   keyStringCase: "lower_snake_case",
+  includeId: false,
+  includeArgs: false,
 )
-abstract class _ModelUser extends ThisModel<ModelUser> {
+abstract class _ModelUser {
   @Field()
   String? firstName;
 
   @Field()
   String? lastName;
-
-  String get fullName => "$firstName $lastName";
-
-  bool get isAdmin => this.model.type == ModelUserType.ADMIN.name;
-  bool get isUser => this.model.type == ModelUserType.USER.name;
-
-  bool emailContains(String value) {
-    return this.model.email?.contains(value.toLowerCase()) == true;
-  }
-
-  bool nameContains(String value) {
-    return this.model.searchableName?.contains(value.toLowerCase()) == true;
-  }
 }
 
 enum ModelUserType {

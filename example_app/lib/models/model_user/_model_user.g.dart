@@ -7,31 +7,18 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-// ignore_for_file: annotate_overrides
-// ignore_for_file: empty_constructor_bodies
 // ignore_for_file: invalid_null_aware_operator
-// ignore_for_file: overridden_fields
 // ignore_for_file: unnecessary_non_null_assertion
 // ignore_for_file: unnecessary_null_comparison
-// ignore_for_file: unnecessary_this
 
 part of 'model_user.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ModelUser extends _ModelUser {
+class ModelUser {
   //
   //
   //
-
-  static const K_ARGS = "args";
-  static const K_DISPLAY_NAME = "display_name";
-  static const K_EMAIL = "email";
-  static const K_FIRST_NAME = "first_name";
-  static const K_ID = "id";
-  static const K_LAST_NAME = "last_name";
-  static const K_SEARCHABLE_NAME = "searchable_name";
-  static const K_TYPE = "type";
 
   String? displayName;
   String? email;
@@ -45,62 +32,13 @@ class ModelUser extends _ModelUser {
   //
 
   ModelUser({
-    String? id,
-    dynamic args,
     this.displayName,
     this.email,
     this.firstName,
     this.lastName,
     this.searchableName,
     this.type,
-  }) : super() {
-    this.id = id;
-    this.args = args;
-  }
-
-  //
-  //
-  //
-
-  ModelUser.unsafe({
-    String? id,
-    dynamic args,
-    this.displayName,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.searchableName,
-    this.type,
-  }) : super() {
-    this.id = id;
-    this.args = args;
-  }
-
-  //
-  //
-  //
-
-  factory ModelUser.from(
-    ModelUser other,
-  ) {
-    return ModelUser.unsafe()..updateWith(other);
-  }
-
-  //
-  //
-  //
-
-  factory ModelUser.fromJsonString(
-    String source,
-  ) {
-    try {
-      final decoded = jsonDecode(source);
-      return ModelUser.fromJson(decoded);
-    } catch (e) {
-      assert(false, e);
-      rethrow;
-    }
-  }
+  });
 
   //
   //
@@ -109,132 +47,44 @@ class ModelUser extends _ModelUser {
   factory ModelUser.fromJson(
     Map<String, dynamic> input,
   ) {
-    try {
-      return ModelUser.unsafe(
-        args: input[K_ARGS],
-        displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-        email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-        firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-        id: input[K_ID]?.toString().trim().nullIfEmpty,
-        lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: input[K_SEARCHABLE_NAME]
-            ?.toString()
-            .trim()
-            .nullIfEmpty
-            ?.toLowerCase(),
-        type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
-      );
-    } catch (e) {
-      assert(false, e);
-      rethrow;
-    }
+    return ModelUser(
+      displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+      email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+      firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
+      lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+      searchableName: input[K_SEARCHABLE_NAME]
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toLowerCase(),
+      type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+    );
   }
 
   //
   //
   //
 
-  @override
-  Map<String, dynamic> toJson({
-    dynamic defaultValue,
-    bool includeNulls = false,
-  }) {
-    try {
-      final withNulls = <String, dynamic>{
-        K_ARGS: args,
-        K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
-        K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
-        K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
-        K_ID: id?.toString().trim().nullIfEmpty,
-        K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
-        K_SEARCHABLE_NAME:
-            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
-        K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
-      }.mapWithDefault(defaultValue);
-      return includeNulls ? withNulls : withNulls.nonNulls;
-    } catch (e) {
-      assert(false, e);
-      rethrow;
-    }
+  Map<String, dynamic> toJson() {
+    return {
+      K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
+      K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
+      K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
+      K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
+      K_SEARCHABLE_NAME:
+          searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+      K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+    };
   }
 
   //
   //
   //
 
-  @override
-  T empty<T extends Model>() {
-    return ModelUser.unsafe() as T;
-  }
-
-  //
-  //
-  //
-
-  @override
-  T copy<T extends Model>() {
-    return (ModelUser.unsafe()..updateWith(this)) as T;
-  }
-
-  //
-  //
-  //
-
-  @override
-  T copyWith<T extends Model>(
-    T other,
-  ) {
-    if (other is ModelUser) {
-      return this.copy<T>()..updateWith(other);
-    }
-    assert(false);
-    return this.copy<T>();
-  }
-
-  //
-  //
-  //
-
-  @override
-  T copyWithJson<T extends Model>(
-    Map<String, dynamic> other,
-  ) {
-    if (other.isNotEmpty) {
-      return this.copy<T>()..updateWithJson(other);
-    }
-    return this.copy<T>();
-  }
-
-  //
-  //
-  //
-
-  @override
-  void updateWith<T extends Model>(
-    T other,
-  ) {
-    if (other is ModelUser) {
-      this.args = other.args ?? this.args;
-      this.displayName = other.displayName ?? this.displayName;
-      this.email = other.email ?? this.email;
-      this.firstName = other.firstName ?? this.firstName;
-      this.id = other.id ?? this.id;
-      this.lastName = other.lastName ?? this.lastName;
-      this.searchableName = other.searchableName ?? this.searchableName;
-      this.type = other.type ?? this.type;
-    } else {
-      assert(false);
-    }
-  }
-
-  //
-  //
-  //
-
-  @override
-  void updateWithJson<T extends Model>(
-    Map<String, dynamic> other,
-  ) {
-    this.updateWith(ModelUser.fromJson(other));
-  }
+  static const K_DISPLAY_NAME = "display_name";
+  static const K_EMAIL = "email";
+  static const K_FIRST_NAME = "first_name";
+  static const K_LAST_NAME = "last_name";
+  static const K_SEARCHABLE_NAME = "searchable_name";
+  static const K_TYPE = "type";
 }
