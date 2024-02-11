@@ -77,7 +77,7 @@ Future<void> _generateForFile(
   // Define the function to call for each annotated class.
   Future<void> onAnnotatedClass(String _, String superClassName) async {
     // Decide on the class name.
-    final a = superClassName.replaceFirst(RegExp(r"^_+"), "");
+    final a = superClassName.replaceFirst(RegExp(r"^[_$]+"), "");
     final b = a != superClassName ? a : "${superClassName}Model";
     className = className.isEmpty ? b : className;
 

@@ -19,16 +19,26 @@ part of 'model_user.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ModelUser extends Model {
+class ModelUser extends _ModelUser {
   //
   //
   //
 
   static const K_ARGS = "args";
+  static const K_DISPLAY_NAME = "display_name";
+  static const K_EMAIL = "email";
+  static const K_FIRST_NAME = "first_name";
   static const K_ID = "id";
-  static const K_NAME_DATA = "name-data";
+  static const K_LAST_NAME = "last_name";
+  static const K_SEARCHABLE_NAME = "searchable_name";
+  static const K_TYPE = "type";
 
-  Map<String, Map<int, Set<bool>>>? nameData;
+  String? displayName;
+  String? email;
+  String? firstName;
+  String? lastName;
+  String? searchableName;
+  String? type;
 
   //
   //
@@ -37,8 +47,13 @@ class ModelUser extends Model {
   ModelUser({
     String? id,
     dynamic args,
-    required this.nameData,
-  }) {
+    this.displayName,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.searchableName,
+    this.type,
+  }) : super() {
     this.id = id;
     this.args = args;
   }
@@ -50,9 +65,13 @@ class ModelUser extends Model {
   ModelUser.unsafe({
     String? id,
     dynamic args,
-    this.nameData,
-  }) {
-    assert(this.nameData != null);
+    this.displayName,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.searchableName,
+    this.type,
+  }) : super() {
     this.id = id;
     this.args = args;
   }
@@ -93,33 +112,17 @@ class ModelUser extends Model {
     try {
       return ModelUser.unsafe(
         args: input[K_ARGS],
+        displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
         id: input[K_ID]?.toString().trim().nullIfEmpty,
-        nameData: letMap(input[K_NAME_DATA])
-            ?.map(
-              (final p0, final p1) => MapEntry(
-                p0?.toString().trim().nullIfEmpty,
-                letMap(p1)
-                    ?.map(
-                      (final p0, final p1) => MapEntry(
-                        letInt(p0),
-                        letSet(p1)
-                            ?.map(
-                              (final p0) => letBool(p0),
-                            )
-                            .nonNulls
-                            .nullIfEmpty
-                            ?.toSet()
-                            .cast(),
-                      ),
-                    )
-                    .nonNulls
-                    .nullIfEmpty
-                    ?.cast(),
-              ),
-            )
-            .nonNulls
+        lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: input[K_SEARCHABLE_NAME]
+            ?.toString()
+            .trim()
             .nullIfEmpty
-            ?.cast(),
+            ?.toLowerCase(),
+        type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       );
     } catch (e) {
       assert(false, e);
@@ -139,30 +142,14 @@ class ModelUser extends Model {
     try {
       final withNulls = <String, dynamic>{
         K_ARGS: args,
+        K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
+        K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
         K_ID: id?.toString().trim().nullIfEmpty,
-        K_NAME_DATA: nameData
-            ?.map(
-              (final p0, final p1) => MapEntry(
-                p0?.toString().trim().nullIfEmpty,
-                p1
-                    ?.map(
-                      (final p0, final p1) => MapEntry(
-                        p0,
-                        p1
-                            ?.map(
-                              (final p0) => p0,
-                            )
-                            .nonNulls
-                            .nullIfEmpty
-                            ?.toList(),
-                      ),
-                    )
-                    .nonNulls
-                    .nullIfEmpty,
-              ),
-            )
-            .nonNulls
-            .nullIfEmpty,
+        K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
+        K_SEARCHABLE_NAME:
+            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -228,8 +215,13 @@ class ModelUser extends Model {
   ) {
     if (other is ModelUser) {
       this.args = other.args ?? this.args;
+      this.displayName = other.displayName ?? this.displayName;
+      this.email = other.email ?? this.email;
+      this.firstName = other.firstName ?? this.firstName;
       this.id = other.id ?? this.id;
-      this.nameData = other.nameData ?? this.nameData;
+      this.lastName = other.lastName ?? this.lastName;
+      this.searchableName = other.searchableName ?? this.searchableName;
+      this.type = other.type ?? this.type;
     } else {
       assert(false);
     }

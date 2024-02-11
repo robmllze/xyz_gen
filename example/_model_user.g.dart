@@ -25,24 +25,20 @@ class ModelUser extends _ModelUser {
   //
 
   static const K_ARGS = "args";
-  static const K_CONNECTION_UIDS = "connection_uids";
-  static const K_DID_SEND_WELCOME_EMAIL = "did_send_welcome_email";
-  static const K_EMAIL_SUBSCRIPTIONS = "email_subscriptions";
+  static const K_DISPLAY_NAME = "display_name";
+  static const K_EMAIL = "email";
+  static const K_FIRST_NAME = "first_name";
   static const K_ID = "id";
-  static const K_PUSH_SUBSCRIPTIONS = "push_subscriptions";
-  static const K_RELATIONSHIP_IDS = "relationship_ids";
-  static const K_SMS_SUBSCRIPTIONS = "sms_subscriptions";
-  static const K_USER_PUB_ID = "user_pub_id";
-  static const K_WHEN_LAST_LOGGED_IN = "when_last_logged_in";
+  static const K_LAST_NAME = "last_name";
+  static const K_SEARCHABLE_NAME = "searchable_name";
+  static const K_TYPE = "type";
 
-  Set<String>? connectionUids;
-  bool? didSendWelcomeEmail;
-  Set<String>? emailSubscriptions;
-  Set<String>? pushSubscriptions;
-  Set<String>? relationshipIds;
-  Set<String>? smsSubscriptions;
-  String? userPubId;
-  DateTime? whenLastLoggedIn;
+  String? displayName;
+  String? email;
+  String? firstName;
+  String? lastName;
+  String? searchableName;
+  String? type;
 
   //
   //
@@ -51,15 +47,13 @@ class ModelUser extends _ModelUser {
   ModelUser({
     String? id,
     dynamic args,
-    this.connectionUids,
-    this.didSendWelcomeEmail,
-    this.emailSubscriptions,
-    this.pushSubscriptions,
-    this.relationshipIds,
-    this.smsSubscriptions,
-    this.userPubId,
-    this.whenLastLoggedIn,
-  }) : super._() {
+    this.displayName,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.searchableName,
+    this.type,
+  }) : super() {
     this.id = id;
     this.args = args;
   }
@@ -71,15 +65,13 @@ class ModelUser extends _ModelUser {
   ModelUser.unsafe({
     String? id,
     dynamic args,
-    this.connectionUids,
-    this.didSendWelcomeEmail,
-    this.emailSubscriptions,
-    this.pushSubscriptions,
-    this.relationshipIds,
-    this.smsSubscriptions,
-    this.userPubId,
-    this.whenLastLoggedIn,
-  }) : super._() {
+    this.displayName,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.searchableName,
+    this.type,
+  }) : super() {
     this.id = id;
     this.args = args;
   }
@@ -120,53 +112,17 @@ class ModelUser extends _ModelUser {
     try {
       return ModelUser.unsafe(
         args: input[K_ARGS],
-        connectionUids: letSet(input[K_CONNECTION_UIDS])
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toSet()
-            .cast(),
-        didSendWelcomeEmail: letBool(input[K_DID_SEND_WELCOME_EMAIL]),
-        emailSubscriptions: letSet(input[K_EMAIL_SUBSCRIPTIONS])
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toSet()
-            .cast(),
+        displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
         id: input[K_ID]?.toString().trim().nullIfEmpty,
-        pushSubscriptions: letSet(input[K_PUSH_SUBSCRIPTIONS])
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
+        lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: input[K_SEARCHABLE_NAME]
+            ?.toString()
+            .trim()
             .nullIfEmpty
-            ?.toSet()
-            .cast(),
-        relationshipIds: letSet(input[K_RELATIONSHIP_IDS])
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toSet()
-            .cast(),
-        smsSubscriptions: letSet(input[K_SMS_SUBSCRIPTIONS])
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toSet()
-            .cast(),
-        userPubId: input[K_USER_PUB_ID]?.toString().trim().nullIfEmpty,
-        whenLastLoggedIn: () {
-          final a = input[K_WHEN_LAST_LOGGED_IN];
-          return a != null ? DateTime.tryParse(a)?.toUtc() : null;
-        }(),
+            ?.toLowerCase(),
+        type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       );
     } catch (e) {
       assert(false, e);
@@ -186,45 +142,14 @@ class ModelUser extends _ModelUser {
     try {
       final withNulls = <String, dynamic>{
         K_ARGS: args,
-        K_CONNECTION_UIDS: connectionUids
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toList(),
-        K_DID_SEND_WELCOME_EMAIL: didSendWelcomeEmail,
-        K_EMAIL_SUBSCRIPTIONS: emailSubscriptions
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toList(),
+        K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
+        K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
         K_ID: id?.toString().trim().nullIfEmpty,
-        K_PUSH_SUBSCRIPTIONS: pushSubscriptions
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toList(),
-        K_RELATIONSHIP_IDS: relationshipIds
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toList(),
-        K_SMS_SUBSCRIPTIONS: smsSubscriptions
-            ?.map(
-              (final p0) => p0?.toString().trim().nullIfEmpty,
-            )
-            .nonNulls
-            .nullIfEmpty
-            ?.toList(),
-        K_USER_PUB_ID: userPubId?.toString().trim().nullIfEmpty,
-        K_WHEN_LAST_LOGGED_IN: whenLastLoggedIn?.toUtc()?.toIso8601String(),
+        K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
+        K_SEARCHABLE_NAME:
+            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -290,15 +215,13 @@ class ModelUser extends _ModelUser {
   ) {
     if (other is ModelUser) {
       this.args = other.args ?? this.args;
-      this.connectionUids = other.connectionUids ?? this.connectionUids;
-      this.didSendWelcomeEmail = other.didSendWelcomeEmail ?? this.didSendWelcomeEmail;
-      this.emailSubscriptions = other.emailSubscriptions ?? this.emailSubscriptions;
+      this.displayName = other.displayName ?? this.displayName;
+      this.email = other.email ?? this.email;
+      this.firstName = other.firstName ?? this.firstName;
       this.id = other.id ?? this.id;
-      this.pushSubscriptions = other.pushSubscriptions ?? this.pushSubscriptions;
-      this.relationshipIds = other.relationshipIds ?? this.relationshipIds;
-      this.smsSubscriptions = other.smsSubscriptions ?? this.smsSubscriptions;
-      this.userPubId = other.userPubId ?? this.userPubId;
-      this.whenLastLoggedIn = other.whenLastLoggedIn ?? this.whenLastLoggedIn;
+      this.lastName = other.lastName ?? this.lastName;
+      this.searchableName = other.searchableName ?? this.searchableName;
+      this.type = other.type ?? this.type;
     } else {
       assert(false);
     }

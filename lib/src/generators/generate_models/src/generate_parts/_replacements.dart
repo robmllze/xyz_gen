@@ -34,9 +34,9 @@ Map<String, String> _replacements(
     [
       () {
         assert(id.nullableName == "String?");
-        return "${id.nullable ? "" : "required "}${id.name} id,";
+        return "${id.nullable ? "" : "required "}${id.getName()} id,";
       }(),
-      "${args.nullable ? "" : "required "}${args.name} args,",
+      "${args.nullable ? "" : "required "}${args.getName()} args,",
       ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
