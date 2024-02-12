@@ -24,7 +24,7 @@ Map<String, String> _getKeyNames(
               return k.toSnakeCase();
             case StringCaseType.UPPER_SNAKE_CASE:
               return k.toUpperSnakeCase();
-            case StringCaseType.KEBAB_CASE:
+            case StringCaseType.LOWER_KEBAB_CASE:
               return k.toKebabCase();
             case StringCaseType.UPPER_KEBAB_CASE:
               return k.toUpperKebabCase();
@@ -32,6 +32,12 @@ Map<String, String> _getKeyNames(
               return k.toCamelCase();
             case StringCaseType.PASCAL_CASE:
               return k.toPascalCase();
+            case StringCaseType.LOWER_DOT_CASE:
+              return k.toLowerDotCase();
+            case StringCaseType.UPPER_DOT_CASE:
+              return k.toUpperDotCase();
+            case StringCaseType.URI_PATH_CASE:
+              return k.toUriPathCase();
           }
         }(),
       ),
