@@ -38,10 +38,9 @@ String _buildCollectionMapper(
       .._largs = Iterable.generate(pLength, (n) => n).map((n) => "final p$n")
       .._type = element[1];
     final argIdMatch = RegExp(r"#x(\d+)").firstMatch(output);
-    collectionEvent._nameIndex =
-        argIdMatch != null && argIdMatch.groupCount > 0 //
-            ? int.tryParse(argIdMatch.group(1)!)
-            : null;
+    collectionEvent._nameIndex = argIdMatch != null && argIdMatch.groupCount > 0 //
+        ? int.tryParse(argIdMatch.group(1)!)
+        : null;
     final xHash = "#x${collectionEvent._nameIndex}";
     final formula = _buildMapper(collectionEvent, mappingFormulas);
     if (formula != null) {
@@ -89,15 +88,14 @@ String? _buildMapper(
       mappers,
       type,
     );
-    assert(results.length == 1);
+    assert(results.isNotEmpty);
     // If there are any matches, take the first one.
     if (results.isNotEmpty) {
       final result = results.entries.first;
       final typePattern = result.key;
       final match = RegExp(typePattern).firstMatch(type);
       if (match != null) {
-        event._matchGroups =
-            Iterable.generate(match.groupCount + 1, (i) => match.group(i)!);
+        event._matchGroups = Iterable.generate(match.groupCount + 1, (i) => match.group(i)!);
         final eventMapper = result.value;
         return eventMapper(event);
       }
