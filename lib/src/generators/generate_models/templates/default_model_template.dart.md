@@ -20,7 +20,7 @@ part of '___CLASS_FILE_NAME___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ___CLASS___ extends ___PARENT_CLASS___ {
+class ___CLASS___ extends ___SUPER_CLASS___ {
   //
   //
   //
@@ -35,7 +35,7 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
 
   ___CLASS___({
     ___P2___
-  }) : super._() {
+  }) ___SUPER_CONSTRUCTOR___ {
     ___P3___
   }
 
@@ -45,7 +45,7 @@ class ___CLASS___ extends ___PARENT_CLASS___ {
 
   ___CLASS___.unsafe({
     ___P4___
-  }) : super._() {
+  }) ___SUPER_CONSTRUCTOR___ {
     ___P5___
     ___P3___
   }

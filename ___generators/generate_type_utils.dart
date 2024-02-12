@@ -17,31 +17,7 @@ const targetApps = <String>[
 
 // To-Do: Specify the directories in your apps/root folders to generate for.
 const subDirectories = <String>[
-  "",
-  "generators",
-  "accessibility",
-  "app_services",
-  "app_state",
-  "app",
-  "brokers",
-  "components",
-  "configs",
-  "firebase_options",
-  "functions",
-  "interfaces",
-  "makeups",
-  "managers",
-  "model_filters",
-  "models",
-  "routing",
-  "screens",
-  "service_brokers",
-  "services",
-  "src",
-  "theme",
   "types",
-  "utils",
-  "widgets",
 ];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -51,7 +27,27 @@ const subDirectories = <String>[
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main() async {
-  await generateExportsApp([
+  await _generateTypeUtils();
+  //await _generateExports();
+}
+
+// -----------------------------------------------------------------------------
+
+Future<void> _generateTypeUtils() {
+  return generateTypeUtilsApp([
+    "-t",
+    "$currentScriptDir/templates/generate_type_utils/default_type_utils_template.dart.md",
+    "-r",
+    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    "-s",
+    subDirectories.join("&"),
+  ]);
+}
+
+// -----------------------------------------------------------------------------
+
+Future<void> _generateExports() {
+  return generateExportsApp([
     "-t",
     "$currentScriptDir/templates/generate_exports/default_exports_template.dart.md",
     "-r",

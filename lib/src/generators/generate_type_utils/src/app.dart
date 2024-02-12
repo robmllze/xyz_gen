@@ -7,13 +7,14 @@
 //.title~
 
 import 'package:args/args.dart';
+import 'package:path/path.dart' as p;
 
 import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateForAnnotationTestApp(List<String> arguments) async {
-  await basicCmdAppHelper<GenerateForAnnotationTestArgs>(
+Future<void> generateTypeUtilsApp(List<String> arguments) async {
+  await basicCmdAppHelper<BasicCmdAppArgs>(
     appTitle: "XYZ Gen - Generate For Annotation Test",
     arguments: arguments,
     parser: ArgParser()
@@ -33,6 +34,7 @@ Future<void> generateForAnnotationTestApp(List<String> arguments) async {
         "subs",
         abbr: "s",
         help: "Sub-directory paths separated by `&`.",
+        defaultsTo: "models",
       )
       ..addOption(
         "patterns",
@@ -40,22 +42,37 @@ Future<void> generateForAnnotationTestApp(List<String> arguments) async {
         help: "Path patterns separated by `&`.",
       )
       ..addOption(
+        "template",
+        abbr: "t",
+        help: "Template file path.",
+        defaultsTo: p.join(
+          await getXyzGenLibPath(),
+          "generators",
+          "generate_models",
+          "templates",
+          "default_type_utils_template.dart.md",
+        ),
+      )
+      ..addOption(
         "dart-sdk",
         help: "Dart SDK path.",
       ),
     onResults: (parser, results) {
-      return GenerateForAnnotationTestArgs(
+      return BasicCmdAppArgs(
+        fallbackDartSdkPath: results["dart-sdk"],
+        templateFilePath: results["template"],
         rootPaths: splitArg(results["roots"])?.toSet(),
         subPaths: splitArg(results["subs"])?.toSet(),
         pathPatterns: splitArg(results["patterns"])?.toSet(),
-        fallbackDartSdkPath: results["dart-sdk"],
       );
     },
     action: (parser, results, args) async {
-      await generateForAnnotationTest(
-        rootDirPaths: args.rootPaths ?? {},
-        subDirPaths: args.subPaths ?? {},
-        pathPatterns: args.pathPatterns ?? {},
+      await generateTypeUtils(
+        fallbackDartSdkPath: args.fallbackDartSdkPath,
+        rootDirPaths: args.rootPaths!,
+        subDirPaths: args.subPaths ?? const {},
+        pathPatterns: args.pathPatterns ?? const {},
+        templateFilePath: args.templateFilePath!,
       );
     },
   );
