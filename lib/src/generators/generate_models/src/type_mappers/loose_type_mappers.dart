@@ -101,6 +101,14 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()";
         },
+        r"^LowerDotCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toLowerDotCase()";
+        },
+        r"^UpperDotCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toUpperDotCase()";
+        },
         r"^CamelCase-String[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()";
@@ -108,6 +116,14 @@ class LooseTypeMappers extends TypeMappers {
         r"^PascalCase-String[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()";
+        },
+        r"^UriPathCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toUriPathCase()";
+        },
+        r"^PathCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toPathCase()";
         },
         r"^bool[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
@@ -191,6 +207,14 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()";
         },
+        r"^LowerDotCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toLowerDotCase()";
+        },
+        r"^UpperDotCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toUpperDotCase()";
+        },
         r"^CamelCase-String[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()";
@@ -198,6 +222,14 @@ class LooseTypeMappers extends TypeMappers {
         r"^PascalCase-String[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()";
+        },
+        r"^UriPathCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toUriPathCase()";
+        },
+        r"^PathCase-String[\?]?$": (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "${e.name}?.toString().trim().nullIfEmpty?.toPathCase()";
         },
         r"^dynamic|bool|int|double|num|Timestamp[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
