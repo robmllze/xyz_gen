@@ -22,16 +22,16 @@ const SCREEN_MAKERS = [
 
 Screen? findScreenFromConfiguration({
   required ModelScreenConfiguration configuration,
-  required bool isLoggedInAndVerified,
-  required bool isLoggedIn,
-  required bool isLoggedOut,
+  required bool? isLoggedInAndVerified,
+  required bool? isLoggedIn,
+  required bool? isLoggedOut,
 }) {
   for (final screenMaker in SCREEN_MAKERS) {
     final screen = screenMaker.call(
       configuration,
-      isLoggedInAndVerified,
-      isLoggedIn,
-      isLoggedOut,
+      isLoggedInAndVerified ?? false,
+      isLoggedIn ?? false,
+      isLoggedOut ?? true,
     );
     if (screen != null) {
       return screen;
@@ -42,14 +42,13 @@ Screen? findScreenFromConfiguration({
 
 Screen? findScreenFromConfigurationAndAuthService({
   required ModelScreenConfiguration configuration,
-  required AuthServiceInterface authServiceBroker,
+  required AuthServiceInterface? authServiceBroker,
 }) {
   return findScreenFromConfiguration(
     configuration: configuration,
-    isLoggedInAndVerified: authServiceBroker.loggedInAndEmailVerified,
-    isLoggedIn: authServiceBroker.loggedIn,
-    isLoggedOut: authServiceBroker.loggedOut,
+    isLoggedInAndVerified: authServiceBroker?.loggedInAndEmailVerified ?? false,
+    isLoggedIn: authServiceBroker?.loggedIn ?? false,
+    isLoggedOut: authServiceBroker?.loggedOut ?? true,
   );
 }
-
 ````
