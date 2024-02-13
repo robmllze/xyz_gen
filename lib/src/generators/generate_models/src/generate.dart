@@ -30,7 +30,6 @@ Future<void> generateModels({
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
     pathPatterns: pathPatterns,
-    begType: "model",
     templateFilePaths: {templateFilePath},
     generateForFile: _generateForFile,
   );

@@ -53,8 +53,8 @@ Future<void> _generateForFile(
         inheritanceConstructor = fieldValue.toStringValue() ?? "";
         break;
       case "keyStringCase":
-        keyStringCaseType = nameToStringCaseType(fieldValue.toStringValue()) ??
-            StringCaseType.LOWER_SNAKE_CASE;
+        keyStringCaseType =
+            nameToStringCaseType(fieldValue.toStringValue()) ?? StringCaseType.LOWER_SNAKE_CASE;
         break;
       case "includeId":
         includeId = fieldValue.toBoolValue() ?? true;
@@ -101,7 +101,7 @@ Future<void> _generateForFile(
         "___SUPER_CONSTRUCTOR___": shouldInherit
             ? inheritanceConstructor.isNotEmpty
                 ? ": super.$inheritanceConstructor()"
-                : ": super()"
+                : ""
             : "",
         "___CLASS___": className,
         "___CLASS_FILE_NAME___": classFileName,
