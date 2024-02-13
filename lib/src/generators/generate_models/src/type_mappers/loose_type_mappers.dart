@@ -157,12 +157,12 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "(){ final a = ${e.name}; return a is String ? a.trim().nullIfEmpty?.toUri(): null; }()";
         },
-        r"^(\w+Type)[\?]?$": (e) {
+        r"^(Type\w+|\w+Type)[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
-          return "nameTo$typeName(letAs<String>(${e.name}))";
+          return "$typeName.values.valueOf(letAs<String>(${e.name}))";
         },
-        r"^(Model\w+)[\?]?$": (e) {
+        r"^(Model\w+|\w+Model)[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
           return "() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()";
@@ -243,11 +243,11 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString()";
         },
-        r"^(\w+Type)[\?]?$": (e) {
+        r"^(Type\w+|\w+Type)[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.name";
         },
-        r"^(Model\w+)[\?]?$": (e) {
+        r"^(Model\w+|\w+Model)[\?]?$": (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toJson()";
         },
