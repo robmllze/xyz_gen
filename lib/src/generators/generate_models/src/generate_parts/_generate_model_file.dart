@@ -104,6 +104,7 @@ Future<void> _generateForFile(
                 : ""
             : "",
         "___CLASS___": className,
+        "___MODEL_ID___": className.toLowerSnakeCase(),
         "___CLASS_FILE_NAME___": classFileName,
         ..._replacements(
           fields: fields,

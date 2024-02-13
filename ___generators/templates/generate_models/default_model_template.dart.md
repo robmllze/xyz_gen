@@ -24,6 +24,10 @@ class ___CLASS___ extends ___SUPER_CLASS___ {
   //
   //
   //
+
+  static const CLASS = "___CLASS___";
+  static const MODEL_ID = "___MODEL_ID___";
+
   
   ___P0___
 

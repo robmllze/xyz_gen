@@ -163,4 +163,8 @@ final generated___CLASS___Route = GoRoute(
     );
   },
 );
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef T___CLASS___State = ScreenState<___CLASS___, ___CONFIGURATION_CLASS___, _Logic>;
 ````
