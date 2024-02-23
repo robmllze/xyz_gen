@@ -1,25 +1,42 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Your Project Name
-// Copyright Ⓒ Your Name
-//
-// Licensing details can be found in the LICENSE file in the root directory.
+// XYZ Gen
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/xyz_gen.dart';
-
-import '../../components/text/text.dart';
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-@GenerateMakeups(
-  variants: {
-    "default",
-  },
-  parameters: TEXT_PARAMETERS,
-)
-// ignore: unused_element
-abstract final class _Text {}
+class BasicAppArgs extends ValidObject {
+  //
+  //
+  //
+
+  final Set<String>? rootPaths;
+  final Set<String>? subPaths;
+  final Set<String>? pathPatterns;
+
+  //
+  //
+  //
+
+  const BasicAppArgs({
+    required this.rootPaths,
+    required this.subPaths,
+    required this.pathPatterns,
+  });
+
+  //
+  //
+  //
+
+  @override
+  bool get valid => ValidObject.areValid([
+        this.rootPaths,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
+      ]);
+}

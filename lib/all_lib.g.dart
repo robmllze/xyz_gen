@@ -8,6 +8,9 @@
 //.title~
 
 export 'src/all_src.g.dart';
+export 'src/generators/generate_directives/all_generate_directives.g.dart';
+export 'src/generators/generate_directives/src/app.dart';
+export 'src/generators/generate_directives/src/generate.dart';
 export 'src/generators/generate_exports/all_generate_exports.g.dart';
 export 'src/generators/generate_exports/src/app.dart';
 export 'src/generators/generate_exports/src/generate.dart';
@@ -33,7 +36,6 @@ export 'src/generators/generate_models/src/map_with.dart';
 export 'src/generators/generate_models/src/type_mappers/loose_type_mappers.dart';
 export 'src/generators/generate_preps/all_generate_preps.g.dart';
 export 'src/generators/generate_preps/src/app.dart';
-export 'src/generators/generate_preps/src/args.dart';
 export 'src/generators/generate_preps/src/generate.dart';
 export 'src/generators/generate_screen/all_generate_screen.g.dart';
 export 'src/generators/generate_screen/all_generate_screens.g.dart';
@@ -52,10 +54,15 @@ export 'src/generators/generate_type_utils/src/app.dart';
 export 'src/generators/generate_type_utils/src/generate.dart';
 export 'src/utils/analyze_annotated_classes.dart';
 export 'src/utils/analyze_annotated_enums.dart';
-export 'src/utils/basic_cmd_app.dart';
+export 'src/utils/basic_app_args.dart';
+export 'src/utils/basic_cmd_app_args.dart';
+export 'src/utils/basic_cmd_app_helper.dart';
 export 'src/utils/current_script_dir.dart';
 export 'src/utils/dart_files.dart';
 export 'src/utils/generate_from_templates.dart';
+export 'src/utils/handle_comment_annotations.dart';
+export 'src/utils/print_usage.dart';
+export 'src/utils/split_arg.dart';
 export 'src/utils/type_codes/type_codes.dart';
 export 'src/utils/xyz_gen_lib_path.dart';
 export 'xyz_gen.dart';

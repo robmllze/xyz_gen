@@ -6,37 +6,19 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:args/args.dart';
+
 import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class PrepTemplateArgs extends ValidObject {
-  //
-  //
-  //
-
-  final Set<String>? rootPaths;
-  final Set<String>? subPaths;
-  final Set<String>? pathPatterns;
-
-  //
-  //
-  //
-
-  const PrepTemplateArgs({
-    required this.rootPaths,
-    required this.subPaths,
-    required this.pathPatterns,
-  });
-
-  //
-  //
-  //
-
-  @override
-  bool get valid => ValidObject.areValid([
-        this.rootPaths,
-        if (this.subPaths != null) this.subPaths,
-        if (this.pathPatterns != null) this.pathPatterns,
-      ]);
+/// Prints the usage information for the given [parser].
+void printUsage(String appTitle, ArgParser parser) {
+  printLightCyan(
+    [
+      appTitle,
+      "Usage:",
+      parser.usage,
+    ].join("\n"),
+  );
 }

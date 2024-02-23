@@ -12,10 +12,9 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating preps.
-Future<void> generatePrepsApp(List<String> arguments) async {
+Future<void> generateDirectivesApp(List<String> arguments) async {
   await basicCmdAppHelper<BasicAppArgs>(
-    appTitle: "XYZ Gen - Generate Preps",
+    appTitle: "XYZ Gen - Generate Dependencies",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -48,19 +47,10 @@ Future<void> generatePrepsApp(List<String> arguments) async {
       );
     },
     action: (parser, results, args) async {
-      await generatePreps(
+      await generateDirectives(
         rootDirPaths: args.rootPaths ?? {},
         subDirPaths: args.subPaths ?? {},
         pathPatterns: args.pathPatterns ?? {},
-        prepMappers: [
-          // Increase the build number by 1.
-          (rawKey, value) {
-            if (rawKey == "version") {
-              return Version.parse(value ?? "").increase(build: 1).toString();
-            }
-            return null;
-          }
-        ],
       );
     },
   );

@@ -10,38 +10,9 @@ import 'package:xyz_gen/xyz_gen.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-// To-Do: Specify your apps/root folders to generate for.
+// To-Do: Specify your apps/root folders to generate exports for.
 const targetApps = <String>[
-  "",
-];
-
-// To-Do: Specify the directories in your apps/root folders to generate for.
-const subDirectories = <String>[
-  "",
-  "accessibility",
-  "app_services",
-  "app_state",
-  "app",
-  "brokers",
-  "components",
-  "configs",
-  "firebase_options",
-  "functions",
-  "generators",
-  "interfaces",
-  "makeups",
-  "managers",
-  "model_filters",
-  "models",
-  "routing",
-  "screens",
-  "service_brokers",
-  "services",
-  "src",
-  "theme",
-  "types",
-  "utils",
-  "widgets",
+  "example_app",
 ];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -51,12 +22,8 @@ const subDirectories = <String>[
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main() async {
-  await generateExportsApp([
-    "-t",
-    "$currentScriptDir/templates/generate_exports/default_exports_template.dart.md",
+  await generateDirectivesApp([
     "-r",
     targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
-    "-s",
-    subDirectories.join("&"),
   ]);
 }

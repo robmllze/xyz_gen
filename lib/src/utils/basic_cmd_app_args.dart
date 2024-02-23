@@ -1,55 +1,48 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Your Project Name
-// Copyright Ⓒ Your Name
-//
-// Licensing details can be found in the LICENSE file in the root directory.
+// XYZ Gen
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/xyz_gen.dart';
-
-part '_text_makeup.g.dart';
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const TEXT_PARAMETERS = <String, String>{};
-
-@GenerateMakeups(
-  variants: {
-    "small",
-    "medium",
-    "large",
-  },
-  parameters: TEXT_PARAMETERS,
-)
-class Text {
+class BasicCmdAppArgs extends ValidObject {
   //
   //
   //
 
-  @Parameter()
-  String? font;
+  final String? fallbackDartSdkPath;
+  final String? templateFilePath;
+  final Set<String>? rootPaths;
+  final Set<String>? subPaths;
+  final Set<String>? pathPatterns;
 
   //
   //
   //
 
-  TextMakeup? makeup;
+  const BasicCmdAppArgs({
+    this.fallbackDartSdkPath,
+    required this.templateFilePath,
+    required this.rootPaths,
+    required this.subPaths,
+    required this.pathPatterns,
+  });
 
   //
   //
   //
 
-  Text({this.makeup, this.font});
-
-  //
-  //
-  //
-
-  dynamic build(dynamic context) {
-    return null;
-  }
+  @override
+  bool get valid => ValidObject.areValid([
+        if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
+        this.templateFilePath,
+        this.rootPaths,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
+      ]);
 }
