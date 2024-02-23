@@ -1,3 +1,2 @@
-___generators/
 .dart_tool/
-**/.dart_tool/
+**/___generators/
