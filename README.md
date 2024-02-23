@@ -69,12 +69,12 @@ dependencies:
 
 ## Contributing
 
-Contributions to XYZ Gen are welcome. Here are a few ways you can help:
+Contributions to xyz_gen are welcome. Here are a few ways you can help:
 
 - Report bugs and make feature requests.
 - Add new generators.
 - Improve the existing generators.
-- Helo with documentation and tutorials.
+- Help with documentation and tutorials.
 
 If you would like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
