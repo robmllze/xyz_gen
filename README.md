@@ -13,12 +13,12 @@ To create your own generators, fork this package from https://github.com/robmllz
 ## Included Generators
 
 ### ⚙️ generate_directives.dart
-A quick way to create missing import/export or part-of directives to your files.
+A quick way to create missing import, export or part-of directives to your files.
 
 ### ⚙️ generate_exports.dart
 Looks through a folder for all Dart files and creates an exports file that includes them all, simplifying your project.
 
-### ⚙️ enerate_license_headers.dart
+### ⚙️ generate_license_headers.dart
 Adds license headers to your files, helping to protect your work.
 
 ### ⚙️ generate_makeups.dart
