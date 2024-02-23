@@ -4,9 +4,9 @@
 
 This package is designed to help speed up your development journey by generating boilerplate code for your projects.
 
-It comes with a set of generators that can be used as-is, or modified to suit your needs. Some generators use templates to create files, while others use code to modify existing files. These templates can be modified to suit your needs and can be found in the `templates` folder.
+It comes with a set of generators that can be used as-is, or modified to suit your needs. Some generators use templates to create files, while others use hard-coded logic to generate or modify existing files. These templates can be modified to suit your needs and can be found in the `templates` folder.
 
-To make your own generators, use the tools in this package. Fork the repository [here](https://github.com/robmllze/xyz_gen) and add your generators.
+To create your own generators, fork this package from https://github.com/robmllze/xyz_gen and customize it as needed or use this package as a dependency in your own package.
 
 🔜 Documentation and video tutorials are coming soon. Feel free to contact me for more information.
 
