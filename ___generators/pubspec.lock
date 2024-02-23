@@ -196,10 +196,11 @@ packages:
   xyz_gen:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.35.0"
+      name: xyz_gen
+      sha256: ec165bbd60f6d3a18aa17e610042f28ec9fc3710ef3f9ad6027374bd3edb335f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.36.0"
   xyz_gen_annotations:
     dependency: transitive
     description:
