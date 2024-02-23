@@ -8,6 +8,9 @@ It comes with a set of generators that can be used as-is, or modified to suit yo
 
 ## Included Generators
 
+### generate_directives.dart
+A quick way to create missing import/export or part of directives to your files.
+
 ### generate_exports.dart
 Looks through a folder for all Dart files and creates an exports file that includes them all, simplifying your project.
 
@@ -22,6 +25,9 @@ Creates model classes from class annotations, handling types better than `json_s
 
 ### generate_preps.dart
 Inserts helpful information like line numbers and file names to keep things organized.
+
+### generate_type_utils.dart
+Generates some utils for annotated Enums.
 
 ### generate_screen.dart (for XYZ configured apps only)
 Creates Screens for your app, including the boilerplate code needed to get them up and running.

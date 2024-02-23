@@ -16,5 +16,7 @@ export 'makeups/text/all_text_makeups.g.dart';
 export 'makeups/theme.g.dart';
 export 'models/all_models.g.dart';
 export 'models/model_user/model_user.dart';
+export 'types/all_types.g.dart';
+export 'types/type_color/type_color.dart';
 export 'utils/all_utils.g.dart';
 export 'utils/prep_example.dart';

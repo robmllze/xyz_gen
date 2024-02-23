@@ -31,9 +31,11 @@ Future<void> generateDirectives({
         filePath: filePath,
         annotationHandlers: {
           "@GenerateDirectives": generateDirectivesHandler,
+          "gd": generateDirectivesHandler,
         },
         annotationsToDelete: {
           "@GenerateDirectives",
+          "gd",
         },
       );
     }
@@ -93,7 +95,7 @@ Future<bool> generateDirectivesHandler(
       }
     }
   } catch (e) {
-    printRed("[generateDirectives] $e");
+    printRed(e);
   }
   return true;
 }
