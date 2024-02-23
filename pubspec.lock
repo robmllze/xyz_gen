@@ -205,18 +205,18 @@ packages:
     dependency: "direct main"
     description:
       name: xyz_gen_annotations
-      sha256: "3b1fff1c2cd3605d2c2fb551347fa2032eab166140eeaaa76d11581126544813"
+      sha256: d36359379fbaee09d122ca6aedb9ced53b369a4f4bc7ef1850f3b1119f624259
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.3"
+    version: "0.3.0"
   xyz_utils:
     dependency: "direct main"
     description:
       name: xyz_utils
-      sha256: "3c0c415155b9aef063253444909771b283db84f7a96fa1f1ab2592944edb9344"
+      sha256: "3665aa628506a6ec9015efdc5947023c6fbb6b31d38c564f14d947b1797ba667"
       url: "https://pub.dev"
     source: hosted
-    version: "0.33.2"
+    version: "0.34.1"
   yaml:
     dependency: transitive
     description:

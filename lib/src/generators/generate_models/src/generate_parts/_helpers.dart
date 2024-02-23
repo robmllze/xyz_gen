@@ -36,8 +36,8 @@ Map<String, String> _getKeyNames(
               return k.toLowerDotCase();
             case StringCaseType.UPPER_DOT_CASE:
               return k.toUpperDotCase();
-            case StringCaseType.URI_PATH_CASE:
-              return k.toUriPathCase();
+            case StringCaseType.PATH_CASE:
+              return k.toPathCase();
           }
         }(),
       ),
