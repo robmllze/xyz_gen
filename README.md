@@ -13,7 +13,7 @@ To make your own generators, use the tools in this package. Fork the repository 
 ## Included Generators
 
 ### ⚙️ generate_directives.dart
-A quick way to create missing import/export or part of directives to your files.
+A quick way to create missing import/export or part-of directives to your files.
 
 ### ⚙️ generate_exports.dart
 Looks through a folder for all Dart files and creates an exports file that includes them all, simplifying your project.
