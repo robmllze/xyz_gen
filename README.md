@@ -2,13 +2,13 @@
 
 [![pub package](https://img.shields.io/pub/v/xyz_gen.svg)](https://pub.dev/packages/xyz_gen)
 
-This package is designed to help you speed up development by generating boilerplate code for your projects.
+This package is designed to help speed up your development journey by generating boilerplate code for your projects.
 
 It comes with a set of generators that can be used as-is, or modified to suit your needs. Some generators use templates to create files, while others use code to modify existing files. These templates can be modified to suit your needs and can be found in the `templates` folder.
 
 To make your own generators, use the tools in this package. Fork the repository [here](https://github.com/robmllze/xyz_gen) and add your generators.
 
-🔜 Documentation and video tutorials are coming soon.
+🔜 Documentation and video tutorials are coming soon. Feel free to contact me for more information.
 
 ## Included Generators
 
@@ -34,24 +34,33 @@ Inserts helpful information like line numbers and file names to keep things orga
 Generates some utils for annotated Enums.
 
 ### ⚙️ generate_screen.dart (🛠️ not ready for public use)
-Creates Screens for your app, including the boilerplate code needed to get them up and running.
+Creates Screens for your app, including the boilerplate code needed to get them up and running. Feel free to contact me for more information.
 
 ### ⚙️ generate_screen_access.dart (🛠️ not ready for public use)
-Connects your Screens to the navigator.
+Connects your Screens to the navigator. Feel free to contact me for more information.
 
 ### ⚙️ generate_configurations.dart (🛠️ not ready for public use)
-Generates code to connect your Screens to your app.
+Generates code to connect your Screens to your app. Feel free to contact me for more information.
 
 ## Getting Started
 
 ### Installation
 
-1. Add this to your package's `pubspec.yaml` file, where `any` is the latest version:
+#### If you are only interested in using the existing generators, there's no need to include this package, but you'll need to include the annotations package by modifying your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  xyz_gen: any
+  xyz_gen_annotations: any  # or the latest version
 ```
+
+#### If you want to use the tools included in this package to create your own generators package, you can include it like so:
+
+```yaml
+dependencies:
+  xyz_gen: any # or the latest version
+```
+
+### Next Steps
 
 1. Navigate to your project directory by running `cd your/project/path` then clone the generator scripts via `git clone https://github.com/robmllze/___generators.git`.
 1. Modify the generators as needed. You may also wish to change the generator templates to suit your needs.

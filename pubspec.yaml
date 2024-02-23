@@ -7,9 +7,9 @@
 #.title~
 
 name: xyz_gen
-description: A package designed to generate boilerplate code, reducing the amount of repetitive code you need to write.
+description: This package is designed to help speed up your development journey by generating boilerplate code for your projects.
 repository: https://github.com/robmllze/xyz_gen
-version: 0.37.0
+version: 0.37.1
 
 ## -----------------------------------------------------------------------------
 
