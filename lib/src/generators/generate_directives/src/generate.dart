@@ -18,6 +18,7 @@ Future<void> generateDirectives({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
+  printYellow("Starting generator. Please wait...");
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
     final results = await findDartFiles(
       dirPath,
@@ -36,6 +37,7 @@ Future<void> generateDirectives({
         },
       );
     }
+    printYellow("[DONE]");
   }
 }
 
@@ -69,13 +71,16 @@ Future<bool> generateDirectivesHandler(
               );
               switch (directiveType) {
                 case "part":
+                  printGreen("Generating part file for `$relativePathToOriginal`...");
                   return "part of '$relativePathToOriginal';";
                 case "import":
+                  printGreen("Generating import file for `$relativePathToOriginal`...");
                   return "// Imported by $relativePathToOriginal";
                 case "export":
+                  printGreen("Generating export file for `$relativePathToOriginal`...");
                   return "// Exported by $relativePathToOriginal";
                 default:
-                  return "";
+                  throw UnimplementedError("Unknown directive type: $directiveType");
               }
             }();
             await writeFile(directiveFilePath, directiveContent);
@@ -83,6 +88,8 @@ Future<bool> generateDirectivesHandler(
         } else {
           return false;
         }
+      } else {
+        printLightGreen("Skipping `$originalFilePath`...");
       }
     }
   } catch (e) {

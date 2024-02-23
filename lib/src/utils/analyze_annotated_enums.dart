@@ -33,7 +33,8 @@ Future<void> analyzeAnnotatedEnums({
   final context = collection.contextFor(normalizedFilePath);
   final library = await context.currentSession.getLibraryByUri(fileUri);
   if (library is LibraryElementResult) {
-    final enumElements = library.element.topLevelElements.whereType<EnumElement>();
+    final enumElements =
+        library.element.topLevelElements.whereType<EnumElement>();
     for (final enumElement in enumElements) {
       final className = enumElement.displayName;
       if (enumNamePattern == null || enumNamePattern.hasMatch(className)) {
@@ -57,7 +58,8 @@ FutureOr<void> _processEnumAnnotations(
   for (final metadata in enumElement.metadata) {
     final element = metadata.element;
     final classAnnotationName = element?.displayName;
-    if (classAnnotationName != null && enumAnnotations?.contains(classAnnotationName) != false) {
+    if (classAnnotationName != null &&
+        enumAnnotations?.contains(classAnnotationName) != false) {
       await onAnnotatedEnum?.call(
         classAnnotationName,
         enumElement.displayName,

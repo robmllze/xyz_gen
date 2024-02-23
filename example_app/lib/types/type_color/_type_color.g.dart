@@ -11,21 +11,27 @@ part of 'type_color.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-TypeColor? nameToTypeColor(String? name) {
-  if (name != null) {
-    for (final a in TypeColor.values) {
-      if (name.trim().toLowerCase() == a.name.toLowerCase()) {
-        return a;
-      }
-    }
+extension NextPreviousTypeColor on TypeColor {
+  TypeColor get next {
+    final index = (this.index + 1) % TypeColor.values.length;
+    return TypeColor.values[index];
   }
-  return null;
+
+  TypeColor get previous {
+    final index =
+        (this.index - 1 + TypeColor.values.length) % TypeColor.values.length;
+    return TypeColor.values[index];
+  }
 }
 
-extension TypeColorExtension on TypeColor {}
+extension TranslateTypeColor on TypeColor {
+  String tr() {
+    return "${this.name}||types.TypeColor.$this".tr();
+  }
+}
 
-extension EnumFromString<T extends Enum> on Iterable<T> {
-  T? valueOf(String value) {
-    return this.firstWhereOrNull((type) => type.name.toLowerCase() == value.toLowerCase());
+extension _DeleteMe on String {
+  String tr() {
+    throw UnimplementedError();
   }
 }

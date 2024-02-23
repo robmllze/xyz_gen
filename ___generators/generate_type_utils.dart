@@ -28,7 +28,7 @@ const subDirectories = <String>[
 
 void main() async {
   await _generateTypeUtils();
-  //await _generateExports();
+  await _generateExports();
 }
 
 // -----------------------------------------------------------------------------

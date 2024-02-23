@@ -12,15 +12,27 @@ part of '___ENUM_FILE_NAME___';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-@Deprecated("Use values.valueOf instead")
-___ENUM___? nameTo___ENUM___(String? name) {
-  if (name != null) {
-    for (final a in ___ENUM___.values) {
-      if (name.trim().toLowerCase() == a.name.toLowerCase()) {
-        return a;
-      }
-    }
+extension NextPrevious___ENUM___ on ___ENUM___ {
+  ___ENUM___ get next {
+    final index = (this.index + 1) % ___ENUM___.values.length;
+    return ___ENUM___.values[index];
   }
-  return null;
+
+  ___ENUM___ get previous {
+    final index = (this.index - 1 + ___ENUM___.values.length) % ___ENUM___.values.length;
+    return ___ENUM___.values[index];
+  }
+}
+
+extension Translate___ENUM___ on ___ENUM___ {
+  String tr() {
+    return "${this.name}||types.___ENUM___.$this".tr();
+  }
+}
+
+extension _DeleteMe on String {
+  String tr() {
+    throw UnimplementedError();
+  }
 }
 ````

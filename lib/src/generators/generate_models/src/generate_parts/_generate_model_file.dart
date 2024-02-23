@@ -53,8 +53,9 @@ Future<void> _generateForFile(
         inheritanceConstructor = fieldValue.toStringValue() ?? "";
         break;
       case "keyStringCase":
-        keyStringCaseType = StringCaseType.values.valueOf(fieldValue.toStringValue()) ??
-            StringCaseType.LOWER_SNAKE_CASE;
+        keyStringCaseType =
+            StringCaseType.values.valueOf(fieldValue.toStringValue()) ??
+                StringCaseType.LOWER_SNAKE_CASE;
         break;
       case "includeId":
         includeId = fieldValue.toBoolValue() ?? true;

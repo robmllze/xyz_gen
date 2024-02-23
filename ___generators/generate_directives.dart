@@ -24,6 +24,8 @@ const targetApps = <String>[
 void main() async {
   await generateDirectivesApp([
     "-r",
-    targetApps.map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib").join("&"),
+    targetApps
+        .map((e) => "$currentScriptDir/../${e.isNotEmpty ? "$e/" : ""}lib")
+        .join("&"),
   ]);
 }
