@@ -76,19 +76,23 @@ Future<bool> generateDirectivesHandler(
               switch (directiveType) {
                 case "part":
                   printGreen(
-                      "Generating part file for `$relativePathToOriginal`...",);
+                    "Generating part file for `$relativePathToOriginal`...",
+                  );
                   return "part of '$relativePathToOriginal';";
                 case "import":
                   printGreen(
-                      "Generating import file for `$relativePathToOriginal`...",);
+                    "Generating import file for `$relativePathToOriginal`...",
+                  );
                   return "// Imported by $relativePathToOriginal";
                 case "export":
                   printGreen(
-                      "Generating export file for `$relativePathToOriginal`...",);
+                    "Generating export file for `$relativePathToOriginal`...",
+                  );
                   return "// Exported by $relativePathToOriginal";
                 default:
                   throw UnimplementedError(
-                      "Unknown directive type: $directiveType",);
+                    "Unknown directive type: $directiveType",
+                  );
               }
             }();
             await writeFile(directiveFilePath, directiveContent);
