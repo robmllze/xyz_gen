@@ -9,7 +9,7 @@
 name: xyz_gen
 description: This package is designed to help speed up your development journey by generating boilerplate code for your projects.
 repository: https://github.com/robmllze/xyz_gen
-version: 0.37.3
+version: 0.38.0
 
 ## -----------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ environment:
 
 dependencies:
   xyz_utils: ^0.34.1
-  xyz_gen_annotations: ^0.3.0
+  xyz_gen_annotations: ^0.4.0
   analyzer: ^6.2.0
   args: ^2.4.2
   path: ^1.8.3

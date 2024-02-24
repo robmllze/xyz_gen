@@ -205,10 +205,10 @@ packages:
     dependency: "direct main"
     description:
       name: xyz_gen_annotations
-      sha256: d36359379fbaee09d122ca6aedb9ced53b369a4f4bc7ef1850f3b1119f624259
+      sha256: cd6a42faddc94da0f0540a996b6252da8f566a78fc4f5914bcaf75232e56915c
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0"
   xyz_utils:
     dependency: "direct main"
     description:

@@ -75,7 +75,3 @@ Future<void> _generateForFile(
     },
   );
 }
-
-class GenerateTypeUtils {
-  const GenerateTypeUtils();
-}

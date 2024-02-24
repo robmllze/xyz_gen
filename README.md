@@ -8,6 +8,8 @@ It comes with a set of generators that can be used as-is, or modified to suit yo
 
 To create your own generators, fork this package from https://github.com/robmllze/xyz_gen and customize it as needed or use this package as a dependency in your own package.
 
+## Documentation
+
 🔜 Documentation and video tutorials are coming soon. Feel free to contact me for more information.
 
 ## Included Generators
@@ -69,14 +71,12 @@ dependencies:
 
 ## Contributing
 
-Contributions to xyz_gen are welcome. Here are a few ways you can help:
+Contributions are welcome. Here are a few ways you can help:
 
 - Report bugs and make feature requests.
 - Add new generators.
 - Improve the existing generators.
 - Help with documentation and tutorials.
-
-If you would like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
 ## License
 
