@@ -74,8 +74,8 @@ dependencies:
 Contributions are welcome. Here are a few ways you can help:
 
 - Report bugs and make feature requests.
-- Add new generators.
-- Improve the existing generators.
+- Add new features.
+- Improve the existing code.
 - Help with documentation and tutorials.
 
 ## License

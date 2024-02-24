@@ -1,4 +1,5 @@
-**/.dart_tool
+**/___generators/
+**/.dart_tool/
 **/.DS_Store
-**/___generators
+**/build/
 **/pubspec.lock
