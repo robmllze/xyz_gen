@@ -6,6 +6,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:collection';
+
 import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -45,6 +47,10 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! CollectionMapperEvent) throw TypeError();
           return "letSet(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().cast()";
         },
+        r"^Queue[\?]?$": (e) {
+          if (e is! CollectionMapperEvent) throw TypeError();
+          return "(){ final a = letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.from(a): null; }()";
+        },
       });
 
   //
@@ -60,6 +66,10 @@ class LooseTypeMappers extends TypeMappers {
         r"^Iterable|List|Set[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
           return "${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()";
+        },
+        r"^Queue[\?]?$": (e) {
+          if (e is! CollectionMapperEvent) throw TypeError();
+          return "(){ final a = ${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.from(a): null; }()";
         },
       });
 
