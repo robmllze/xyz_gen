@@ -63,13 +63,9 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! CollectionMapperEvent) throw TypeError();
           return "${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty";
         },
-        r"^Iterable|List|Set[\?]?$": (e) {
+        r"^Iterable|List|Set|Queue[\?]?$": (e) {
           if (e is! CollectionMapperEvent) throw TypeError();
           return "${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()";
-        },
-        r"^Queue[\?]?$": (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
-          return "(){ final a = ${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.of(a): null; }()";
         },
       });
 
