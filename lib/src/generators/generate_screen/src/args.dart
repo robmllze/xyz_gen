@@ -33,6 +33,7 @@ class GenerateScreenArgs extends ValidObject {
   final String? makeup;
   final String? title;
   final String? navigationControlWidget;
+  final Set<String>? partFileDirs;
 
   //
   //
@@ -57,6 +58,7 @@ class GenerateScreenArgs extends ValidObject {
     required this.makeup,
     required this.title,
     required this.navigationControlWidget,
+    required this.partFileDirs,
   });
 
   //
@@ -72,13 +74,13 @@ class GenerateScreenArgs extends ValidObject {
         screenTemplateFilePath,
         stateTemplateFilePath,
         configurationTemplateFilePath,
-        if (isAccessibleOnlyIfLoggedInAndVerified != null)
-          isAccessibleOnlyIfLoggedInAndVerified,
+        if (isAccessibleOnlyIfLoggedInAndVerified != null) isAccessibleOnlyIfLoggedInAndVerified,
         if (isAccessibleOnlyIfLoggedIn != null) isAccessibleOnlyIfLoggedIn,
         if (isAccessibleOnlyIfLoggedOut != null) isAccessibleOnlyIfLoggedOut,
         if (isRedirectable != null) isRedirectable,
         if (makeup != null) makeup,
         if (title != null) title,
         if (navigationControlWidget != null) navigationControlWidget,
+        if (partFileDirs != null) partFileDirs,
       ]);
 }

@@ -24,28 +24,18 @@ Future<void> generateScreenAccess({
     if (filePaths != null) {
       filePaths.sort();
       for (final filePath in filePaths) {
-        if (isGeneratedDartFilePath(filePath) &&
-            matchesAnyPathPattern(filePath, pathPatterns)) {
+        if (isGeneratedDartFilePath(filePath) && matchesAnyPathPattern(filePath, pathPatterns)) {
           var screenFileKey = getBaseName(filePath).replaceAll(".g.dart", "");
-          screenFileKey = screenFileKey.startsWith("_")
-              ? screenFileKey.substring(1)
-              : screenFileKey;
-          if (screenFileKey.startsWith("screen_")) {
-            final contents = await readFile(filePath);
-            if (contents != null) {
-              final x = RegExp("const +_CLASS += +[\"'](\\w+)[\"'];");
-              final match = x.firstMatch(contents);
-              if (match != null && match.groupCount == 1) {
-                final screenClassName = match.group(1);
-                if (screenClassName != null) {
-                  final screenClassKey = screenClassName.toSnakeCase();
-                  if (screenFileKey != screenClassKey) {
-                    printLightYellow(
-                      "Key mismatch $screenFileKey != $screenClassKey",
-                    );
-                  }
-                  screenClassNames1.add(screenClassName);
-                }
+          screenFileKey =
+              screenFileKey.startsWith("_") ? screenFileKey.substring(1) : screenFileKey;
+          final contents = await readFile(filePath);
+          if (contents != null) {
+            final x = RegExp("const +_CLASS += +[\"'](\\w+)[\"'];");
+            final match = x.firstMatch(contents);
+            if (match != null && match.groupCount == 1) {
+              final screenClassName = match.group(1);
+              if (screenClassName != null) {
+                screenClassNames1.add(screenClassName);
               }
             }
           }
@@ -59,17 +49,12 @@ Future<void> generateScreenAccess({
   final b = keys.map((e) => "...PATH_$e").join(",");
   final c = keys.map((e) => "...PATH_NOT_REDIRECTABLE_$e").join(",");
   final d = keys.map((e) => "...PATH_ALWAYS_ACCESSIBLE_$e").join(",");
-  final e = keys
-      .map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e")
-      .join(",");
-  final f =
-      keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
-  final g =
-      keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
+  final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e").join(",");
+  final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
+  final g = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
   final h = sorted.map((e) => "...cast${e}Configuration").join(",");
   final i = sorted.map((e) => "generated${e}Route").join(",");
-  final template =
-      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   final outputContent = replaceAllData(template, {
     "___SCREEN_MAKERS___": a,
     "___PATHS___": b,

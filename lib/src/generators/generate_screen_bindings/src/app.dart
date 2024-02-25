@@ -13,10 +13,10 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating screen configurations.
-Future<void> generateScreenConfigurationsApp(List<String> arguments) async {
+/// A command line app for generating screen bindings.
+Future<void> generateScreenBindingsApp(List<String> arguments) async {
   await basicCmdAppHelper<BasicCmdAppArgs>(
-    appTitle: "XYZ Gen - Generate Screen Configurations",
+    appTitle: "XYZ Gen - Generate Screen Bindings",
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
@@ -49,9 +49,9 @@ Future<void> generateScreenConfigurationsApp(List<String> arguments) async {
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           "generators",
-          "generate_screen_configurations",
+          "generate_screen_bindings",
           "templates",
-          "default_screen_configuration_template.dart.md",
+          "default_screen_bindings_template.dart.md",
         ),
       )
       ..addOption(
@@ -68,7 +68,7 @@ Future<void> generateScreenConfigurationsApp(List<String> arguments) async {
       );
     },
     action: (parser, results, args) async {
-      await generateScreenConfigurations(
+      await generateScreenBindings(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         templateFilePath: args.templateFilePath!,
         rootDirPaths: args.rootPaths!,

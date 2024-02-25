@@ -46,9 +46,9 @@ export 'src/generators/generate_screen_access/all_generate_screen_access.g.dart'
 export 'src/generators/generate_screen_access/src/app.dart';
 export 'src/generators/generate_screen_access/src/args.dart';
 export 'src/generators/generate_screen_access/src/generate.dart';
-export 'src/generators/generate_screen_configurations/all_generate_screen_configurations.g.dart';
-export 'src/generators/generate_screen_configurations/src/app.dart';
-export 'src/generators/generate_screen_configurations/src/generate.dart';
+export 'src/generators/generate_screen_bindings/all_generate_screen_bindings.g.dart';
+export 'src/generators/generate_screen_bindings/src/app.dart';
+export 'src/generators/generate_screen_bindings/src/generate.dart';
 export 'src/generators/generate_type_utils/all_generate_type_utils.g.dart';
 export 'src/generators/generate_type_utils/src/app.dart';
 export 'src/generators/generate_type_utils/src/generate.dart';

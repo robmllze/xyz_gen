@@ -55,10 +55,27 @@ Future<void> generateScreensApp(List<String> arguments) async {
         help: "Path segments.",
       )
       ..addOption(
-        "logic-template",
-        help: "Logic template file path.",
+        "bindings-template",
+        help: "Bindings template file path.",
         defaultsTo: toLocalSystemPathFormat(
-          p.join(defaultTemplatesPath, "default_screen_logic_template.dart.md"),
+          p.join(
+            defaultTemplatesPath,
+            "default_screen_bindings_template.dart.md",
+          ),
+        ),
+      )
+      ..addOption(
+        "controller-template",
+        help: "Controller template file path.",
+        defaultsTo: toLocalSystemPathFormat(
+          p.join(defaultTemplatesPath, "default_screen_controller_template.dart.md"),
+        ),
+      )
+      ..addOption(
+        "view-template",
+        help: "View template file path.",
+        defaultsTo: toLocalSystemPathFormat(
+          p.join(defaultTemplatesPath, "default_screen_view_template.dart.md"),
         ),
       )
       ..addOption(
@@ -66,23 +83,6 @@ Future<void> generateScreensApp(List<String> arguments) async {
         help: "Screen template file path.",
         defaultsTo: toLocalSystemPathFormat(
           p.join(defaultTemplatesPath, "default_screen_template.dart.md"),
-        ),
-      )
-      ..addOption(
-        "state-template",
-        help: "State template file path.",
-        defaultsTo: toLocalSystemPathFormat(
-          p.join(defaultTemplatesPath, "default_screen_state_template.dart.md"),
-        ),
-      )
-      ..addOption(
-        "configuration-template",
-        help: "Configuration template file path.",
-        defaultsTo: toLocalSystemPathFormat(
-          p.join(
-            defaultTemplatesPath,
-            "default_screen_configuration_template.dart.md",
-          ),
         ),
       )
       ..addOption(
@@ -123,6 +123,10 @@ Future<void> generateScreensApp(List<String> arguments) async {
         help: "Screen navigator.",
       )
       ..addOption(
+        "part-file-dirs",
+        help: "Part file directories separated by `&`.",
+      )
+      ..addOption(
         "dart-sdk",
         help: "Dart SDK path.",
       ),
@@ -135,24 +139,21 @@ Future<void> generateScreensApp(List<String> arguments) async {
             })
             .nonNulls
             .toSet();
-        return entries != null
-            ? Map<String, String>.fromEntries(entries)
-            : null;
+        return entries != null ? Map<String, String>.fromEntries(entries) : null;
       }
 
       bool toBool(String option) {
-        return results[option]?.toString().toLowerCase().trim() ==
-            true.toString();
+        return results[option]?.toString().toLowerCase().trim() == true.toString();
       }
 
       return GenerateScreenArgs(
         fallbackDartSdkPath: results["dart-sdk"],
         outputDirPath: results["output"],
         screenName: results["class-name"],
-        logicTemplateFilePath: results["logic-template"],
+        logicTemplateFilePath: results["controller-template"],
         screenTemplateFilePath: results["screen-template"],
-        stateTemplateFilePath: results["state-template"],
-        configurationTemplateFilePath: results["configuration-template"],
+        stateTemplateFilePath: results["view-template"],
+        configurationTemplateFilePath: results["bindings-template"],
         path: results["path"],
         isAccessibleOnlyIfLoggedIn: toBool("is-only-accessible-if-logged-in"),
         isAccessibleOnlyIfLoggedInAndVerified:
@@ -165,6 +166,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
         makeup: results["makeup"],
         title: results["default-title"],
         navigationControlWidget: results["navigation-control-widget"],
+        partFileDirs: splitArg(results["part-file-dirs"])?.toSet(),
       );
     },
     action: (parser, results, args) async {
@@ -172,14 +174,13 @@ Future<void> generateScreensApp(List<String> arguments) async {
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         outputDirPath: args.outputDirPath!,
         screenName: args.screenName!,
-        logicTemplateFilePath: args.logicTemplateFilePath!,
+        controllerTemplateFilePath: args.logicTemplateFilePath!,
         screenTemplateFilePath: args.screenTemplateFilePath!,
-        stateTemplateFilePath: args.stateTemplateFilePath!,
+        viewTemplateFilePath: args.stateTemplateFilePath!,
         path: args.path!,
-        configurationTemplateFilePath: args.configurationTemplateFilePath!,
+        bindingsTemplateFilePath: args.configurationTemplateFilePath!,
         isAccessibleOnlyIfLoggedIn: args.isAccessibleOnlyIfLoggedIn!,
-        isAccessibleOnlyIfLoggedInAndVerified:
-            args.isAccessibleOnlyIfLoggedInAndVerified!,
+        isAccessibleOnlyIfLoggedInAndVerified: args.isAccessibleOnlyIfLoggedInAndVerified!,
         isAccessibleOnlyIfLoggedOut: args.isAccessibleOnlyIfLoggedOut!,
         isRedirectable: args.isRedirectable!,
         internalParameters: args.internalParameters ?? const {},
@@ -188,6 +189,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
         makeup: args.makeup ?? "",
         title: args.title ?? "",
         navigationControlWidget: args.navigationControlWidget ?? "",
+        partFileDirs: args.partFileDirs ?? {},
       );
     },
   );

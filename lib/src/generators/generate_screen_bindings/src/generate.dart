@@ -12,12 +12,12 @@ import 'package:path/path.dart' as p;
 
 import '/_common.dart';
 
-part 'generate_parts/_generate_screen_configuration_file.dart';
+part 'generate_parts/_generate_screen_bindings_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Note: Returns all the annotated screen class names.
-Future<Set<String>> generateScreenConfigurations({
+Future<Set<String>> generateScreenBindings({
   String? fallbackDartSdkPath,
   required String templateFilePath,
   required Set<String> rootDirPaths,
@@ -30,7 +30,6 @@ Future<Set<String>> generateScreenConfigurations({
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
     pathPatterns: pathPatterns,
-    begType: "screen",
     templateFilePaths: {templateFilePath},
     generateForFile: (collection, filePath, templates) async {
       final temp = await _generateForFile(

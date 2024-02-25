@@ -41,7 +41,7 @@ Creates Screens for your app, including the boilerplate code needed to get them 
 ### ⚙️ generate_screen_access.dart (🛠️ not ready for public use)
 Connects your Screens to the navigator. Feel free to contact me for more information.
 
-### ⚙️ generate_configurations.dart (🛠️ not ready for public use)
+### ⚙️ generate_bindings.dart (🛠️ not ready for public use)
 Generates code to connect your Screens to your app. Feel free to contact me for more information.
 
 ## Getting Started

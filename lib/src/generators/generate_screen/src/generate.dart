@@ -16,10 +16,10 @@ Future<void> generateScreen({
   String? fallbackDartSdkPath,
   required String outputDirPath,
   required String screenName,
-  required String logicTemplateFilePath,
+  required String controllerTemplateFilePath,
   required String screenTemplateFilePath,
-  required String stateTemplateFilePath,
-  required String configurationTemplateFilePath,
+  required String viewTemplateFilePath,
+  required String bindingsTemplateFilePath,
   String path = "",
   bool isAccessibleOnlyIfLoggedIn = false,
   bool isAccessibleOnlyIfLoggedInAndVerified = false,
@@ -31,38 +31,35 @@ Future<void> generateScreen({
   String makeup = "",
   String title = "",
   String navigationControlWidget = "",
+  Set<String> partFileDirs = const {},
 }) async {
   final screenClassKey = screenName.toSnakeCase();
   final screenClassName = screenName.toPascalCase();
-  final configurationFileName = "_$screenClassKey.g.dart";
-  final logicFileName = "_$screenClassKey.logic.dart";
+  const BINDINGS_FILE_NAME = "_bindings.g.dart";
+  const CONTROLLER_FILE_NAME = "_controller.dart";
   final screenFileName = "$screenClassKey.dart";
-  final stateFileName = "_$screenClassKey.state.dart";
+  const VIEW_FILE_NAME = "_view.dart";
   final data = {
     "___SCREEN_CLASS___": screenClassName,
-    "___CONFIGURATION_FILE___": configurationFileName,
-    "___LOGIC_FILE___": logicFileName,
+    "___BINDINGS_FILE___": BINDINGS_FILE_NAME,
+    "___CONTROLLER_FILE___": CONTROLLER_FILE_NAME,
     "___SCREEN_FILE___": screenFileName,
-    "___STATE_FILE___": stateFileName,
+    "___VIEW_FILE___": VIEW_FILE_NAME,
   };
   final folderDirPath = p.joinAll(
     [
       outputDirPath,
-      if (path.isNotEmpty)
-        (path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path)
-            .split(RegExp(r"[\\/]"))
-            .map((e) => e.startsWith("screen_") ? e : "screen_$e")
-            .join("/"),
+      if (path.isNotEmpty) path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path,
       screenClassKey,
     ],
   );
-  final logicFilePath = p.join(folderDirPath, logicFileName);
+  final controllerFilePath = p.join(folderDirPath, CONTROLLER_FILE_NAME);
   await _writeFile(
-    logicTemplateFilePath,
-    logicFilePath,
+    controllerTemplateFilePath,
+    controllerFilePath,
     data,
   );
-  printGreen("Generated `_Logic` in `${getBaseName(logicFilePath)}");
+  printGreen("Generated `_Controller` in `${getBaseName(controllerFilePath)}");
   final screenFilePath = p.join(folderDirPath, screenFileName);
   await _writeScreenFile(
     screenTemplateFilePath,
@@ -70,8 +67,7 @@ Future<void> generateScreen({
     data,
     path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-    isAccessibleOnlyIfLoggedInAndVerified:
-        isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
@@ -80,21 +76,20 @@ Future<void> generateScreen({
     makeup: makeup,
     title: title,
     navigationControlWidget: navigationControlWidget,
+    partFileDirs: partFileDirs,
   );
-  printGreen(
-    "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`",
-  );
-  final stateFilePath = p.join(folderDirPath, stateFileName);
+  printGreen("Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
+  final stateFilePath = p.join(folderDirPath, VIEW_FILE_NAME);
   await _writeFile(
-    stateTemplateFilePath,
+    viewTemplateFilePath,
     stateFilePath,
     data,
   );
-  printGreen("Generated `_State` in `${getBaseName(stateFilePath)}`");
-  await generateScreenConfigurations(
+  printGreen("Generated `_View` in `${getBaseName(stateFilePath)}`");
+  await generateScreenBindings(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootDirPaths: {folderDirPath},
-    templateFilePath: configurationTemplateFilePath,
+    templateFilePath: bindingsTemplateFilePath,
   );
 }
 
@@ -115,6 +110,7 @@ Future<void> _writeScreenFile(
   String makeup = "",
   String title = "",
   String navigationControlWidget = "",
+  Set<String> partFileDirs = const {},
 }) async {
   final a = internalParameters.entries
       .map((e) {
@@ -124,32 +120,28 @@ Future<void> _writeScreenFile(
       })
       .nonNulls
       .join(",");
-  final b = queryParameters
-      .map((e) => e.isNotEmpty ? '"$e"' : null)
-      .nonNulls
-      .join(",");
-  final c =
-      pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
-  final configurationArgs = [
+  final b = queryParameters.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
+  final c = pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
+  final generateScreenBindingsArgs = [
     if (path.isNotEmpty) 'path: "$path"',
     if (title.isNotEmpty) 'defaultTitle: "$title"',
-    if (navigationControlWidget.isNotEmpty)
-      'navigationControlWidget: "$navigationControlWidget"',
+    if (navigationControlWidget.isNotEmpty) 'navigationControlWidget: "$navigationControlWidget"',
     if (makeup.isNotEmpty) 'makeup: "$makeup"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
-    if (isAccessibleOnlyIfLoggedInAndVerified)
-      "isAccessibleOnlyIfLoggedInAndVerified: true",
+    if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty && a.isNotEmpty)
-      "internalParameters: {$a,}",
+    if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
     if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    "___CONFIGURATION_ARGS___":
-        configurationArgs.isNotEmpty ? "$configurationArgs," : "",
+    "___GENERATE_SCREEN_BINDINGS_ARGS___":
+        generateScreenBindingsArgs.isNotEmpty ? "$generateScreenBindingsArgs," : "",
+    "___PARTS___": partFileDirs.isNotEmpty
+        ? "// @GenerateDirectives\n${partFileDirs.map((e) => e.toLowerCase().endsWith(".dart") ? e : "$e.dart").map((e) => 'part "$e";').join("\n")}"
+        : "",
   });
 }
 
@@ -160,8 +152,7 @@ Future<void> _writeFile(
   String outputFilePath,
   Map<String, String> data,
 ) async {
-  final template =
-      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   final output = replaceAllData(template, data);
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);

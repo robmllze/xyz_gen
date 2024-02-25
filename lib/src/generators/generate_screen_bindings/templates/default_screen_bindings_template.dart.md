@@ -125,8 +125,8 @@ class ___CONFIGURATION_CLASS___ extends ModelScreenConfiguration {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
-    extends ScreenLogic<___CONFIGURATION_CLASS___> {
+abstract class _ControllerBroker<T1 extends ___CLASS___, T2 extends _View>
+    extends ScreenController<___CONFIGURATION_CLASS___> {
 
   late final screen = super.superScreen as T1;
   late final state = super.superState as T2;
@@ -134,7 +134,7 @@ abstract class _LogicBroker<T1 extends ___CLASS___, T2 extends _State>
     screen.configuration?.arguments ?? {},
   );
   
-  _LogicBroker(super.superScreen, super.superState);
+  _ControllerBroker(super.superScreen, super.superState);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -163,4 +163,8 @@ final generated___CLASS___Route = GoRoute(
     );
   },
 );
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef T___CLASS___View = ScreenView<___CLASS___, ___CONFIGURATION_CLASS___, _Controller>;
 ````
