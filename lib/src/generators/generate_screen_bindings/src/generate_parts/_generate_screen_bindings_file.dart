@@ -106,7 +106,7 @@ Future<Set<String>> _generateForFile(
     className = className.nullIfEmpty ?? annotatedClassName;
     final classFileName = getBaseName(fixedFilePath);
     final classFileDirPath = getDirPath(fixedFilePath);
-    screenKey = screenKey.nullIfEmpty ?? className.replaceAll("Screen", "").toSnakeCase();
+    screenKey = screenKey.nullIfEmpty ?? className.replaceFirst("Screen", "").toSnakeCase();
     final screenConstKey = screenKey.toUpperCase();
     final configurationClassName = "${className}Configuration";
     final screenSegment = p.joinAll(
