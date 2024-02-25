@@ -17,8 +17,6 @@ import '/_common.dart';
 Future<void> generateMakeupsApp(List<String> arguments) async {
   final defaultTemplatesPath = p.join(
     await getXyzGenLibPath(),
-    "generators",
-    "generate_makeups",
     "templates",
   );
   await basicCmdAppHelper<GenerateMakeupsArgs>(

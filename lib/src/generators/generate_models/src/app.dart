@@ -48,8 +48,6 @@ Future<void> generateModelsApp(List<String> arguments) async {
         help: "Template file path.",
         defaultsTo: p.join(
           await getXyzGenLibPath(),
-          "generators",
-          "generate_models",
           "templates",
           "default_model_template.dart.md",
         ),

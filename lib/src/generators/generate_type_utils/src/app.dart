@@ -47,8 +47,6 @@ Future<void> generateTypeUtilsApp(List<String> arguments) async {
         help: "Template file path.",
         defaultsTo: p.join(
           await getXyzGenLibPath(),
-          "generators",
-          "generate_models",
           "templates",
           "default_type_utils_template.dart.md",
         ),

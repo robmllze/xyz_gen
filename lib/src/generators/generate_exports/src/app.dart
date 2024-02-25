@@ -47,8 +47,6 @@ Future<void> generateExportsApp(List<String> arguments) async {
         help: "Template file path.",
         defaultsTo: p.join(
           await getXyzGenLibPath(),
-          "generators",
-          "generate_exports",
           "templates",
           "default_exports_template.dart.md",
         ),

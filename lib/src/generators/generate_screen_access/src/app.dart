@@ -51,8 +51,6 @@ Future<void> generateScreenAccessApp(List<String> arguments) async {
         help: "Template file path.",
         defaultsTo: p.join(
           await getXyzGenLibPath(),
-          "generators",
-          "generate_screen_access",
           "templates",
           "default_screen_access_template.dart.md",
         ),

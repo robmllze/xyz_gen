@@ -47,8 +47,6 @@ Future<void> generateLicenseHeadersApp(List<String> arguments) async {
         help: "Template file path.",
         defaultsTo: p.join(
           await getXyzGenLibPath(),
-          "generators",
-          "generate_license_headers",
           "templates",
           "default_license_header_template.dart.md",
         ),

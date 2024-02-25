@@ -17,8 +17,6 @@ import '/_common.dart';
 Future<void> generateScreensApp(List<String> arguments) async {
   final defaultTemplatesPath = p.join(
     await getXyzGenLibPath(),
-    "generators",
-    "generate_screen",
     "templates",
   );
   await basicCmdAppHelper<GenerateScreenArgs>(
