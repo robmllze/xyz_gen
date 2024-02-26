@@ -24,10 +24,12 @@ Future<void> generateScreenAccess({
     if (filePaths != null) {
       filePaths.sort();
       for (final filePath in filePaths) {
-        if (isGeneratedDartFilePath(filePath) && matchesAnyPathPattern(filePath, pathPatterns)) {
+        if (isGeneratedDartFilePath(filePath) &&
+            matchesAnyPathPattern(filePath, pathPatterns)) {
           var screenFileKey = getBaseName(filePath).replaceAll(".g.dart", "");
-          screenFileKey =
-              screenFileKey.startsWith("_") ? screenFileKey.substring(1) : screenFileKey;
+          screenFileKey = screenFileKey.startsWith("_")
+              ? screenFileKey.substring(1)
+              : screenFileKey;
           final contents = await readFile(filePath);
           if (contents != null) {
             final x = RegExp("const +_CLASS += +[\"'](\\w+)[\"'];");
@@ -49,12 +51,17 @@ Future<void> generateScreenAccess({
   final b = keys.map((e) => "...PATH_$e").join(",");
   final c = keys.map((e) => "...PATH_NOT_REDIRECTABLE_$e").join(",");
   final d = keys.map((e) => "...PATH_ALWAYS_ACCESSIBLE_$e").join(",");
-  final e = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e").join(",");
-  final f = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
-  final g = keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
+  final e = keys
+      .map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED_$e")
+      .join(",");
+  final f =
+      keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e").join(",");
+  final g =
+      keys.map((e) => "...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e").join(",");
   final h = sorted.map((e) => "...cast${e}Configuration").join(",");
   final i = sorted.map((e) => "generated${e}Route").join(",");
-  final template = (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template =
+      (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   final outputContent = replaceAllData(template, {
     "___SCREEN_MAKERS___": a,
     "___PATHS___": b,

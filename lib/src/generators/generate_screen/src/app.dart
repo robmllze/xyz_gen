@@ -66,7 +66,8 @@ Future<void> generateScreensApp(List<String> arguments) async {
         "controller-template",
         help: "Controller template file path.",
         defaultsTo: toLocalSystemPathFormat(
-          p.join(defaultTemplatesPath, "default_screen_controller_template.dart.md"),
+          p.join(defaultTemplatesPath,
+              "default_screen_controller_template.dart.md"),
         ),
       )
       ..addOption(
@@ -137,11 +138,14 @@ Future<void> generateScreensApp(List<String> arguments) async {
             })
             .nonNulls
             .toSet();
-        return entries != null ? Map<String, String>.fromEntries(entries) : null;
+        return entries != null
+            ? Map<String, String>.fromEntries(entries)
+            : null;
       }
 
       bool toBool(String option) {
-        return results[option]?.toString().toLowerCase().trim() == true.toString();
+        return results[option]?.toString().toLowerCase().trim() ==
+            true.toString();
       }
 
       return GenerateScreenArgs(
@@ -178,7 +182,8 @@ Future<void> generateScreensApp(List<String> arguments) async {
         path: args.path!,
         bindingsTemplateFilePath: args.configurationTemplateFilePath!,
         isAccessibleOnlyIfLoggedIn: args.isAccessibleOnlyIfLoggedIn!,
-        isAccessibleOnlyIfLoggedInAndVerified: args.isAccessibleOnlyIfLoggedInAndVerified!,
+        isAccessibleOnlyIfLoggedInAndVerified:
+            args.isAccessibleOnlyIfLoggedInAndVerified!,
         isAccessibleOnlyIfLoggedOut: args.isAccessibleOnlyIfLoggedOut!,
         isRedirectable: args.isRedirectable!,
         internalParameters: args.internalParameters ?? const {},
