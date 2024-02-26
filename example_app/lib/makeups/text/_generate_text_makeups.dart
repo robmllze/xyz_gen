@@ -19,7 +19,7 @@ import '../../components/text/text.dart';
   variants: {
     "default",
   },
-  parameters: TEXT_PARAMETERS,
+  properties: TEXT_PROPERTIES,
 )
 // ignore: unused_element
 abstract final class _Text {}

@@ -39,9 +39,9 @@ Future<void> generateMakeups({
       generateTemplateFilePath,
     },
     generateForFile: (
-      final collection,
-      final fixedFilePath,
-      final templates,
+      collection,
+      fixedFilePath,
+      templates,
     ) async {
       await _generateMakeupFile(
         collection,
@@ -50,7 +50,7 @@ Future<void> generateMakeups({
         templates,
         exportFilesBuffer,
         outputDirPath,
-        (final makeupBuilder, final makeupClassName) {
+        (makeupBuilder, makeupClassName) {
           makeupBuilderNameArgs.add((makeupBuilder, makeupClassName));
         },
       );
@@ -71,7 +71,7 @@ Future<void> generateMakeups({
       "___DECLARTION_PART___": declarationParts.join("\n  "),
       "___INITIALIZATION_PART___": initializationParts.join("\n    "),
     });
-    final outputFilePath = p.join(outputDirPath ?? "", "theme.g.dart");
+    final outputFilePath = p.join(outputDirPath ?? "", "makeup_theme.g.dart");
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
     printLightGreen("Generated theme class in `$outputFilePath`");
@@ -93,7 +93,7 @@ Future<void> _generateMakeupFile(
 
   // Create variables to hold the annotation's field values.
   final variants = <String>{"default"};
-  final parameters = <String, TypeCode>{};
+  final properties = <String, TypeCode>{};
 
   // ---------------------------------------------------------------------------
 
@@ -104,10 +104,9 @@ Future<void> _generateMakeupFile(
   ) async {
     final outputFilePath = p.join(rootOutputDirPath, "_generate_makeups.dart");
     if (!await fileExists(outputFilePath)) {
-      final template = templates.values.elementAt(4);
+      final template = templates.values.elementAt(3);
       final outputData = replaceAllData(template, {
-        "___PARAMETERS___": "${annotatedClassName.toSnakeCase().toUpperCase()}_PARAMETERS",
-        "___CLASS___": "_$annotatedClassName",
+        "___CLASS___": annotatedClassName,
       });
 
       await writeFile(outputFilePath, outputData);
@@ -138,6 +137,9 @@ Future<void> _generateMakeupFile(
       "___CLASS_FILE___": desiredClassFileName,
       "___MAKEUP_CLASS___": makeupClassName,
       "___CLASS___": className,
+      "___PROPERTIES___": [
+        properties.entries.map((e) => '"${e.key}": "${e.value.nullableName}"').join(","),
+      ].map((e) => e.isEmpty ? "" : "$e,").first,
     };
 
     if (hasCorrectFileName) {
@@ -145,7 +147,7 @@ Future<void> _generateMakeupFile(
         p.join(classFileDirPath, makeupClassFileName),
         templates.values.elementAt(0),
         templateData,
-        parameters,
+        properties,
       );
     }
 
@@ -154,7 +156,7 @@ Future<void> _generateMakeupFile(
       p.join(rootOutputDirPath, "makeups"),
       templates.values.elementAt(1),
       templateData,
-      parameters,
+      properties,
       variants,
       classKey,
       onNamingMakeupBuilder,
@@ -173,14 +175,16 @@ Future<void> _generateMakeupFile(
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
     collection: collection,
-    memberAnnotations: {"Parameter"},
-    onAnnotatedMember: (final memberAnnotationName, final memberName, final memberType) async {
-      parameters.addAll({
-        memberName: TypeCode(memberType),
-      });
+    memberAnnotations: {"Property"},
+    onAnnotatedMember: (memberAnnotationName, memberName, memberType) async {
+      if (memberAnnotationName == "Property") {
+        properties.addAll({
+          memberName: TypeCode(memberType),
+        });
+      }
     },
     classAnnotations: {"GenerateMakeups"},
-    onAnnotatedClass: (final classAnnotationName, final className) async {
+    onAnnotatedClass: (classAnnotationName, className) async {
       // Remove the underscores at the start.
       var temp = className;
       while (temp.startsWith("_")) {
@@ -193,7 +197,7 @@ Future<void> _generateMakeupFile(
         exportFilesBuffer,
       );
     },
-    onClassAnnotationField: (final fieldName, final fieldValue) {
+    onClassAnnotationField: (fieldName, fieldValue) {
       switch (fieldName) {
         case "variants":
           variants.addAll(
@@ -201,8 +205,8 @@ Future<void> _generateMakeupFile(
           );
           break;
 
-        case "parameters":
-          parameters.addAll(
+        case "properties":
+          properties.addAll(
             fieldValue.toMapValue()?.map((k, v) {
                   final typeCode = v?.toStringValue();
                   return MapEntry(

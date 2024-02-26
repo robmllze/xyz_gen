@@ -15,7 +15,7 @@ part '_text_makeup.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const TEXT_PARAMETERS = <String, String>{};
+const TEXT_PROPERTIES = <String, String>{};
 
 @GenerateMakeups(
   variants: {
@@ -23,14 +23,14 @@ const TEXT_PARAMETERS = <String, String>{};
     "medium",
     "large",
   },
-  parameters: TEXT_PARAMETERS,
+  properties: TEXT_PROPERTIES,
 )
 class Text {
   //
   //
   //
 
-  @Parameter()
+  @Field()
   String? font;
 
   //

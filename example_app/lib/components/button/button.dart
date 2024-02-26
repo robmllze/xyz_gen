@@ -15,7 +15,7 @@ part '_button_makeup.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-const BUTTON_PARAMETERS = <String, String>{
+const BUTTON_PROPERTIES = <String, String>{
   "color": "int?",
   "width": "double?",
   "height": "double?",
@@ -27,7 +27,7 @@ const BUTTON_PARAMETERS = <String, String>{
     "medium",
     "large",
   },
-  parameters: BUTTON_PARAMETERS,
+  properties: BUTTON_PROPERTIES,
 )
 class Button {
   //

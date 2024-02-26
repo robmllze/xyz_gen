@@ -19,7 +19,7 @@ import '../../components/button/button.dart';
   variants: {
     "default",
   },
-  parameters: BUTTON_PARAMETERS,
+  properties: BUTTON_PROPERTIES,
 )
 // ignore: unused_element
 abstract final class _Button {}
