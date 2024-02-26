@@ -18,7 +18,6 @@ class GenerateMakeupsArgs extends ValidObject {
   final String? fallbackDartSdkPath;
   final String? classTemplateFilePath;
   final String? builderTemplateFilePath;
-  final String? exportsTemplateFilePath;
   final String? generatedThemeTemplateFilePath;
   final String? generateTemplateFilePath;
   final Set<String>? rootPaths;
@@ -34,7 +33,6 @@ class GenerateMakeupsArgs extends ValidObject {
     required this.fallbackDartSdkPath,
     required this.classTemplateFilePath,
     required this.builderTemplateFilePath,
-    required this.exportsTemplateFilePath,
     required this.generatedThemeTemplateFilePath,
     required this.generateTemplateFilePath,
     required this.rootPaths,
@@ -52,7 +50,6 @@ class GenerateMakeupsArgs extends ValidObject {
         if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
         this.classTemplateFilePath,
         this.builderTemplateFilePath,
-        this.exportsTemplateFilePath,
         this.generatedThemeTemplateFilePath,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,

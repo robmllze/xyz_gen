@@ -71,15 +71,6 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
-        "exports-template",
-        abbr: "e",
-        help: "Exports template file path.",
-        defaultsTo: p.join(
-          toLocalSystemPathFormat(defaultTemplatesPath),
-          "default_makeup_exports_template.dart.md",
-        ),
-      )
-      ..addOption(
         "theme-template",
         abbr: "t",
         help: "Theme template file path.",
@@ -106,7 +97,6 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         fallbackDartSdkPath: results["dart-sdk"],
         classTemplateFilePath: results["class-template"],
         builderTemplateFilePath: results["builder-template"],
-        exportsTemplateFilePath: results["exports-template"],
         generatedThemeTemplateFilePath: results["theme-template"],
         generateTemplateFilePath: results["generate-template"],
         rootPaths: splitArg(results["roots"])?.toSet(),
@@ -124,7 +114,6 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         outputDirPath: args.outputDirPath!,
         classTemplateFilePath: args.classTemplateFilePath!,
         builderTemplateFilePath: args.builderTemplateFilePath!,
-        exportsTemplateFilePath: args.exportsTemplateFilePath!,
         generatedThemeTemplateFilePath: args.generatedThemeTemplateFilePath!,
         generateTemplateFilePath: args.generateTemplateFilePath!,
       );
