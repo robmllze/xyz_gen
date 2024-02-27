@@ -11,6 +11,8 @@
 
 // ignore_for_file: unused_element
 
+import 'dart:convert';
+
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 part '_model_user.g.dart';

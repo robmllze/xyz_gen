@@ -72,7 +72,7 @@ class ModelUser extends Model {
   //
 
   factory ModelUser.from(
-    Model other,
+    Model? other,
   ) {
     return ModelUser.unsafe()..updateWith(other);
   }
@@ -82,7 +82,7 @@ class ModelUser extends Model {
   //
 
   factory ModelUser.of(
-    ModelUser other,
+    ModelUser? other,
   ) {
     return ModelUser.unsafe()..updateWith(other);
   }
@@ -92,10 +92,10 @@ class ModelUser extends Model {
   //
 
   factory ModelUser.fromJsonString(
-    String source,
+    String? source,
   ) {
     try {
-      if (source.isNotEmpty) {
+      if (source != null && source.isNotEmpty) {
         final decoded = jsonDecode(source);
         return ModelUser.fromJson(decoded);
       } else {
@@ -112,7 +112,7 @@ class ModelUser extends Model {
   //
 
   factory ModelUser.fromJson(
-    Map<String, dynamic> data,
+    Map<String, dynamic>? data,
   ) {
     try {
       return ModelUser.unsafe(
@@ -183,9 +183,9 @@ class ModelUser extends Model {
 
   @override
   void updateWithJson(
-    Map<String, dynamic> data,
+    Map<String, dynamic>? data,
   ) {
-    if (data.isNotEmpty) {
+    if (data != null && data.isNotEmpty) {
       this.displayName =
           letAs<String?>(data[K_DISPLAY_NAME]) ?? this.displayName;
       this.email = letAs<String?>(data[K_EMAIL]) ?? this.email;
