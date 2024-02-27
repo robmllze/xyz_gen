@@ -7,18 +7,32 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+// ignore_for_file: annotate_overrides
+// ignore_for_file: empty_constructor_bodies
 // ignore_for_file: invalid_null_aware_operator
+// ignore_for_file: overridden_fields
 // ignore_for_file: unnecessary_non_null_assertion
 // ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_this
 
 part of 'model_user.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ModelUser {
+class ModelUser extends Model {
   //
   //
   //
+
+  static const CLASS = "ModelUser";
+  static const MODEL_ID = "model_user";
+
+  static const K_DISPLAY_NAME = "display_name";
+  static const K_EMAIL = "email";
+  static const K_FIRST_NAME = "first_name";
+  static const K_LAST_NAME = "last_name";
+  static const K_SEARCHABLE_NAME = "searchable_name";
+  static const K_TYPE = "type";
 
   String? displayName;
   String? email;
@@ -38,53 +52,183 @@ class ModelUser {
     this.lastName,
     this.searchableName,
     this.type,
-  });
+  }) {}
+
+  //
+  //
+  //
+
+  ModelUser.unsafe({
+    this.displayName,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.searchableName,
+    this.type,
+  }) {}
+
+  //
+  //
+  //
+
+  factory ModelUser.from(
+    Model other,
+  ) {
+    return ModelUser.unsafe()..updateWith(other);
+  }
+
+  //
+  //
+  //
+
+  factory ModelUser.of(
+    ModelUser other,
+  ) {
+    return ModelUser.unsafe()..updateWith(other);
+  }
+
+  //
+  //
+  //
+
+  factory ModelUser.fromJsonString(
+    String source,
+  ) {
+    try {
+      if (source.isNotEmpty) {
+        final decoded = jsonDecode(source);
+        return ModelUser.fromJson(decoded);
+      } else {
+        return ModelUser.unsafe();
+      }
+    } catch (e) {
+      assert(false, e);
+      rethrow;
+    }
+  }
 
   //
   //
   //
 
   factory ModelUser.fromJson(
-    Map<String, dynamic> input,
+    Map<String, dynamic> data,
   ) {
-    return ModelUser(
-      displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-      email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-      firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-      lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-      searchableName: input[K_SEARCHABLE_NAME]
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toLowerCase(),
-      type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
-    );
+    try {
+      return ModelUser.unsafe(
+        displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
+        lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: input[K_SEARCHABLE_NAME]
+            ?.toString()
+            .trim()
+            .nullIfEmpty
+            ?.toLowerCase(),
+        type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+      );
+    } catch (e) {
+      assert(false, e);
+      rethrow;
+    }
   }
 
   //
   //
   //
 
-  Map<String, dynamic> toJson() {
-    return {
-      K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
-      K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
-      K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
-      K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
-      K_SEARCHABLE_NAME:
-          searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
-      K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
-    };
+  @override
+  Map<String, dynamic> toJson({
+    dynamic defaultValue,
+    bool includeNulls = false,
+  }) {
+    try {
+      final withNulls = <String, dynamic>{
+        K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
+        K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
+        K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
+        K_SEARCHABLE_NAME:
+            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+      }.mapWithDefault(defaultValue);
+      return includeNulls ? withNulls : withNulls.nonNulls;
+    } catch (e) {
+      assert(false, e);
+      rethrow;
+    }
   }
 
   //
   //
   //
 
-  static const K_DISPLAY_NAME = "display_name";
-  static const K_EMAIL = "email";
-  static const K_FIRST_NAME = "first_name";
-  static const K_LAST_NAME = "last_name";
-  static const K_SEARCHABLE_NAME = "searchable_name";
-  static const K_TYPE = "type";
+  @override
+  T empty<T extends Model>() {
+    return ModelUser.unsafe() as T;
+  }
+
+  //
+  //
+  //
+
+  @override
+  T copy<T extends Model>() {
+    return (ModelUser.unsafe()..updateWith(this)) as T;
+  }
+
+  //
+  //
+  //
+
+  @override
+  T copyWith<T extends Model>(
+    T other,
+  ) {
+    return this.copy<T>()..updateWith(other);
+  }
+
+  //
+  //
+  //
+
+  @override
+  T copyWithJson<T extends Model>(
+    Map<String, dynamic> other,
+  ) {
+    if (other.isNotEmpty) {
+      return this.copy<T>()..updateWithJson(other);
+    }
+    return this.copy<T>();
+  }
+
+  //
+  //
+  //
+
+  @override
+  void updateWith<T extends Model>(
+    T other,
+  ) {
+    final data = other.toJson();
+    if (data.isNotEmpty) {
+      this.displayName = other[K_DISPLAY_NAME] ?? this.displayName;
+      this.email = other[K_EMAIL] ?? this.email;
+      this.firstName = other[K_FIRST_NAME] ?? this.firstName;
+      this.lastName = other[K_LAST_NAME] ?? this.lastName;
+      this.searchableName = other[K_SEARCHABLE_NAME] ?? this.searchableName;
+      this.type = other[K_TYPE] ?? this.type;
+    }
+  }
+
+  //
+  //
+  //
+
+  @override
+  void updateWithJson<T extends Model>(
+    Map<String, dynamic> other,
+  ) {
+    this.updateWith(ModelUser.fromJson(other));
+  }
 }
