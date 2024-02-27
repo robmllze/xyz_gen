@@ -81,7 +81,7 @@ Future<void> generateScreen({
     partFileDirs: partFileDirs,
   );
   printGreen(
-      "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`");
+      "Generated `$screenClassName` in `${getBaseName(screenFilePath)}`",);
   final stateFilePath = p.join(folderDirPath, VIEW_FILE_NAME);
   await _writeFile(
     viewTemplateFilePath,

@@ -67,7 +67,7 @@ Future<void> generateScreensApp(List<String> arguments) async {
         help: "Controller template file path.",
         defaultsTo: toLocalSystemPathFormat(
           p.join(defaultTemplatesPath,
-              "default_screen_controller_template.dart.md"),
+              "default_screen_controller_template.dart.md",),
         ),
       )
       ..addOption(
