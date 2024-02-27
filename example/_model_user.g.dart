@@ -19,16 +19,17 @@ part of 'example.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ModelUser extends _ModelUser {
+class ModelUser extends Model {
   //
   //
   //
 
-  static const K_ARGS = "args";
+  static const CLASS = "ModelUser";
+  static const MODEL_ID = "model_user";
+
   static const K_DISPLAY_NAME = "display_name";
   static const K_EMAIL = "email";
   static const K_FIRST_NAME = "first_name";
-  static const K_ID = "id";
   static const K_LAST_NAME = "last_name";
   static const K_SEARCHABLE_NAME = "searchable_name";
   static const K_TYPE = "type";
@@ -45,42 +46,42 @@ class ModelUser extends _ModelUser {
   //
 
   ModelUser({
-    String? id,
-    dynamic args,
     this.displayName,
     this.email,
     this.firstName,
     this.lastName,
     this.searchableName,
     this.type,
-  }) : super() {
-    this.id = id;
-    this.args = args;
-  }
+  }) {}
 
   //
   //
   //
 
   ModelUser.unsafe({
-    String? id,
-    dynamic args,
     this.displayName,
     this.email,
     this.firstName,
     this.lastName,
     this.searchableName,
     this.type,
-  }) : super() {
-    this.id = id;
-    this.args = args;
-  }
+  }) {}
 
   //
   //
   //
 
   factory ModelUser.from(
+    Model other,
+  ) {
+    return ModelUser.unsafe()..updateWith(other);
+  }
+
+  //
+  //
+  //
+
+  factory ModelUser.of(
     ModelUser other,
   ) {
     return ModelUser.unsafe()..updateWith(other);
@@ -94,8 +95,12 @@ class ModelUser extends _ModelUser {
     String source,
   ) {
     try {
-      final decoded = jsonDecode(source);
-      return ModelUser.fromJson(decoded);
+      if (source.isNotEmpty) {
+        final decoded = jsonDecode(source);
+        return ModelUser.fromJson(decoded);
+      } else {
+        return ModelUser.unsafe();
+      }
     } catch (e) {
       assert(false, e);
       rethrow;
@@ -107,22 +112,16 @@ class ModelUser extends _ModelUser {
   //
 
   factory ModelUser.fromJson(
-    Map<String, dynamic> input,
+    Map<String, dynamic> data,
   ) {
     try {
       return ModelUser.unsafe(
-        args: input[K_ARGS],
-        displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-        email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-        firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-        id: input[K_ID]?.toString().trim().nullIfEmpty,
-        lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: input[K_SEARCHABLE_NAME]
-            ?.toString()
-            .trim()
-            .nullIfEmpty
-            ?.toLowerCase(),
-        type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+        displayName: data[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email: data[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: data[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
+        lastName: data[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: data[K_SEARCHABLE_NAME]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        type: data[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       );
     } catch (e) {
       assert(false, e);
@@ -141,14 +140,11 @@ class ModelUser extends _ModelUser {
   }) {
     try {
       final withNulls = <String, dynamic>{
-        K_ARGS: args,
         K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
         K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
         K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
-        K_ID: id?.toString().trim().nullIfEmpty,
         K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
-        K_SEARCHABLE_NAME:
-            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_SEARCHABLE_NAME: searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
         K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
@@ -181,60 +177,16 @@ class ModelUser extends _ModelUser {
   //
 
   @override
-  T copyWith<T extends Model>(
-    T other,
+  void updateWithJson(
+    Map<String, dynamic> data,
   ) {
-    if (other is ModelUser) {
-      return this.copy<T>()..updateWith(other);
+    if (data.isNotEmpty) {
+      this.displayName = letAs<String?>(data[K_DISPLAY_NAME]) ?? this.displayName;
+      this.email = letAs<String?>(data[K_EMAIL]) ?? this.email;
+      this.firstName = letAs<String?>(data[K_FIRST_NAME]) ?? this.firstName;
+      this.lastName = letAs<String?>(data[K_LAST_NAME]) ?? this.lastName;
+      this.searchableName = letAs<String?>(data[K_SEARCHABLE_NAME]) ?? this.searchableName;
+      this.type = letAs<String?>(data[K_TYPE]) ?? this.type;
     }
-    assert(false);
-    return this.copy<T>();
-  }
-
-  //
-  //
-  //
-
-  @override
-  T copyWithJson<T extends Model>(
-    Map<String, dynamic> other,
-  ) {
-    if (other.isNotEmpty) {
-      return this.copy<T>()..updateWithJson(other);
-    }
-    return this.copy<T>();
-  }
-
-  //
-  //
-  //
-
-  @override
-  void updateWith<T extends Model>(
-    T other,
-  ) {
-    if (other is ModelUser) {
-      this.args = other.args ?? this.args;
-      this.displayName = other.displayName ?? this.displayName;
-      this.email = other.email ?? this.email;
-      this.firstName = other.firstName ?? this.firstName;
-      this.id = other.id ?? this.id;
-      this.lastName = other.lastName ?? this.lastName;
-      this.searchableName = other.searchableName ?? this.searchableName;
-      this.type = other.type ?? this.type;
-    } else {
-      assert(false);
-    }
-  }
-
-  //
-  //
-  //
-
-  @override
-  void updateWithJson<T extends Model>(
-    Map<String, dynamic> other,
-  ) {
-    this.updateWith(ModelUser.fromJson(other));
   }
 }

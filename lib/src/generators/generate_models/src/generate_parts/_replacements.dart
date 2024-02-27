@@ -86,9 +86,9 @@ Map<String, String> _replacements({
     // ___P8___
     allEntries.map((e) {
       final key = e.key;
-      final typeCode = e.value;
+      final t = e.value.getName();
       final keyConst = allKeyConsts[key];
-      return "this.$e = letAs<$typeCode>(data[$keyConst]) ?? this.$e;";
+      return "this.$key = letAs<$t>(data[$keyConst]) ?? this.$key;";
     }),
   ];
 

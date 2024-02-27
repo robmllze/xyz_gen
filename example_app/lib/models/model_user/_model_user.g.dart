@@ -116,16 +116,16 @@ class ModelUser extends Model {
   ) {
     try {
       return ModelUser.unsafe(
-        displayName: input[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-        email: input[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-        firstName: input[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-        lastName: input[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: input[K_SEARCHABLE_NAME]
+        displayName: data[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email: data[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: data[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
+        lastName: data[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: data[K_SEARCHABLE_NAME]
             ?.toString()
             .trim()
             .nullIfEmpty
             ?.toLowerCase(),
-        type: input[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+        type: data[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       );
     } catch (e) {
       assert(false, e);
@@ -182,53 +182,18 @@ class ModelUser extends Model {
   //
 
   @override
-  T copyWith<T extends Model>(
-    T other,
+  void updateWithJson(
+    Map<String, dynamic> data,
   ) {
-    return this.copy<T>()..updateWith(other);
-  }
-
-  //
-  //
-  //
-
-  @override
-  T copyWithJson<T extends Model>(
-    Map<String, dynamic> other,
-  ) {
-    if (other.isNotEmpty) {
-      return this.copy<T>()..updateWithJson(other);
-    }
-    return this.copy<T>();
-  }
-
-  //
-  //
-  //
-
-  @override
-  void updateWith<T extends Model>(
-    T other,
-  ) {
-    final data = other.toJson();
     if (data.isNotEmpty) {
-      this.displayName = other[K_DISPLAY_NAME] ?? this.displayName;
-      this.email = other[K_EMAIL] ?? this.email;
-      this.firstName = other[K_FIRST_NAME] ?? this.firstName;
-      this.lastName = other[K_LAST_NAME] ?? this.lastName;
-      this.searchableName = other[K_SEARCHABLE_NAME] ?? this.searchableName;
-      this.type = other[K_TYPE] ?? this.type;
+      this.displayName =
+          letAs<String?>(data[K_DISPLAY_NAME]) ?? this.displayName;
+      this.email = letAs<String?>(data[K_EMAIL]) ?? this.email;
+      this.firstName = letAs<String?>(data[K_FIRST_NAME]) ?? this.firstName;
+      this.lastName = letAs<String?>(data[K_LAST_NAME]) ?? this.lastName;
+      this.searchableName =
+          letAs<String?>(data[K_SEARCHABLE_NAME]) ?? this.searchableName;
+      this.type = letAs<String?>(data[K_TYPE]) ?? this.type;
     }
-  }
-
-  //
-  //
-  //
-
-  @override
-  void updateWithJson<T extends Model>(
-    Map<String, dynamic> other,
-  ) {
-    this.updateWith(ModelUser.fromJson(other));
   }
 }
