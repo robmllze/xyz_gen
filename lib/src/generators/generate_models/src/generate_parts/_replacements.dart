@@ -60,7 +60,7 @@ Map<String, String> _replacements({
     nonNullableIds.map((e) => "assert(this.$e != null);"),
     // ___P6___
     allIds.map((e) {
-      final fieldName = "data[${allKeyConsts[e]}]";
+      final fieldName = "data?[${allKeyConsts[e]}]";
       final parameter = camelCaseFields[e]!;
       final typeCode = parameter.value;
       final value = mapWithFromMappers(
@@ -88,7 +88,7 @@ Map<String, String> _replacements({
       final key = e.key;
       final t = e.value.getName();
       final keyConst = allKeyConsts[key];
-      return "this.$key = letAs<$t>(data[$keyConst]) ?? this.$key;";
+      return "this.$key = letAs<$t>(data?[$keyConst]) ?? this.$key;";
     }),
   ];
 
