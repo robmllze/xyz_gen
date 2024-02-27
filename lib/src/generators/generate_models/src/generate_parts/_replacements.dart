@@ -85,7 +85,7 @@ Map<String, String> _replacements({
     }),
     // ___P8___
     allIds.map((e) {
-      return "if (other.$e != null) ? this.$e = other.$e;";
+      return "other.$e != null ? this.$e = other.$e: null;";
     }),
   ];
 
