@@ -116,16 +116,16 @@ class ModelUser extends Model {
   ) {
     try {
       return ModelUser.unsafe(
-        displayName: data[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-        email: data[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-        firstName: data[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-        lastName: data[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: data[K_SEARCHABLE_NAME]
+        displayName: data?[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email: data?[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: data?[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
+        lastName: data?[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: data?[K_SEARCHABLE_NAME]
             ?.toString()
             .trim()
             .nullIfEmpty
             ?.toLowerCase(),
-        type: data[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+        type: data?[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       );
     } catch (e) {
       assert(false, e);
@@ -187,13 +187,13 @@ class ModelUser extends Model {
   ) {
     if (data != null && data.isNotEmpty) {
       this.displayName =
-          letAs<String?>(data[K_DISPLAY_NAME]) ?? this.displayName;
-      this.email = letAs<String?>(data[K_EMAIL]) ?? this.email;
-      this.firstName = letAs<String?>(data[K_FIRST_NAME]) ?? this.firstName;
-      this.lastName = letAs<String?>(data[K_LAST_NAME]) ?? this.lastName;
+          letAs<String?>(data?[K_DISPLAY_NAME]) ?? this.displayName;
+      this.email = letAs<String?>(data?[K_EMAIL]) ?? this.email;
+      this.firstName = letAs<String?>(data?[K_FIRST_NAME]) ?? this.firstName;
+      this.lastName = letAs<String?>(data?[K_LAST_NAME]) ?? this.lastName;
       this.searchableName =
-          letAs<String?>(data[K_SEARCHABLE_NAME]) ?? this.searchableName;
-      this.type = letAs<String?>(data[K_TYPE]) ?? this.type;
+          letAs<String?>(data?[K_SEARCHABLE_NAME]) ?? this.searchableName;
+      this.type = letAs<String?>(data?[K_TYPE]) ?? this.type;
     }
   }
 }

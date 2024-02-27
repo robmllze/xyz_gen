@@ -9,6 +9,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:convert';
+
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 part '_model_user.g.dart';
@@ -29,6 +31,7 @@ part '_model_user.g.dart';
   shouldInherit: true,
   keyStringCase: "lower_snake_case",
 )
+// ignore: unused_element
 abstract class _ModelUser extends ThisModel<ModelUser> {
   @Field()
   String? firstName;
