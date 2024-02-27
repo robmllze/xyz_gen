@@ -86,7 +86,7 @@ Map<String, String> _replacements({
     // ___P8___
     allIds.map((e) {
       final keyConst = allKeyConsts[e];
-      return "this.$e = other[$keyConst] ?? this.$e;";
+      return "this.$e = data[$keyConst] ?? this.$e;";
     }),
   ];
 
