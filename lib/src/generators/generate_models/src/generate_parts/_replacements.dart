@@ -84,11 +84,8 @@ Map<String, String> _replacements({
       return "$keyConst: $value,";
     }),
     // ___P8___
-    allEntries.map((e) {
-      final key = e.key;
-      final t = e.value.getName();
-      final keyConst = allKeyConsts[key];
-      return "this.$key = letAs<$t>(otherData?[$keyConst]) ?? this.$key;";
+    allIds.map((e) {
+      return "if (other.$e != null) ? this.$e = other.$e;";
     }),
   ];
 
