@@ -17,9 +17,13 @@ Map<String, String> _replacements({
   required bool includeArgs,
 }) {
   final camelCaseFields = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
-  final id = includeId ? camelCaseFields["id"] ??= const TypeCode("String?") : null;
-  final args = includeArgs ? camelCaseFields["args"] ??= const TypeCode("dynamic") : null;
-  final allEntries = camelCaseFields.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+  final id =
+      includeId ? camelCaseFields["id"] ??= const TypeCode("String?") : null;
+  final args = includeArgs
+      ? camelCaseFields["args"] ??= const TypeCode("dynamic")
+      : null;
+  final allEntries = camelCaseFields.entries.toList()
+    ..sort((a, b) => a.key.compareTo(b.key));
   final allIds = allEntries.map((e) => e.key);
   final ids = allIds.where((e) => !const ["id", "args"].contains(e));
   final entries = ids.map((i) => MapEntry(i, camelCaseFields[i]));
@@ -43,7 +47,8 @@ Map<String, String> _replacements({
         () {
           return "${args.nullable ? "" : "required "}${args.getName()} args,";
         }(),
-      ...entries.map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
+      ...entries
+          .map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
     ],
     // ___P3___
     [
