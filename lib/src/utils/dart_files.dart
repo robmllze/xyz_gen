@@ -172,14 +172,15 @@ bool isSourceDartFilePath(String filePath) {
 /// ### Parameters:
 ///
 /// - `filePath`: The path to the markdown file.
-/// - `language`: The language of the code snippets to read, e.g. "dart".
+/// - `lang`: The language code, i.e. "dart" for Dart-code snippets, `yaml` for
+///   YAML-code snippets or "[^\\n]+" for any language.
 ///
 /// ### Returns:
 ///
 /// - A Future of list of code snippets.
 Future<List<String>> readSnippetsFromMarkdownFile(
   String filePath, {
-  String language = "",
+  String lang = "[^\\n]+",
 }) async {
   final isMarkdownFile = filePath.toLowerCase().endsWith(".md");
   if (!isMarkdownFile) {
@@ -187,9 +188,9 @@ Future<List<String>> readSnippetsFromMarkdownFile(
   }
   final file = File(filePath);
   final input = await file.readAsString();
-  final dartCodeRegex = RegExp("````$language(.*?)````", dotAll: true);
+  final dartCodeRegex = RegExp("````($lang)\\n(.*?)````", dotAll: true);
   final matches = dartCodeRegex.allMatches(input);
-  return matches.map((match) => match.group(1)?.trim() ?? "").toList();
+  return matches.map((match) => match.group(2)?.trim() ?? "").toList();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
