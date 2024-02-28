@@ -11,4 +11,3 @@
 ## [0.43.1]
 
 - Current release.
-
