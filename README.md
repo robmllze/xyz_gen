@@ -48,14 +48,14 @@ Generates code to connect your Screens to your app. Feel free to contact me for 
 
 ### Installation
 
-#### If you are only interested in using the existing generators, there's no need to include this package, but you'll need to include the annotations package by modifying your `pubspec.yaml` file:
+If you are only interested in using the existing generators, there's no need to include this package, but you'll need to include the annotations package by modifying your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
   xyz_gen_annotations: any  # or the latest version
 ```
 
-#### If you want to use the tools included in this package to create your own generators package, you can include it like so:
+If you want to use the tools included in this package to create your own generators package, you can include it like so:
 
 ```yaml
 dependencies:
@@ -90,7 +90,7 @@ Once cloned, you can modify the generator scripts or templates according to your
 Execute any of the generator scripts by navigating to the cloned directory and running:
 
 ```bash
-dart ___generators/generate_modelst
+dart ___generators/generate_models.dart
 ```
 
 Replace `generate_models.dart` with the specific generator you wish to run, for example, `dart generate_exports.dart`.
