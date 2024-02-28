@@ -20,8 +20,9 @@ Future<void> generateDirectives({
 }) async {
   printYellow("Starting generator. Please wait...");
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
-    final results = await findDartFiles(
+    final results = await findFiles(
       dirPath,
+      extensions: {".dart"},
       pathPatterns: pathPatterns,
       onFileFound: (_, __, filePath) async =>
           !isGeneratedDartFilePath(filePath),

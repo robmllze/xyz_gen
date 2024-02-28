@@ -16,11 +16,11 @@ Future<void> generateForFiles({
   Set<String> pathPatterns = const {},
 }) async {
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
-    final results = await findDartFiles(
+    final results = await findFiles(
       dirPath,
+      extensions: {".dart"},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async =>
-          !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
     );
     for (final result in results) {
       final filePath = result.filePath;

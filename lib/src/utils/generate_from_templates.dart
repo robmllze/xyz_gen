@@ -64,12 +64,13 @@ Future<void> generateFromTemplates({
     final templates = <String, String>{};
     for (final templateFilePath in templateFilePaths) {
       templates[templateFilePath] =
-          (await readDartSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+          (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
     }
-    final results = await findDartFiles(
+    final results = await findFiles(
       path,
+      extensions: {".dart"},
       pathPatterns: pathPatterns,
-      onFileFound: (final dirName, final folderName, final filePath) async {
+      onFileFound: (dirName, folderName, filePath) async {
         final a = isMatchingFileName(filePath, begType, "dart").$1;
         final b = isSourceDartFilePath(filePath);
         if (a && b) {

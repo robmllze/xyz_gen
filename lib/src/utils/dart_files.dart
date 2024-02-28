@@ -14,7 +14,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Formats the dart file at [filePath].
+/// Formats the dart file at `filePath`.
 Future<void> fmtDartFile(String filePath) async {
   try {
     final localFilePath = toLocalSystemPathFormat(filePath);
@@ -22,7 +22,7 @@ Future<void> fmtDartFile(String filePath) async {
   } catch (_) {}
 }
 
-/// Applies fixes to the dart file at [filePath].
+/// Applies fixes to the dart file at `filePath`.
 Future<void> fixDartFile(String filePath) async {
   try {
     final localFilePath = toLocalSystemPathFormat(filePath);
@@ -32,9 +32,10 @@ Future<void> fixDartFile(String filePath) async {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Finds all the dart files in [rootDirPath] and its sub-directories
-Future<List<DartFileResult>> findDartFiles(
+/// Finds all the dart files in `rootDirPath` and its sub-directories.
+Future<List<FindFileResult>> findFiles(
   String rootDirPath, {
+  Set<String> extensions = const {},
   Set<String> pathPatterns = const {},
   Future<bool> Function(
     String dirPath,
@@ -42,19 +43,18 @@ Future<List<DartFileResult>> findDartFiles(
     String filePath,
   )? onFileFound,
 }) async {
-  final results = <DartFileResult>[];
+  final results = <FindFileResult>[];
   final filePaths = await listFilePaths(rootDirPath);
   if (filePaths != null) {
     filePaths.sort();
     for (final filePath in filePaths) {
-      if (isDartFilePath(filePath) &&
+      if (matchesAnyExtensions(filePath, extensions) &&
           matchesAnyPathPattern(filePath, pathPatterns)) {
         final dirPath = getDirPath(filePath);
         final folderName = getBaseName(dirPath);
-        final add =
-            (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
+        final add = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
         if (add) {
-          final result = DartFileResult(
+          final result = FindFileResult(
             dirPath: dirPath,
             folderName: folderName,
             filePath: filePath,
@@ -67,8 +67,8 @@ Future<List<DartFileResult>> findDartFiles(
   return results;
 }
 
-/// Finds all the generated dart files in [rootDirPath] and its sub-directories.
-Future<List<DartFileResult>> findGeneratedDartFiles(
+/// Finds all the generated dart files in `rootDirPath` and its sub-directories.
+Future<List<FindFileResult>> findGeneratedDartFiles(
   String rootDirPath, {
   Set<String> pathPatterns = const {},
   Future<bool> Function(
@@ -77,7 +77,7 @@ Future<List<DartFileResult>> findGeneratedDartFiles(
     String filePath,
   )? onFileFound,
 }) async {
-  final results = <DartFileResult>[];
+  final results = <FindFileResult>[];
   final filePaths = await listFilePaths(rootDirPath);
   if (filePaths != null) {
     filePaths.sort();
@@ -85,10 +85,9 @@ Future<List<DartFileResult>> findGeneratedDartFiles(
       if (isGeneratedDartFilePath(filePath)) {
         final dirPath = getDirPath(filePath);
         final folderName = getBaseName(dirPath);
-        final add =
-            (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
+        final add = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
         if (add) {
-          final result = DartFileResult(
+          final result = FindFileResult(
             dirPath: dirPath,
             folderName: folderName,
             filePath: filePath,
@@ -101,15 +100,19 @@ Future<List<DartFileResult>> findGeneratedDartFiles(
   return results;
 }
 
-class DartFileResult {
+/// The result of a `findFiles` or `findGeneratedDartFiles` operation.
+class FindFileResult {
   final String dirPath;
   final String folderName;
   final String filePath;
-  const DartFileResult({
+
+  const FindFileResult({
     required this.dirPath,
     required this.folderName,
     required this.filePath,
   });
+
+  String get extension => p.extension(filePath);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -132,56 +135,72 @@ String? getSourcePath(String filePath) {
   return null;
 }
 
-/// Whether [filePath] ends with ".dart".
+/// Whether `filePath` ends with ".dart".
 bool isDartFilePath(String filePath) {
   return filePath.toLowerCase().endsWith(".dart");
 }
 
-/// Whether [filePath] ends with ".g.dart".
+/// Whether `filePath` ends with ".g.dart".
 bool isGeneratedDartFilePath(String filePath) {
   return filePath.toLowerCase().endsWith(".g.dart");
 }
 
-/// Whether [filePath] ends with ".dart" and does not end with ".g.dart".
+/// Whether `filePath` ends with `extension`.
+bool matchesAnyExtensions(
+  String filePath,
+  Set<String> extensions, {
+  bool caseSensitive = true,
+}) {
+  if (extensions.isEmpty) return true;
+  final extension = p.extension(filePath);
+  return extensions.any((e) {
+    final a = caseSensitive ? extension : extension.toLowerCase();
+    final b = caseSensitive ? e : e.toLowerCase();
+    return a == b;
+  });
+}
+
+/// Whether `filePath` ends with ".dart" and does not end with ".g.dart".
 bool isSourceDartFilePath(String filePath) {
   return isDartFilePath(filePath) && !isGeneratedDartFilePath(filePath);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Reads all Dart code snippets from a markdown file.
+/// Reads all code snippets from a markdown file.
 ///
-/// Searches for blocks of Dart code in the markdown file, demarcated by
-/// "```dart" at the beginning and "```" at the end of each block. Each Dart
-/// code block is extracted and returned as a separate string within a list.
+/// ### Parameters:
 ///
-/// The function expects a file path to a markdown file.
+/// - `filePath`: The path to the markdown file.
+/// - `language`: The language of the code snippets to read, e.g. "dart".
 ///
-/// [filePath] The path to the markdown file.
-/// Returns a Future that resolves to a list of strings, each containing a Dart
-/// code block.
-Future<List<String>> readDartSnippetsFromMarkdownFile(String filePath) async {
+/// ### Returns:
+///
+/// - A Future of list of code snippets.
+Future<List<String>> readSnippetsFromMarkdownFile(
+  String filePath, {
+  String language = "",
+}) async {
   final isMarkdownFile = filePath.toLowerCase().endsWith(".md");
   if (!isMarkdownFile) {
     throw Exception("Not a Markdown file: $filePath");
   }
   final file = File(filePath);
   final input = await file.readAsString();
-  final dartCodeRegex = RegExp(r"```dart(.*?)```", dotAll: true);
+  final dartCodeRegex = RegExp("````$language(.*?)````", dotAll: true);
   final matches = dartCodeRegex.allMatches(input);
   return matches.map((match) => match.group(1)?.trim() ?? "").toList();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Deletes the .g.dart file at [filePath].
+/// Deletes the .g.dart file at `filePath`.
 Future<void> deleteGeneratedDartFile(
   String filePath, {
   void Function(String filePath)? onDelete,
   Set<String> pathPatterns = const {},
 }) async {
-  if (isGeneratedDartFilePath(filePath) &&
-      matchesAnyPathPattern(filePath, pathPatterns)) {
+  if (isGeneratedDartFilePath(filePath) && matchesAnyPathPattern(filePath, pathPatterns)) {
     await deleteFile(filePath);
     onDelete?.call(filePath);
   }
@@ -207,7 +226,7 @@ Future<void> deleteGeneratedDartFiles(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Whether the source and generated Dart files exist for [filePath].
+/// Whether the source and generated Dart files exist for `filePath`.
 Future<bool> sourceAndGeneratedDartFileExists(
   String filePath, [
   Set<String> pathPatterns = const {},

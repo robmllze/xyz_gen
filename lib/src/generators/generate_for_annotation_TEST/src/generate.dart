@@ -22,8 +22,9 @@ Future<void> generateForAnnotationTest({
   final collection =
       createAnalysisContextCollection(paths, fallbackDartSdkPath);
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
-    final results = await findDartFiles(
+    final results = await findFiles(
       dirPath,
+      extensions: {".dart"},
       pathPatterns: pathPatterns,
     );
     for (final result in results) {

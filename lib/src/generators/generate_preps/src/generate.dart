@@ -19,7 +19,11 @@ Future<void> generatePreps({
   List<String? Function(String, String?)> prepMappers = const [],
 }) async {
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
-    final results = await findDartFiles(dirPath, pathPatterns: pathPatterns);
+    final results = await findFiles(
+      dirPath,
+      extensions: {".dart"},
+      pathPatterns: pathPatterns,
+    );
     for (final result in results) {
       final filePath = result.filePath;
       await _generatePrep(filePath, prepMappers);
