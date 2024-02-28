@@ -1,19 +1,18 @@
-//.title
-// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+// =============================================================================
 //
-// Your Project Name
-// Copyright Ⓒ Your Name
+// Your Project Here
+//
+// Copyright Ⓒ Your Name Here (Your Website Here)
 //
 // Licensing details can be found in the LICENSE file in the root directory.
 //
-// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-//.title~
+// =============================================================================
 
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 part '_model_user.g.dart';
 
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+// -----------------------------------------------------------------------------
 
 // This is just one of many generators included in the `xyz_gen` package! This
 // Model generator is much more flexible than `json_serializable` and easier
@@ -29,6 +28,9 @@ part '_model_user.g.dart';
   shouldInherit: true,
   keyStringCase: "lower_snake_case",
 )
+
+// -----------------------------------------------------------------------------
+
 // ignore: unused_element
 abstract class _ModelUser extends ThisModel<ModelUser> {
   @Field()
@@ -50,6 +52,8 @@ abstract class _ModelUser extends ThisModel<ModelUser> {
     return this.model.searchableName?.contains(value.toLowerCase()) == true;
   }
 }
+
+// -----------------------------------------------------------------------------
 
 enum ModelUserType {
   ADMIN,
