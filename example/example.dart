@@ -1,12 +1,14 @@
-// =============================================================================
+//.title
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Your Project Here
+// X|Y|Z & Dev 
 //
-// Copyright Ⓒ Your Name Here (Your Website Here)
-//
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
+// 
 // Licensing details can be found in the LICENSE file in the root directory.
-//
-// =============================================================================
+// 
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//.title~
 
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 

@@ -1,9 +1,9 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// X|Y|Z & Dev 
 //
-// Copyright Ⓒ Robert Mollentze (https://xyzand.dev)
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
 // 
 // Licensing details can be found in the LICENSE file in the root directory.
 // 
