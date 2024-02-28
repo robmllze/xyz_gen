@@ -8,16 +8,10 @@
 git clone https://github.com/robmllze/___generators.git && rm -rf ___generators/.git/
 ```
 
-#### On Windows (Command Prompt):
+#### On Windows:
 
 ```cmd
 git clone https://github.com/robmllze/___generators.git && rmdir /s /q ___generators/.git/
-```
-
-#### On Windows (PowerShell):
-
-```powershell
-git clone https://github.com/robmllze/___generators.git; Remove-Item -Recurse -Force ___generators/.git/
 ```
 
 ## Publishing
