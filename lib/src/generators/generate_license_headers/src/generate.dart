@@ -1,12 +1,12 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-// 
+//
 // X|Y|Z Gen
 //
 // https://xyzand.dev/
 //
 // See LICENSE file in the root of this project for license details.
-// 
+//
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
@@ -22,13 +22,15 @@ Future<void> generateLicenseHeaders({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
-  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template =
+      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
     Iterable fileResults = await findFiles(
       dirPath,
       extensions: const {},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async =>
+          !isGeneratedDartFilePath(filePath),
     );
     final templateLangFileExt =
         p.extension(templateFilePath, 2).replaceAll(".md", "").toLowerCase();

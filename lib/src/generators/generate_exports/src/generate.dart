@@ -1,12 +1,12 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-// 
+//
 // X|Y|Z Gen
 //
 // https://xyzand.dev/
 //
 // See LICENSE file in the root of this project for license details.
-// 
+//
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
@@ -24,7 +24,8 @@ Future<void> generateExports({
 }) async {
   var cachedDirPath = "";
   // Get the template to use.
-  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template =
+      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
