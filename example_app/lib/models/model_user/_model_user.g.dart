@@ -27,49 +27,27 @@ class ModelUser extends Model {
   static const CLASS = "ModelUser";
   static const MODEL_ID = "model_user";
 
-  static const K_DISPLAY_NAME = "display_name";
-  static const K_EMAIL = "email";
-  static const K_FIRST_NAME = "first_name";
-  static const K_LAST_NAME = "last_name";
-  static const K_SEARCHABLE_NAME = "searchable_name";
-  static const K_TEST = "test";
-  static const K_TYPE = "type";
-
-  String? displayName;
-  String? email;
-  String? firstName;
-  String? lastName;
-  String? searchableName;
-  String? test;
-  String? type;
+  static const K_ID = "id";
 
   //
   //
   //
 
   ModelUser({
-    this.displayName,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.searchableName,
-    this.test,
-    this.type,
-  }) {}
+    String? id,
+  }) {
+    this.id = id;
+  }
 
   //
   //
   //
 
   ModelUser.unsafe({
-    this.displayName,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.searchableName,
-    this.test,
-    this.type,
-  }) {}
+    String? id,
+  }) {
+    this.id = id;
+  }
 
   //
   //
@@ -120,22 +98,7 @@ class ModelUser extends Model {
   ) {
     try {
       return ModelUser.unsafe(
-        displayName: otherData?[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-        email:
-            otherData?[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-        firstName: otherData?[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-        lastName: otherData?[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: otherData?[K_SEARCHABLE_NAME]
-            ?.toString()
-            .trim()
-            .nullIfEmpty
-            ?.toLowerCase(),
-        test: otherData?[K_TEST]?.toString().trim().nullIfEmpty,
-        type: otherData?[K_TYPE]
-            ?.toString()
-            .trim()
-            .nullIfEmpty
-            ?.toUpperSnakeCase(),
+        id: otherData?[K_ID]?.toString().trim().nullIfEmpty,
       );
     } catch (e) {
       assert(false, e);
@@ -154,14 +117,7 @@ class ModelUser extends Model {
   }) {
     try {
       final withNulls = <String, dynamic>{
-        K_DISPLAY_NAME: displayName?.toString().trim().nullIfEmpty,
-        K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
-        K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
-        K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
-        K_SEARCHABLE_NAME:
-            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
-        K_TEST: test?.toString().trim().nullIfEmpty,
-        K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+        K_ID: id?.toString().trim().nullIfEmpty,
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -198,15 +154,7 @@ class ModelUser extends Model {
   ) {
     if (otherData != null && otherData.isNotEmpty) {
       final other = ModelUser.fromJson(otherData);
-      other.displayName != null ? this.displayName = other.displayName : null;
-      other.email != null ? this.email = other.email : null;
-      other.firstName != null ? this.firstName = other.firstName : null;
-      other.lastName != null ? this.lastName = other.lastName : null;
-      other.searchableName != null
-          ? this.searchableName = other.searchableName
-          : null;
-      other.test != null ? this.test = other.test : null;
-      other.type != null ? this.type = other.type : null;
+      other.id != null ? this.id = other.id : null;
     }
   }
 }

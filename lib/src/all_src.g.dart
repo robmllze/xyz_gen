@@ -29,6 +29,7 @@ export 'generators/generate_makeups/src/app.dart';
 export 'generators/generate_makeups/src/args.dart';
 export 'generators/generate_makeups/src/generate.dart';
 export 'generators/generate_models/all_generate_models.g.dart';
+export 'generators/generate_models/src/analyze.dart';
 export 'generators/generate_models/src/app.dart';
 export 'generators/generate_models/src/generate.dart';
 export 'generators/generate_models/src/map_with.dart';

@@ -30,6 +30,7 @@ export 'src/generators/generate_makeups/src/app.dart';
 export 'src/generators/generate_makeups/src/args.dart';
 export 'src/generators/generate_makeups/src/generate.dart';
 export 'src/generators/generate_models/all_generate_models.g.dart';
+export 'src/generators/generate_models/src/analyze.dart';
 export 'src/generators/generate_models/src/app.dart';
 export 'src/generators/generate_models/src/generate.dart';
 export 'src/generators/generate_models/src/map_with.dart';
