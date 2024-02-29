@@ -46,7 +46,7 @@ Future<GenerateModel?> analyzeModelFromFile({
   )? generateModel,
 }) async {
   var annotation = const GenerateModel();
-  bool didFindAnnotation = false;
+  var didFindAnnotation = false;
   // Analyze the annotated class and generate the model file.
   await analyzeAnnotatedClasses(
     filePath: inputFilePath,
@@ -57,14 +57,17 @@ Future<GenerateModel?> analyzeModelFromFile({
       annotatedClassName,
     ) async {
       if (generateModel != null) {
-        annotation = await generateModel(classAnnotationName, annotatedClassName);
+        annotation = await generateModel(
+          classAnnotationName,
+          annotatedClassName,
+        );
       } else {
-        didFindAnnotation = true;
         annotation = _updateClassName(
           annotation,
           annotatedClassName,
         );
       }
+      didFindAnnotation = true;
     },
     // Allow the following class annotations:
     classAnnotations: {"GenerateModel"},
