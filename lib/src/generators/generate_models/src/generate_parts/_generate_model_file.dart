@@ -45,7 +45,8 @@ Future<GenerateModel?> analyzeModelFromFile({
     String annotatedClassName,
   )? generateModel,
 }) async {
-  GenerateModel? annotation;
+  var annotation = const GenerateModel();
+  bool didFindAnnotation = false;
   // Analyze the annotated class and generate the model file.
   await analyzeAnnotatedClasses(
     filePath: inputFilePath,
@@ -58,8 +59,9 @@ Future<GenerateModel?> analyzeModelFromFile({
       if (generateModel != null) {
         annotation = await generateModel(classAnnotationName, annotatedClassName);
       } else {
+        didFindAnnotation = true;
         annotation = _updateClassName(
-          annotation ?? const GenerateModel(),
+          annotation,
           annotatedClassName,
         );
       }
@@ -68,13 +70,11 @@ Future<GenerateModel?> analyzeModelFromFile({
     classAnnotations: {"GenerateModel"},
     // Call for each field in the annotation.
     onClassAnnotationField: (fieldName, fieldValue) {
-      if (annotation != null) {
-        annotation = _updateFromClassAnnotationField(
-          annotation!,
-          fieldName,
-          fieldValue,
-        );
-      }
+      annotation = _updateFromClassAnnotationField(
+        annotation,
+        fieldName,
+        fieldValue,
+      );
     },
     // Call for each annotated member.
     onAnnotatedMember: (
@@ -82,19 +82,17 @@ Future<GenerateModel?> analyzeModelFromFile({
       memberName,
       memberType,
     ) {
-      if (annotation != null) {
-        annotation = _updateFromAnnotatedMember(
-          annotation!,
-          memberAnnotationName,
-          memberName,
-          memberType,
-        );
-      }
+      annotation = _updateFromAnnotatedMember(
+        annotation,
+        memberAnnotationName,
+        memberName,
+        memberType,
+      );
     },
     // Allow the following member annotations.
     memberAnnotations: {"Field"},
   );
-  return annotation;
+  return didFindAnnotation ? annotation : null;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
