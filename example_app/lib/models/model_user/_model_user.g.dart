@@ -32,6 +32,7 @@ class ModelUser extends Model {
   static const K_FIRST_NAME = "first_name";
   static const K_LAST_NAME = "last_name";
   static const K_SEARCHABLE_NAME = "searchable_name";
+  static const K_TEST = "test";
   static const K_TYPE = "type";
 
   String? displayName;
@@ -39,6 +40,7 @@ class ModelUser extends Model {
   String? firstName;
   String? lastName;
   String? searchableName;
+  ModelGenerateModelSettings? test;
   String? type;
 
   //
@@ -51,6 +53,7 @@ class ModelUser extends Model {
     this.firstName,
     this.lastName,
     this.searchableName,
+    this.test,
     this.type,
   }) {}
 
@@ -64,6 +67,7 @@ class ModelUser extends Model {
     this.firstName,
     this.lastName,
     this.searchableName,
+    this.test,
     this.type,
   }) {}
 
@@ -112,20 +116,29 @@ class ModelUser extends Model {
   //
 
   factory ModelUser.fromJson(
-    Map<String, dynamic>? data,
+    Map<String, dynamic>? otherData,
   ) {
     try {
       return ModelUser.unsafe(
-        displayName: data?[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
-        email: data?[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
-        firstName: data?[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
-        lastName: data?[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: data?[K_SEARCHABLE_NAME]
+        displayName: otherData?[K_DISPLAY_NAME]?.toString().trim().nullIfEmpty,
+        email:
+            otherData?[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        firstName: otherData?[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
+        lastName: otherData?[K_LAST_NAME]?.toString().trim().nullIfEmpty,
+        searchableName: otherData?[K_SEARCHABLE_NAME]
             ?.toString()
             .trim()
             .nullIfEmpty
             ?.toLowerCase(),
-        type: data?[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
+        test: () {
+          final a = letMap<String, dynamic>(otherData?[K_TEST]);
+          return a != null ? ModelGenerateModelSettings.fromJson(a) : null;
+        }(),
+        type: otherData?[K_TYPE]
+            ?.toString()
+            .trim()
+            .nullIfEmpty
+            ?.toUpperSnakeCase(),
       );
     } catch (e) {
       assert(false, e);
@@ -150,6 +163,7 @@ class ModelUser extends Model {
         K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
         K_SEARCHABLE_NAME:
             searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_TEST: test?.toJson(),
         K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
@@ -183,17 +197,19 @@ class ModelUser extends Model {
 
   @override
   void updateWithJson(
-    Map<String, dynamic>? data,
+    Map<String, dynamic>? otherData,
   ) {
-    if (data != null && data.isNotEmpty) {
-      this.displayName =
-          letAs<String?>(data?[K_DISPLAY_NAME]) ?? this.displayName;
-      this.email = letAs<String?>(data?[K_EMAIL]) ?? this.email;
-      this.firstName = letAs<String?>(data?[K_FIRST_NAME]) ?? this.firstName;
-      this.lastName = letAs<String?>(data?[K_LAST_NAME]) ?? this.lastName;
-      this.searchableName =
-          letAs<String?>(data?[K_SEARCHABLE_NAME]) ?? this.searchableName;
-      this.type = letAs<String?>(data?[K_TYPE]) ?? this.type;
+    if (otherData != null && otherData.isNotEmpty) {
+      final other = ModelUser.fromJson(otherData);
+      other.displayName != null ? this.displayName = other.displayName : null;
+      other.email != null ? this.email = other.email : null;
+      other.firstName != null ? this.firstName = other.firstName : null;
+      other.lastName != null ? this.lastName = other.lastName : null;
+      other.searchableName != null
+          ? this.searchableName = other.searchableName
+          : null;
+      other.test != null ? this.test = other.test : null;
+      other.type != null ? this.type = other.type : null;
     }
   }
 }
