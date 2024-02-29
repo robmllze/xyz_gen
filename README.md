@@ -71,7 +71,7 @@ Navigate to your project directory by running `cd your/project/path` in your ter
 ##### On macOS and Linux:
 
 ```bash
-git clone https://github.com/robmllze/___generators.git && rm -rf ___generators/.git/
+rm -rf ___generators/ && git clone https://github.com/robmllze/___generators.git && dart pub get && rm -rf ___generators/.git/
 ```
 ##### On Windows:
 
