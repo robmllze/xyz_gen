@@ -14,140 +14,187 @@ part of '../generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> _generateForFile(
+Future<void> _generateModelForFile(
   AnalysisContextCollection collection,
-  String fixedFilePath,
+  String inputFilePath,
   Map<String, String> templates,
 ) async {
-  // ---------------------------------------------------------------------------
+  var annotation = const GenerateModel();
+  // Analyze the annotated class and generate the model file.
+  await analyzeAnnotatedClasses(
+    filePath: inputFilePath,
+    collection: collection,
+    // Call for each annotated class.
+    onAnnotatedClass: (
+      classAnnotationName,
+      annotatedClassName,
+    ) async {
+      annotation = await generateModel(
+        inputFilePath: inputFilePath,
+        templates: templates,
+        annotation: annotation,
+        annotatedClassName: annotatedClassName,
+      );
+    },
+    // Allow the following class annotations:
+    classAnnotations: {"GenerateModel"},
+    // Call for each field in the annotation.
+    onClassAnnotationField: (fieldName, fieldValue) {
+      annotation = _updateFromClassAnnotationField(
+        annotation,
+        fieldName,
+        fieldValue,
+      );
+    },
+    // Call for each annotated member.
+    onAnnotatedMember: (
+      memberAnnotationName,
+      memberName,
+      memberType,
+    ) {
+      annotation = _updateFromAnnotatedMember(
+        annotation,
+        memberAnnotationName,
+        memberName,
+        memberType,
+      );
+    },
+    // Allow the following member annotations.
+    memberAnnotations: {"Field"},
+  );
+}
 
-  // Create variables to hold the annotation's field values.
-  var className = "";
-  final fields = <String, TypeCode>{};
-  var shouldInherit = false;
-  var inheritanceConstructor = "";
-  var keyStringCaseType = StringCaseType.LOWER_SNAKE_CASE;
-  var includeId = true;
-  var includeArgs = true;
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-  // ---------------------------------------------------------------------------
+Future<GenerateModel> generateModel({
+  required String inputFilePath,
+  required Map<String, String> templates,
+  required GenerateModel annotation,
+  required String annotatedClassName,
+}) async {
+  // Decide on the class name.
+  final a = annotatedClassName.replaceFirst(RegExp(r"^[_$]+"), "");
+  final b = a != annotatedClassName ? a : "${annotatedClassName}Model";
+  annotation = annotation.copyWith(
+    className: annotation.className?.nullIfEmpty == null ? b : annotation.className,
+  );
 
-  // Define the function to call for each annotation field.
-  void onClassAnnotationField(String fieldName, DartObject fieldValue) {
-    switch (fieldName) {
-      case "className":
-        className = fieldValue.toStringValue() ?? "";
-        break;
-      case "fields":
-        fields.addAll(
-          fieldValue.toMapValue()?.map((k, v) {
-                final typeCode = v?.toStringValue();
+  // Get the class file name from the file path.
+  final classFileName = getBaseName(inputFilePath);
+
+  // Replace placeholders with the actual values.
+  final template = templates.values.first;
+  final output = replaceAllData(
+    template,
+    {
+      "___SUPER_CLASS___": annotation.shouldInherit ? annotatedClassName : "Model",
+      "___SUPER_CONSTRUCTOR___": annotation.shouldInherit
+          ? annotation.inheritanceConstructor?.nullIfEmpty != null
+              ? ": super.${annotation.inheritanceConstructor}()"
+              : ""
+          : "",
+      "___CLASS___": annotation.className,
+      "___MODEL_ID___": annotation.className?.toLowerSnakeCase(),
+      "___CLASS_FILE_NAME___": classFileName,
+      ..._replacements(
+        fields: annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
+        keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
+            StringCaseType.LOWER_SNAKE_CASE,
+        includeId: annotation.includeId,
+        includeArgs: annotation.includeArgs,
+      ),
+    },
+  );
+
+  // Get the output file path.
+  final outputFilePath = () {
+    final classFileDirPath = getDirPath(inputFilePath);
+    final classKey = getFileNameWithoutExtension(classFileName);
+    final outputFileName = "_$classKey.g.dart";
+    return p.join(classFileDirPath, outputFileName);
+  }();
+
+  // Write the generated Dart file.
+  await writeFile(outputFilePath, output);
+
+  // Format the generated Dart file.
+  await fmtDartFile(outputFilePath);
+
+  // Log the generated file.
+  printGreen("Generated `${annotation.className}` in `${getBaseName(outputFilePath)}`");
+  return annotation;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+GenerateModel _updateFromAnnotatedMember(
+  GenerateModel annotation,
+  String memberAnnotationName,
+  String memberName,
+  String memberType,
+) {
+  if (memberAnnotationName == "Field") {
+    annotation = annotation.copyWith(
+      fields: {
+        ...?annotation.fields,
+        memberName: memberType,
+      },
+    );
+  }
+  return annotation;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+GenerateModel _updateFromClassAnnotationField(
+  GenerateModel annotation,
+  String fieldName,
+  DartObject fieldValue,
+) {
+  switch (fieldName) {
+    case "className":
+      return annotation.copyWith(
+        className: fieldValue.toStringValue() ?? "",
+      );
+
+    case "fields":
+      return annotation.copyWith(
+        fields: {
+          ...?annotation.fields,
+          ...fieldValue.toMapValue()?.map((k, v) {
                 return MapEntry(
                   k?.toStringValue(),
-                  typeCode != null ? TypeCode(typeCode) : null,
+                  v?.toStringValue(),
                 );
               }).nonNulls ??
               {},
-        );
-        break;
-      case "shouldInherit":
-        shouldInherit = fieldValue.toBoolValue() ?? false;
-        break;
-      case "inheritanceConstructor":
-        inheritanceConstructor = fieldValue.toStringValue() ?? "";
-        break;
-      case "keyStringCase":
-        keyStringCaseType =
-            StringCaseType.values.valueOf(fieldValue.toStringValue()) ??
-                StringCaseType.LOWER_SNAKE_CASE;
-        break;
-      case "includeId":
-        includeId = fieldValue.toBoolValue() ?? true;
-        break;
-      case "includeArgs":
-        includeArgs = fieldValue.toBoolValue() ?? true;
-        break;
-    }
+        },
+      );
+
+    case "shouldInherit":
+      return annotation.copyWith(
+        shouldInherit: fieldValue.toBoolValue() ?? false,
+      );
+    case "inheritanceConstructor":
+      return annotation.copyWith(
+        inheritanceConstructor: fieldValue.toStringValue() ?? "",
+      );
+
+    case "keyStringCase":
+      return annotation.copyWith(
+        keyStringCase: fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
+      );
+
+    case "includeId":
+      return annotation.copyWith(
+        includeId: fieldValue.toBoolValue() ?? true,
+      );
+
+    case "includeArgs":
+      return annotation.copyWith(
+        includeArgs: fieldValue.toBoolValue() ?? true,
+      );
+    default:
+      return annotation;
   }
-
-  // ---------------------------------------------------------------------------
-
-  // Define the function to call for each annotated member.
-  Future<void> onAnnotatedMember(
-    String memberAnnotationName,
-    String memberName,
-    String memberType,
-  ) async {
-    if (memberAnnotationName == "Field") {
-      fields.addAll({
-        memberName: TypeCode(memberType),
-      });
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-
-  // Define the function to call for each annotated class.
-  Future<void> onAnnotatedClass(String _, String superClassName) async {
-    // Decide on the class name.
-    final a = superClassName.replaceFirst(RegExp(r"^[_$]+"), "");
-    final b = a != superClassName ? a : "${superClassName}Model";
-    className = className.isEmpty ? b : className;
-
-    // Get the class file name from the file path.
-    final classFileName = getBaseName(fixedFilePath);
-
-    // Replace placeholders with the actual values.
-    final template = templates.values.first;
-    final output = replaceAllData(
-      template,
-      {
-        "___SUPER_CLASS___": shouldInherit ? superClassName : "Model",
-        "___SUPER_CONSTRUCTOR___": shouldInherit
-            ? inheritanceConstructor.isNotEmpty
-                ? ": super.$inheritanceConstructor()"
-                : ""
-            : "",
-        "___CLASS___": className,
-        "___MODEL_ID___": className.toLowerSnakeCase(),
-        "___CLASS_FILE_NAME___": classFileName,
-        ..._replacements(
-          fields: fields,
-          keyStringCaseType: keyStringCaseType,
-          includeId: includeId,
-          includeArgs: includeArgs,
-        ),
-      },
-    );
-
-    // Get the output file path.
-    final outputFilePath = () {
-      final classFileDirPath = getDirPath(fixedFilePath);
-      final classKey = getFileNameWithoutExtension(classFileName);
-      final outputFileName = "_$classKey.g.dart";
-      return p.join(classFileDirPath, outputFileName);
-    }();
-
-    // Write the generated Dart file.
-    await writeFile(outputFilePath, output);
-
-    // Format the generated Dart file.
-    await fmtDartFile(outputFilePath);
-
-    // Log the generated file.
-    printGreen("Generated `$className` in `${getBaseName(outputFilePath)}`");
-  }
-
-  // ---------------------------------------------------------------------------
-
-  // Analyze the annotated class and generate the model file.
-  await analyzeAnnotatedClasses(
-    filePath: fixedFilePath,
-    collection: collection,
-    classAnnotations: {"GenerateModel"},
-    onAnnotatedClass: onAnnotatedClass,
-    onClassAnnotationField: onClassAnnotationField,
-    memberAnnotations: {"Field"},
-    onAnnotatedMember: onAnnotatedMember,
-  );
 }

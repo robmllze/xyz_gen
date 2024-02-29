@@ -26,7 +26,7 @@ part '_model_user.g.dart';
     "searchable_name": $LowerCaseString,
     "display_name": "String?",
     "type": $UpperSnakeCaseString,
-    "test": "ModelGenerateModelSettings?",
+    "test": "String?",
   },
   shouldInherit: false,
   keyStringCase: "lower_snake_case",

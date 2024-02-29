@@ -65,8 +65,7 @@ class TypeCode {
     temp = temp.split("-").last;
     temp = temp.replaceAll("|let", "");
     while (true) {
-      final match = RegExp(r"\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>")
-          .firstMatch(temp);
+      final match = RegExp(r"\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>").firstMatch(temp);
       if (match == null) break;
       final group0 = match.group(0);
       if (group0 == null) break;

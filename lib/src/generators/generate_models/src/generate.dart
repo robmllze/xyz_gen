@@ -12,6 +12,8 @@
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
+// import 'package:analyzer/dart/element/element.dart';
+// import 'package:analyzer/dart/element/type.dart';
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
@@ -35,6 +37,6 @@ Future<void> generateModels({
     subDirPaths: subDirPaths,
     pathPatterns: pathPatterns,
     templateFilePaths: {templateFilePath},
-    generateForFile: _generateForFile,
+    generateForFile: _generateModelForFile,
   );
 }

@@ -40,7 +40,7 @@ class ModelUser extends Model {
   String? firstName;
   String? lastName;
   String? searchableName;
-  ModelGenerateModelSettings? test;
+  String? test;
   String? type;
 
   //
@@ -130,10 +130,7 @@ class ModelUser extends Model {
             .trim()
             .nullIfEmpty
             ?.toLowerCase(),
-        test: () {
-          final a = letMap<String, dynamic>(otherData?[K_TEST]);
-          return a != null ? ModelGenerateModelSettings.fromJson(a) : null;
-        }(),
+        test: otherData?[K_TEST]?.toString().trim().nullIfEmpty,
         type: otherData?[K_TYPE]
             ?.toString()
             .trim()
@@ -163,7 +160,7 @@ class ModelUser extends Model {
         K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
         K_SEARCHABLE_NAME:
             searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
-        K_TEST: test?.toJson(),
+        K_TEST: test?.toString().trim().nullIfEmpty,
         K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
