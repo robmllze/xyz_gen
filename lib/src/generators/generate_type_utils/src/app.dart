@@ -52,7 +52,7 @@ Future<void> generateTypeUtilsApp(List<String> arguments) async {
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           "templates",
-          "default_type_utils_template.dart.md",
+          "your_type_utils_template.dart.md",
         ),
       )
       ..addOption(

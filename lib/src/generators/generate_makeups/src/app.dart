@@ -62,7 +62,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         help: "Builder template file path.",
         defaultsTo: p.join(
           toLocalSystemPathFormat(defaultTemplatesPath),
-          "default_makeup_builder_template.dart.md",
+          "your_makeup_builder_template.dart.md",
         ),
       )
       ..addOption(
@@ -71,7 +71,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         help: "Class template file path.",
         defaultsTo: p.join(
           toLocalSystemPathFormat(defaultTemplatesPath),
-          "default_makeup_class_template.dart.md",
+          "your_makeup_class_template.dart.md",
         ),
       )
       ..addOption(
@@ -80,7 +80,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         help: "Theme template file path.",
         defaultsTo: p.join(
           toLocalSystemPathFormat(defaultTemplatesPath),
-          "default_generated_theme_template.dart.md",
+          "your_generated_theme_template.dart.md",
         ),
       )
       ..addOption(
@@ -89,7 +89,7 @@ Future<void> generateMakeupsApp(List<String> arguments) async {
         help: "Generate template file path.",
         defaultsTo: p.join(
           toLocalSystemPathFormat(defaultTemplatesPath),
-          "default_makeup_generate_template.dart.md",
+          "your_makeup_generate_template.dart.md",
         ),
       )
       ..addOption(

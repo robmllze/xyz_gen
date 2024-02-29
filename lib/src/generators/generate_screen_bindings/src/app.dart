@@ -53,7 +53,7 @@ Future<void> generateScreenBindingsApp(List<String> arguments) async {
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           "templates",
-          "default_screen_bindings_template.dart.md",
+          "your_screen_bindings_template.dart.md",
         ),
       )
       ..addOption(

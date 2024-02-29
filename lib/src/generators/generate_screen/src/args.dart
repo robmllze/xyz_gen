@@ -22,7 +22,7 @@ class GenerateScreenArgs extends ValidObject {
   final String? fallbackDartSdkPath;
   final String? outputDirPath;
   final String? screenName;
-  final String? logicTemplateFilePath;
+  final String? controllerTemplateFilePath;
   final String? screenTemplateFilePath;
   final String? stateTemplateFilePath;
   final String? configurationTemplateFilePath;
@@ -47,7 +47,7 @@ class GenerateScreenArgs extends ValidObject {
     required this.fallbackDartSdkPath,
     required this.outputDirPath,
     required this.screenName,
-    required this.logicTemplateFilePath,
+    required this.controllerTemplateFilePath,
     required this.screenTemplateFilePath,
     required this.stateTemplateFilePath,
     required this.configurationTemplateFilePath,
@@ -74,12 +74,11 @@ class GenerateScreenArgs extends ValidObject {
         if (fallbackDartSdkPath != null) fallbackDartSdkPath,
         outputDirPath,
         screenName,
-        logicTemplateFilePath,
+        controllerTemplateFilePath,
         screenTemplateFilePath,
         stateTemplateFilePath,
         configurationTemplateFilePath,
-        if (isAccessibleOnlyIfLoggedInAndVerified != null)
-          isAccessibleOnlyIfLoggedInAndVerified,
+        if (isAccessibleOnlyIfLoggedInAndVerified != null) isAccessibleOnlyIfLoggedInAndVerified,
         if (isAccessibleOnlyIfLoggedIn != null) isAccessibleOnlyIfLoggedIn,
         if (isAccessibleOnlyIfLoggedOut != null) isAccessibleOnlyIfLoggedOut,
         if (isRedirectable != null) isRedirectable,

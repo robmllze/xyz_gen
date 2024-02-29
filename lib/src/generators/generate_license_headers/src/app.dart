@@ -52,7 +52,7 @@ Future<void> generateLicenseHeadersApp(List<String> arguments) async {
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           "templates",
-          "default_license_header_template.dart.md",
+          "your_license_header_template.dart.md",
         ),
       ),
     onResults: (parser, results) {

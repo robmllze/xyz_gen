@@ -53,7 +53,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           "templates",
-          "default_model_template.dart.md",
+          "your_model_template.dart.md",
         ),
       )
       ..addOption(

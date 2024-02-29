@@ -52,7 +52,7 @@ Future<void> generateExportsApp(List<String> arguments) async {
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           "templates",
-          "default_exports_template.dart.md",
+          "your_exports_template.dart.md",
         ),
       ),
     onResults: (parser, results) {

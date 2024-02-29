@@ -53,8 +53,7 @@ Future<void> generateScreen({
   final folderDirPath = p.joinAll(
     [
       outputDirPath,
-      if (path.isNotEmpty)
-        path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path,
+      if (path.isNotEmpty) path.startsWith(RegExp(r"[\\/]")) ? path.substring(1) : path,
       screenClassKey,
     ],
   );
@@ -72,8 +71,7 @@ Future<void> generateScreen({
     data,
     path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-    isAccessibleOnlyIfLoggedInAndVerified:
-        isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
@@ -128,33 +126,25 @@ Future<void> _writeScreenFile(
       })
       .nonNulls
       .join(",");
-  final b = queryParameters
-      .map((e) => e.isNotEmpty ? '"$e"' : null)
-      .nonNulls
-      .join(",");
-  final c =
-      pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
+  final b = queryParameters.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
+  final c = pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(",");
   final generateScreenBindingsArgs = [
     if (path.isNotEmpty) 'path: "$path"',
     if (title.isNotEmpty) 'defaultTitle: "$title"',
-    if (navigationControlWidget.isNotEmpty)
-      'navigationControlWidget: "$navigationControlWidget"',
+    if (navigationControlWidget.isNotEmpty) 'navigationControlWidget: "$navigationControlWidget"',
     if (makeup.isNotEmpty) 'makeup: "$makeup"',
     if (isAccessibleOnlyIfLoggedIn) "isAccessibleOnlyIfLoggedIn: true",
-    if (isAccessibleOnlyIfLoggedInAndVerified)
-      "isAccessibleOnlyIfLoggedInAndVerified: true",
+    if (isAccessibleOnlyIfLoggedInAndVerified) "isAccessibleOnlyIfLoggedInAndVerified: true",
     if (isAccessibleOnlyIfLoggedOut) "isAccessibleOnlyIfLoggedOut: true",
     if (isRedirectable) "isRedirectable: true",
-    if (internalParameters.isNotEmpty && a.isNotEmpty)
-      "internalParameters: {$a,}",
+    if (internalParameters.isNotEmpty && a.isNotEmpty) "internalParameters: {$a,}",
     if (queryParameters.isNotEmpty && b.isNotEmpty) "queryParameters: {$b,}",
     if (pathSegments.isNotEmpty && c.isNotEmpty) "pathSegments: [$c,]",
   ].join(",");
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    "___GENERATE_SCREEN_BINDINGS_ARGS___": generateScreenBindingsArgs.isNotEmpty
-        ? "$generateScreenBindingsArgs,"
-        : "",
+    "___GENERATE_SCREEN_BINDINGS_ARGS___":
+        generateScreenBindingsArgs.isNotEmpty ? "$generateScreenBindingsArgs," : "",
     "___PARTS___": partFileDirs.isNotEmpty
         ? "// @GenerateDirectives\n${partFileDirs.map((e) => e.toLowerCase().endsWith(".dart") ? e : "$e.dart").map((e) => 'part "$e";').join("\n")}"
         : "",
@@ -168,8 +158,9 @@ Future<void> _writeFile(
   String outputFilePath,
   Map<String, String> data,
 ) async {
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  print(templateFilePath);
+
+  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   final output = replaceAllData(template, data);
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
