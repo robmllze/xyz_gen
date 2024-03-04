@@ -23,21 +23,18 @@ Future<void> generateLicenseHeaders({
   required String templateFilePath,
 }) async {
   Here().debugLogStart("Starting generator. Please wait...");
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     var fileResults = await findFiles(
       dirPath,
       extensions: const {},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async =>
-          !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
     );
     final templateLangFileExt =
         p.extension(templateFilePath, 2).replaceAll(".md", "").toLowerCase();
-    fileResults =
-        fileResults.where((e) => e.extension == templateLangFileExt).toList();
+    fileResults = fileResults.where((e) => e.extension == templateLangFileExt).toList();
     for (final result in fileResults) {
       await _generateForFile(result, template);
     }
@@ -52,16 +49,15 @@ Future<void> _generateForFile(FindFileResult result, String template) async {
   final commentStarter = langFileCommentStarters[result.extension] ?? "//";
   final lines = (await readFileAsLines(filePath))!;
   if (lines.isNotEmpty) {
-    var n = 0;
-    for (n; n < lines.length; n++) {
+    for (var n = 0; n < lines.length; n++) {
       final line = lines[n].trim();
       if (line.isEmpty || !line.startsWith(commentStarter)) {
+        final withoutHeader = lines.sublist(n).join("\n");
+        final withHeader = "${template.trim()}\n\n${withoutHeader.trim()}";
+        await writeFile(filePath, withHeader);
         break;
       }
     }
-    final withoutHeader = lines.sublist(n).join("\n");
-    final withHeader = "${template.trim()}\n\n$withoutHeader";
-    await writeFile(filePath, withHeader);
   }
 }
 
