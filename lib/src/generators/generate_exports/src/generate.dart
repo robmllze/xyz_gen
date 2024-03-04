@@ -24,14 +24,13 @@ Future<void> generateExports({
 }) async {
   var cachedDirPath = "";
   // Get the template to use.
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     // Determine the output file path from dirPath.
     final folderName = p.basename(dirPath).toLowerCase();
-    final outputFileName = "all_$folderName.g.dart";
+    final outputFileName = "_all_$folderName.g.dart";
     final outputFilePath = p.join(dirPath, outputFileName);
     // Find all Dart files in dirPath.
     await findFiles(
