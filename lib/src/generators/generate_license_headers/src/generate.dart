@@ -22,15 +22,13 @@ Future<void> generateLicenseHeaders({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
     Iterable fileResults = await findFiles(
       dirPath,
       extensions: const {},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async =>
-          !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
     );
     final templateLangFileExt =
         p.extension(templateFilePath, 2).replaceAll(".md", "").toLowerCase();
@@ -51,7 +49,7 @@ Future<void> _generateForFile(FindFileResult result, String template) async {
     var n = 0;
     for (n; n < lines.length; n++) {
       final line = lines[n].trim();
-      if (line.isNotEmpty && !line.startsWith(commentStarter)) {
+      if (line.isEmpty || !line.startsWith(commentStarter)) {
         break;
       }
     }
