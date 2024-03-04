@@ -10,11 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:async';
-import 'dart:io';
-
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/file_system/physical_file_system.dart';
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
@@ -49,16 +44,15 @@ Future<void> generateFromTemplates({
   bool deleteGeneratedFiles = false,
   void Function(String filePath)? onDelete,
 }) async {
-  printYellow("Starting generator. Please wait...");
   final combinedPaths = combinePathSets([rootDirPaths, subDirPaths]);
   final collection = createAnalysisContextCollection(
     combinedPaths,
     fallbackDartSdkPath,
   );
   if (deleteGeneratedFiles) {
-    for (final path in combinedPaths) {
+    for (final dirPath in combinedPaths) {
       await deleteGeneratedDartFiles(
-        path,
+        dirPath,
         onDelete: onDelete,
         pathPatterns: pathPatterns,
       );
@@ -88,7 +82,6 @@ Future<void> generateFromTemplates({
       await generateForFile(collection, filePath, templates);
     }
   }
-  printYellow("[DONE]");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

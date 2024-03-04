@@ -22,21 +22,27 @@ Future<void> generateLicenseHeaders({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
-  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
-  for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
-    Iterable fileResults = await findFiles(
+  Here().debugLogStart("Starting generator. Please wait...");
+  final template =
+      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
+  for (final dirPath in combinedDirPaths) {
+    var fileResults = await findFiles(
       dirPath,
       extensions: const {},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async =>
+          !isGeneratedDartFilePath(filePath),
     );
     final templateLangFileExt =
         p.extension(templateFilePath, 2).replaceAll(".md", "").toLowerCase();
-    fileResults = fileResults.where((e) => e.extension == templateLangFileExt);
+    fileResults =
+        fileResults.where((e) => e.extension == templateLangFileExt).toList();
     for (final result in fileResults) {
       await _generateForFile(result, template);
     }
   }
+  Here().debugLogStop("Done!");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -55,7 +61,6 @@ Future<void> _generateForFile(FindFileResult result, String template) async {
     }
     final withoutHeader = lines.sublist(n).join("\n");
     final withHeader = "${template.trim()}\n\n$withoutHeader";
-    printGreen("Generated license header for `${getBaseName(filePath)}`");
     await writeFile(filePath, withHeader);
   }
 }

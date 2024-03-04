@@ -10,8 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-
 import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -22,10 +20,11 @@ Future<void> generateForAnnotationTest({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  final paths = combinePathSets([rootDirPaths, subDirPaths]);
+  Here().debugLogStart("Starting generator. Please wait...");
+  final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   final collection =
-      createAnalysisContextCollection(paths, fallbackDartSdkPath);
-  for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
+      createAnalysisContextCollection(combinedDirPaths, fallbackDartSdkPath);
+  for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,
       extensions: {".dart"},
@@ -36,6 +35,7 @@ Future<void> generateForAnnotationTest({
       await _generateForFile(filePath, collection);
     }
   }
+  Here().debugLogStop("Done!");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -48,10 +48,8 @@ Future<void> _generateForFile(
     filePath: filePath,
     collection: collection,
     classAnnotations: {"TestAnnotation"},
-    onAnnotatedClass: (final classAnnotationName, final className) async {
-      printGreen(
-        "[generate_from_annotation_TEST]: Found $className annotated with $classAnnotationName at `${getBaseName(filePath)}`",
-      );
+    onAnnotatedClass: (classAnnotationName, className) async {
+      // Do something with the annotated class.
     },
   );
 }

@@ -22,9 +22,11 @@ Future<void> generateExports({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
+  Here().debugLogStart("Starting generator. Please wait...");
   var cachedDirPath = "";
   // Get the template to use.
-  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template =
+      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
@@ -41,7 +43,6 @@ Future<void> generateExports({
         // Create the file if it doesn't exist.
         if (dirPath != cachedDirPath) {
           cachedDirPath = dirPath;
-          printGreen("Creating `$outputFileName`...");
           await writeFile(outputFilePath, "$template\n\n");
         }
         // Let's not add the output file to itself.
@@ -59,7 +60,6 @@ Future<void> generateExports({
           final private = fileName.startsWith("_");
           // Write the export statement to the output file if it's not private.
           if (!private) {
-            printGreen("Adding `$relativeFilePath` to `$outputFileName`...");
             await writeFile(
               outputFilePath,
               "export '$relativeFilePath';\n",
@@ -68,9 +68,9 @@ Future<void> generateExports({
             return true;
           }
         }
-        printLightGreen("Skipping `$outputFileName`...");
         return false;
       },
     );
   }
+  Here().debugLogStop("Done!");
 }

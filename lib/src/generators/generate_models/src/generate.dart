@@ -10,7 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 
@@ -29,6 +28,7 @@ Future<void> generateModels({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
+  Here().debugLogStart("Starting generator. Please wait...");
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootDirPaths: rootDirPaths,
@@ -37,4 +37,5 @@ Future<void> generateModels({
     templateFilePaths: {templateFilePath},
     generateForFile: _generateModelFromFile,
   );
+  Here().debugLogStop("Done!");
 }

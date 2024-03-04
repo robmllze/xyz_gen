@@ -10,8 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
@@ -29,6 +27,7 @@ Future<void> generateMakeups({
   required String generatedThemeTemplateFilePath,
   required String generateTemplateFilePath,
 }) async {
+  Here().debugLogStart("Starting generator. Please wait...");
   final exportFilesBuffer = <String, Set<String>>{};
   final makeupBuilderNameArgs = <(String, String)>{};
   await generateFromTemplates(
@@ -79,8 +78,8 @@ Future<void> generateMakeups({
     final outputFilePath = p.join(outputDirPath ?? "", "makeup_theme.g.dart");
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
-    printLightGreen("Generated theme class in `$outputFilePath`");
   }
+  Here().debugLogStop("Done!");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -259,7 +258,6 @@ Future<void> _writeClassFile(
   });
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);
-  printGreen("Generated makeup class in `$outputFilePath`");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -295,6 +293,5 @@ Future<void> _writeBuilderFiles(
     });
     await writeFile(outputFilePath, output);
     await fmtDartFile(outputFilePath);
-    printGreen("Generated makeup builder in `$outputFilePath`");
   }
 }

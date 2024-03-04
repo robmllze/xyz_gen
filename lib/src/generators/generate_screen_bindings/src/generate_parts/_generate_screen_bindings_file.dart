@@ -183,11 +183,6 @@ Future<Set<String>> _generateForFile(
 
     // Format the generated Dart file.
     await fmtDartFile(outputFilePath);
-
-    // Log the generated file.
-    printGreen(
-      "Generated bindings for `$className`",
-    );
   }
 
   // ---------------------------------------------------------------------------

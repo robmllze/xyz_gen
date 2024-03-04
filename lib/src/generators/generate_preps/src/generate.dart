@@ -10,8 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:io';
-
 import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -22,7 +20,10 @@ Future<void> generatePreps({
   Set<String> pathPatterns = const {},
   List<String? Function(String, String?)> prepMappers = const [],
 }) async {
-  for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
+  Here().debugLogStart("Starting generator. Please wait...");
+  // Loop through all possible directories.
+  final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
+  for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,
       extensions: {".dart"},
@@ -33,6 +34,7 @@ Future<void> generatePreps({
       await _generatePrep(filePath, prepMappers);
     }
   }
+  Here().debugLogStop("Done!");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -85,7 +87,6 @@ Future<void> _generatePrep(
     }
     if (changed) {
       await file.writeAsString(lines.join("\n"));
-      printGreen("File updated: $filePath");
     }
   } catch (_) {}
 }

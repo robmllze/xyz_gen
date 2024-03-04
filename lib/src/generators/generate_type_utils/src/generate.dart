@@ -10,7 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
@@ -24,15 +23,16 @@ Future<void> generateTypeUtils({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
+  Here().debugLogStart("Starting generator. Please wait...");
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
     pathPatterns: pathPatterns,
-    //begType: "type",
     templateFilePaths: {templateFilePath},
     generateForFile: _generateForFile,
   );
+  Here().debugLogStop("Done!");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -46,7 +46,7 @@ Future<void> _generateForFile(
     filePath: fixedFilePath,
     collection: collection,
     enumAnnotations: {"GenerateTypeUtils"},
-    onAnnotatedEnum: (final enumAnnotationName, final enumName) async {
+    onAnnotatedEnum: (enumAnnotationName, enumName) async {
       // Get the enum file name from the file path.
       final enumFileName = getBaseName(fixedFilePath);
 
@@ -73,9 +73,6 @@ Future<void> _generateForFile(
 
       // Format the generated Dart file.
       await fmtDartFile(outputFilePath);
-
-      // Log the generated file.
-      printGreen("Generated `$enumName` in `${getBaseName(outputFilePath)}`");
     },
   );
 }

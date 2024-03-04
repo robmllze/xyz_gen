@@ -10,7 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 
@@ -28,6 +27,7 @@ Future<Set<String>> generateScreenBindings({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
+  Here().debugLogStart("Starting generator. Please wait...");
   final classNames = <String>{};
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
@@ -44,5 +44,6 @@ Future<Set<String>> generateScreenBindings({
       classNames.addAll(temp);
     },
   );
+  Here().debugLogStop("Done!");
   return classNames;
 }

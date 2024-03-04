@@ -22,6 +22,7 @@ Future<void> generateScreenAccess({
   Set<String> pathPatterns = const {},
   Set<String> screenClassNames = const {},
 }) async {
+  Here().debugLogStart("Starting generator. Please wait...");
   final screenClassNames1 = Set.of(screenClassNames);
   for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
     final filePaths = await listFilePaths(dirPath);
@@ -78,7 +79,5 @@ Future<void> generateScreenAccess({
     "___GENERATED_SCREEN_ROUTES___": i,
   });
   await writeFile(outputFilePath, outputContent);
-  printGreen(
-    "Generated screen access for ${sorted.map((e) => "`$e`").joinWithLastSeparator()} in `${getBaseName(outputFilePath)}`",
-  );
+  Here().debugLogStop("Done!");
 }

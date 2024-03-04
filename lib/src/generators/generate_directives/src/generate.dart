@@ -10,7 +10,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:io';
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
@@ -22,8 +21,10 @@ Future<void> generateDirectives({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  printYellow("Starting generator. Please wait...");
-  for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
+  Here().debugLogStart("Starting generator. Please wait...");
+  // Loop through all possible directories.
+  final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
+  for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,
       extensions: {".dart"},
@@ -45,7 +46,7 @@ Future<void> generateDirectives({
         },
       );
     }
-    printYellow("[DONE]");
+    Here().debugLogStop("Done!");
   }
 }
 
@@ -80,19 +81,10 @@ Future<bool> generateDirectivesHandler(
               );
               switch (directiveType) {
                 case "part":
-                  printGreen(
-                    "Generating part file for `$relativePathToOriginal`...",
-                  );
                   return "part of '$relativePathToOriginal';";
                 case "import":
-                  printGreen(
-                    "Generating import file for `$relativePathToOriginal`...",
-                  );
                   return "// Imported by $relativePathToOriginal";
                 case "export":
-                  printGreen(
-                    "Generating export file for `$relativePathToOriginal`...",
-                  );
                   return "// Exported by $relativePathToOriginal";
                 default:
                   throw UnimplementedError(
@@ -105,12 +97,10 @@ Future<bool> generateDirectivesHandler(
         } else {
           return false;
         }
-      } else {
-        printLightGreen("Skipping `$originalFilePath`...");
       }
     }
   } catch (e) {
-    printRed(e);
+    Here().debugLogError(e);
   }
   return true;
 }

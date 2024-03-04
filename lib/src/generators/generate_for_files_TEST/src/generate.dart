@@ -19,7 +19,9 @@ Future<void> generateForFiles({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  for (final dirPath in combinePathSets([rootDirPaths, subDirPaths])) {
+  Here().debugLogStart("Starting generator. Please wait...");
+  final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
+  for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,
       extensions: {".dart"},
@@ -32,10 +34,11 @@ Future<void> generateForFiles({
       await _generateForFile(filePath);
     }
   }
+  Here().debugLogStop("Done!");
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> _generateForFile(String filePath) async {
-  printGreen("[generate_from_files_TEST]: Found `${getBaseName(filePath)}`");
+  // Do something with the file.
 }
