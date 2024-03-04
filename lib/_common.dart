@@ -20,4 +20,4 @@ export 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 export 'package:xyz_utils/non_web.dart';
 export 'package:xyz_utils/web_friendly.dart';
 
-export 'lib.dart';
+export 'src/_all_src.g.dart';
