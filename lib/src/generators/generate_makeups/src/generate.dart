@@ -69,7 +69,8 @@ Future<void> generateMakeups({
         .map((e) => (e.$1.substring(0, e.$1.length - 6), e.$1))
         .map((e) => "this.${e.$1} = ${e.$2};");
     final template =
-        (await readSnippetsFromMarkdownFile(generatedThemeTemplateFilePath)).join("\n");
+        (await readSnippetsFromMarkdownFile(generatedThemeTemplateFilePath))
+            .join("\n");
     final output = replaceData(template, {
       "___DECLARTION_PART___": declarationParts.join("\n  "),
       "___INITIALIZATION_PART___": initializationParts.join("\n    "),
@@ -129,19 +130,23 @@ Future<void> _generateMakeupFile(
     final defaultOutputDirPath = p.join(classFileDirPath, "makeups");
     final classKey = className.toSnakeCase();
     final makeupClassName = "${className}Makeup";
-    final actualClassFileName = p.join(fixedFilePath).split(p.separator).last.toLowerCase();
+    final actualClassFileName =
+        p.join(fixedFilePath).split(p.separator).last.toLowerCase();
     final desiredClassFileName = "$classKey.dart";
     final hasCorrectFileName = actualClassFileName == desiredClassFileName;
     final makeupClassFileName = "${classKey}_makeup.g.dart";
-    final rootOutputDirPath =
-        outputDirPath == null ? defaultOutputDirPath : p.join(outputDirPath, classKey);
+    final rootOutputDirPath = outputDirPath == null
+        ? defaultOutputDirPath
+        : p.join(outputDirPath, classKey);
     final templateData = {
       "___MAKEUP_CLASS_FILE___": makeupClassFileName,
       "___CLASS_FILE___": desiredClassFileName,
       "___MAKEUP_CLASS___": makeupClassName,
       "___CLASS___": className,
       "___PROPERTIES___": [
-        properties.entries.map((e) => '"${e.key}": "${e.value.nullableName}"').join(","),
+        properties.entries
+            .map((e) => '"${e.key}": "${e.value.nullableName}"')
+            .join(","),
       ].map((e) => e.isEmpty ? "" : "$e,").first,
     };
 
@@ -204,7 +209,12 @@ Future<void> _generateMakeupFile(
       switch (fieldName) {
         case "variants":
           variants.addAll(
-            fieldValue.toSetValue()?.map((e) => e.toStringValue()).nonNulls.toSet() ?? <String>{},
+            fieldValue
+                    .toSetValue()
+                    ?.map((e) => e.toStringValue())
+                    .nonNulls
+                    .toSet() ??
+                <String>{},
           );
           break;
 
@@ -235,7 +245,8 @@ Future<void> _writeClassFile(
 ) async {
   final entries = parameters.entries;
   final p0 = entries.map((e) => "${e.value.getName()} ${e.key};");
-  final p1 = entries.map((e) => "${e.value.nullable ? "" : "required "}this.${e.key},");
+  final p1 = entries
+      .map((e) => "${e.value.nullable ? "" : "required "}this.${e.key},");
   final p2 = entries.map((e) => "${e.value.nullableName} ${e.key},");
   final p3 = entries.map((e) => "${e.key}: ${e.key} ?? this.${e.key},");
   final output = replaceData(template, {
@@ -271,8 +282,9 @@ Future<void> _writeBuilderFiles(
     onNamingMakeupBuilder?.call(makeupBuilder, makeupClassName);
     if (await fileExists(outputFilePath)) continue;
     final defaultMakeupBuilder = "${classKey}_default_makeup".toCamelCase();
-    final makeupBuilderFunction =
-        shortMakeupKey == "default" ? makeupClassName : "$defaultMakeupBuilder().copyWith";
+    final makeupBuilderFunction = shortMakeupKey == "default"
+        ? makeupClassName
+        : "$defaultMakeupBuilder().copyWith";
     final output = replaceData(template, {
       ...templateData,
       "___BUILDER___": makeupBuilder,
