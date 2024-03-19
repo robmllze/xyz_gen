@@ -3,7 +3,6 @@
 ## [0.51.2]
 
 - Released @ 2024-03-19 07:39:45.217825Z
-- Updated print statements
 
 ## [0.51.0]
 
