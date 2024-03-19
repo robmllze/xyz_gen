@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.51.2]
+## [0.51.1]
 
 - Released @ 2024-03-19 07:40:31.244995Z
 - Update print statements
