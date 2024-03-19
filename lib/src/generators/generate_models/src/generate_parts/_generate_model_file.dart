@@ -19,11 +19,10 @@ Future<GenerateModel?> _generateModelFromFile(
   String inputFilePath,
   Map<String, String> templates,
 ) async {
-  var annotation = const GenerateModel();
   return analyzeModelFromFile(
     collection: collection,
     inputFilePath: inputFilePath,
-    generateModel: (classAnnotationName, annotatedClassName) async {
+    generateModel: (classAnnotationName, annotatedClassName, annotation) async {
       annotation = await generateModel(
         inputFilePath: inputFilePath,
         templates: templates,
@@ -43,6 +42,7 @@ Future<GenerateModel?> analyzeModelFromFile({
   Future<GenerateModel> Function(
     String classAnnotationName,
     String annotatedClassName,
+    GenerateModel annotation,
   )? generateModel,
 }) async {
   var annotation = const GenerateModel();
@@ -56,10 +56,12 @@ Future<GenerateModel?> analyzeModelFromFile({
       classAnnotationName,
       annotatedClassName,
     ) async {
+      print("ANNOTATED CLASS: $annotatedClassName ($classAnnotationName)");
       if (generateModel != null) {
         annotation = await generateModel(
           classAnnotationName,
           annotatedClassName,
+          annotation,
         );
       } else {
         annotation = _updateClassName(
@@ -73,6 +75,7 @@ Future<GenerateModel?> analyzeModelFromFile({
     classAnnotations: {"GenerateModel"},
     // Call for each field in the annotation.
     onClassAnnotationField: (fieldName, fieldValue) {
+      print("ANNOTATION FIELD: $fieldName = $fieldValue");
       annotation = _updateFromClassAnnotationField(
         annotation,
         fieldName,
@@ -85,6 +88,7 @@ Future<GenerateModel?> analyzeModelFromFile({
       memberName,
       memberType,
     ) {
+      print("ANNOTATED MEMBER: $memberName ($memberAnnotationName)");
       annotation = _updateFromAnnotatedMember(
         annotation,
         memberAnnotationName,
@@ -118,8 +122,7 @@ Future<GenerateModel> generateModel({
   final output = replaceAllData(
     template,
     {
-      "___SUPER_CLASS___":
-          annotation.shouldInherit ? annotatedClassName : "Model",
+      "___SUPER_CLASS___": annotation.shouldInherit ? annotatedClassName : "Model",
       "___SUPER_CONSTRUCTOR___": annotation.shouldInherit
           ? annotation.inheritanceConstructor?.nullIfEmpty != null
               ? ": super.${annotation.inheritanceConstructor}()"
@@ -129,11 +132,9 @@ Future<GenerateModel> generateModel({
       "___MODEL_ID___": annotation.className?.toLowerSnakeCase(),
       "___CLASS_FILE_NAME___": classFileName,
       ..._replacements(
-        fields:
-            annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
-        keyStringCaseType:
-            StringCaseType.values.valueOf(annotation.keyStringCase) ??
-                StringCaseType.LOWER_SNAKE_CASE,
+        fields: annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
+        keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
+            StringCaseType.LOWER_SNAKE_CASE,
         includeId: annotation.includeId,
         includeArgs: annotation.includeArgs,
       ),
@@ -168,8 +169,7 @@ GenerateModel _updateClassName(
   final a = annotatedClassName.replaceFirst(RegExp(r"^[_$]+"), "");
   final b = a != annotatedClassName ? a : "${annotatedClassName}Model";
   annotation = annotation.copyWith(
-    className:
-        annotation.className?.nullIfEmpty == null ? b : annotation.className,
+    className: annotation.className?.nullIfEmpty == null ? b : annotation.className,
   );
   return annotation;
 }
@@ -231,8 +231,7 @@ GenerateModel _updateFromClassAnnotationField(
 
     case "keyStringCase":
       return annotation.copyWith(
-        keyStringCase:
-            fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
+        keyStringCase: fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
       );
 
     case "includeId":

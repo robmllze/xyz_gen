@@ -10,30 +10,21 @@
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##.title~
 
-name: xyz_gen
-description: This package is designed to help speed up your development journey by generating boilerplate code for your projects.
-repository: https://github.com/robmllze/xyz_gen
-version: 0.51.0
+name: Publish to pub.dev
 
 ## -----------------------------------------------------------------------------
 
-environment:
-
-  sdk: ^3.0.0
-
-## -----------------------------------------------------------------------------
-
-dependencies:
-
-  xyz_gen_annotations: ^0.11.3
-  xyz_utils: ^0.46.0
-  analyzer: ^6.2.0
-  args: ^2.4.2
-  path: ^1.8.3
-  collection: ^1.18.0
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 ## -----------------------------------------------------------------------------
 
-dev_dependencies:
-
-  lints: ^3.0.0
+jobs:
+  publish:
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    # with:
+    #   working-directory: path/to/package/within/repository
