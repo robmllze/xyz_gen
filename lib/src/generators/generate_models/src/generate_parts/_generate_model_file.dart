@@ -56,7 +56,6 @@ Future<GenerateModel?> analyzeModelFromFile({
       classAnnotationName,
       annotatedClassName,
     ) async {
-      print("ANNOTATED CLASS: $annotatedClassName ($classAnnotationName)");
       if (generateModel != null) {
         annotation = await generateModel(
           classAnnotationName,
@@ -75,7 +74,6 @@ Future<GenerateModel?> analyzeModelFromFile({
     classAnnotations: {"GenerateModel"},
     // Call for each field in the annotation.
     onClassAnnotationField: (fieldName, fieldValue) {
-      print("ANNOTATION FIELD: $fieldName = $fieldValue");
       annotation = _updateFromClassAnnotationField(
         annotation,
         fieldName,
@@ -88,7 +86,6 @@ Future<GenerateModel?> analyzeModelFromFile({
       memberName,
       memberType,
     ) {
-      print("ANNOTATED MEMBER: $memberName ($memberAnnotationName)");
       annotation = _updateFromAnnotatedMember(
         annotation,
         memberAnnotationName,

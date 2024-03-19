@@ -29,7 +29,7 @@ Future<void> basicCmdAppHelper<T extends ValidObject>({
     try {
       results = parser.parse(arguments);
     } catch (e) {
-      printRed("[Error: Failed to parse arguments] $e");
+      Here().debugLogError("Failed to parse arguments $e");
       return;
     }
     if (results["help"]) {
@@ -38,12 +38,12 @@ Future<void> basicCmdAppHelper<T extends ValidObject>({
     }
     final args = onResults(parser, results);
     if (!args.valid) {
-      printRed("You must provide all required options.");
+      Here().debugLogError("You must provide all required options.");
       printUsage(appTitle, parser);
       exit(1);
     }
     await action(parser, results, args);
   } catch (e) {
-    printRed("Error: $e");
+    Here().debugLogError(e);
   }
 }
