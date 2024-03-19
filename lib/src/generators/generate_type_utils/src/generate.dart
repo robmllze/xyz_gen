@@ -52,7 +52,7 @@ Future<void> _generateForFile(
 
       // Replace placeholders with the actual values.
       final template = templates.values.first;
-      final output = replaceAllData(
+      final output = replaceData(
         template,
         {
           "___ENUM_FILE_NAME___": enumFileName,

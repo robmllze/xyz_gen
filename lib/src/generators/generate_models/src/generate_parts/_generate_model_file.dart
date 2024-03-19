@@ -119,7 +119,7 @@ Future<GenerateModel> generateModel({
 
   // Replace placeholders with the actual values.
   final template = templates.values.first;
-  final output = replaceAllData(
+  final output = replaceData(
     template,
     {
       "___SUPER_CLASS___": annotation.shouldInherit ? annotatedClassName : "Model",
