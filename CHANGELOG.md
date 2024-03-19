@@ -2,7 +2,7 @@
 
 ## [0.51.1]
 
-- Released @ 2024-03-19 07:40:31.244995Z
+- Released @ 2024-03-19 07:41:11.803650Z
 - Update print statements
 
 ## [0.51.0]
