@@ -10,12 +10,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/constant/value.dart';
-import 'package:path/path.dart' as p;
+import "package:analyzer/dart/constant/value.dart";
+import "package:path/path.dart" as p;
 
-import '/_common.dart';
+import "/_common.dart";
 
-part 'generate_parts/_generate_screen_bindings_file.dart';
+part "generate_parts/_generate_screen_bindings_file.dart";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

@@ -7,8 +7,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'src/analyze.dart';
-export 'src/app.dart';
-export 'src/generate.dart';
-export 'src/map_with.dart';
-export 'src/type_mappers/loose_type_mappers.dart';
+export "src/analyze.dart";
+export "src/app.dart";
+export "src/generate.dart";
+export "src/map_with.dart";
+export "src/type_mappers/loose_type_mappers.dart";

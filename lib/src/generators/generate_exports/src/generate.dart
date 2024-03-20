@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
+import "package:path/path.dart" as p;
 
-import '/_common.dart';
+import "/_common.dart";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,12 +21,12 @@ Future<void> generateExports({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
+  bool doubleQuotes = true,
 }) async {
   Here().debugLogStart("Starting generator. Please wait...");
   var cachedDirPath = "";
   // Get the template to use.
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
@@ -60,9 +60,10 @@ Future<void> generateExports({
           final private = fileName.startsWith("_");
           // Write the export statement to the output file if it's not private.
           if (!private) {
+            final q = doubleQuotes ? '"' : "'";
             await writeFile(
               outputFilePath,
-              "export '$relativeFilePath';\n",
+              "export $q$relativeFilePath$q;\n",
               append: true,
             );
             return true;

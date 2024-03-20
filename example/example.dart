@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
+import "package:xyz_gen_annotations/xyz_gen_annotations.dart";
 
-part '_model_user.g.dart';
+part "_model_user.g.dart";
 
 // -----------------------------------------------------------------------------
 

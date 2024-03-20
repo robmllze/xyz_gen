@@ -71,12 +71,19 @@ Navigate to your project directory by running `cd your/project/path` in your ter
 ##### On macOS and Linux:
 
 ```bash
-rm -rf ___generators/ && git clone https://github.com/robmllze/___generators.git && dart pub get && rm -rf ___generators/.git/
+rm -rf ___generators/
+git clone https://github.com/robmllze/___generators.git
+dart pub get -C ___generators
+rm -rf ___generators/.git
 ```
+
 ##### On Windows:
 
-```cmd
-git clone https://github.com/robmllze/___generators.git && rmdir /s /q ___generators/.git/
+```bash
+rmdir /s /q ___generators/
+git clone https://github.com/robmllze/___generators.git
+dart pub get -C ___generators
+rmdir /s /q ___generators/.git
 ```
 
 This will clone the generator scripts into your project directory and remove the `.git` directory, effectively detaching it from version control so that you can modify it as needed.
@@ -95,9 +102,10 @@ dart ___generators/generate_models.dart
 
 Replace `generate_models.dart` with the specific generator you wish to run, for example, `dart generate_exports.dart`.
 
-#### 4. Enhance Workflow Efficiency:
+#### 4. Enhance Workflow Efficiency with VS Code Extensions:
 
-Consider setting up keyboard shortcuts or single-click actions to quickly run the generators. For instance, in Visual Studio Code, you can configure tasks to execute the generators with ease. Learn more: https://code.visualstudio.com/docs/editor/tasks.
+You can also install the [xyz-run-script](https://marketplace.visualstudio.com/items?itemName=robmllze.xyz-run-script) extension to run the generators with a right click or use the [xyz-run-tasks](https://marketplace.visualstudio.com/items?itemName=robmllze.xyz-run-tasks) extension to run the generators via the explorer menu.
+
 ## Contributing
 
 Contributions are welcome. Here are a few ways you can help:
@@ -109,7 +117,7 @@ Contributions are welcome. Here are a few ways you can help:
 
 ## License
 
-This package is released under the MIT License.
+This project is released under the MIT License. See [LICENSE](https://raw.githubusercontent.com/robmllze/xyz_gen/main/LICENSE) for more information.
 
 ## Contact
 

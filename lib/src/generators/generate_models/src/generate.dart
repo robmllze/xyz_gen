@@ -10,14 +10,14 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/constant/value.dart';
-import 'package:path/path.dart' as p;
+import "package:analyzer/dart/constant/value.dart";
+import "package:path/path.dart" as p;
 
-import '/_common.dart';
+import "/_common.dart";
 
-part 'generate_parts/_generate_model_file.dart';
-part 'generate_parts/_helpers.dart';
-part 'generate_parts/_replacements.dart';
+part "generate_parts/_generate_model_file.dart";
+part "generate_parts/_helpers.dart";
+part "generate_parts/_replacements.dart";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

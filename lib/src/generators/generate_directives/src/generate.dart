@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
+import "package:path/path.dart" as p;
 
-import '/_common.dart';
+import "/_common.dart";
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -60,7 +60,7 @@ Future<bool> generateDirectivesHandler(
 ) async {
   try {
     final originalFilePath = Uri.file(filePath);
-    final originalDirPath = originalFilePath.resolve('.').toFilePath();
+    final originalDirPath = originalFilePath.resolve(".").toFilePath();
     final directiveRegExp = RegExp("^(\\w+)\\s+['\"](.+)['\"];\$");
     for (var n = startIndex + 1; n < lines.length; n++) {
       final line = lines[n].trim();
