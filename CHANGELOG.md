@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.52.0]
+
+- Released @ 2024-03-20 02:47:54.202507Z
+- Misc small updates
+
 ## [0.51.2]
 
 - Released @ 2024-03-20 02:25:05.774018Z
