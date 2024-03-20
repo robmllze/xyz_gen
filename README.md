@@ -94,7 +94,7 @@ Once cloned, you can modify the generator scripts or templates according to your
 
 #### 3. Run the Generator Scripts:
 
-Execute any of the generator scripts by navigating to the cloned directory and running:
+Execute any of the generator scripts from the root of your project directory:
 
 ```bash
 dart ___generators/generate_models.dart
