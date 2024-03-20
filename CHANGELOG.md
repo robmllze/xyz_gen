@@ -3,7 +3,7 @@
 ## [0.52.0]
 
 - Released @ 2024-03-20 02:50:03.622202Z
-- Small updates
+- Small update
 
 ## [0.51.2]
 
