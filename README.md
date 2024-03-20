@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/xyz_gen.svg)](https://pub.dev/packages/xyz_gen)
 
-This package is designed to help speed up your development journey by generating boilerplate code for your projects.
+This package contains a set of generators to help you with your Flutter projects.
 
 It comes with a set of generators that can be used as-is, or modified to suit your needs. Some generators use templates to create files, while others use hard-coded logic to generate or modify existing files. These templates can be modified to suit your needs and can be found in the `templates` folder.
 
