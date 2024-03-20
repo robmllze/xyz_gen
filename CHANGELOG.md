@@ -2,8 +2,9 @@
 
 ## [0.51.1]
 
-- Released @ 2024-03-19 07:41:11.803650Z
+- Released @ 2024-03-20 02:24:21.201287Z
 - Update print statements
+- Update readme
 
 ## [0.51.0]
 
