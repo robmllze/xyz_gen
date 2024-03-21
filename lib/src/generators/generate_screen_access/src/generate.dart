@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -37,7 +37,7 @@ Future<void> generateScreenAccess({
               : screenFileKey;
           final contents = await readFile(filePath);
           if (contents != null) {
-            final x = RegExp("const +_CLASS += +[\"'](\\w+)[\"'];");
+            final x = RegExp(r'''const +_CLASS += +["'](\w+)["'];''');
             final match = x.firstMatch(contents);
             if (match != null && match.groupCount == 1) {
               final screenClassName = match.group(1);

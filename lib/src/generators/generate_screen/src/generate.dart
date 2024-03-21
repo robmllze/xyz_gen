@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -121,22 +121,22 @@ Future<void> _writeScreenFile(
       .map((e) {
         final k = e.key;
         final v = e.value;
-        return k.isNotEmpty && v.isNotEmpty ? '"$k": "$v"' : null;
+        return k.isNotEmpty && v.isNotEmpty ? "'$k': '$v'" : null;
       })
       .nonNulls
       .join(',');
   final b = queryParameters
-      .map((e) => e.isNotEmpty ? '"$e"' : null)
+      .map((e) => e.isNotEmpty ? "'$e'" : null)
       .nonNulls
       .join(',');
   final c =
-      pathSegments.map((e) => e.isNotEmpty ? '"$e"' : null).nonNulls.join(',');
+      pathSegments.map((e) => e.isNotEmpty ? "'$e'" : null).nonNulls.join(',');
   final generateScreenBindingsArgs = [
-    if (path.isNotEmpty) 'path: "$path"',
-    if (title.isNotEmpty) 'defaultTitle: "$title"',
+    if (path.isNotEmpty) "path: '$path'",
+    if (title.isNotEmpty) "defaultTitle: '$title'",
     if (navigationControlWidget.isNotEmpty)
-      'navigationControlWidget: "$navigationControlWidget"',
-    if (makeup.isNotEmpty) 'makeup: "$makeup"',
+      "navigationControlWidget: '$navigationControlWidget'",
+    if (makeup.isNotEmpty) "makeup: '$makeup'",
     if (isAccessibleOnlyIfLoggedIn) 'isAccessibleOnlyIfLoggedIn: true',
     if (isAccessibleOnlyIfLoggedInAndVerified)
       'isAccessibleOnlyIfLoggedInAndVerified: true',
@@ -153,7 +153,7 @@ Future<void> _writeScreenFile(
         ? '$generateScreenBindingsArgs,'
         : '',
     '___PARTS___': partFileDirs.isNotEmpty
-        ? "// @GenerateDirectives\n${partFileDirs.map((e) => e.toLowerCase().endsWith(".dart") ? e : "$e.dart").map((e) => 'part "$e";').join("\n")}"
+        ? '// @GenerateDirectives\n${partFileDirs.map((e) => e.toLowerCase().endsWith('.dart') ? e : '$e.dart').map((e) => "part '$e';'").join('\n')}'
         : '',
   });
 }

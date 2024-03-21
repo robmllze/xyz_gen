@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -220,7 +220,7 @@ String _ip0(Map<String, String> internalParameters) {
     final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return [
       '/// Key corresponding to the value `$fieldName`',
-      'static const $fieldK = "$fieldKey";',
+      "static const $fieldK = '$fieldKey';",
       '/// Returns the **internal parameter** with the key `$fieldKey`',
       '/// or [$fieldK].',
       '$fieldType get $fieldName => super.arg<$t>($fieldK)$nullCheck;',
@@ -266,7 +266,7 @@ String _qp0(Set<String> queryParameters) {
     return [
       '/// Key corresponding to the value `$fieldName`',
       // ignore: unnecessary_string_escapes
-      'static const $fieldK = \"$fieldKey\";',
+      "static const $fieldK = '$fieldKey';",
       '/// Returns the URI **query parameter** with the key `$fieldKey`',
       '/// or [$fieldK].',
       'String$nullableCheck get $fieldName => super.arg<String>($fieldK)$nullCheck;',

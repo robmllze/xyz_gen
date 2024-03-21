@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -49,14 +49,14 @@ Future<void> generateExports({
         if (filePath != outputFilePath) {
           // Get the relative file path.
           var relativeFilePath = filePath.replaceFirst(dirPath, '');
-          // Remove the initial "/" from the relative file path if present.
+          // Remove the initial '/' from the relative file path if present.
           relativeFilePath = relativeFilePath.startsWith(p.separator)
               ? relativeFilePath.substring(1)
               : relativeFilePath;
           relativeFilePath = toUnixSystemPathFormat(relativeFilePath);
           // Get the file name from the file path.
           final fileName = p.basename(filePath);
-          // Check if the file is private / if it starts with "_".
+          // Check if the file is private / if it starts with '_'.
           final private = fileName.startsWith('_');
           // Write the export statement to the output file if it's not private.
           if (!private) {

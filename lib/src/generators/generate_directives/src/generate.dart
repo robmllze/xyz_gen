@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -61,7 +61,7 @@ Future<bool> generateDirectivesHandler(
   try {
     final originalFilePath = Uri.file(filePath);
     final originalDirPath = originalFilePath.resolve('.').toFilePath();
-    final directiveRegExp = RegExp("^(\\w+)\\s+['\"](.+)['\"];\$");
+    final directiveRegExp = RegExp('^(\\w+)\\s+[\'"](.+)[\'"];\$');
     for (var n = startIndex + 1; n < lines.length; n++) {
       final line = lines[n].trim();
       final match = directiveRegExp.firstMatch(line);

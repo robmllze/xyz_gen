@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -50,7 +50,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
       final subtypes = e
           .group(2)!
           .split(','); // e.g. ["String", "int"] in "List<String,int>"
-      final nullableSymbol = e.group(5) ?? ''; // "?" or ""
+      final nullableSymbol = e.group(5) ?? ''; // '?' or ""
       final index = e.start; // index in [input] where the match starts
       return MapEntry(
         index,

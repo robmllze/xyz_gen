@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -145,7 +145,7 @@ Future<void> _generateMakeupFile(
       '___CLASS___': className,
       '___PROPERTIES___': [
         properties.entries
-            .map((e) => '"${e.key}": "${e.value.nullableName}"')
+            .map((e) => "'${e.key}': '${e.value.nullableName}'")
             .join(','),
       ].map((e) => e.isEmpty ? '' : '$e,').first,
     };
@@ -246,14 +246,14 @@ Future<void> _writeClassFile(
   final entries = parameters.entries;
   final p0 = entries.map((e) => '${e.value.getName()} ${e.key};');
   final p1 = entries
-      .map((e) => "${e.value.nullable ? "" : "required "}this.${e.key},");
+      .map((e) => '${e.value.nullable ? '' : 'required '}this.${e.key},');
   final p2 = entries.map((e) => '${e.value.nullableName} ${e.key},');
   final p3 = entries.map((e) => '${e.key}: ${e.key} ?? this.${e.key},');
   final output = replaceData(template, {
     ...templateData,
     '___P0___': p0.isNotEmpty ? p0.join('\n') : '// TODO: Add parameters here.',
-    '___P1___': p1.isNotEmpty ? "{${p1.join("\n")}}" : '',
-    '___P2___': p2.isNotEmpty ? "{${p2.join("\n")}}" : '',
+    '___P1___': p1.isNotEmpty ? '{${p1.join('\n')}}' : '',
+    '___P2___': p2.isNotEmpty ? '{${p2.join('\n')}}' : '',
     '___P3___': p3.join('\n'),
   });
   await writeFile(outputFilePath, output);

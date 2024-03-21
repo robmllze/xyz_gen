@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -37,7 +37,7 @@ Map<String, String> _replacements({
 
   final p = <Iterable>[
     // ___P0___
-    allIds.map((e) => 'static const ${allKeyConsts[e]} = "${allKeys[e]}";'),
+    allIds.map((e) => "static const ${allKeyConsts[e]} = '${allKeys[e]}';"),
     // ___P1___
     entries.map((e) => '${e.value!.nullableName} ${e.key};'),
     // ___P2___
@@ -45,14 +45,14 @@ Map<String, String> _replacements({
       if (id != null)
         () {
           assert(id.nullableName == 'String?');
-          return "${id.nullable ? "" : "required "}${id.getName()} id,";
+          return '${id.nullable ? '' : 'required '}${id.getName()} id,';
         }(),
       if (args != null)
         () {
-          return "${args.nullable ? "" : "required "}${args.getName()} args,";
+          return '${args.nullable ? '' : 'required '}${args.getName()} args,';
         }(),
       ...entries
-          .map((e) => "${e.value!.nullable ? "" : "required "}this.${e.key},"),
+          .map((e) => '${e.value!.nullable ? '' : 'required '}this.${e.key},'),
     ],
     // ___P3___
     [
