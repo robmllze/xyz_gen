@@ -220,7 +220,7 @@ String _ip0(Map<String, String> internalParameters) {
     final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return [
       '/// Key corresponding to the value `$fieldName`',
-      'static const $fieldK = \"$fieldKey\";',
+      'static const $fieldK = "$fieldKey";',
       '/// Returns the **internal parameter** with the key `$fieldKey`',
       '/// or [$fieldK].',
       '$fieldType get $fieldName => super.arg<$t>($fieldK)$nullCheck;',
@@ -235,7 +235,7 @@ String _ip1(Map<String, String> internalParameters) {
     final fieldName = e.key;
     final fieldType = e.value;
     final required = fieldType.endsWith('?') ? '' : 'required ';
-    return "$required$fieldType $fieldName,";
+    return '$required$fieldType $fieldName,';
   }).toList()
     ..sort();
   return a.isNotEmpty ? a.join('\n') : '';
@@ -265,6 +265,7 @@ String _qp0(Set<String> queryParameters) {
     final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return [
       '/// Key corresponding to the value `$fieldName`',
+      // ignore: unnecessary_string_escapes
       'static const $fieldK = \"$fieldKey\";',
       '/// Returns the URI **query parameter** with the key `$fieldKey`',
       '/// or [$fieldK].',
