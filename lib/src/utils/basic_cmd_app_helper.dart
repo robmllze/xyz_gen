@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:args/args.dart";
+import 'package:args/args.dart';
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -29,16 +29,16 @@ Future<void> basicCmdAppHelper<T extends ValidObject>({
     try {
       results = parser.parse(arguments);
     } catch (e) {
-      Here().debugLogError("Failed to parse arguments $e");
+      Here().debugLogError('Failed to parse arguments $e');
       return;
     }
-    if (results["help"]) {
+    if (results['help']) {
       printUsage(appTitle, parser);
       return;
     }
     final args = onResults(parser, results);
     if (!args.valid) {
-      Here().debugLogError("You must provide all required options.");
+      Here().debugLogError('You must provide all required options.');
       printUsage(appTitle, parser);
       exit(1);
     }

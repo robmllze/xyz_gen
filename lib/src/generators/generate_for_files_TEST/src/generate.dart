@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -19,12 +19,12 @@ Future<void> generateForFiles({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  Here().debugLogStart("Starting generator. Please wait...");
+  Here().debugLogStart('Starting generator. Please wait...');
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,
-      extensions: {".dart"},
+      extensions: {'.dart'},
       pathPatterns: pathPatterns,
       onFileFound: (_, __, filePath) async =>
           !isGeneratedDartFilePath(filePath),
@@ -34,7 +34,7 @@ Future<void> generateForFiles({
       await _generateForFile(filePath);
     }
   }
-  Here().debugLogStop("Done!");
+  Here().debugLogStop('Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

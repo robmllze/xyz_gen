@@ -10,12 +10,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:analyzer/dart/constant/value.dart";
-import "package:path/path.dart" as p;
+import 'package:analyzer/dart/constant/value.dart';
+import 'package:path/path.dart' as p;
 
-import "/_common.dart";
+import '/_common.dart';
 
-part "generate_parts/_generate_screen_bindings_file.dart";
+part 'generate_parts/_generate_screen_bindings_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -27,7 +27,7 @@ Future<Set<String>> generateScreenBindings({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  Here().debugLogStart("Starting generator. Please wait...");
+  Here().debugLogStart('Starting generator. Please wait...');
   final classNames = <String>{};
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
@@ -44,6 +44,6 @@ Future<Set<String>> generateScreenBindings({
       classNames.addAll(temp);
     },
   );
-  Here().debugLogStop("Done!");
+  Here().debugLogStop('Done!');
   return classNames;
 }

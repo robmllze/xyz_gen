@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../generate.dart";
+part of '../generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -54,7 +54,7 @@ Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
     parameterKeys.map(
       (e) => MapEntry(
         e,
-        "K_${e.toSnakeCase().toUpperCase()}",
+        'K_${e.toSnakeCase().toUpperCase()}',
       ),
     ),
   );

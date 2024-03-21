@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../type_codes.dart";
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -40,7 +40,7 @@ class TypeCodeMapper {
       fieldName: fieldName,
       genericTypeCode: genericTypeCode,
     );
-    if (result == "#x0") {
+    if (result == '#x0') {
       result = this.mapObject(
         fieldName: fieldName,
         typeCode: genericTypeCode,
@@ -58,7 +58,7 @@ class TypeCodeMapper {
     required String typeCode,
   }) {
     final formula =
-        _buildObjectMapper(typeCode, fieldName, this.mappers) ?? "#x0";
+        _buildObjectMapper(typeCode, fieldName, this.mappers) ?? '#x0';
     return formula;
   }
 
@@ -76,7 +76,7 @@ class TypeCodeMapper {
     // Use the typeData to build a mapping formula.
     var formula = _buildCollectionMapper(typeData, this.mappers);
     // Insert the field name into the formula.
-    formula = formula.replaceFirst("p0", fieldName);
+    formula = formula.replaceFirst('p0', fieldName);
     return formula;
   }
 }

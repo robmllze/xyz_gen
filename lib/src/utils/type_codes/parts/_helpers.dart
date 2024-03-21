@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../type_codes.dart";
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -39,8 +39,8 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
 
   String? decompose(String input) {
     // Find all collection type expressions from the input.
-    const A = r"[\w\*\|\?]+";
-    const B = r"\b(" "$A" r")\<((" "$A" r")(\," "$A" r")*)\>(\?)?";
+    const A = r'[\w\*\|\?]+';
+    const B = r'\b(' '$A' r')\<((' '$A' r')(\,' '$A' r')*)\>(\?)?';
     final matches = RegExp(B).allMatches(input);
 
     // Map each map to its primary type and its subtypes.
@@ -49,8 +49,8 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
       final shortType = e.group(1)!; // // e.g. "List"
       final subtypes = e
           .group(2)!
-          .split(","); // e.g. ["String", "int"] in "List<String,int>"
-      final nullableSymbol = e.group(5) ?? ""; // "?" or ""
+          .split(','); // e.g. ["String", "int"] in "List<String,int>"
+      final nullableSymbol = e.group(5) ?? ''; // "?" or ""
       final index = e.start; // index in [input] where the match starts
       return MapEntry(
         index,
@@ -68,7 +68,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
     // Replace processed parts with placeholders.
     for (final e in mappingEntries) {
       final first = e.value.first;
-      input = input.replaceFirst(first, "*" * first.length);
+      input = input.replaceFirst(first, '*' * first.length);
     }
     return mappingEntries.isNotEmpty ? input : null;
   }
@@ -76,7 +76,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
   // Decompose the typeCode until complete.
   {
     // [decompose] doesn't take spaces into account.
-    String? decomposed = typeCode.replaceAll(" ", "");
+    String? decomposed = typeCode.replaceAll(' ', '');
     do {
       decomposed = decompose(decomposed!);
     } while (decomposed != null);
@@ -128,23 +128,23 @@ TTypeMappers filterMappersByType(
 /// - LinkedHashMap
 String toGenericTypeCode(String typeCode) {
   const TRANSFORMATIONS = {
-    "Map": "Map<dynamic, dynamic>",
-    "List": "List<dynamic>",
-    "Set": "Set<dynamic>",
-    "Iterable": "Iterable<dynamic>",
-    "Queue": "Queue<dynamic>",
-    "LinkedList": "LinkedList<dynamic>",
-    "HashSet": "HashSet<dynamic>",
-    "LinkedHashSet": "LinkedHashSet<dynamic>",
-    "HashMap": "HashMap<dynamic, dynamic>",
-    "LinkedHashMap": "LinkedHashMap<dynamic, dynamic>",
+    'Map': 'Map<dynamic, dynamic>',
+    'List': 'List<dynamic>',
+    'Set': 'Set<dynamic>',
+    'Iterable': 'Iterable<dynamic>',
+    'Queue': 'Queue<dynamic>',
+    'LinkedList': 'LinkedList<dynamic>',
+    'HashSet': 'HashSet<dynamic>',
+    'LinkedHashSet': 'LinkedHashSet<dynamic>',
+    'HashMap': 'HashMap<dynamic, dynamic>',
+    'LinkedHashMap': 'LinkedHashMap<dynamic, dynamic>',
   };
 
   for (final key in TRANSFORMATIONS.keys) {
     // This regex looks for the key (like "Map") that is not immediately
     // followed by a "<", but it will also match if the key is followed by "|"
     // and any text.
-    final regex = RegExp(r"\b" + key + r"\b(?![<|])");
+    final regex = RegExp(r'\b' + key + r'\b(?![<|])');
     typeCode = typeCode.replaceAll(regex, TRANSFORMATIONS[key]!);
   }
   return typeCode;

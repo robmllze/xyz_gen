@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../type_codes.dart";
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -31,38 +31,38 @@ String _buildCollectionMapper(
   Iterable<List<String>> typeData,
   TTypeMappers mappingFormulas,
 ) {
-  var output = "#x0";
+  var output = '#x0';
   // Loop through type data elements.
   for (final element in typeData) {
     final collectionEvent = CollectionMapperEvent().._ltypes = element.skip(2);
     final pLength = collectionEvent._ltypes.length;
     collectionEvent
-      .._lhashes = Iterable.generate(pLength, (n) => n).map((n) => "#p$n")
-      .._lparams = Iterable.generate(pLength, (n) => n).map((n) => "p$n")
-      .._largs = Iterable.generate(pLength, (n) => n).map((n) => "final p$n")
+      .._lhashes = Iterable.generate(pLength, (n) => n).map((n) => '#p$n')
+      .._lparams = Iterable.generate(pLength, (n) => n).map((n) => 'p$n')
+      .._largs = Iterable.generate(pLength, (n) => n).map((n) => 'final p$n')
       .._type = element[1];
-    final argIdMatch = RegExp(r"#x(\d+)").firstMatch(output);
+    final argIdMatch = RegExp(r'#x(\d+)').firstMatch(output);
     collectionEvent._nameIndex =
         argIdMatch != null && argIdMatch.groupCount > 0 //
             ? int.tryParse(argIdMatch.group(1)!)
             : null;
-    final xHash = "#x${collectionEvent._nameIndex}";
+    final xHash = '#x${collectionEvent._nameIndex}';
     final formula = _buildMapper(collectionEvent, mappingFormulas);
     if (formula != null) {
       output = output.replaceFirst(xHash, formula);
     } else {
-      assert(false, "Collection type-mapper not found!");
+      assert(false, 'Collection type-mapper not found!');
     }
     // Loop through object types.
     for (var n = 0; n < pLength; n++) {
       final objectEvent = ObjectMapperEvent()
         .._nameIndex = n
         .._type = collectionEvent._ltypes.elementAt(n);
-      final pHash = "#p$n";
+      final pHash = '#p$n';
 
       // If the object type is the next type data element.
-      if (objectEvent.type?[0] == "*") {
-        final xHash = "#x$n";
+      if (objectEvent.type?[0] == '*') {
+        final xHash = '#x$n';
         output = output.replaceFirst(pHash, xHash);
       }
       // If the object type is something else like num, int, double, bool or
@@ -72,7 +72,7 @@ String _buildCollectionMapper(
         if (formula != null) {
           output = output.replaceFirst(pHash, formula);
         } else {
-          assert(false, "Object type-mapper not found!");
+          assert(false, 'Object type-mapper not found!');
         }
       }
     }

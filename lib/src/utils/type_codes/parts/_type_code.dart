@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../type_codes.dart";
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -32,7 +32,7 @@ class TypeCode {
   //
 
   static bool isNullable(String value) {
-    return value.endsWith("?") || value == "dynamic";
+    return value.endsWith('?') || value == 'dynamic';
   }
 
   //
@@ -53,7 +53,7 @@ class TypeCode {
 
   String get nullableName {
     final name = this.getName();
-    return isNullable(name) ? name : "$name?";
+    return isNullable(name) ? name : '$name?';
   }
 
   //
@@ -61,11 +61,11 @@ class TypeCode {
   //
 
   static String _typeCodeToName(String value) {
-    var temp = value.replaceAll(" ", "");
-    temp = temp.split("-").last;
-    temp = temp.replaceAll("|let", "");
+    var temp = value.replaceAll(' ', '');
+    temp = temp.split('-').last;
+    temp = temp.replaceAll('|let', '');
     while (true) {
-      final match = RegExp(r"\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>")
+      final match = RegExp(r'\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>')
           .firstMatch(temp);
       if (match == null) break;
       final group0 = match.group(0);
@@ -73,14 +73,14 @@ class TypeCode {
       temp = temp.replaceAll(
         group0,
         group0
-            .replaceAll("|clean", "")
-            .replaceAll("?", "")
-            .replaceAll("<", "[")
-            .replaceAll(">", "]")
-            .replaceAll(",", "+"),
+            .replaceAll('|clean', '')
+            .replaceAll('?', '')
+            .replaceAll('<', '[')
+            .replaceAll('>', ']')
+            .replaceAll(',', '+'),
       );
     }
-    return temp.replaceAll("[", "<").replaceAll("]", ">").replaceAll("+", ", ");
+    return temp.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
   }
 
   //

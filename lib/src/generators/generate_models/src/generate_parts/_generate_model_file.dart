@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../generate.dart";
+part of '../generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -71,7 +71,7 @@ Future<GenerateModel?> analyzeModelFromFile({
       didFindAnnotation = true;
     },
     // Allow the following class annotations:
-    classAnnotations: {"GenerateModel"},
+    classAnnotations: {'GenerateModel'},
     // Call for each field in the annotation.
     onClassAnnotationField: (fieldName, fieldValue) {
       annotation = _updateFromClassAnnotationField(
@@ -94,7 +94,7 @@ Future<GenerateModel?> analyzeModelFromFile({
       );
     },
     // Allow the following member annotations.
-    memberAnnotations: {"Field"},
+    memberAnnotations: {'Field'},
   );
   return didFindAnnotation ? annotation : null;
 }
@@ -119,16 +119,16 @@ Future<GenerateModel> generateModel({
   final output = replaceData(
     template,
     {
-      "___SUPER_CLASS___":
-          annotation.shouldInherit ? annotatedClassName : "Model",
-      "___SUPER_CONSTRUCTOR___": annotation.shouldInherit
+      '___SUPER_CLASS___':
+          annotation.shouldInherit ? annotatedClassName : 'Model',
+      '___SUPER_CONSTRUCTOR___': annotation.shouldInherit
           ? annotation.inheritanceConstructor?.nullIfEmpty != null
-              ? ": super.${annotation.inheritanceConstructor}()"
-              : ""
-          : "",
-      "___CLASS___": annotation.className,
-      "___MODEL_ID___": annotation.className?.toLowerSnakeCase(),
-      "___CLASS_FILE_NAME___": classFileName,
+              ? ': super.${annotation.inheritanceConstructor}()'
+              : ''
+          : '',
+      '___CLASS___': annotation.className,
+      '___MODEL_ID___': annotation.className?.toLowerSnakeCase(),
+      '___CLASS_FILE_NAME___': classFileName,
       ..._replacements(
         fields:
             annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
@@ -145,7 +145,7 @@ Future<GenerateModel> generateModel({
   final outputFilePath = () {
     final classFileDirPath = getDirPath(inputFilePath);
     final classKey = getFileNameWithoutExtension(classFileName);
-    final outputFileName = "_$classKey.g.dart";
+    final outputFileName = '_$classKey.g.dart';
     return p.join(classFileDirPath, outputFileName);
   }();
 
@@ -166,8 +166,8 @@ GenerateModel _updateClassName(
   GenerateModel annotation,
   String annotatedClassName,
 ) {
-  final a = annotatedClassName.replaceFirst(RegExp(r"^[_$]+"), "");
-  final b = a != annotatedClassName ? a : "${annotatedClassName}Model";
+  final a = annotatedClassName.replaceFirst(RegExp(r'^[_$]+'), '');
+  final b = a != annotatedClassName ? a : '${annotatedClassName}Model';
   annotation = annotation.copyWith(
     className:
         annotation.className?.nullIfEmpty == null ? b : annotation.className,
@@ -183,7 +183,7 @@ GenerateModel _updateFromAnnotatedMember(
   String memberName,
   String memberType,
 ) {
-  if (memberAnnotationName == "Field") {
+  if (memberAnnotationName == 'Field') {
     annotation = annotation.copyWith(
       fields: {
         ...?annotation.fields,
@@ -202,12 +202,12 @@ GenerateModel _updateFromClassAnnotationField(
   DartObject fieldValue,
 ) {
   switch (fieldName) {
-    case "className":
+    case 'className':
       return annotation.copyWith(
-        className: fieldValue.toStringValue() ?? "",
+        className: fieldValue.toStringValue() ?? '',
       );
 
-    case "fields":
+    case 'fields':
       return annotation.copyWith(
         fields: {
           ...?annotation.fields,
@@ -221,27 +221,27 @@ GenerateModel _updateFromClassAnnotationField(
         },
       );
 
-    case "shouldInherit":
+    case 'shouldInherit':
       return annotation.copyWith(
         shouldInherit: fieldValue.toBoolValue() ?? false,
       );
-    case "inheritanceConstructor":
+    case 'inheritanceConstructor':
       return annotation.copyWith(
-        inheritanceConstructor: fieldValue.toStringValue() ?? "",
+        inheritanceConstructor: fieldValue.toStringValue() ?? '',
       );
 
-    case "keyStringCase":
+    case 'keyStringCase':
       return annotation.copyWith(
         keyStringCase:
             fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
       );
 
-    case "includeId":
+    case 'includeId':
       return annotation.copyWith(
         includeId: fieldValue.toBoolValue() ?? true,
       );
 
-    case "includeArgs":
+    case 'includeArgs':
       return annotation.copyWith(
         includeArgs: fieldValue.toBoolValue() ?? true,
       );

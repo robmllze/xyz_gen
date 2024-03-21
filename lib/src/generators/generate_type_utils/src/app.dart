@@ -10,62 +10,62 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:args/args.dart";
-import "package:path/path.dart" as p;
+import 'package:args/args.dart';
+import 'package:path/path.dart' as p;
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateTypeUtilsApp(List<String> arguments) async {
   await basicCmdAppHelper<BasicCmdAppArgs>(
-    appTitle: "XYZ Gen - Generate For Annotation Test",
+    appTitle: 'XYZ Gen - Generate For Annotation Test',
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
-        "help",
-        abbr: "h",
+        'help',
+        abbr: 'h',
         negatable: false,
-        help: "Help information.",
+        help: 'Help information.',
       )
       ..addOption(
-        "roots",
-        abbr: "r",
-        help: "Root directory paths separated by `&`.",
-        defaultsTo: "lib",
+        'roots',
+        abbr: 'r',
+        help: 'Root directory paths separated by `&`.',
+        defaultsTo: 'lib',
       )
       ..addOption(
-        "subs",
-        abbr: "s",
-        help: "Sub-directory paths separated by `&`.",
-        defaultsTo: "models",
+        'subs',
+        abbr: 's',
+        help: 'Sub-directory paths separated by `&`.',
+        defaultsTo: 'models',
       )
       ..addOption(
-        "patterns",
-        abbr: "p",
-        help: "Path patterns separated by `&`.",
+        'patterns',
+        abbr: 'p',
+        help: 'Path patterns separated by `&`.',
       )
       ..addOption(
-        "template",
-        abbr: "t",
-        help: "Template file path.",
+        'template',
+        abbr: 't',
+        help: 'Template file path.',
         defaultsTo: p.join(
           await getXyzGenLibPath(),
-          "templates",
-          "your_type_utils_template.dart.md",
+          'templates',
+          'your_type_utils_template.dart.md',
         ),
       )
       ..addOption(
-        "dart-sdk",
-        help: "Dart SDK path.",
+        'dart-sdk',
+        help: 'Dart SDK path.',
       ),
     onResults: (parser, results) {
       return BasicCmdAppArgs(
-        fallbackDartSdkPath: results["dart-sdk"],
-        templateFilePath: results["template"],
-        rootPaths: splitArg(results["roots"])?.toSet(),
-        subPaths: splitArg(results["subs"])?.toSet(),
-        pathPatterns: splitArg(results["patterns"])?.toSet(),
+        fallbackDartSdkPath: results['dart-sdk'],
+        templateFilePath: results['template'],
+        rootPaths: splitArg(results['roots'])?.toSet(),
+        subPaths: splitArg(results['subs'])?.toSet(),
+        pathPatterns: splitArg(results['patterns'])?.toSet(),
       );
     },
     action: (parser, results, args) async {

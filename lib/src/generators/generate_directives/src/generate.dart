@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:path/path.dart" as p;
+import 'package:path/path.dart' as p;
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,13 +21,13 @@ Future<void> generateDirectives({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  Here().debugLogStart("Starting generator. Please wait...");
+  Here().debugLogStart('Starting generator. Please wait...');
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,
-      extensions: {".dart"},
+      extensions: {'.dart'},
       pathPatterns: pathPatterns,
       onFileFound: (_, __, filePath) async =>
           !isGeneratedDartFilePath(filePath),
@@ -37,16 +37,16 @@ Future<void> generateDirectives({
       await handleCommentAnnotations(
         filePath: filePath,
         annotationHandlers: {
-          "@GenerateDirectives": generateDirectivesHandler,
-          "gd": generateDirectivesHandler,
+          '@GenerateDirectives': generateDirectivesHandler,
+          'gd': generateDirectivesHandler,
         },
         annotationsToDelete: {
-          "@GenerateDirectives",
-          "gd",
+          '@GenerateDirectives',
+          'gd',
         },
       );
     }
-    Here().debugLogStop("Done!");
+    Here().debugLogStop('Done!');
   }
 }
 
@@ -60,7 +60,7 @@ Future<bool> generateDirectivesHandler(
 ) async {
   try {
     final originalFilePath = Uri.file(filePath);
-    final originalDirPath = originalFilePath.resolve(".").toFilePath();
+    final originalDirPath = originalFilePath.resolve('.').toFilePath();
     final directiveRegExp = RegExp("^(\\w+)\\s+['\"](.+)['\"];\$");
     for (var n = startIndex + 1; n < lines.length; n++) {
       final line = lines[n].trim();
@@ -80,15 +80,15 @@ Future<bool> generateDirectivesHandler(
                 from: directiveFileDir.toFilePath(),
               );
               switch (directiveType) {
-                case "part":
+                case 'part':
                   return "part of '$relativePathToOriginal';";
-                case "import":
-                  return "// Imported by $relativePathToOriginal";
-                case "export":
-                  return "// Exported by $relativePathToOriginal";
+                case 'import':
+                  return '// Imported by $relativePathToOriginal';
+                case 'export':
+                  return '// Exported by $relativePathToOriginal';
                 default:
                   throw UnimplementedError(
-                    "Unknown directive type: $directiveType",
+                    'Unknown directive type: $directiveType',
                   );
               }
             }();

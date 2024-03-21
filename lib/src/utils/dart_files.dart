@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:path/path.dart" as p;
+import 'package:path/path.dart' as p;
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -20,7 +20,7 @@ import "/_common.dart";
 Future<void> fmtDartFile(String filePath) async {
   try {
     final localFilePath = toLocalSystemPathFormat(filePath);
-    await Process.run("dart", ["format", localFilePath]);
+    await Process.run('dart', ['format', localFilePath]);
   } catch (_) {}
 }
 
@@ -28,7 +28,7 @@ Future<void> fmtDartFile(String filePath) async {
 Future<void> fixDartFile(String filePath) async {
   try {
     final localFilePath = toLocalSystemPathFormat(filePath);
-    await Process.run("dart", ["fix", "--apply", localFilePath]);
+    await Process.run('dart', ['fix', '--apply', localFilePath]);
   } catch (_) {}
 }
 
@@ -127,13 +127,13 @@ String? getSourcePath(String filePath) {
   final localSystemFilePath = toLocalSystemPathFormat(filePath);
   final dirName = p.dirname(localSystemFilePath);
   final baseName = p.basename(localSystemFilePath);
-  if (baseName.endsWith(".g.dart")) {
+  if (baseName.endsWith('.g.dart')) {
     return p.join(
       dirName,
       "${baseName.substring(0, baseName.length - ".g.dart".length)}.dart",
     );
   }
-  if (baseName.endsWith(".dart")) {
+  if (baseName.endsWith('.dart')) {
     return localSystemFilePath;
   }
   return null;
@@ -141,12 +141,12 @@ String? getSourcePath(String filePath) {
 
 /// Whether `filePath` ends with ".dart".
 bool isDartFilePath(String filePath) {
-  return filePath.toLowerCase().endsWith(".dart");
+  return filePath.toLowerCase().endsWith('.dart');
 }
 
 /// Whether `filePath` ends with ".g.dart".
 bool isGeneratedDartFilePath(String filePath) {
-  return filePath.toLowerCase().endsWith(".g.dart");
+  return filePath.toLowerCase().endsWith('.g.dart');
 }
 
 /// Whether `filePath` ends with `extension`.
@@ -184,17 +184,17 @@ bool isSourceDartFilePath(String filePath) {
 /// - A Future of list of code snippets.
 Future<List<String>> readSnippetsFromMarkdownFile(
   String filePath, {
-  String lang = "[^\\n]+",
+  String lang = '[^\\n]+',
 }) async {
-  final isMarkdownFile = filePath.toLowerCase().endsWith(".md");
+  final isMarkdownFile = filePath.toLowerCase().endsWith('.md');
   if (!isMarkdownFile) {
-    throw Exception("Not a Markdown file: $filePath");
+    throw Exception('Not a Markdown file: $filePath');
   }
   final file = File(filePath);
   final input = await file.readAsString();
-  final dartCodeRegex = RegExp("````($lang)\\n(.*?)````", dotAll: true);
+  final dartCodeRegex = RegExp('````($lang)\\n(.*?)````', dotAll: true);
   final matches = dartCodeRegex.allMatches(input);
-  return matches.map((match) => match.group(2)?.trim() ?? "").toList();
+  return matches.map((match) => match.group(2)?.trim() ?? '').toList();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

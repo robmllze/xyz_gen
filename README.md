@@ -74,7 +74,6 @@ Navigate to your project directory by running `cd your/project/path` in your ter
 rm -rf ___generators/
 git clone https://github.com/robmllze/___generators.git
 dart pub get -C ___generators
-rm -rf ___generators/.git
 ```
 
 ##### On Windows:

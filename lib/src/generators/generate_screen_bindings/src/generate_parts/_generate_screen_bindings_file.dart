@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../generate.dart";
+part of '../generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -22,7 +22,7 @@ Future<Set<String>> _generateForFile(
   // ---------------------------------------------------------------------------
 
   // Create variables to hold the annotation's field values.
-  var path = "";
+  var path = '';
   var isAccessibleOnlyIfLoggedInAndVerified = false;
   var isAccessibleOnlyIfLoggedIn = false;
   var isAccessibleOnlyIfLoggedOut = false;
@@ -30,11 +30,11 @@ Future<Set<String>> _generateForFile(
   var internalParameters = const <String, String>{};
   var queryParameters = const <String>{};
   var pathSegments = const <String>[];
-  var navigationControlWidget = "null";
-  var defaultTitle = "...";
-  var makeup = "null";
-  var className = "";
-  var screenKey = "";
+  var navigationControlWidget = 'null';
+  var defaultTitle = '...';
+  var makeup = 'null';
+  var className = '';
+  var screenKey = '';
 
   // ---------------------------------------------------------------------------
 
@@ -44,22 +44,22 @@ Future<Set<String>> _generateForFile(
     DartObject fieldValue,
   ) {
     switch (fieldName) {
-      case "path":
-        path = fieldValue.toStringValue() ?? "";
-      case "isAccessibleOnlyIfLoggedInAndVerified":
+      case 'path':
+        path = fieldValue.toStringValue() ?? '';
+      case 'isAccessibleOnlyIfLoggedInAndVerified':
         isAccessibleOnlyIfLoggedInAndVerified =
             fieldValue.toBoolValue() ?? false;
         break;
-      case "isAccessibleOnlyIfLoggedIn":
+      case 'isAccessibleOnlyIfLoggedIn':
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
         break;
-      case "isAccessibleOnlyIfLoggedOut":
+      case 'isAccessibleOnlyIfLoggedOut':
         isAccessibleOnlyIfLoggedOut = fieldValue.toBoolValue() ?? false;
         break;
-      case "isRedirectable":
+      case 'isRedirectable':
         isRedirectable = fieldValue.toBoolValue() ?? false;
         break;
-      case "internalParameters":
+      case 'internalParameters':
         internalParameters = fieldValue
                 .toMapValue()
                 ?.map(
@@ -71,7 +71,7 @@ Future<Set<String>> _generateForFile(
                 .nonNulls ??
             const {};
         break;
-      case "queryParameters":
+      case 'queryParameters':
         queryParameters = fieldValue
                 .toSetValue()
                 ?.map((e) => e.toStringValue()?.nullIfEmpty)
@@ -79,7 +79,7 @@ Future<Set<String>> _generateForFile(
                 .toSet() ??
             {};
         break;
-      case "pathSegments":
+      case 'pathSegments':
         pathSegments = fieldValue
                 .toListValue()
                 ?.map((e) => e.toStringValue()?.nullIfEmpty)
@@ -87,21 +87,21 @@ Future<Set<String>> _generateForFile(
                 .toList() ??
             [];
         break;
-      case "navigationControlWidget":
+      case 'navigationControlWidget':
         navigationControlWidget =
             fieldValue.toStringValue()?.nullIfEmpty ?? navigationControlWidget;
         break;
-      case "defaultTitle":
+      case 'defaultTitle':
         defaultTitle = fieldValue.toStringValue()?.nullIfEmpty ?? defaultTitle;
         break;
-      case "makeup":
+      case 'makeup':
         makeup = fieldValue.toStringValue()?.nullIfEmpty ?? makeup;
         break;
-      case "className":
-        className = fieldValue.toStringValue()?.nullIfEmpty ?? "";
+      case 'className':
+        className = fieldValue.toStringValue()?.nullIfEmpty ?? '';
         break;
-      case "screenKey":
-        screenKey = fieldValue.toStringValue()?.nullIfEmpty ?? "";
+      case 'screenKey':
+        screenKey = fieldValue.toStringValue()?.nullIfEmpty ?? '';
         break;
     }
   }
@@ -115,34 +115,34 @@ Future<Set<String>> _generateForFile(
     final classFileName = getBaseName(fixedFilePath);
     final classFileDirPath = getDirPath(fixedFilePath);
     screenKey = screenKey.nullIfEmpty ??
-        className.replaceFirst("Screen", "").toSnakeCase();
+        className.replaceFirst('Screen', '').toSnakeCase();
     final screenConstKey = screenKey.toUpperCase();
-    final configurationClassName = "${className}Configuration";
+    final configurationClassName = '${className}Configuration';
     final screenSegment = p.joinAll(
       [
-        path.isNotEmpty && path.startsWith(RegExp(r"[\\/]"))
+        path.isNotEmpty && path.startsWith(RegExp(r'[\\/]'))
             ? path.substring(1)
             : path,
         screenKey,
       ],
     );
-    final screenPath = "/$screenSegment";
+    final screenPath = '/$screenSegment';
     assert(
       !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedIn,
-      "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.",
+      'Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.',
     );
     assert(
       !isAccessibleOnlyIfLoggedInAndVerified || !isAccessibleOnlyIfLoggedOut,
-      "Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.",
+      'Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.',
     );
     assert(
       !isAccessibleOnlyIfLoggedIn || !isAccessibleOnlyIfLoggedOut,
-      "Cannot set both `isAccessibleOnlyIfLoggedIn` and `isAccessibleOnlyIfLoggedOut` to `true`.",
+      'Cannot set both `isAccessibleOnlyIfLoggedIn` and `isAccessibleOnlyIfLoggedOut` to `true`.',
     );
     final isAlwaysAccessible = (!isAccessibleOnlyIfLoggedInAndVerified &&
         !isAccessibleOnlyIfLoggedIn &&
         !isAccessibleOnlyIfLoggedOut);
-    const OUTPUT_FILE_NAME = "_bindings.g.dart";
+    const OUTPUT_FILE_NAME = '_bindings.g.dart';
     final outputFilePath = p.join(classFileDirPath, OUTPUT_FILE_NAME);
 
     // Replace placeholders with the actual values.
@@ -150,31 +150,31 @@ Future<Set<String>> _generateForFile(
     final output = replaceData(
       template,
       {
-        "___CLASS___": className,
-        "___CONFIGURATION_CLASS___": configurationClassName,
-        "___CLASS_FILE___": classFileName,
-        "___SCREEN_KEY___": screenKey,
-        "___SCREEN_CONST_KEY___": screenConstKey,
-        "___SCREEN_SEGMENT___": screenSegment,
-        "___SCREEN_PATH___": screenPath,
-        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___":
+        '___CLASS___': className,
+        '___CONFIGURATION_CLASS___': configurationClassName,
+        '___CLASS_FILE___': classFileName,
+        '___SCREEN_KEY___': screenKey,
+        '___SCREEN_CONST_KEY___': screenConstKey,
+        '___SCREEN_SEGMENT___': screenSegment,
+        '___SCREEN_PATH___': screenPath,
+        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___':
             isAccessibleOnlyIfLoggedInAndVerified,
-        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___": isAccessibleOnlyIfLoggedIn,
-        "___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___": isAccessibleOnlyIfLoggedOut,
-        "___IS_ALWAYS_ACCESSIBLE___": isAlwaysAccessible,
-        "___IS_REDIRECTABLE___": isRedirectable,
-        "___IP0___": _ip0(internalParameters),
-        "___IP1___": _ip1(internalParameters),
-        "___IP2___": _ip2(internalParameters),
-        "___QP0___": _qp0(queryParameters),
-        "___QP1___": _qp1(queryParameters),
-        "___QP2___": _qp2(queryParameters),
-        "___PS0___": _ps0(pathSegments),
-        "___PS1___": _ps1(pathSegments),
-        "___PS2___": _ps2(pathSegments),
-        "___NAVIGATION_CONTROLS_WIDGET___": navigationControlWidget,
-        "___DEFAULT_TITLE___": defaultTitle,
-        "___MAKEUP___": makeup,
+        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___': isAccessibleOnlyIfLoggedIn,
+        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___': isAccessibleOnlyIfLoggedOut,
+        '___IS_ALWAYS_ACCESSIBLE___': isAlwaysAccessible,
+        '___IS_REDIRECTABLE___': isRedirectable,
+        '___IP0___': _ip0(internalParameters),
+        '___IP1___': _ip1(internalParameters),
+        '___IP2___': _ip2(internalParameters),
+        '___QP0___': _qp0(queryParameters),
+        '___QP1___': _qp1(queryParameters),
+        '___QP2___': _qp2(queryParameters),
+        '___PS0___': _ps0(pathSegments),
+        '___PS1___': _ps1(pathSegments),
+        '___PS2___': _ps2(pathSegments),
+        '___NAVIGATION_CONTROLS_WIDGET___': navigationControlWidget,
+        '___DEFAULT_TITLE___': defaultTitle,
+        '___MAKEUP___': makeup,
       }.nonNulls,
     );
 
@@ -193,7 +193,7 @@ Future<Set<String>> _generateForFile(
   await analyzeAnnotatedClasses(
     filePath: fixedFilePath,
     collection: collection,
-    classAnnotations: {"GenerateScreenBindings"},
+    classAnnotations: {'GenerateScreenBindings'},
     onAnnotatedClass: (final classAnnotationName, final className) async {
       await onAnnotatedClass(classAnnotationName, className);
       // Get all the class names to use later.
@@ -213,66 +213,66 @@ String _ip0(Map<String, String> internalParameters) {
     final fieldName = e.key;
     final fieldType = e.value;
     final fieldKey = fieldName.toSnakeCase();
-    final nullable = fieldType.endsWith("?");
-    final nullCheck = nullable ? "" : "!";
+    final nullable = fieldType.endsWith('?');
+    final nullCheck = nullable ? '' : '!';
     final t =
         nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
-    final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
+    final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return [
-      "/// Key corresponding to the value `$fieldName`",
-      "static const $fieldK = \"$fieldKey\";",
-      "/// Returns the **internal parameter** with the key `$fieldKey`",
-      "/// or [$fieldK].",
-      "$fieldType get $fieldName => super.arg<$t>($fieldK)$nullCheck;",
-    ].join("\n");
+      '/// Key corresponding to the value `$fieldName`',
+      'static const $fieldK = \"$fieldKey\";',
+      '/// Returns the **internal parameter** with the key `$fieldKey`',
+      '/// or [$fieldK].',
+      '$fieldType get $fieldName => super.arg<$t>($fieldK)$nullCheck;',
+    ].join('\n');
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }
 
 String _ip1(Map<String, String> internalParameters) {
   final a = internalParameters.entries.map((e) {
     final fieldName = e.key;
     final fieldType = e.value;
-    final required = fieldType.endsWith("?") ? "" : "required ";
+    final required = fieldType.endsWith('?') ? '' : 'required ';
     return "$required$fieldType $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }
 
 String _ip2(Map<String, String> internalParameters) {
   final a = internalParameters.entries.map((e) {
     final fieldName = e.key;
     final fieldType = e.value;
-    final ifNotNull = fieldType.endsWith("?") ? "if ($fieldName != null) " : "";
-    final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
-    return "$ifNotNull $fieldK: $fieldName,";
+    final ifNotNull = fieldType.endsWith('?') ? 'if ($fieldName != null) ' : '';
+    final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
+    return '$ifNotNull $fieldK: $fieldName,';
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }
 
 String _qp0(Set<String> queryParameters) {
   final a = queryParameters.map((e) {
     var fieldName = e;
-    final nullable = fieldName.endsWith("?");
+    final nullable = fieldName.endsWith('?');
     fieldName =
         nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     final fieldKey = fieldName.toSnakeCase();
-    final nullCheck = nullable ? "" : "!";
-    final nullableCheck = nullable ? "?" : "";
-    final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
+    final nullCheck = nullable ? '' : '!';
+    final nullableCheck = nullable ? '?' : '';
+    final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return [
-      "/// Key corresponding to the value `$fieldName`",
-      "static const $fieldK = \"$fieldKey\";",
-      "/// Returns the URI **query parameter** with the key `$fieldKey`",
-      "/// or [$fieldK].",
-      "String$nullableCheck get $fieldName => super.arg<String>($fieldK)$nullCheck;",
-    ].join("\n");
+      '/// Key corresponding to the value `$fieldName`',
+      'static const $fieldK = \"$fieldKey\";',
+      '/// Returns the URI **query parameter** with the key `$fieldKey`',
+      '/// or [$fieldK].',
+      'String$nullableCheck get $fieldName => super.arg<String>($fieldK)$nullCheck;',
+    ].join('\n');
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }
 
 String _qp1(Set<String> queryParameters) {
@@ -287,45 +287,45 @@ String _ps0(List<String> pathSegments) {
   var n = 0;
   final a = pathSegments.map((e) {
     var fieldName = e;
-    final nullable = fieldName.endsWith("?");
+    final nullable = fieldName.endsWith('?');
     fieldName =
         nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
-    final nullCheck = nullable ? "" : "!";
-    final nullableCheck = nullable ? "?" : "";
-    final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
+    final nullCheck = nullable ? '' : '!';
+    final nullableCheck = nullable ? '?' : '';
+    final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return [
-      "/// Key corresponding to the value `$fieldName`",
-      "static const $fieldK = ${++n};",
-      "/// Returns the URI **path segment** at position `$n` AKA the value",
-      "/// corresponding to the key `$n` or [$fieldK].",
-      "String$nullableCheck get $fieldName => super.arg<String>($fieldK)$nullCheck;",
-    ].join("\n");
+      '/// Key corresponding to the value `$fieldName`',
+      'static const $fieldK = ${++n};',
+      '/// Returns the URI **path segment** at position `$n` AKA the value',
+      '/// corresponding to the key `$n` or [$fieldK].',
+      'String$nullableCheck get $fieldName => super.arg<String>($fieldK)$nullCheck;',
+    ].join('\n');
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }
 
 String _ps1(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
-    final nullable = fieldName.endsWith("?");
+    final nullable = fieldName.endsWith('?');
     fieldName =
         nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     return "${nullable ? "String?" : "required String"} $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }
 
 String _ps2(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
-    final nullable = fieldName.endsWith("?");
+    final nullable = fieldName.endsWith('?');
     fieldName =
         nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
-    final fieldK = "K_${fieldName.toSnakeCase().toUpperCase()}";
+    final fieldK = 'K_${fieldName.toSnakeCase().toUpperCase()}';
     return "${nullable ? "if ($fieldName != null) " : ""}$fieldK: $fieldName,";
   }).toList()
     ..sort();
-  return a.isNotEmpty ? a.join("\n") : "";
+  return a.isNotEmpty ? a.join('\n') : '';
 }

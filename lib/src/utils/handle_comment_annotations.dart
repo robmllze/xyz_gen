@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -23,14 +23,14 @@ Future<void> handleCommentAnnotations({
   final lines = await readFileAsLines(filePath) ?? [];
   if (lines.isNotEmpty) {
     final simplifiedAnnotationHandlers = annotationHandlers.map(
-      (k, v) => MapEntry(k.replaceAll(_sugarRegExp, "").toLowerCase(), v),
+      (k, v) => MapEntry(k.replaceAll(_sugarRegExp, '').toLowerCase(), v),
     );
     final instructions = <int, String>{};
     for (var n = 0; n < lines.length; n++) {
       final line = lines[n].trim();
       final match = commentAnnotationRegExp.firstMatch(line.toLowerCase());
       if (match != null) {
-        final instruction = match.group(1)?.replaceAll(_sugarRegExp, "") ?? "";
+        final instruction = match.group(1)?.replaceAll(_sugarRegExp, '') ?? '';
         instructions[n] = instruction;
         final shouldContinue = await simplifiedAnnotationHandlers[instruction]
             ?.call(n, lines, filePath);
@@ -41,7 +41,7 @@ Future<void> handleCommentAnnotations({
     }
     if (annotationsToDelete.isNotEmpty) {
       final simplifiedAnnotationsToDelete = annotationsToDelete
-          .map((e) => e.replaceAll(_sugarRegExp, "").toLowerCase());
+          .map((e) => e.replaceAll(_sugarRegExp, '').toLowerCase());
       final newLines = List.of(lines);
       for (final instruction in instructions.entries) {
         final n = instruction.key;
@@ -50,13 +50,13 @@ Future<void> handleCommentAnnotations({
           newLines.removeAt(n);
         }
       }
-      await writeFile(filePath, newLines.join("\n"));
+      await writeFile(filePath, newLines.join('\n'));
     }
   }
 }
 
-final _sugarRegExp = RegExp(r"[@_\s]");
+final _sugarRegExp = RegExp(r'[@_\s]');
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final commentAnnotationRegExp = RegExp("^///?\\s*@?([\\w ]+)\$");
+final commentAnnotationRegExp = RegExp('^///?\\s*@?([\\w ]+)\$');

@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:xyz_gen_annotations/xyz_gen_annotations.dart";
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
-part "_model_user.g.dart";
+part '_model_user.g.dart';
 
 // -----------------------------------------------------------------------------
 
@@ -22,13 +22,13 @@ part "_model_user.g.dart";
 
 @GenerateModel(
   fields: {
-    "email": $LowerCaseString,
-    "searchable_name": $LowerCaseString,
-    "display_name": "String?",
-    "type": $UpperSnakeCaseString,
+    'email': $LowerCaseString,
+    'searchable_name': $LowerCaseString,
+    'display_name': 'String?',
+    'type': $UpperSnakeCaseString,
   },
   shouldInherit: true,
-  keyStringCase: "lower_snake_case",
+  keyStringCase: 'lower_snake_case',
 )
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ abstract class _ModelUser extends ThisModel<ModelUser> {
   @Field()
   String? lastName;
 
-  String get fullName => "$firstName $lastName";
+  String get fullName => '$firstName $lastName';
 
   bool get isAdmin => this.model.type == ModelUserType.ADMIN.name;
   bool get isUser => this.model.type == ModelUserType.USER.name;

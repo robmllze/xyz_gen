@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:path/path.dart" as p;
+import 'package:path/path.dart' as p;
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -39,7 +39,7 @@ Future<void> generateFromTemplates({
     Map<String, String> templates,
   ) generateForFile,
   required Set<String> templateFilePaths,
-  String begType = "",
+  String begType = '',
   Set<String> pathPatterns = const {},
   bool deleteGeneratedFiles = false,
   void Function(String filePath)? onDelete,
@@ -62,14 +62,14 @@ Future<void> generateFromTemplates({
     final templates = <String, String>{};
     for (final templateFilePath in templateFilePaths) {
       templates[templateFilePath] =
-          (await readSnippetsFromMarkdownFile(templateFilePath)).join("\n");
+          (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
     }
     final results = await findFiles(
       path,
-      extensions: {".dart"},
+      extensions: {'.dart'},
       pathPatterns: pathPatterns,
       onFileFound: (dirName, folderName, filePath) async {
-        final a = isMatchingFileName(filePath, begType, "dart").$1;
+        final a = isMatchingFileName(filePath, begType, 'dart').$1;
         final b = isSourceDartFilePath(filePath);
         if (a && b) {
           return true;
@@ -93,7 +93,7 @@ AnalysisContextCollection createAnalysisContextCollection(
   Set<String> paths,
   String? fallbackDartSdkPath,
 ) {
-  final sdkPath = Platform.environment["DART_SDK"] ?? fallbackDartSdkPath;
+  final sdkPath = Platform.environment['DART_SDK'] ?? fallbackDartSdkPath;
   final includePaths = paths.map((e) => p.normalize(p.absolute(e))).toList();
   final collection = AnalysisContextCollection(
     includedPaths: includePaths,

@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of "../type_codes.dart";
+part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -18,7 +18,7 @@ part of "../type_codes.dart";
 abstract class MapperEvent {
   /// The name of the field, e.g. "firstName" or "p3".
   String? get name =>
-      this._name ?? (this._nameIndex != null ? "p${this._nameIndex}" : null);
+      this._name ?? (this._nameIndex != null ? 'p${this._nameIndex}' : null);
   String? _name;
 
   /// The index of the generated field name, e.g. "p3" = 3.
@@ -46,10 +46,10 @@ class CollectionMapperEvent extends MapperEvent {
   Iterable<String> get lhashes => this._lhashes;
   Iterable<String> get lparams => this._lparams;
   Iterable<String> get ltypes => this._ltypes;
-  String get args => this._largs.join(", ");
-  String get hashes => this._lhashes.join(", ");
-  String get params => this._lparams.join(", ");
-  String get types => this._ltypes.join(", ");
+  String get args => this._largs.join(', ');
+  String get hashes => this._lhashes.join(', ');
+  String get params => this._lparams.join(', ');
+  String get types => this._ltypes.join(', ');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

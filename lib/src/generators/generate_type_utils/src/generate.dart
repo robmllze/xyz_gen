@@ -10,9 +10,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:path/path.dart" as p;
+import 'package:path/path.dart' as p;
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -23,7 +23,7 @@ Future<void> generateTypeUtils({
   Set<String> pathPatterns = const {},
   required String templateFilePath,
 }) async {
-  Here().debugLogStart("Starting generator. Please wait...");
+  Here().debugLogStart('Starting generator. Please wait...');
   await generateFromTemplates(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootDirPaths: rootDirPaths,
@@ -32,7 +32,7 @@ Future<void> generateTypeUtils({
     templateFilePaths: {templateFilePath},
     generateForFile: _generateForFile,
   );
-  Here().debugLogStop("Done!");
+  Here().debugLogStop('Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -45,7 +45,7 @@ Future<void> _generateForFile(
   await analyzeAnnotatedEnums(
     filePath: fixedFilePath,
     collection: collection,
-    enumAnnotations: {"GenerateTypeUtils"},
+    enumAnnotations: {'GenerateTypeUtils'},
     onAnnotatedEnum: (enumAnnotationName, enumName) async {
       // Get the enum file name from the file path.
       final enumFileName = getBaseName(fixedFilePath);
@@ -55,8 +55,8 @@ Future<void> _generateForFile(
       final output = replaceData(
         template,
         {
-          "___ENUM_FILE_NAME___": enumFileName,
-          "___ENUM___": enumName,
+          '___ENUM_FILE_NAME___': enumFileName,
+          '___ENUM___': enumName,
         },
       );
 
@@ -64,7 +64,7 @@ Future<void> _generateForFile(
       final outputFilePath = () {
         final classFileDirPath = getDirPath(fixedFilePath);
         final classKey = getFileNameWithoutExtension(enumFileName);
-        final outputFileName = "_$classKey.g.dart";
+        final outputFileName = '_$classKey.g.dart';
         return p.join(classFileDirPath, outputFileName);
       }();
 

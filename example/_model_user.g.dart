@@ -15,7 +15,7 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_this
 
-part of "example.dart";
+part of 'example.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,15 +24,15 @@ class ModelUser extends ThisModel<ModelUser> {
   //
   //
 
-  static const CLASS = "ModelUser";
-  static const MODEL_ID = "model_user";
+  static const CLASS = 'ModelUser';
+  static const MODEL_ID = 'model_user';
 
-  static const K_DISPLAY_NAME = "display_name";
-  static const K_EMAIL = "email";
-  static const K_FIRST_NAME = "first_name";
-  static const K_LAST_NAME = "last_name";
-  static const K_SEARCHABLE_NAME = "searchable_name";
-  static const K_TYPE = "type";
+  static const K_DISPLAY_NAME = 'display_name';
+  static const K_EMAIL = 'email';
+  static const K_FIRST_NAME = 'first_name';
+  static const K_LAST_NAME = 'last_name';
+  static const K_SEARCHABLE_NAME = 'searchable_name';
+  static const K_TYPE = 'type';
 
   String? displayName;
   String? email;

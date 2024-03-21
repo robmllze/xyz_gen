@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -28,9 +28,9 @@ Future<void> analyzeModels({
   for (final path in combinedPaths) {
     final files = await findFiles(
       path,
-      extensions: {".dart"},
+      extensions: {'.dart'},
       onFileFound: (dirName, folderName, filePath) async {
-        final a = isMatchingFileName(filePath, "", "dart").$1;
+        final a = isMatchingFileName(filePath, '', 'dart').$1;
         final b = isSourceDartFilePath(filePath);
         if (a && b) {
           return true;

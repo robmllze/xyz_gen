@@ -10,44 +10,44 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:args/args.dart";
+import 'package:args/args.dart';
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> generateDirectivesApp(List<String> arguments) async {
   await basicCmdAppHelper<BasicAppArgs>(
-    appTitle: "XYZ Gen - Generate Dependencies",
+    appTitle: 'XYZ Gen - Generate Dependencies',
     arguments: arguments,
     parser: ArgParser()
       ..addFlag(
-        "help",
-        abbr: "h",
+        'help',
+        abbr: 'h',
         negatable: false,
-        help: "Help information.",
+        help: 'Help information.',
       )
       ..addOption(
-        "roots",
-        abbr: "r",
-        help: "Root directory paths separated by `&`.",
-        defaultsTo: "lib",
+        'roots',
+        abbr: 'r',
+        help: 'Root directory paths separated by `&`.',
+        defaultsTo: 'lib',
       )
       ..addOption(
-        "subs",
-        abbr: "s",
-        help: "Sub-directory paths separated by `&`.",
+        'subs',
+        abbr: 's',
+        help: 'Sub-directory paths separated by `&`.',
       )
       ..addOption(
-        "patterns",
-        abbr: "p",
-        help: "Path patterns separated by `&`.",
+        'patterns',
+        abbr: 'p',
+        help: 'Path patterns separated by `&`.',
       ),
     onResults: (parser, results) {
       return BasicAppArgs(
-        rootPaths: splitArg(results["roots"])?.toSet(),
-        subPaths: splitArg(results["subs"])?.toSet(),
-        pathPatterns: splitArg(results["patterns"])?.toSet(),
+        rootPaths: splitArg(results['roots'])?.toSet(),
+        subPaths: splitArg(results['subs'])?.toSet(),
+        pathPatterns: splitArg(results['patterns'])?.toSet(),
       );
     },
     action: (parser, results, args) async {
