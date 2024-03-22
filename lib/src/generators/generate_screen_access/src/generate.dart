@@ -63,8 +63,7 @@ Future<void> generateScreenAccess({
       keys.map((e) => '...PATH_ACCESSIBLE_ONLY_IF_LOGGED_IN_$e').join(',');
   final g =
       keys.map((e) => '...PATH_ACCESSIBLE_ONLY_IF_LOGGED_OUT_$e').join(',');
-  final h = sorted.map((e) => '...cast${e}Configuration').join(',');
-  final i = sorted.map((e) => 'generated${e}Route').join(',');
+  final h = sorted.map((e) => 'generated${e}Route').join(',');
   final template =
       (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
   final outputContent = replaceData(template, {
@@ -75,8 +74,7 @@ Future<void> generateScreenAccess({
     '___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___': e,
     '___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_IN___': f,
     '___PATHS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___': g,
-    '___SCREEN_CONFIGURATION_CASTS___': h,
-    '___GENERATED_SCREEN_ROUTES___': i,
+    '___GENERATED_SCREEN_ROUTES___': h,
   });
   await writeFile(outputFilePath, outputContent);
   Here().debugLogStop('Done!');
