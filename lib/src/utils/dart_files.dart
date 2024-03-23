@@ -54,8 +54,7 @@ Future<List<FindFileResult>> findFiles(
           matchesAnyPathPattern(filePath, pathPatterns)) {
         final dirPath = getDirPath(filePath);
         final folderName = getBaseName(dirPath);
-        final add =
-            (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
+        final add = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
         if (add) {
           final result = FindFileResult(
             dirPath: dirPath,
@@ -88,8 +87,7 @@ Future<List<FindFileResult>> findGeneratedDartFiles(
       if (isGeneratedDartFilePath(filePath)) {
         final dirPath = getDirPath(filePath);
         final folderName = getBaseName(dirPath);
-        final add =
-            (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
+        final add = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
         if (add) {
           final result = FindFileResult(
             dirPath: dirPath,
@@ -192,7 +190,7 @@ Future<List<String>> readSnippetsFromMarkdownFile(
   }
   final file = File(filePath);
   final input = await file.readAsString();
-  final dartCodeRegex = RegExp('````($lang)\\n(.*?)````', dotAll: true);
+  final dartCodeRegex = RegExp('```($lang)\\n(.*?)```', dotAll: true);
   final matches = dartCodeRegex.allMatches(input);
   return matches.map((match) => match.group(2)?.trim() ?? '').toList();
 }
@@ -205,8 +203,7 @@ Future<void> deleteGeneratedDartFile(
   void Function(String filePath)? onDelete,
   Set<String> pathPatterns = const {},
 }) async {
-  if (isGeneratedDartFilePath(filePath) &&
-      matchesAnyPathPattern(filePath, pathPatterns)) {
+  if (isGeneratedDartFilePath(filePath) && matchesAnyPathPattern(filePath, pathPatterns)) {
     await deleteFile(filePath);
     onDelete?.call(filePath);
   }

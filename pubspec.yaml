@@ -4,30 +4,28 @@
 ## 🇽🇾🇿 & Dev
 ##
 ## Copyright Ⓒ Robert Mollentze, xyzand.dev
-## 
+##
 ## Licensing details can be found in the LICENSE file in the root directory.
-## 
+##
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##.title~
 
 name: xyz_gen
 description: This package contains a set of generators to help you with your Flutter projects.
 repository: https://github.com/robmllze/xyz_gen
-version: 0.55.2
+version: 0.56.0
 
 ## -----------------------------------------------------------------------------
 
 environment:
-
-  sdk: '>= 3.3.1 < 4.0.0'
+  sdk: ">= 3.3.1 < 4.0.0"
 
 ## -----------------------------------------------------------------------------
 
 dependencies:
-
   xyz_gen_annotations: ^0.15.2
   xyz_utils: ^0.52.0
-  
+
   analyzer: ^6.4.1
   args: ^2.4.2
   path: ^1.9.0
@@ -36,5 +34,4 @@ dependencies:
 ## -----------------------------------------------------------------------------
 
 dev_dependencies:
-
   lints: ^3.0.0
