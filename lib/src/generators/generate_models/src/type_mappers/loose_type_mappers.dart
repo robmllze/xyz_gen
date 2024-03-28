@@ -1,11 +1,9 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XFSY|Z & Dev
+// 🇽🇾🇿 & Dev
 //
-// Copyright Ⓒ Robert Mollentze, xyzand.dev
-//
-// Licensing details can be found in the LICENSE file in the root directory.
+// Licencing details are in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -170,6 +168,10 @@ class LooseTypeMappers extends TypeMappers {
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(letAs<String>(${e.name}))';
         },
+        r'^(DataModel)\??$': (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return "() { final a = letMap<String, dynamic>(${e.name})?['data']; return a != null ? DataModel(data: a): null; }()";
+        },
         r'^(Model\w+|\w+Model)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
@@ -254,6 +256,10 @@ class LooseTypeMappers extends TypeMappers {
         r'^(Type\w+|\w+Type)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.name';
+        },
+        r'^(DataModel)\??$': (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return '${e.name}?.data';
         },
         r'^(Model\w+|\w+Model)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();

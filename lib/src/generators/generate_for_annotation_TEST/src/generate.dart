@@ -3,9 +3,7 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Copyright Ⓒ Robert Mollentze, xyzand.dev
-//
-// Licensing details can be found in the LICENSE file in the root directory.
+// Licencing details are in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -22,8 +20,7 @@ Future<void> generateForAnnotationTest({
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
-  final collection =
-      createAnalysisContextCollection(combinedDirPaths, fallbackDartSdkPath);
+  final collection = createAnalysisContextCollection(combinedDirPaths, fallbackDartSdkPath);
   for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,

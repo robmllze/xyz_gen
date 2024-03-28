@@ -3,9 +3,7 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Copyright Ⓒ Robert Mollentze, xyzand.dev
-//
-// Licensing details can be found in the LICENSE file in the root directory.
+// Licencing details are in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -119,8 +117,7 @@ Future<GenerateModel> generateModel({
   final output = replaceData(
     template,
     {
-      '___SUPER_CLASS___':
-          annotation.shouldInherit ? annotatedClassName : 'Model',
+      '___SUPER_CLASS___': annotation.shouldInherit ? annotatedClassName : 'Model',
       '___SUPER_CONSTRUCTOR___': annotation.shouldInherit
           ? annotation.inheritanceConstructor?.nullIfEmpty != null
               ? ': super.${annotation.inheritanceConstructor}()'
@@ -130,11 +127,9 @@ Future<GenerateModel> generateModel({
       '___MODEL_ID___': annotation.className?.toLowerSnakeCase(),
       '___CLASS_FILE_NAME___': classFileName,
       ..._replacements(
-        fields:
-            annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
-        keyStringCaseType:
-            StringCaseType.values.valueOf(annotation.keyStringCase) ??
-                StringCaseType.LOWER_SNAKE_CASE,
+        fields: annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
+        keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
+            StringCaseType.LOWER_SNAKE_CASE,
         includeId: annotation.includeId,
         includeArgs: annotation.includeArgs,
       ),
@@ -169,8 +164,7 @@ GenerateModel _updateClassName(
   final a = annotatedClassName.replaceFirst(RegExp(r'^[_$]+'), '');
   final b = a != annotatedClassName ? a : '${annotatedClassName}Model';
   annotation = annotation.copyWith(
-    className:
-        annotation.className?.nullIfEmpty == null ? b : annotation.className,
+    className: annotation.className?.nullIfEmpty == null ? b : annotation.className,
   );
   return annotation;
 }
@@ -232,8 +226,7 @@ GenerateModel _updateFromClassAnnotationField(
 
     case 'keyStringCase':
       return annotation.copyWith(
-        keyStringCase:
-            fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
+        keyStringCase: fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
       );
 
     case 'includeId':
