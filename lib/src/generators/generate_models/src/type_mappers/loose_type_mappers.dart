@@ -170,7 +170,7 @@ class LooseTypeMappers extends TypeMappers {
         },
         r'^(DataModel)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
-          return '() { final a = letMap<letMap<String, dynamic>(${e.name})?[DataModel.K_DATA]>; return a != null ? DataModel(data: a): null; }()';
+          return '() { final a = letMap<String, dynamic>(letMap(${e.name})?[DataModel.K_DATA]); return a != null ? DataModel(data: a): null; }()';
         },
         r'^(Model\w+|\w+Model)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
