@@ -23,7 +23,8 @@ Future<void> generateExports({
   Here().debugLogStart('Starting generator. Please wait...');
   var cachedDirPath = '';
   // Get the template to use.
-  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
+  final template =
+      (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {

@@ -20,7 +20,8 @@ Future<void> generateForAnnotationTest({
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
-  final collection = createAnalysisContextCollection(combinedDirPaths, fallbackDartSdkPath);
+  final collection =
+      createAnalysisContextCollection(combinedDirPaths, fallbackDartSdkPath);
   for (final dirPath in combinedDirPaths) {
     final results = await findFiles(
       dirPath,

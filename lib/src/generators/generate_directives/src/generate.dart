@@ -27,7 +27,8 @@ Future<void> generateDirectives({
       dirPath,
       extensions: {'.dart'},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async =>
+          !isGeneratedDartFilePath(filePath),
     );
     for (final result in results) {
       final filePath = result.filePath;
@@ -65,7 +66,8 @@ Future<bool> generateDirectivesHandler(
       if (match != null) {
         final relativePath = match.group(2);
         if (relativePath != null) {
-          final directiveFilePath = Uri.file(originalDirPath).resolve(relativePath).toFilePath();
+          final directiveFilePath =
+              Uri.file(originalDirPath).resolve(relativePath).toFilePath();
           final fileDoesntExist = !await fileExists(directiveFilePath);
           if (fileDoesntExist) {
             final directiveContent = () {
