@@ -45,7 +45,8 @@ Future<Set<String>> _generateForFile(
       case 'path':
         path = fieldValue.toStringValue() ?? '';
       case 'isAccessibleOnlyIfLoggedInAndVerified':
-        isAccessibleOnlyIfLoggedInAndVerified = fieldValue.toBoolValue() ?? false;
+        isAccessibleOnlyIfLoggedInAndVerified =
+            fieldValue.toBoolValue() ?? false;
         break;
       case 'isAccessibleOnlyIfLoggedIn':
         isAccessibleOnlyIfLoggedIn = fieldValue.toBoolValue() ?? false;
@@ -111,12 +112,15 @@ Future<Set<String>> _generateForFile(
     className = className.nullIfEmpty ?? annotatedClassName;
     final classFileName = getBaseName(fixedFilePath);
     final classFileDirPath = getDirPath(fixedFilePath);
-    screenKey = screenKey.nullIfEmpty ?? className.replaceFirst('Screen', '').toSnakeCase();
+    screenKey = screenKey.nullIfEmpty ??
+        className.replaceFirst('Screen', '').toSnakeCase();
     final screenConstKey = screenKey.toUpperCase();
     final configurationClassName = '${className}Configuration';
     final screenSegment = p.joinAll(
       [
-        path.isNotEmpty && path.startsWith(RegExp(r'[\\/]')) ? path.substring(1) : path,
+        path.isNotEmpty && path.startsWith(RegExp(r'[\\/]'))
+            ? path.substring(1)
+            : path,
         screenKey,
       ],
     );
@@ -151,7 +155,8 @@ Future<Set<String>> _generateForFile(
         '___SCREEN_CONST_KEY___': screenConstKey,
         '___SCREEN_SEGMENT___': screenSegment,
         '___SCREEN_PATH___': screenPath,
-        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___': isAccessibleOnlyIfLoggedInAndVerified,
+        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___':
+            isAccessibleOnlyIfLoggedInAndVerified,
         '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___': isAccessibleOnlyIfLoggedIn,
         '___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___': isAccessibleOnlyIfLoggedOut,
         '___IS_ALWAYS_ACCESSIBLE___': isAlwaysAccessible,
@@ -208,7 +213,8 @@ String _ip0(Map<String, String> internalParameters) {
     final fieldType = e.value;
     final nullable = fieldType.endsWith('?');
     final nullCheck = nullable ? '' : '!';
-    final t = nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
+    final t =
+        nullable ? fieldType.substring(0, fieldType.length - 1) : fieldType;
     final fieldK = 'K_${fieldKey.toUpperCase()}';
     return [
       '/// Key corresponding to the value `$fieldName`',
@@ -251,7 +257,8 @@ String _qp0(Set<String> queryParameters) {
   final a = queryParameters.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith('?');
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     fieldName = fieldName.toCamelCase();
     final fieldKey = fieldName.toSnakeCase();
     final fieldK = 'K_${fieldKey.toUpperCase()}';
@@ -283,7 +290,8 @@ String _ps0(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith('?');
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     fieldName = fieldName.toCamelCase();
     final fieldKey = fieldName.toSnakeCase();
     final fieldK = 'K_${fieldKey.toUpperCase()}';
@@ -305,7 +313,8 @@ String _ps1(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith('?');
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     fieldName = fieldName.toCamelCase();
     return "${nullable ? "String?" : "required String"} $fieldName,";
   }).toList()
@@ -317,7 +326,8 @@ String _ps2(List<String> pathSegments) {
   final a = pathSegments.map((e) {
     var fieldName = e;
     final nullable = fieldName.endsWith('?');
-    fieldName = nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+    fieldName =
+        nullable ? fieldName.substring(0, fieldName.length - 1) : fieldName;
     fieldName = fieldName.toCamelCase();
     final fieldKey = fieldName.toSnakeCase();
     final fieldK = 'K_${fieldKey.toUpperCase()}';

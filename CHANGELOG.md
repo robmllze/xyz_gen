@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.61.0]
+
+- Released @ 2024-03-30 03:18:58.111824Z
+- Fix type issues with screen generator
+
 ## [0.60.0]
 
 - Released @ 2024-03-30 02:56:29.866498Z
