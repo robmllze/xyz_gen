@@ -2,8 +2,9 @@
 
 ## [0.61.0]
 
-- Released @ 2024-03-30 03:18:58.111824Z
+- Released @ 2024-03-30 03:47:46.913432Z
 - Fix type issues with screen generator
+- Bugfix
 
 ## [0.60.0]
 
