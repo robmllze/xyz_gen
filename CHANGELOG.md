@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.64.0]
+
+- Released @ 2024-05-02 13:01:49.311018Z
+- Update type mappers
+
 ## [0.63.2]
 
 - Released @ 2024-05-02 12:47:38.604051Z
