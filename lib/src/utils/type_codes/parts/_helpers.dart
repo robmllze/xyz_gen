@@ -37,7 +37,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
 
   String? decompose(String input) {
     // Find all collection type expressions from the input.
-    const A = r'[\w\*\|\?]+';
+    const A = r'[\w\-\*\|\?]+';
     const B = r'\b(' '$A' r')\<((' '$A' r')(\,' '$A' r')*)\>(\?)?';
     final matches = RegExp(B).allMatches(input);
 

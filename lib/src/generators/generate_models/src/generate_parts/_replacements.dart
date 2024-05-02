@@ -69,7 +69,7 @@ Map<String, String> _replacements({
     allIds.map((e) {
       final fieldName = 'otherData?[${allKeyConsts[e]}]';
       final parameter = camelCaseFields[e]!;
-      final typeCode = parameter.getName();
+      final typeCode = parameter.value;
       final value = mapWithFromMappers(
         typeMappers: LooseTypeMappers.instance,
         fieldName: fieldName,
@@ -82,7 +82,7 @@ Map<String, String> _replacements({
     allIds.map((e) {
       final keyConst = allKeyConsts[e];
       final parameter = camelCaseFields[e]!;
-      final typeCode = parameter.getName();
+      final typeCode = parameter.value;
       final value = mapWithToMappers(
         typeMappers: LooseTypeMappers.instance,
         fieldName: e,
