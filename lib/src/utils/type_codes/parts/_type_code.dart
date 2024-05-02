@@ -109,10 +109,6 @@ class TypeCode {
   //
   //
 
-  //
-  //
-  //
-
   @override
   int get hashCode => this.value.hashCode;
 

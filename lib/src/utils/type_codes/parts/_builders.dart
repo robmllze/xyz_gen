@@ -27,7 +27,7 @@ String? _buildObjectMapper(
 
 String _buildCollectionMapper(
   Iterable<List<String>> typeData,
-  TTypeMappers mappingFormulas,
+  TTypeMappers mappers,
 ) {
   var output = '#x0';
   // Loop through type data elements.
@@ -37,7 +37,7 @@ String _buildCollectionMapper(
     collectionEvent
       .._lhashes = Iterable.generate(pLength, (n) => n).map((n) => '#p$n')
       .._lparams = Iterable.generate(pLength, (n) => n).map((n) => 'p$n')
-      .._largs = Iterable.generate(pLength, (n) => n).map((n) => 'final p$n')
+      .._largs = Iterable.generate(pLength, (n) => n).map((n) => 'p$n')
       .._type = element[1];
     final argIdMatch = RegExp(r'#x(\d+)').firstMatch(output);
     collectionEvent._nameIndex =
@@ -45,7 +45,7 @@ String _buildCollectionMapper(
             ? int.tryParse(argIdMatch.group(1)!)
             : null;
     final xHash = '#x${collectionEvent._nameIndex}';
-    final formula = _buildMapper(collectionEvent, mappingFormulas);
+    final formula = _buildMapper(collectionEvent, mappers);
     if (formula != null) {
       output = output.replaceFirst(xHash, formula);
     } else {
@@ -66,7 +66,7 @@ String _buildCollectionMapper(
       // If the object type is something else like num, int, double, bool or
       // String.
       else {
-        final formula = _buildMapper(objectEvent, mappingFormulas);
+        final formula = _buildMapper(objectEvent, mappers);
         if (formula != null) {
           output = output.replaceFirst(pHash, formula);
         } else {
