@@ -87,6 +87,10 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()';
         },
+        r'^(Searchable-String)\??$': (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return '''${e.name}?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll('[^\\w]', ' ')''';
+        },
         r'^(UpperCase-String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperCase()';
@@ -196,6 +200,10 @@ class LooseTypeMappers extends TypeMappers {
         r'^(LowerCase-String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()';
+        },
+        r'^(Searchable-String)\??$': (e) {
+          if (e is! ObjectMapperEvent) throw TypeError();
+          return '''${e.name}?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll('[^\\w]', ' ')''';
         },
         r'^(UpperCase-String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
