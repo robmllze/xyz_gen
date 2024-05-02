@@ -141,7 +141,11 @@ class ModelUser extends Model {
         email: data?[K_EMAIL]?.toString().trim().nullIfEmpty?.toLowerCase(),
         firstName: data?[K_FIRST_NAME]?.toString().trim().nullIfEmpty,
         lastName: data?[K_LAST_NAME]?.toString().trim().nullIfEmpty,
-        searchableName: data?[K_SEARCHABLE_NAME]?.toString().trim().nullIfEmpty?.toLowerCase(),
+        searchableName: data?[K_SEARCHABLE_NAME]
+            ?.toString()
+            .trim()
+            .nullIfEmpty
+            ?.toLowerCase(),
         type: data?[K_TYPE]?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       );
     } catch (e) {
@@ -165,7 +169,8 @@ class ModelUser extends Model {
         K_EMAIL: email?.toString().trim().nullIfEmpty?.toLowerCase(),
         K_FIRST_NAME: firstName?.toString().trim().nullIfEmpty,
         K_LAST_NAME: lastName?.toString().trim().nullIfEmpty,
-        K_SEARCHABLE_NAME: searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
+        K_SEARCHABLE_NAME:
+            searchableName?.toString().trim().nullIfEmpty?.toLowerCase(),
         K_TYPE: type?.toString().trim().nullIfEmpty?.toUpperSnakeCase(),
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
@@ -202,11 +207,13 @@ class ModelUser extends Model {
     Map<String, dynamic>? data,
   ) {
     if (data != null && data.isNotEmpty) {
-      this.displayName = letAs<String?>(data?[K_DISPLAY_NAME]) ?? this.displayName;
+      this.displayName =
+          letAs<String?>(data?[K_DISPLAY_NAME]) ?? this.displayName;
       this.email = letAs<String?>(data?[K_EMAIL]) ?? this.email;
       this.firstName = letAs<String?>(data?[K_FIRST_NAME]) ?? this.firstName;
       this.lastName = letAs<String?>(data?[K_LAST_NAME]) ?? this.lastName;
-      this.searchableName = letAs<String?>(data?[K_SEARCHABLE_NAME]) ?? this.searchableName;
+      this.searchableName =
+          letAs<String?>(data?[K_SEARCHABLE_NAME]) ?? this.searchableName;
       this.type = letAs<String?>(data?[K_TYPE]) ?? this.type;
     }
   }
