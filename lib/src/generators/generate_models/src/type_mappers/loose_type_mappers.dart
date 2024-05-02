@@ -83,55 +83,55 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
-        r'^(LowerCase-String)\??$': (e) {
+        r'^(LowerCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()';
         },
-        r'^(Searchable-String)\??$': (e) {
+        r'^(Searchable_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\\w]', ' ')";
         },
-        r'^(UpperCase-String)\??$': (e) {
+        r'^(UpperCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperCase()';
         },
-        r'^(LowerSnakeCase-String)\??$': (e) {
+        r'^(LowerSnakeCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerSnakeCase()';
         },
-        r'^(UpperSnakeCase-String)\??$': (e) {
+        r'^(UpperSnakeCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperSnakeCase()';
         },
-        r'^(LowerKebabCase-String)\??$': (e) {
+        r'^(LowerKebabCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerKebabCase()';
         },
-        r'^(UpperKebabCase-String)\??$': (e) {
+        r'^(UpperKebabCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()';
         },
-        r'^(LowerDotCase-String)\??$': (e) {
+        r'^(LowerDotCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerDotCase()';
         },
-        r'^(UpperDotCase-String)\??$': (e) {
+        r'^(UpperDotCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperDotCase()';
         },
-        r'^(CamelCase-String)\??$': (e) {
+        r'^(CamelCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()';
         },
-        r'^(PascalCase-String)\??$': (e) {
+        r'^(PascalCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()';
         },
-        r'^(UriPathCase-String)\??$': (e) {
+        r'^(UriPathCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUriPathCase()';
         },
-        r'^(PathCase-String)\??$': (e) {
+        r'^(PathCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toPathCase()';
         },
@@ -197,55 +197,55 @@ class LooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
-        r'^(LowerCase-String)\??$': (e) {
+        r'^(LowerCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()';
         },
-        r'^(Searchable-String)\??$': (e) {
+        r'^(Searchable_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\\w]', ' ')";
         },
-        r'^(UpperCase-String)\??$': (e) {
+        r'^(UpperCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperCase()';
         },
-        r'^(LowerSnakeCase-String)\??$': (e) {
+        r'^(LowerSnakeCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerSnakeCase()';
         },
-        r'^(UpperSnakeCase-String)\??$': (e) {
+        r'^(UpperSnakeCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperSnakeCase()';
         },
-        r'^(LowerKebabCase-String)\??$': (e) {
+        r'^(LowerKebabCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerKebabCase()';
         },
-        r'^(UpperKebabCase-String)\??$': (e) {
+        r'^(UpperKebabCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()';
         },
-        r'^(LowerDotCase-String)\??$': (e) {
+        r'^(LowerDotCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerDotCase()';
         },
-        r'^(UpperDotCase-String)\??$': (e) {
+        r'^(UpperDotCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperDotCase()';
         },
-        r'^(CamelCase-String)\??$': (e) {
+        r'^(CamelCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()';
         },
-        r'^(PascalCase-String)\??$': (e) {
+        r'^(PascalCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()';
         },
-        r'^(UriPathCase-String)\??$': (e) {
+        r'^(UriPathCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUriPathCase()';
         },
-        r'^(PathCase-String)\??$': (e) {
+        r'^(PathCase_String)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toPathCase()';
         },
