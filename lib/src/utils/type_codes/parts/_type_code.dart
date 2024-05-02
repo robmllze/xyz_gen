@@ -58,28 +58,54 @@ class TypeCode {
   //
   //
 
-  static String _typeCodeToName(String value) {
-    var temp = value.replaceAll(' ', '');
-    temp = temp.split('-').last;
-    temp = temp.replaceAll('|let', '');
-    while (true) {
-      final match = RegExp(r'\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>')
-          .firstMatch(temp);
-      if (match == null) break;
-      final group0 = match.group(0);
-      if (group0 == null) break;
-      temp = temp.replaceAll(
-        group0,
-        group0
+  static String _typeCodeToName(String input) {
+    String step0(String input) {
+      return input.replaceAll(' ', '');
+    }
+
+    String step1(String input) {
+      return input.replaceAll('|let', '');
+    }
+
+    String step2(String input) {
+      final x = RegExp(r'(\w+)-(\w+)');
+      return input.replaceAllMapped(x, (m) => m.group(2)!);
+    }
+
+    String step3(String input) {
+      final x = RegExp(r'\w+\|clean\<([\w\[\]\+]+\??)(,[\w\[\]\+]+\??)*\>');
+      var output = input;
+      while (true) {
+        final group0 = x.firstMatch(output)?.group(0);
+        print(group0);
+        if (group0 == null) break;
+        final replacement = group0
             .replaceAll('|clean', '')
             .replaceAll('?', '')
             .replaceAll('<', '[')
             .replaceAll('>', ']')
-            .replaceAll(',', '+'),
-      );
+            .replaceAll(',', '+');
+        output = output.replaceAll(group0, replacement);
+      }
+      return output;
     }
-    return temp.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
+
+    String step4(String input) {
+      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
+    }
+
+    var output = input;
+    output = step0(input);
+    output = step1(output);
+    output = step2(output);
+    output = step3(output);
+    output = step4(output);
+    return output;
   }
+
+  //
+  //
+  //
 
   //
   //
