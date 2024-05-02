@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.66.0]
+
+- Released @ 2024-05-02 14:33:45.681365Z
+- Update TypeCode
+
 ## [0.65.0]
 
 - Released @ 2024-05-02 14:08:46.815562Z
