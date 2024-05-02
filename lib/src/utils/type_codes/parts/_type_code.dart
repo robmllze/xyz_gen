@@ -69,7 +69,9 @@ class TypeCode {
 
     String step2(String input) {
       return input.replaceAllMapped(
-          RegExp(r'(\b\w+-)*(\w+)\b'), (m) => m.group(2)!);
+        RegExp(r'(\b\w+-)*(\w+)\b'),
+        (m) => m.group(2)!,
+      );
     }
 
     String step3(String input) {
@@ -90,10 +92,7 @@ class TypeCode {
     }
 
     String step4(String input) {
-      return input
-          .replaceAll('[', '<')
-          .replaceAll(']', '>')
-          .replaceAll('+', ', ');
+      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
     }
 
     var output = input;
