@@ -68,8 +68,7 @@ class TypeCode {
     }
 
     String step2(String input) {
-      final x = RegExp(r'(\w+)-(\w+)');
-      return input.replaceAllMapped(x, (m) => m.group(2)!);
+      return input.replaceAllMapped(RegExp(r'(\b\w+-)*(\w+)\b'), (m) => m.group(2)!);
     }
 
     String step3(String input) {
@@ -77,7 +76,6 @@ class TypeCode {
       var output = input;
       while (true) {
         final group0 = x.firstMatch(output)?.group(0);
-        print(group0);
         if (group0 == null) break;
         final replacement = group0
             .replaceAll('|clean', '')
@@ -91,10 +89,7 @@ class TypeCode {
     }
 
     String step4(String input) {
-      return input
-          .replaceAll('[', '<')
-          .replaceAll(']', '>')
-          .replaceAll('+', ', ');
+      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
     }
 
     var output = input;
