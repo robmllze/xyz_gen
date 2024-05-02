@@ -91,7 +91,10 @@ class TypeCode {
     }
 
     String step4(String input) {
-      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
+      return input
+          .replaceAll('[', '<')
+          .replaceAll(']', '>')
+          .replaceAll('+', ', ');
     }
 
     var output = input;
