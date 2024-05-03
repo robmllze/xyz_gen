@@ -60,7 +60,7 @@ Map<String, String> _replacements({
     ],
     // ___P8___
     [
-      ...vars.map((e) => '${consts[e]}: $e,'),
+      ...vars.map((e) => '${consts[e]}: this.\$$e,'),
     ],
     // ___P9___
 

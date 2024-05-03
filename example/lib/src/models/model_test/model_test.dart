@@ -30,7 +30,7 @@ part '_model_test.g.dart';
 )
 abstract class _ModelTest extends Model {
   @Field()
-  String? firstName;
+  late String firstName;
 
   @Field()
   String? lastName;

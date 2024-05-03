@@ -58,7 +58,7 @@ class ModelTest extends _ModelTest {
   factory ModelTest({
     DateTime? date,
     String? email,
-    String? firstName,
+    required String firstName,
     String? id,
     String? lastName,
     required String name,
@@ -88,6 +88,7 @@ class ModelTest extends _ModelTest {
     String? name,
     String? searchableName,
   }) {
+    assert(firstName != null);
     assert(name != null);
     this._date = date;
     this._email = email;
@@ -170,7 +171,7 @@ class ModelTest extends _ModelTest {
     Uri? uri,
   ) {
     try {
-      if (uri != null && uri.path == MODEL_ID) {
+      if (uri != null && uri.path == CLASS) {
         return ModelTest.fromJson(uri.queryParameters);
       } else {
         return ModelTest.b();
@@ -213,13 +214,13 @@ class ModelTest extends _ModelTest {
   }) {
     try {
       final withNulls = <String, dynamic>{
-        K_DATE: date,
-        K_EMAIL: email,
-        K_FIRST_NAME: firstName,
-        K_ID: id,
-        K_LAST_NAME: lastName,
-        K_NAME: name,
-        K_SEARCHABLE_NAME: searchableName,
+        K_DATE: this.$date,
+        K_EMAIL: this.$email,
+        K_FIRST_NAME: this.$firstName,
+        K_ID: this.$id,
+        K_LAST_NAME: this.$lastName,
+        K_NAME: this.$name,
+        K_SEARCHABLE_NAME: this.$searchableName,
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -301,10 +302,10 @@ class ModelTest extends _ModelTest {
   set $email(v) =>
       this._email = v?.toString().trim().nullIfEmpty?.toLowerCase();
 
-  String? get firstName => this._firstName;
-  set firstName(String? v) => this._firstName = v;
+  String get firstName => this._firstName!;
+  set firstName(String v) => this._firstName = v;
 
-  dynamic get $firstName => this._firstName?.toString().trim().nullIfEmpty;
+  dynamic get $firstName => (this._firstName?.toString().trim().nullIfEmpty)!;
   set $firstName(v) => this._firstName = v?.toString().trim().nullIfEmpty;
 
   String? get id => this._id;
