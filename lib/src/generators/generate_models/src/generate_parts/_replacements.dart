@@ -18,82 +18,80 @@ Map<String, String> _replacements({
   required bool includeId,
   required bool includeArgs,
 }) {
-  final camelCaseFields = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
-  final id =
-      includeId ? camelCaseFields['id'] ??= const TypeCode('String?') : null;
-  final args = includeArgs
-      ? camelCaseFields['args'] ??= const TypeCode('dynamic')
-      : null;
-  final allEntries = camelCaseFields.entries.toList()
-    ..sort((a, b) => a.key.compareTo(b.key));
-  final allIds = allEntries.map((e) => e.key);
-  final ids = allIds.where((e) => !const ['id', 'args'].contains(e));
-  final entries = ids.map((i) => MapEntry(i, camelCaseFields[i]));
-  final nonNullableIds = allIds.where((e) => !camelCaseFields[e]!.nullable);
-  final allKeys = _getKeyNames(allIds, keyStringCaseType);
-  final allKeyConsts = _getKeyConstNames(allIds);
+  final fields0 = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
+  final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+  final vars = entries0.map((e) => e.key);
+  final entries1 = vars.map((i) => MapEntry(i, fields0[i]));
+  final nonNullableVars = vars.where((e) => !fields0[e]!.nullable);
+  final keys = _getKeyNames(vars, keyStringCaseType);
+  final consts = _getKeyConstNames(vars);
 
   final p = <Iterable>[
     // ___P0___
-    allIds.map((e) => "static const ${allKeyConsts[e]} = '${allKeys[e]}';"),
+    vars.map((e) => "static const ${consts[e]} = '${keys[e]}';"),
     // ___P1___
-    entries.map((e) => '${e.value!.nullableName} ${e.key};'),
+    entries1.map((e) => 'dynamic _${e.key};'),
     // ___P2___
     [
-      if (id != null)
-        () {
-          assert(id.nullableName == 'String?');
-          return '${id.nullable ? '' : 'required '}${id.getName()} id,';
-        }(),
-      if (args != null)
-        () {
-          return '${args.nullable ? '' : 'required '}${args.getName()} args,';
-        }(),
-      ...entries
-          .map((e) => '${e.value!.nullable ? '' : 'required '}this.${e.key},'),
+      ...entries1
+          .map((e) => '${e.value!.nullable ? '' : 'required '}${e.value?.getName()} ${e.key},'),
     ],
     // ___P3___
     [
-      if (id != null) 'this.id = id;',
-      if (args != null) 'this.args = args;',
+      ...vars.map((e) => 'this._$e = $e;'),
     ],
     // ___P4___
     [
-      if (id != null) 'String? id,',
-      if (args != null) '${args.nullableName} args,',
-      ...ids.map((e) => 'this.$e,'),
+      ...entries1.map((e) => '${e.value?.nullableName} ${e.key},'),
     ],
     // ___P5___
-    nonNullableIds.map((e) => 'assert(this.$e != null);'),
+    nonNullableVars.map((e) => 'assert($e != null);'),
     // ___P6___
-    allIds.map((e) {
-      final fieldName = 'otherData?[${allKeyConsts[e]}]';
-      final parameter = camelCaseFields[e]!;
-      final typeCode = parameter.value;
-      final value = mapWithFromMappers(
-        typeMappers: LooseTypeMappers.instance,
-        fieldName: fieldName,
-        typeCode: typeCode,
-      );
-      return '$e: $value,';
-    }),
-
+    [
+      ...vars.map((e) {
+        return '..\$$e = otherData?[${consts[e]}]';
+      }),
+      ';',
+    ],
     // ___P7___
-    allIds.map((e) {
-      final keyConst = allKeyConsts[e];
-      final parameter = camelCaseFields[e]!;
-      final typeCode = parameter.value;
-      final value = mapWithToMappers(
-        typeMappers: LooseTypeMappers.instance,
-        fieldName: e,
-        typeCode: typeCode,
-      );
-      return '$keyConst: $value,';
+    vars.map((e) {
+      final keyConst = consts[e];
+      return '$keyConst: this._$e,';
     }),
     // ___P8___
-    allIds.map((e) {
-      return 'other.$e != null ? this.$e = other.$e: null;';
+
+    vars.map((e) {
+      return 'if (other._$e != null) { this.$e = other._$e; }';
     }),
+    // ___P9___
+    [],
+    // ___P10___
+    vars.map((e) {
+      final parameter = fields0[e]!;
+      final typeCode = parameter.value;
+      final typeName = parameter.getName();
+      final v0 = mapWithFromMappers(
+        typeMappers: LooseTypeMappers.instance,
+        fieldName: 'v',
+        typeCode: typeCode,
+      );
+      var v1 = mapWithToMappers(
+        typeMappers: LooseTypeMappers.instance,
+        fieldName: 'this._$e',
+        typeCode: typeCode,
+      );
+      return [
+        '$typeName get $e => this._$e;',
+        'dynamic get \$$e => ${parameter.nullable ? v1 : '($v1)!'};'
+            'set $e($typeName v) => this.\$$e = v;',
+        'set \$$e(v) => this._$e = $v0;',
+        '',
+      ].join('\n');
+    }),
+    // ___P11___
+    [
+      ...vars.map((e) => '$e: $e,'),
+    ],
   ];
 
   final output = <String, String>{};
