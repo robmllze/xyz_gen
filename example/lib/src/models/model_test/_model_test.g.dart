@@ -58,7 +58,7 @@ class ModelTest extends _ModelTest {
   //
 
   factory ModelTest({
-    required DateTime date,
+    DateTime? date,
     String? email,
     required String firstName,
     String? id,
@@ -93,7 +93,6 @@ class ModelTest extends _ModelTest {
     String? searchableName,
     Map<String, List<int>>? test2,
   }) {
-    assert(date != null);
     assert(firstName != null);
     assert(name != null);
     assert(test2 != null);
@@ -298,10 +297,10 @@ class ModelTest extends _ModelTest {
   //
   //
 
-  DateTime get date => this._date!;
-  set date(DateTime v) => this._date = v;
+  DateTime? get date => this._date;
+  set date(DateTime? v) => this._date = v;
 
-  dynamic get $date => (this._date?.toUtc()?.toIso8601String())!;
+  dynamic get $date => this._date?.toUtc()?.toIso8601String();
   set $date(v) => this._date = () {
         final a = v;
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;

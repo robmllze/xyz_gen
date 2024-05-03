@@ -32,5 +32,8 @@ abstract class _ModelTest extends Model {
   @Field()
   String? lastName;
 
+  @Field()
+  late Map<DateTime, List<Set<ModelTest>>?> toets;
+
   String get fullName => '$firstName $lastName';
 }
