@@ -242,7 +242,7 @@ Future<void> _writeClassFile(
   Map<String, TypeCode> parameters,
 ) async {
   final entries = parameters.entries;
-  final p0 = entries.map((e) => '${e.value.getName()} ${e.key};');
+  final p0 = entries.map((e) => '${e.value.name} ${e.key};');
   final p1 = entries
       .map((e) => '${e.value.nullable ? '' : 'required '}this.${e.key},');
   final p2 = entries.map((e) => '${e.value.nullableName} ${e.key},');

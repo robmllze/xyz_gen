@@ -36,6 +36,7 @@ class ModelTest extends _ModelTest {
   static const K_LAST_NAME = 'last_name';
   static const K_NAME = 'name';
   static const K_SEARCHABLE_NAME = 'searchable_name';
+  static const K_TEST_2 = 'test_2';
 
   DateTime? _date;
   String? _email;
@@ -44,6 +45,7 @@ class ModelTest extends _ModelTest {
   String? _lastName;
   String? _name;
   String? _searchableName;
+  Map<String, List<int>>? _test2;
 
   //
   //
@@ -56,13 +58,14 @@ class ModelTest extends _ModelTest {
   //
 
   factory ModelTest({
-    DateTime? date,
+    required DateTime date,
     String? email,
     required String firstName,
     String? id,
     String? lastName,
     required String name,
     String? searchableName,
+    required Map<String, List<int>> test2,
   }) {
     return ModelTest.b(
       date: date,
@@ -72,6 +75,7 @@ class ModelTest extends _ModelTest {
       lastName: lastName,
       name: name,
       searchableName: searchableName,
+      test2: test2,
     );
   }
 
@@ -87,9 +91,12 @@ class ModelTest extends _ModelTest {
     String? lastName,
     String? name,
     String? searchableName,
+    Map<String, List<int>>? test2,
   }) {
+    assert(date != null);
     assert(firstName != null);
     assert(name != null);
+    assert(test2 != null);
     this._date = date;
     this._email = email;
     this._firstName = firstName;
@@ -97,6 +104,7 @@ class ModelTest extends _ModelTest {
     this._lastName = lastName;
     this._name = name;
     this._searchableName = searchableName;
+    this._test2 = test2;
   }
 
   //
@@ -156,7 +164,8 @@ class ModelTest extends _ModelTest {
         ..$id = otherData?[K_ID]
         ..$lastName = otherData?[K_LAST_NAME]
         ..$name = otherData?[K_NAME]
-        ..$searchableName = otherData?[K_SEARCHABLE_NAME];
+        ..$searchableName = otherData?[K_SEARCHABLE_NAME]
+        ..$test2 = otherData?[K_TEST_2];
     } catch (e) {
       assert(false, e);
       rethrow;
@@ -221,6 +230,7 @@ class ModelTest extends _ModelTest {
         K_LAST_NAME: this.$lastName,
         K_NAME: this.$name,
         K_SEARCHABLE_NAME: this.$searchableName,
+        K_TEST_2: this.$test2,
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -278,6 +288,9 @@ class ModelTest extends _ModelTest {
       if (other._searchableName != null) {
         this.searchableName = other._searchableName!;
       }
+      if (other._test2 != null) {
+        this.test2 = other._test2!;
+      }
     }
   }
 
@@ -285,10 +298,10 @@ class ModelTest extends _ModelTest {
   //
   //
 
-  DateTime? get date => this._date;
-  set date(DateTime? v) => this._date = v;
+  DateTime get date => this._date!;
+  set date(DateTime v) => this._date = v;
 
-  dynamic get $date => this._date?.toUtc()?.toIso8601String();
+  dynamic get $date => (this._date?.toUtc()?.toIso8601String())!;
   set $date(v) => this._date = () {
         final a = v;
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
@@ -338,4 +351,41 @@ class ModelTest extends _ModelTest {
       .replaceAll(r'[^\w]', '');
   set $searchableName(v) => this._searchableName =
       v?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\w]', '');
+
+  Map<String, List<int>> get test2 => this._test2!;
+  set test2(Map<String, List<int>> v) => this._test2 = v;
+
+  dynamic get $test2 => (this
+      ._test2
+      ?.map(
+        (p0, p1) => MapEntry(
+          p0?.toString().trim().nullIfEmpty,
+          p1
+              ?.map(
+                (p0) => p0,
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.toList(),
+        ),
+      )
+      .nonNulls
+      .nullIfEmpty)!;
+  set $test2(v) => this._test2 = letMap(v)
+      ?.map(
+        (p0, p1) => MapEntry(
+          p0?.toString().trim().nullIfEmpty,
+          letList(p1)
+              ?.map(
+                (p0) => letInt(p0),
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.toList()
+              .cast(),
+        ),
+      )
+      .nonNulls
+      .nullIfEmpty
+      ?.cast();
 }

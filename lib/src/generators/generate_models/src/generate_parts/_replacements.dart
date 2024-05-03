@@ -15,8 +15,6 @@ part of '../generate.dart';
 Map<String, String> _replacements({
   required Map<String, TypeCode> fields,
   required StringCaseType keyStringCaseType,
-  required bool includeId,
-  required bool includeArgs,
 }) {
   final fields0 = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
   final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
@@ -33,8 +31,7 @@ Map<String, String> _replacements({
     entries1.map((e) => '${e.value?.nullableName} _${e.key};'),
     // ___P2___
     [
-      ...entries1
-          .map((e) => '${e.value!.nullable ? '' : 'required '}${e.value?.getName()} ${e.key},'),
+      ...entries1.map((e) => '${e.value!.nullable ? '' : 'required '}${e.value?.name} ${e.key},'),
     ],
     // ___P3___
     [
@@ -69,9 +66,10 @@ Map<String, String> _replacements({
     }),
     // ___P10___
     vars.map((e) {
-      final parameter = fields0[e]!;
-      final typeCode = parameter.value;
-      final typeName = parameter.getName();
+      final type = fields0[e]!;
+      final typeCode = type.code;
+      final typeName = type.name;
+      final nullable = type.nullable;
       final v0 = mapWithFromMappers(
         typeMappers: LooseTypeMappers.instance,
         fieldName: 'v',
@@ -83,10 +81,10 @@ Map<String, String> _replacements({
         typeCode: typeCode,
       );
       return [
-        '$typeName get $e => this._$e${parameter.nullable ? '' : '!'};',
+        '$typeName get $e => this._$e${nullable ? '' : '!'};',
         'set $e($typeName v) => this._$e = v;',
         '',
-        'dynamic get \$$e => ${parameter.nullable ? v1 : '($v1)!'};',
+        'dynamic get \$$e => ${nullable ? v1 : '($v1)!'};',
         'set \$$e(v) => this._$e = $v0;',
         '',
       ].join('\n');

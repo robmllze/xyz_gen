@@ -117,8 +117,7 @@ Future<GenerateModel> generateModel({
   final output = replaceData(
     template,
     {
-      '___SUPER_CLASS___':
-          annotation.shouldInherit ? annotatedClassName : 'Model',
+      '___SUPER_CLASS___': annotation.shouldInherit ? annotatedClassName : 'Model',
       '___SUPER_CONSTRUCTOR___': annotation.shouldInherit
           ? annotation.inheritanceConstructor?.nullIfEmpty != null
               ? ': super.${annotation.inheritanceConstructor}()'
@@ -128,13 +127,21 @@ Future<GenerateModel> generateModel({
       '___MODEL_ID___': annotation.className?.toLowerSnakeCase(),
       '___CLASS_FILE_NAME___': classFileName,
       ..._replacements(
-        fields:
-            annotation.fields?.map((k, v) => MapEntry(k, TypeCode(v))) ?? {},
-        keyStringCaseType:
-            StringCaseType.values.valueOf(annotation.keyStringCase) ??
-                StringCaseType.LOWER_SNAKE_CASE,
-        includeId: annotation.includeId,
-        includeArgs: annotation.includeArgs,
+        fields: annotation.fields?.map((e) {
+              final fieldName = e.fieldName;
+              final fieldType = e.fieldType?.toString() ?? 'dynamic';
+              final nullable = e.nullable == true || e.fieldType.endsWith('?');
+              return MapEntry(
+                fieldName,
+                TypeCode.b(
+                  fieldType,
+                  nullable: nullable,
+                ),
+              );
+            }).toMap() ??
+            {},
+        keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
+            StringCaseType.LOWER_SNAKE_CASE,
       ),
     },
   );
@@ -167,8 +174,7 @@ GenerateModel _updateClassName(
   final a = annotatedClassName.replaceFirst(RegExp(r'^[_$]+'), '');
   final b = a != annotatedClassName ? a : '${annotatedClassName}Model';
   annotation = annotation.copyWith(
-    className:
-        annotation.className?.nullIfEmpty == null ? b : annotation.className,
+    className: annotation.className?.nullIfEmpty == null ? b : annotation.className,
   );
   return annotation;
 }
@@ -185,7 +191,7 @@ GenerateModel _updateFromAnnotatedMember(
     annotation = annotation.copyWith(
       fields: {
         ...?annotation.fields,
-        memberName: memberType,
+        F(memberName, memberType),
       },
     );
   }
@@ -206,16 +212,25 @@ GenerateModel _updateFromClassAnnotationField(
       );
 
     case 'fields':
+      final newFields = fieldValue.toSetValue()?.map((e) {
+            final fieldName = (e.getField('fieldName')?.toStringValue())!;
+            final nullable = e.getField('nullable')?.toBoolValue() == true;
+            final fieldType = (e
+                    .getField('fieldType')
+                    ?.toTypeValue()
+                    ?.getDisplayString(withNullability: nullable) ??
+                e.getField('fieldType')?.toStringValue())!;
+            return F(
+              fieldName,
+              fieldType,
+              nullable: nullable,
+            );
+          }).nonNulls ??
+          {};
       return annotation.copyWith(
         fields: {
           ...?annotation.fields,
-          ...fieldValue.toMapValue()?.map((k, v) {
-                return MapEntry(
-                  k?.toStringValue(),
-                  v?.toStringValue(),
-                );
-              }).nonNulls ??
-              {},
+          ...newFields,
         },
       );
 
@@ -230,18 +245,7 @@ GenerateModel _updateFromClassAnnotationField(
 
     case 'keyStringCase':
       return annotation.copyWith(
-        keyStringCase:
-            fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
-      );
-
-    case 'includeId':
-      return annotation.copyWith(
-        includeId: fieldValue.toBoolValue() ?? true,
-      );
-
-    case 'includeArgs':
-      return annotation.copyWith(
-        includeArgs: fieldValue.toBoolValue() ?? true,
+        keyStringCase: fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
       );
     default:
       return annotation;

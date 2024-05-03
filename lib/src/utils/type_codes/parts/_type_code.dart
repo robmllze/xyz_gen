@@ -17,13 +17,32 @@ class TypeCode {
   //
   //
 
-  final String value;
+  final String code;
 
   //
   //
   //
 
-  const TypeCode(this.value);
+  const TypeCode(this.code);
+
+  //
+  //
+  //
+
+  factory TypeCode.b(
+    String code, {
+    bool? nullable,
+  }) {
+    return nullable == null
+        ? TypeCode(code)
+        : nullable
+            ? TypeCode(
+                code.endsWith('?') ? code : '$code?',
+              )
+            : TypeCode(
+                code.endsWith('?') ? code.substring(0, code.length - 1) : code,
+              );
+  }
 
   //
   //
@@ -37,21 +56,21 @@ class TypeCode {
   //
   //
 
-  bool get nullable => isNullable(this.getName());
+  bool get nullable => isNullable(this.name);
 
   //
   //
   //
 
-  String getName() => _typeCodeToName(this.value);
+  String get name => _typeCodeToName(this.code);
 
   //
   //
   //
 
   String get nullableName {
-    final name = this.getName();
-    return isNullable(name) ? name : '$name?';
+    final a = this.name;
+    return isNullable(a) ? a : '$a?';
   }
 
   //
@@ -92,10 +111,7 @@ class TypeCode {
     }
 
     String step4(String input) {
-      return input
-          .replaceAll('[', '<')
-          .replaceAll(']', '>')
-          .replaceAll('+', ', ');
+      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
     }
 
     var output = input;
@@ -112,7 +128,7 @@ class TypeCode {
   //
 
   @override
-  int get hashCode => this.value.hashCode;
+  int get hashCode => this.code.hashCode;
 
   //
   //
@@ -122,4 +138,11 @@ class TypeCode {
   bool operator ==(Object other) {
     return other.runtimeType == TypeCode && other.hashCode == this.hashCode;
   }
+
+  //
+  //
+  //
+
+  @override
+  String toString() => this.code;
 }
