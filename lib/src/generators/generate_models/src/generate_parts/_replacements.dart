@@ -30,7 +30,7 @@ Map<String, String> _replacements({
     // ___P0___
     vars.map((e) => "static const ${consts[e]} = '${keys[e]}';"),
     // ___P1___
-    entries1.map((e) => 'dynamic _${e.key};'),
+    entries1.map((e) => '${e.value?.nullableName} _${e.key};'),
     // ___P2___
     [
       ...entries1
@@ -38,8 +38,9 @@ Map<String, String> _replacements({
     ],
     // ___P3___
     [
-      ...vars.map((e) => 'this._$e = $e;'),
+      ...vars.map((e) => '$e: $e,'),
     ],
+
     // ___P4___
     [
       ...entries1.map((e) => '${e.value?.nullableName} ${e.key},'),
@@ -48,23 +49,24 @@ Map<String, String> _replacements({
     nonNullableVars.map((e) => 'assert($e != null);'),
     // ___P6___
     [
+      ...vars.map((e) => 'this._$e = $e;'),
+    ],
+    // ___P7___
+    [
       ...vars.map((e) {
         return '..\$$e = otherData?[${consts[e]}]';
       }),
       ';',
     ],
-    // ___P7___
-    vars.map((e) {
-      final keyConst = consts[e];
-      return '$keyConst: this._$e,';
-    }),
     // ___P8___
+    [
+      ...vars.map((e) => '${consts[e]}: $e,'),
+    ],
+    // ___P9___
 
     vars.map((e) {
-      return 'if (other._$e != null) { this.$e = other._$e; }';
+      return 'if (other._$e != null) { this.$e = other._$e!; }';
     }),
-    // ___P9___
-    [],
     // ___P10___
     vars.map((e) {
       final parameter = fields0[e]!;
@@ -81,17 +83,14 @@ Map<String, String> _replacements({
         typeCode: typeCode,
       );
       return [
-        '$typeName get $e => this._$e;',
-        'dynamic get \$$e => ${parameter.nullable ? v1 : '($v1)!'};'
-            'set $e($typeName v) => this.\$$e = v;',
+        '$typeName get $e => this._$e${parameter.nullable ? '' : '!'};',
+        'set $e($typeName v) => this._$e = v;',
+        '',
+        'dynamic get \$$e => ${parameter.nullable ? v1 : '($v1)!'};',
         'set \$$e(v) => this._$e = $v0;',
         '',
       ].join('\n');
     }),
-    // ___P11___
-    [
-      ...vars.map((e) => '$e: $e,'),
-    ],
   ];
 
   final output = <String, String>{};

@@ -19,50 +19,56 @@ part of 'model_test.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ModeTest extends _ModeTest {
+class ModelTest extends _ModelTest {
   //
   //
   //
 
-  static const CLASS = 'ModeTest';
-  static const MODEL_ID = 'mode_test';
+  static const CLASS = 'ModelTest';
+
+  @override
+  String get $class => CLASS;
 
   static const K_DATE = 'date';
   static const K_EMAIL = 'email';
   static const K_FIRST_NAME = 'first_name';
+  static const K_ID = 'id';
   static const K_LAST_NAME = 'last_name';
   static const K_NAME = 'name';
   static const K_SEARCHABLE_NAME = 'searchable_name';
 
-  dynamic _date;
-  dynamic _email;
-  dynamic _firstName;
-  dynamic _lastName;
-  dynamic _name;
-  dynamic _searchableName;
+  DateTime? _date;
+  String? _email;
+  String? _firstName;
+  String? _id;
+  String? _lastName;
+  String? _name;
+  String? _searchableName;
 
   //
   //
   //
 
-  ModeTest.empty();
+  ModelTest.empty();
 
   //
   //
   //
 
-  factory ModeTest({
+  factory ModelTest({
     DateTime? date,
     String? email,
     String? firstName,
+    String? id,
     String? lastName,
     required String name,
     String? searchableName,
   }) {
-    return ModeTest.unsafe(
+    return ModelTest.b(
       date: date,
       email: email,
       firstName: firstName,
+      id: id,
       lastName: lastName,
       name: name,
       searchableName: searchableName,
@@ -73,10 +79,11 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  ModeTest.unsafe({
+  ModelTest.b({
     DateTime? date,
     String? email,
     String? firstName,
+    String? id,
     String? lastName,
     String? name,
     String? searchableName,
@@ -85,6 +92,7 @@ class ModeTest extends _ModeTest {
     this._date = date;
     this._email = email;
     this._firstName = firstName;
+    this._id = id;
     this._lastName = lastName;
     this._name = name;
     this._searchableName = searchableName;
@@ -94,11 +102,11 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  factory ModeTest.from(
+  factory ModelTest.from(
     Model? other,
   ) {
-    return ModeTest.fromJson(
-      other is GenericModel ? other.data : other?.toJson(),
+    return ModelTest.fromJson(
+      letAs<GenericModel>(other)?.data ?? other?.toJson(),
     );
   }
 
@@ -106,25 +114,25 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  factory ModeTest.of(
-    ModeTest? other,
+  factory ModelTest.of(
+    ModelTest? other,
   ) {
-    return ModeTest.fromJson(other?.toJson());
+    return ModelTest.fromJson(other?.toJson());
   }
 
   //
   //
   //
 
-  factory ModeTest.fromJsonString(
+  factory ModelTest.fromJsonString(
     String? source,
   ) {
     try {
       if (source != null && source.isNotEmpty) {
         final decoded = jsonDecode(source);
-        return ModeTest.fromJson(decoded);
+        return ModelTest.fromJson(decoded);
       } else {
-        return ModeTest.unsafe();
+        return ModelTest.empty();
       }
     } catch (e) {
       assert(false, e);
@@ -136,14 +144,15 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  factory ModeTest.fromJson(
+  factory ModelTest.fromJson(
     Map<String, dynamic>? otherData,
   ) {
     try {
-      return ModeTest.empty()
+      return ModelTest.empty()
         ..$date = otherData?[K_DATE]
         ..$email = otherData?[K_EMAIL]
         ..$firstName = otherData?[K_FIRST_NAME]
+        ..$id = otherData?[K_ID]
         ..$lastName = otherData?[K_LAST_NAME]
         ..$name = otherData?[K_NAME]
         ..$searchableName = otherData?[K_SEARCHABLE_NAME];
@@ -157,14 +166,14 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  factory ModeTest.fromUri(
+  factory ModelTest.fromUri(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == MODEL_ID) {
-        return ModeTest.fromJson(uri.queryParameters);
+        return ModelTest.fromJson(uri.queryParameters);
       } else {
-        return ModeTest.unsafe();
+        return ModelTest.b();
       }
     } catch (e) {
       assert(false, e);
@@ -176,18 +185,18 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  static ModeTest? convert(
+  static ModelTest? convert(
     Model? other,
   ) {
-    return other != null ? ModeTest.from(other) : null;
+    return other != null ? ModelTest.from(other) : null;
   }
 
   //
   //
   //
 
-  static ModeTest? fromPool({
-    required Iterable<ModeTest>? pool,
+  static ModelTest? fromPool({
+    required Iterable<ModelTest>? pool,
     required String? id,
   }) {
     return id != null ? pool?.firstWhereOrNull((e) => e.id == id) : null;
@@ -204,12 +213,13 @@ class ModeTest extends _ModeTest {
   }) {
     try {
       final withNulls = <String, dynamic>{
-        K_DATE: this._date,
-        K_EMAIL: this._email,
-        K_FIRST_NAME: this._firstName,
-        K_LAST_NAME: this._lastName,
-        K_NAME: this._name,
-        K_SEARCHABLE_NAME: this._searchableName,
+        K_DATE: date,
+        K_EMAIL: email,
+        K_FIRST_NAME: firstName,
+        K_ID: id,
+        K_LAST_NAME: lastName,
+        K_NAME: name,
+        K_SEARCHABLE_NAME: searchableName,
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -224,7 +234,7 @@ class ModeTest extends _ModeTest {
 
   @override
   T empty<T extends Model>() {
-    return ModeTest.unsafe() as T;
+    return ModelTest.b() as T;
   }
 
   //
@@ -233,7 +243,7 @@ class ModeTest extends _ModeTest {
 
   @override
   T copy<T extends Model>() {
-    return (ModeTest.unsafe()..updateWith(this)) as T;
+    return (ModelTest.b()..updateWith(this)) as T;
   }
 
   //
@@ -245,24 +255,27 @@ class ModeTest extends _ModeTest {
     Map<String, dynamic>? otherData,
   ) {
     if (otherData != null && otherData.isNotEmpty) {
-      final other = ModeTest.fromJson(otherData);
+      final other = ModelTest.fromJson(otherData);
       if (other._date != null) {
-        this.date = other._date;
+        this.date = other._date!;
       }
       if (other._email != null) {
-        this.email = other._email;
+        this.email = other._email!;
       }
       if (other._firstName != null) {
-        this.firstName = other._firstName;
+        this.firstName = other._firstName!;
+      }
+      if (other._id != null) {
+        this.id = other._id!;
       }
       if (other._lastName != null) {
-        this.lastName = other._lastName;
+        this.lastName = other._lastName!;
       }
       if (other._name != null) {
-        this.name = other._name;
+        this.name = other._name!;
       }
       if (other._searchableName != null) {
-        this.searchableName = other._searchableName;
+        this.searchableName = other._searchableName!;
       }
     }
   }
@@ -271,55 +284,57 @@ class ModeTest extends _ModeTest {
   //
   //
 
-  String get modelId => MODEL_ID;
-
-  //
-  //
-  //
-
-  //
-  //
-  //
-
   DateTime? get date => this._date;
+  set date(DateTime? v) => this._date = v;
+
   dynamic get $date => this._date?.toUtc()?.toIso8601String();
-  set date(DateTime? v) => this.$date = v;
   set $date(v) => this._date = () {
         final a = v;
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
 
   String? get email => this._email;
+  set email(String? v) => this._email = v;
+
   dynamic get $email =>
       this._email?.toString().trim().nullIfEmpty?.toLowerCase();
-  set email(String? v) => this.$email = v;
   set $email(v) =>
       this._email = v?.toString().trim().nullIfEmpty?.toLowerCase();
 
   String? get firstName => this._firstName;
+  set firstName(String? v) => this._firstName = v;
+
   dynamic get $firstName => this._firstName?.toString().trim().nullIfEmpty;
-  set firstName(String? v) => this.$firstName = v;
   set $firstName(v) => this._firstName = v?.toString().trim().nullIfEmpty;
 
+  String? get id => this._id;
+  set id(String? v) => this._id = v;
+
+  dynamic get $id => this._id?.toString().trim().nullIfEmpty;
+  set $id(v) => this._id = v?.toString().trim().nullIfEmpty;
+
   String? get lastName => this._lastName;
+  set lastName(String? v) => this._lastName = v;
+
   dynamic get $lastName => this._lastName?.toString().trim().nullIfEmpty;
-  set lastName(String? v) => this.$lastName = v;
   set $lastName(v) => this._lastName = v?.toString().trim().nullIfEmpty;
 
-  String get name => this._name;
+  String get name => this._name!;
+  set name(String v) => this._name = v;
+
   dynamic get $name => (this._name?.toString().trim().nullIfEmpty)!;
-  set name(String v) => this.$name = v;
   set $name(v) => this._name = v?.toString().trim().nullIfEmpty;
 
   String? get searchableName => this._searchableName;
+  set searchableName(String? v) => this._searchableName = v;
+
   dynamic get $searchableName => this
       ._searchableName
       ?.toString()
       .trim()
       .nullIfEmpty
       ?.toLowerCase()
-      .replaceAll(r'[^\w]', ' ');
-  set searchableName(String? v) => this.$searchableName = v;
+      .replaceAll(r'[^\w]', '');
   set $searchableName(v) => this._searchableName =
-      v?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\w]', ' ');
+      v?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\w]', '');
 }
