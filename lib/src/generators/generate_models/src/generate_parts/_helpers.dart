@@ -71,8 +71,8 @@ TStdField _stdField(dynamic input) {
     nullable = _stdNullable(input);
   }
   return (
-    fieldName: _stdFieldName(input),
-    fieldType: _stdFieldType(input),
+    fieldName: fieldName,
+    fieldType: fieldType,
     nullable: nullable,
   );
 }
