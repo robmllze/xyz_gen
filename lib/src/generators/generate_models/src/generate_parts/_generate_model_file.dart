@@ -127,10 +127,10 @@ Future<GenerateModel> generateModel({
       '___MODEL_ID___': annotation.className?.toLowerSnakeCase(),
       '___CLASS_FILE_NAME___': classFileName,
       ..._replacements(
-        fields: annotation.fields?.map((e) {
-              final fieldName = e.fieldName;
-              final fieldType = e.fieldType?.toString() ?? 'dynamic';
-              final nullable = e.nullable == true || e.fieldType.endsWith('?');
+        fields: annotation.fields?.map((e) => _stdField(e)).nonNulls.map((t) {
+              final fieldName = t.fieldName;
+              final fieldType = t.fieldType.toString();
+              final nullable = t.nullable == true || t.fieldType.endsWith('?');
               return MapEntry(
                 fieldName,
                 TypeCode.b(
@@ -184,14 +184,19 @@ GenerateModel _updateClassName(
 GenerateModel _updateFromAnnotatedMember(
   GenerateModel annotation,
   String memberAnnotationName,
-  String memberName,
-  String memberType,
+  String fieldName,
+  String fieldType,
 ) {
+  final TStdField more = (
+    fieldName: fieldName,
+    fieldType: fieldType,
+    nullable: fieldType.endsWith('?'),
+  );
   if (memberAnnotationName == 'Field') {
     annotation = annotation.copyWith(
       fields: {
         ...?annotation.fields,
-        F(memberName, memberType),
+        more,
       },
     );
   }
@@ -212,25 +217,29 @@ GenerateModel _updateFromClassAnnotationField(
       );
 
     case 'fields':
-      final newFields = fieldValue.toSetValue()?.map((e) {
-            final fieldName = (e.getField('fieldName')?.toStringValue())!;
-            final nullable = e.getField('nullable')?.toBoolValue() == true;
-            final fieldType = (e
-                    .getField('fieldType')
-                    ?.toTypeValue()
-                    ?.getDisplayString(withNullability: nullable) ??
-                e.getField('fieldType')?.toStringValue())!;
-            return F(
-              fieldName,
-              fieldType,
-              nullable: nullable,
-            );
-          }).nonNulls ??
-          {};
       return annotation.copyWith(
         fields: {
           ...?annotation.fields,
-          ...newFields,
+          ...?fieldValue.toSetValue()?.map((e) {
+            final fieldName1 = e.getField('\$1')?.toStringValue();
+            final fieldName2 = e.getField('fieldName')?.toStringValue();
+            final fieldName = (fieldName1 ?? fieldName2)!;
+            final nullable1 = e.getField('nullable')?.toBoolValue();
+            final nullable2 = e.getField('\$3')?.toBoolValue();
+            final nullable = (nullable1 ?? nullable2) ?? true;
+            final fieldType1 = e.getField('\$2')?.toStringValue();
+            final fieldType2 =
+                e.getField('\$2')?.toTypeValue()?.getDisplayString(withNullability: nullable);
+            final fieldType3 = e.getField('fieldType')?.toStringValue();
+            final fieldType4 =
+                e.getField('fieldType')?.toTypeValue()?.getDisplayString(withNullability: nullable);
+            final fieldType = (fieldType1 ?? fieldType2 ?? fieldType3 ?? fieldType4)!;
+            return (
+              fieldName: fieldName,
+              fieldType: fieldType,
+              nullable: nullable,
+            );
+          }),
         },
       );
 

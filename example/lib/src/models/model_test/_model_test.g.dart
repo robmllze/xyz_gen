@@ -37,6 +37,7 @@ class ModelTest extends _ModelTest {
   static const K_NAME = 'name';
   static const K_SEARCHABLE_NAME = 'searchable_name';
   static const K_TEST_2 = 'test_2';
+  static const K_TOETS = 'toets';
 
   DateTime? _date;
   String? _email;
@@ -46,6 +47,7 @@ class ModelTest extends _ModelTest {
   String? _name;
   String? _searchableName;
   Map<String, List<int>>? _test2;
+  Map<DateTime, List<Set<ModelTest>>?>? _toets;
 
   //
   //
@@ -63,9 +65,10 @@ class ModelTest extends _ModelTest {
     required String firstName,
     String? id,
     String? lastName,
-    required String name,
+    String? name,
     String? searchableName,
-    required Map<String, List<int>> test2,
+    Map<String, List<int>>? test2,
+    required Map<DateTime, List<Set<ModelTest>>?> toets,
   }) {
     return ModelTest.b(
       date: date,
@@ -76,6 +79,7 @@ class ModelTest extends _ModelTest {
       name: name,
       searchableName: searchableName,
       test2: test2,
+      toets: toets,
     );
   }
 
@@ -92,10 +96,10 @@ class ModelTest extends _ModelTest {
     String? name,
     String? searchableName,
     Map<String, List<int>>? test2,
+    Map<DateTime, List<Set<ModelTest>>?>? toets,
   }) {
     assert(firstName != null);
-    assert(name != null);
-    assert(test2 != null);
+    assert(toets != null);
     this._date = date;
     this._email = email;
     this._firstName = firstName;
@@ -104,6 +108,7 @@ class ModelTest extends _ModelTest {
     this._name = name;
     this._searchableName = searchableName;
     this._test2 = test2;
+    this._toets = toets;
   }
 
   //
@@ -164,7 +169,8 @@ class ModelTest extends _ModelTest {
         ..$lastName = otherData?[K_LAST_NAME]
         ..$name = otherData?[K_NAME]
         ..$searchableName = otherData?[K_SEARCHABLE_NAME]
-        ..$test2 = otherData?[K_TEST_2];
+        ..$test2 = otherData?[K_TEST_2]
+        ..$toets = otherData?[K_TOETS];
     } catch (e) {
       assert(false, e);
       rethrow;
@@ -230,6 +236,7 @@ class ModelTest extends _ModelTest {
         K_NAME: this.$name,
         K_SEARCHABLE_NAME: this.$searchableName,
         K_TEST_2: this.$test2,
+        K_TOETS: this.$toets,
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -290,6 +297,9 @@ class ModelTest extends _ModelTest {
       if (other._test2 != null) {
         this.test2 = other._test2!;
       }
+      if (other._toets != null) {
+        this.toets = other._toets!;
+      }
     }
   }
 
@@ -332,10 +342,10 @@ class ModelTest extends _ModelTest {
   dynamic get $lastName => this._lastName?.toString().trim().nullIfEmpty;
   set $lastName(v) => this._lastName = v?.toString().trim().nullIfEmpty;
 
-  String get name => this._name!;
-  set name(String v) => this._name = v;
+  String? get name => this._name;
+  set name(String? v) => this._name = v;
 
-  dynamic get $name => (this._name?.toString().trim().nullIfEmpty)!;
+  dynamic get $name => this._name?.toString().trim().nullIfEmpty;
   set $name(v) => this._name = v?.toString().trim().nullIfEmpty;
 
   String? get searchableName => this._searchableName;
@@ -351,10 +361,10 @@ class ModelTest extends _ModelTest {
   set $searchableName(v) => this._searchableName =
       v?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\w]', '');
 
-  Map<String, List<int>> get test2 => this._test2!;
-  set test2(Map<String, List<int>> v) => this._test2 = v;
+  Map<String, List<int>>? get test2 => this._test2;
+  set test2(Map<String, List<int>>? v) => this._test2 = v;
 
-  dynamic get $test2 => (this
+  dynamic get $test2 => this
       ._test2
       ?.map(
         (p0, p1) => MapEntry(
@@ -369,7 +379,7 @@ class ModelTest extends _ModelTest {
         ),
       )
       .nonNulls
-      .nullIfEmpty)!;
+      .nullIfEmpty;
   set $test2(v) => this._test2 = letMap(v)
       ?.map(
         (p0, p1) => MapEntry(
@@ -377,6 +387,62 @@ class ModelTest extends _ModelTest {
           letList(p1)
               ?.map(
                 (p0) => letInt(p0),
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.toList()
+              .cast(),
+        ),
+      )
+      .nonNulls
+      .nullIfEmpty
+      ?.cast();
+
+  Map<DateTime, List<Set<ModelTest>>?> get toets => this._toets!;
+  set toets(Map<DateTime, List<Set<ModelTest>>?> v) => this._toets = v;
+
+  dynamic get $toets => (this
+      ._toets
+      ?.map(
+        (p0, p1) => MapEntry(
+          p0?.toUtc()?.toIso8601String(),
+          p1
+              ?.map(
+                (p0) => p0
+                    ?.map(
+                      (p0) => p0?.toJson(),
+                    )
+                    .nonNulls
+                    .nullIfEmpty
+                    ?.toList(),
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.toList(),
+        ),
+      )
+      .nonNulls
+      .nullIfEmpty)!;
+  set $toets(v) => this._toets = letMap(v)
+      ?.map(
+        (p0, p1) => MapEntry(
+          () {
+            final a = p0;
+            return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+          }(),
+          letList(p1)
+              ?.map(
+                (p0) => letSet(p0)
+                    ?.map(
+                      (p0) => () {
+                        final a = letMap<String, dynamic>(p0);
+                        return a != null ? ModelTest.fromJson(a) : null;
+                      }(),
+                    )
+                    .nonNulls
+                    .nullIfEmpty
+                    ?.toSet()
+                    .cast(),
               )
               .nonNulls
               .nullIfEmpty

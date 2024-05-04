@@ -12,16 +12,16 @@ import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 part '_model_test.g.dart';
 
-// -----------------------------------------------------------------------------
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 @GenerateModel(
   fields: {
-    F('id', 'String?'),
-    F('email', $LowerCaseString),
-    F('searchable_name', $SearchableString),
-    F('name', String),
-    F('date', DateTime, nullable: true),
-    F('test2', Map<String, List<int>>),
+    (fieldName: 'id', fieldType: 'String?'),
+    ('email', T_LOWER_CASE_STRING),
+    ('searchable_name', T_SEARCHABLE_STRING),
+    ('name', String),
+    ('date', DateTime, nullable: true),
+    ('test2', Map<String, List<int>>),
   },
   shouldInherit: true,
 )

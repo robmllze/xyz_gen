@@ -47,7 +47,7 @@ Future<void> _generatePrep(
     var changed = false;
     for (var l = 0; l < lines.length; ++l) {
       final line = lines[l];
-      prepValueRegex.allMatches(line).forEach((final match) {
+      prepRegExp.allMatches(line).forEach((final match) {
         final c = match.start;
         final c1 = match.end;
         final chunk = match.group(0);

@@ -57,3 +57,50 @@ Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
     ),
   );
 }
+
+TStdField _stdField(dynamic input) {
+  return (
+    fieldName: _stdfieldName(input),
+    fieldType: _stdfieldType(input),
+    nullable: _stdNullable(input),
+  );
+}
+
+typedef TStdField = ({String fieldName, String fieldType, bool? nullable});
+
+String _stdfieldName(dynamic input) {
+  try {
+    return input.fieldName as String;
+  } catch (_) {
+    try {
+      return input.$1 as String;
+    } catch (_) {
+      final r = Random().nextInt(99999 - 10000) + 10000;
+      return 'field_$r';
+    }
+  }
+}
+
+String _stdfieldType(dynamic input) {
+  try {
+    return input.fieldType as String;
+  } catch (_) {
+    try {
+      return input.$2 as String;
+    } catch (_) {
+      return 'Null';
+    }
+  }
+}
+
+bool? _stdNullable(dynamic input) {
+  try {
+    return input.nullable as bool?;
+  } catch (_) {
+    try {
+      return input.$3 as bool?;
+    } catch (_) {
+      return true;
+    }
+  }
+}
