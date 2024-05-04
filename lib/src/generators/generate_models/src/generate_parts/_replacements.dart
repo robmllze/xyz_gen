@@ -17,7 +17,8 @@ Map<String, String> _replacements({
   required StringCaseType keyStringCaseType,
 }) {
   final fields0 = allFields.map((k, v) => MapEntry(k.toCamelCase(), v));
-  final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+  final entries0 = fields0.entries.toList()
+    ..sort((a, b) => a.key.compareTo(b.key));
   final vars = entries0.map((e) => e.key);
   final entries1 = vars.map((i) => MapEntry(i, fields0[i]));
   final nonNullableVars = vars.where((e) => !fields0[e]!.nullable);
@@ -31,7 +32,8 @@ Map<String, String> _replacements({
     entries1.map((e) => '${e.value?.nullableName} _${e.key};'),
     // ___P2___
     [
-      ...entries1.map((e) => '${e.value!.nullable ? '' : 'required '}${e.value?.name} ${e.key},'),
+      ...entries1.map((e) =>
+          '${e.value!.nullable ? '' : 'required '}${e.value?.name} ${e.key},',),
     ],
     // ___P3___
     [
