@@ -13,10 +13,10 @@ part of '../generate.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Map<String, String> _replacements({
-  required Map<String, TypeCode> fields,
+  required Map<String, TypeCode> allFields,
   required StringCaseType keyStringCaseType,
 }) {
-  final fields0 = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
+  final fields0 = allFields.map((k, v) => MapEntry(k.toCamelCase(), v));
   final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final vars = entries0.map((e) => e.key);
   final entries1 = vars.map((i) => MapEntry(i, fields0[i]));
@@ -81,9 +81,9 @@ Map<String, String> _replacements({
         typeCode: typeCode,
       );
       return [
+        '  // $e.',
         '$typeName get $e => this._$e${nullable ? '' : '!'};',
         'set $e($typeName v) => this._$e = v;',
-        '',
         'dynamic get \$$e => ${nullable ? v1 : '($v1)!'};',
         'set \$$e(v) => this._$e = $v0;',
         '',

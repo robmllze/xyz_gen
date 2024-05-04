@@ -127,19 +127,18 @@ Future<GenerateModel> generateModel({
       '___MODEL_ID___': annotation.className?.toLowerSnakeCase(),
       '___CLASS_FILE_NAME___': classFileName,
       ..._replacements(
-        fields: annotation.fields?.map((e) => _stdField(e)).nonNulls.map((t) {
-              final fieldName = t.fieldName;
-              final fieldType = t.fieldType.toString();
-              final nullable = t.nullable == true || t.fieldType.endsWith('?');
-              return MapEntry(
-                fieldName,
-                TypeCode.b(
-                  fieldType,
-                  nullable: nullable,
-                ),
-              );
-            }).toMap() ??
-            {},
+        allFields: annotation.allFields.map((e) => _stdField(e)).nonNulls.map((e) {
+          final fieldName = e.fieldName;
+          final fieldType = e.fieldType.toString();
+          final nullable = e.nullable == true || e.fieldType.endsWith('?');
+          return MapEntry(
+            fieldName,
+            TypeCode.b(
+              fieldType,
+              nullable: nullable,
+            ),
+          );
+        }).toMap(),
         keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
             StringCaseType.LOWER_SNAKE_CASE,
       ),
@@ -195,7 +194,7 @@ GenerateModel _updateFromAnnotatedMember(
   if (memberAnnotationName == 'Field') {
     annotation = annotation.copyWith(
       fields: {
-        ...?annotation.fields,
+        ...annotation.fields,
         more,
       },
     );
@@ -219,7 +218,7 @@ GenerateModel _updateFromClassAnnotationField(
     case 'fields':
       return annotation.copyWith(
         fields: {
-          ...?annotation.fields,
+          ...annotation.fields,
           ...?fieldValue.toSetValue()?.map((e) {
             final fieldName1 = e.getField('\$1')?.toStringValue();
             final fieldName2 = e.getField('fieldName')?.toStringValue();
