@@ -1,4 +1,3 @@
-
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
@@ -274,8 +273,10 @@ class ModelUser extends _ModelUser {
   // email.
   String? get email => this._email;
   set email(String? v) => this._email = v;
-  dynamic get $email => this._email?.toString().trim().nullIfEmpty?.toLowerCase();
-  set $email(v) => this._email = v?.toString().trim().nullIfEmpty?.toLowerCase();
+  dynamic get $email =>
+      this._email?.toString().trim().nullIfEmpty?.toLowerCase();
+  set $email(v) =>
+      this._email = v?.toString().trim().nullIfEmpty?.toLowerCase();
 
   // firstName.
   String? get firstName => this._firstName;
