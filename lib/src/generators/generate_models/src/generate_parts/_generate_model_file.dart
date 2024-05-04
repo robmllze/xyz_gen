@@ -117,7 +117,8 @@ Future<GenerateModel> generateModel({
   final output = replaceData(
     template,
     {
-      '___SUPER_CLASS___': annotation.shouldInherit ? annotatedClassName : 'Model',
+      '___SUPER_CLASS___':
+          annotation.shouldInherit ? annotatedClassName : 'Model',
       '___SUPER_CONSTRUCTOR___': annotation.shouldInherit
           ? annotation.inheritanceConstructor?.nullIfEmpty != null
               ? ': super.${annotation.inheritanceConstructor}()'
@@ -136,8 +137,9 @@ Future<GenerateModel> generateModel({
             ),
           );
         }).toMap(),
-        keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
-            StringCaseType.LOWER_SNAKE_CASE,
+        keyStringCaseType:
+            StringCaseType.values.valueOf(annotation.keyStringCase) ??
+                StringCaseType.LOWER_SNAKE_CASE,
       ),
     },
   );
@@ -170,7 +172,8 @@ GenerateModel _updateClassName(
   final a = annotatedClassName.replaceFirst(RegExp(r'^[_$]+'), '');
   final b = a != annotatedClassName ? a : '${annotatedClassName}Model';
   annotation = annotation.copyWith(
-    className: annotation.className?.nullIfEmpty == null ? b : annotation.className,
+    className:
+        annotation.className?.nullIfEmpty == null ? b : annotation.className,
   );
   return annotation;
 }
@@ -183,8 +186,9 @@ GenerateModel _updateFromAnnotatedMember(
   String fieldName,
   String fieldType,
 ) {
-  final nullable =
-      fieldType == 'dynamic' ? false : fieldName.endsWith('?') || fieldType.endsWith('?');
+  final nullable = fieldType == 'dynamic'
+      ? false
+      : fieldName.endsWith('?') || fieldType.endsWith('?');
   final TStdField more = (
     fieldName: fieldName,
     fieldType: fieldType,
@@ -227,15 +231,21 @@ GenerateModel _updateFromClassAnnotationField(
             final nullable2 = e.getField('\$3')?.toBoolValue();
             final nullable3 = fieldType1?.endsWith('?');
             final nullable4 = fieldName.endsWith('?');
-            fieldName =
-                fieldName.endsWith('?') ? fieldName.substring(0, fieldName.length - 1) : fieldName;
+            fieldName = fieldName.endsWith('?')
+                ? fieldName.substring(0, fieldName.length - 1)
+                : fieldName;
             final nullable = nullable1 ?? nullable2 ?? nullable3 ?? nullable4;
-            final fieldType2 =
-                e.getField('\$2')?.toTypeValue()?.getDisplayString(withNullability: nullable);
+            final fieldType2 = e
+                .getField('\$2')
+                ?.toTypeValue()
+                ?.getDisplayString(withNullability: nullable);
             final fieldType3 = e.getField('fieldType')?.toStringValue();
-            final fieldType4 =
-                e.getField('fieldType')?.toTypeValue()?.getDisplayString(withNullability: nullable);
-            final fieldType = (fieldType1 ?? fieldType2 ?? fieldType3 ?? fieldType4)!;
+            final fieldType4 = e
+                .getField('fieldType')
+                ?.toTypeValue()
+                ?.getDisplayString(withNullability: nullable);
+            final fieldType =
+                (fieldType1 ?? fieldType2 ?? fieldType3 ?? fieldType4)!;
             return (
               fieldName: fieldName,
               fieldType: fieldType,
@@ -256,7 +266,8 @@ GenerateModel _updateFromClassAnnotationField(
 
     case 'keyStringCase':
       return annotation.copyWith(
-        keyStringCase: fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
+        keyStringCase:
+            fieldValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
       );
     default:
       return annotation;
