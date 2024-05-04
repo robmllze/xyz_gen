@@ -16,7 +16,8 @@ part '_model_user.g.dart';
 
 @GenerateModel(
   fields: {
-    ('email', T_LOWER_CASE_STRING),
+    ('id', String),
+    ('email', 'LowerCase-String?'),
   },
   shouldInherit: true,
 )
@@ -26,9 +27,6 @@ abstract class _ModelUser extends Model {
 
   @Field()
   String? lastName;
-
-  @Field()
-  ModelUser? child;
 
   String get fullName => '$firstName $lastName';
 }
