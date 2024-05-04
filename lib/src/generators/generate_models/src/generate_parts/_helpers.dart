@@ -63,9 +63,7 @@ TStdField _stdField(dynamic input) {
   var fieldType = _stdFieldType(input);
   final nullable = fieldType == 'dynamic'
       ? false
-      : fieldName.endsWith('?') || fieldType.endsWith('?')
-          ? true
-          : _stdNullable(input);
+      : _stdNullable(input) ?? fieldName.endsWith('?') || fieldType.endsWith('?');
   if (fieldName.endsWith('?')) {
     fieldName = fieldName.substring(0, fieldName.length - 1);
   }
@@ -85,12 +83,7 @@ String _stdFieldName(dynamic input) {
   try {
     return input.fieldName as String;
   } catch (_) {
-    try {
-      return input.$1 as String;
-    } catch (_) {
-      final r = Random().nextInt(99999 - 10000) + 10000;
-      return 'field_$r';
-    }
+    return input.$1 as String;
   }
 }
 
@@ -98,11 +91,7 @@ String _stdFieldType(dynamic input) {
   try {
     return input.fieldType as String;
   } catch (_) {
-    try {
-      return input.$2 as String;
-    } catch (_) {
-      return 'Null';
-    }
+    return input.$2 as String;
   }
 }
 
@@ -113,7 +102,7 @@ bool? _stdNullable(dynamic input) {
     try {
       return input.$3 as bool?;
     } catch (_) {
-      return true;
+      return null;
     }
   }
 }
