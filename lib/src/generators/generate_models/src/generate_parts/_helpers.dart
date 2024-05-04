@@ -61,15 +61,13 @@ Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
 TStdField _stdField(dynamic input) {
   var fieldName = _stdFieldName(input);
   final fieldType = _stdFieldType(input);
-  var nullable = _stdNullable(input);
-
-  if (nullable != true && fieldName.endsWith('?')) {
+  final nullable = (fieldName.endsWith('?') || fieldType.endsWith('?') || fieldType == 'dynamic')
+      ? true
+      : _stdNullable(input);
+  if (fieldName.endsWith('?')) {
     fieldName = fieldName.substring(0, fieldName.length - 1);
-    nullable = true;
   }
-  if (fieldType == 'dynamic') {
-    nullable = false;
-  }
+
   return (
     fieldName: fieldName,
     fieldType: fieldType,
