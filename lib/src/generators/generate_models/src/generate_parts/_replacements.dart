@@ -32,8 +32,10 @@ Map<String, String> _replacements({
     entries1.map((e) => '${e.value?.nullableName} _${e.key};'),
     // ___P2___
     [
-      ...entries1.map((e) =>
-          '${e.value!.nullable ? '' : 'required '}${e.value?.name} ${e.key},',),
+      ...entries1.map(
+        (e) =>
+            '${e.value!.nullable ? '' : 'required '}${e.value?.name} ${e.key},',
+      ),
     ],
     // ___P3___
     [

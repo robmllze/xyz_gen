@@ -2,7 +2,7 @@
 
 ## [0.69.0]
 
-- Released @ 2024-05-04 11:57:52.885215Z
+- Released @ 2024-05-04 12:04:56.281015Z
 - Update model generators
 
 ## [0.68.0]
