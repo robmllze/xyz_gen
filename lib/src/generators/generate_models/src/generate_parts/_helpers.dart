@@ -63,14 +63,14 @@ TStdField _stdField(dynamic input) {
   var fieldType = _stdFieldType(input);
   final nullable = fieldType == 'dynamic'
       ? false
-      : (fieldName.endsWith('?') || fieldType.endsWith('?'))
+      : fieldName.endsWith('?') || fieldType.endsWith('?')
           ? true
           : _stdNullable(input);
   if (fieldName.endsWith('?')) {
     fieldName = fieldName.substring(0, fieldName.length - 1);
   }
-  if (fieldName.endsWith('?')) {
-    fieldName = fieldName.substring(0, fieldName.length - 1);
+  if (fieldType.endsWith('?')) {
+    fieldType = fieldType.substring(0, fieldType.length - 1);
   }
   return (
     fieldName: fieldName,
