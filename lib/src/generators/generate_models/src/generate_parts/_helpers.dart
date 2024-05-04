@@ -59,8 +59,8 @@ Map<String, String> _getKeyConstNames(Iterable<String> parameterKeys) {
 }
 
 TStdField _stdField(dynamic input) {
-  var fieldName = _stdfieldName(input);
-  final fieldType = _stdfieldType(input);
+  var fieldName = _stdFieldName(input);
+  final fieldType = _stdFieldType(input);
   bool? nullable;
   if (fieldName.endsWith('?')) {
     fieldName = fieldName.substring(0, fieldName.length - 1);
@@ -71,15 +71,15 @@ TStdField _stdField(dynamic input) {
     nullable = _stdNullable(input);
   }
   return (
-    fieldName: _stdfieldName(input),
-    fieldType: _stdfieldType(input),
+    fieldName: _stdFieldName(input),
+    fieldType: _stdFieldType(input),
     nullable: nullable,
   );
 }
 
 typedef TStdField = ({String fieldName, String fieldType, bool? nullable});
 
-String _stdfieldName(dynamic input) {
+String _stdFieldName(dynamic input) {
   try {
     return input.fieldName as String;
   } catch (_) {
@@ -92,7 +92,7 @@ String _stdfieldName(dynamic input) {
   }
 }
 
-String _stdfieldType(dynamic input) {
+String _stdFieldType(dynamic input) {
   try {
     return input.fieldType as String;
   } catch (_) {
