@@ -1,14 +1,15 @@
 # Changelog
 
+## [0.78.3]
+
+- Released @ 2024-05-05 14:58:12.761277Z
+- Update model generator
+- Update dependencies
+
 ## [0.78.4]
 
 - Released @ 2024-05-05 14:56:24.941519Z
 - Update dependencies
-
-## [0.78.3]
-
-- Released @ 2024-05-05 14:52:00.811407Z
-- Update model generator
 
 ## [0.78.2]
 
