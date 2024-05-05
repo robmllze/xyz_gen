@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.78.3]
+
+- Released @ 2024-05-05 14:52:00.811407Z
+- Update model generator
+
 ## [0.78.2]
 
 - Released @ 2024-05-04 15:55:41.090866Z

@@ -241,7 +241,8 @@ class ModelUser extends _ModelUser {
   String get emailField => this.email!;
   set emailField(String v) => this.email = v;
   @protected
-  dynamic get $email => (this.email?.toString().trim().nullIfEmpty?.toLowerCase())!;
+  dynamic get $email =>
+      (this.email?.toString().trim().nullIfEmpty?.toLowerCase())!;
   @protected
   set $email(v) => this.email = v?.toString().trim().nullIfEmpty?.toLowerCase();
 
