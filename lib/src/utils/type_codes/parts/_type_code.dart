@@ -77,6 +77,15 @@ class TypeCode {
   //
   //
 
+  String get nonNullableName {
+    final a = this.name;
+    return isNullable(a) ? a.substring(0, a.length - 1) : a;
+  }
+
+  //
+  //
+  //
+
   static String _typeCodeToName(String input) {
     String step0(String input) {
       return input.replaceAll(' ', '');
@@ -111,10 +120,7 @@ class TypeCode {
     }
 
     String step4(String input) {
-      return input
-          .replaceAll('[', '<')
-          .replaceAll(']', '>')
-          .replaceAll('+', ', ');
+      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
     }
 
     var output = input;

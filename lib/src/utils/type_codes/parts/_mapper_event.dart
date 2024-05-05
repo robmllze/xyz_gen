@@ -15,8 +15,7 @@ part of '../type_codes.dart';
 /// Mapper event base class.
 abstract class MapperEvent {
   /// The name of the field, e.g. "firstName" or "p3".
-  String? get name =>
-      this._name ?? (this._nameIndex != null ? 'p${this._nameIndex}' : null);
+  String? get name => this._name ?? (this._nameIndex != null ? 'p${this._nameIndex}' : null);
   String? _name;
 
   /// The index of the generated field name, e.g. "p3" = 3.
@@ -26,6 +25,9 @@ abstract class MapperEvent {
   /// The field type, e.g. "String?".
   String? get type => this._type;
   String? _type;
+
+  // /// The type code, e.g. TypeCode("String?").
+  // TypeCode? get typeCode => this._type != null ? TypeCode(this._type!) : null;
 
   /// Regex match groups.
   Iterable<String>? get matchGroups => this._matchGroups;
