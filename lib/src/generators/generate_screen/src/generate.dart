@@ -44,14 +44,14 @@ Future<void> generateScreen({
   const VIEW_FILE_NAME = '_view.dart';
   final i1 = internalParameters.entries
       .map(
-        (e) => 'late final ${e.value} ${e.key} = this.configuration.${e.key};',
+        (e) => 'late final ${e.key} = this.configuration.${e.key};',
       )
       .join('\n');
   final q1 = queryParameters
-      .map((e) => 'late final String $e = this.configuration.$e;')
+      .map((e) => 'late final $e = this.configuration.$e;')
       .join('\n');
   final p1 = pathSegments
-      .map((e) => 'late final String $e = this.configuration.$e;')
+      .map((e) => 'late final $e = this.configuration.$e;')
       .join('\n');
   final data = {
     '___SCREEN_CLASS___': screenClassName,
