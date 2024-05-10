@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.81.0]
+
+- Released @ 2024-05-10 12:27:16.094688Z
+- Update screen generator
+
 ## [0.80.0]
 
 - Released @ 2024-05-10 12:22:10.185213Z
