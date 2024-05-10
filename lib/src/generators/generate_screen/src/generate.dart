@@ -58,9 +58,9 @@ Future<void> generateScreen({
     '___CONTROLLER_FILE___': CONTROLLER_FILE_NAME,
     '___SCREEN_FILE___': screenFileName,
     '___VIEW_FILE___': VIEW_FILE_NAME,
-    '___QUERY_PARAMETERS___': q1,
-    '___PATH_SEGMENTS___': p1,
-    '___INTERNAL_PARAMETERS___': i1,
+    '___Q1___': q1,
+    '___P1___': p1,
+    '___I1___': i1,
   };
   final folderDirPath = p.joinAll(
     [
