@@ -2,7 +2,7 @@
 
 ## [0.80.0]
 
-- Released @ 2024-05-10 12:20:58.488554Z
+- Released @ 2024-05-10 12:22:10.185213Z
 - Update screen generator
 
 ## [0.79.1]

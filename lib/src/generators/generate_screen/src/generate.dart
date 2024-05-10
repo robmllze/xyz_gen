@@ -43,8 +43,9 @@ Future<void> generateScreen({
   final screenFileName = '$screenClassKey.dart';
   const VIEW_FILE_NAME = '_view.dart';
   final i1 = internalParameters.entries
-      .map((e) =>
-          'late final ${e.value} ${e.key} = this.configuration.${e.key};',)
+      .map(
+        (e) => 'late final ${e.value} ${e.key} = this.configuration.${e.key};',
+      )
       .join('\n');
   final q1 = queryParameters
       .map((e) => 'late final String $e = this.configuration.$e;')
