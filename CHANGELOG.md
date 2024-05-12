@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.82.0]
+
+- Released @ 2024-05-12 10:44:01.591234Z
+- Added Color to loose_type_mappers.dart
+
 ## [0.81.0]
 
 - Released @ 2024-05-10 12:27:16.094688Z
