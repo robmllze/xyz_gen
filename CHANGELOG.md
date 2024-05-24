@@ -4,7 +4,6 @@
 
 - Released @ 2024-05-24 09:34:37.136101Z
 - Add support DataModel
-- Update
 
 ## [0.82.7]
 
