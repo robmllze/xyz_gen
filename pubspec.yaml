@@ -11,7 +11,7 @@
 name: xyz_gen
 description: This package contains a set of generators to help you with your Flutter projects.
 repository: https://github.com/robmllze/xyz_gen
-version: 0.82.2
+version: 0.82.3
 
 ## -----------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  xyz_gen_annotations: ^0.35.0
+  xyz_gen_annotations: ^0.36.0
   xyz_utils: ^0.54.0
 
   analyzer: ^6.4.1
