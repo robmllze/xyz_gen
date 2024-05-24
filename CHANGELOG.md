@@ -2,8 +2,9 @@
 
 ## [0.83.0]
 
-- Released @ 2024-05-24 09:26:15.148505Z
+- Released @ 2024-05-24 09:34:37.136101Z
 - Add support DataModel
+- Update
 
 ## [0.82.7]
 
