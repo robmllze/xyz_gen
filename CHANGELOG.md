@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.83.0]
+
+- Released @ 2024-05-24 09:26:15.148505Z
+- Add support DataModel
+
 ## [0.82.7]
 
 - Released @ 2024-05-24 07:04:03.527199Z
