@@ -128,7 +128,7 @@ Future<GenerateModel> generateModel({
       '___MODEL_ID___': annotation.className?.toLowerSnakeCase(),
       '___CLASS_FILE_NAME___': classFileName,
       ..._replacements(
-        annotatedClassName: annotatedClassName,
+        annotation: annotation,
         fields: annotation.fields.map((e) => _stdField(e)).nonNulls.map((e) {
           return MapEntry(
             e.fieldName,
