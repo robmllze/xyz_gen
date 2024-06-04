@@ -137,7 +137,7 @@ String _ip0(Set<Record> internalParameters) {
     final fieldName = e.fieldName.toCamelCase();
     final fieldKey = fieldName.toSnakeCase();
     final fieldType = e.fieldType;
-    final nullable = e.nullable == true;
+    final nullable = e.nullable != false;
     final nullCheck = nullable ? '' : '!';
     final fieldK = 'K_${fieldKey.toUpperCase()}';
     return [
@@ -156,7 +156,7 @@ String _ip1(Set<Record> internalParameters) {
   final a = internalParameters.whereType<TStdField>().map((e) {
     final fieldName = e.fieldName.toCamelCase();
     final fieldType = e.fieldType;
-    final nullable = e.nullable == true;
+    final nullable = e.nullable != false;
     final required = nullable ? '' : 'required ';
     return '$required$fieldType $fieldName,';
   }).toList()
@@ -180,7 +180,7 @@ String _ip2(Set<Record> internalParameters) {
 String _qp0(Set<Record> queryParameters) {
   final a = queryParameters.whereType<TStdField>().map((e) {
     final fieldName = e.fieldName.toCamelCase();
-    final nullable = e.nullable == true;
+    final nullable = e.nullable != false;
     final fieldKey = fieldName.toSnakeCase();
     final fieldK = 'K_${fieldKey.toUpperCase()}';
     final nullCheck = nullable ? '' : '!';
@@ -201,7 +201,7 @@ String _qp0(Set<Record> queryParameters) {
 String _qp1(Set<Record> queryParameters) {
   final a = queryParameters.whereType<TStdField>().map((e) {
     final fieldName = e.fieldName.toCamelCase();
-    final nullable = e.nullable == true;
+    final nullable = e.nullable != false;
     return "${nullable ? "String?" : "required String"} $fieldName,";
   }).toList()
     ..sort();
@@ -211,7 +211,7 @@ String _qp1(Set<Record> queryParameters) {
 String _qp2(Set<Record> queryParameters) {
   final a = queryParameters.whereType<TStdField>().map((e) {
     final fieldName = e.fieldName.toCamelCase();
-    final nullable = e.nullable == true;
+    final nullable = e.nullable != false;
     final fieldKey = fieldName.toSnakeCase();
     final fieldK = 'K_${fieldKey.toUpperCase()}';
     return "${nullable ? "if ($fieldName != null) " : ""}$fieldK: $fieldName,";
