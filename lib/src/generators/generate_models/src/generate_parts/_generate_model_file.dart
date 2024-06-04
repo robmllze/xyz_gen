@@ -20,7 +20,7 @@ Future<GenerateModel?> _generateModelFromFile(
   return analyzeModelFromFile(
     collection: collection,
     inputFilePath: inputFilePath,
-    generateModel: (classAnnotationName, annotatedClassName, annotation) async {
+    generate: (classAnnotationName, annotatedClassName, annotation) async {
       annotation = await generateModel(
         inputFilePath: inputFilePath,
         templates: templates,
@@ -41,11 +41,11 @@ Future<GenerateModel?> analyzeModelFromFile({
     String classAnnotationName,
     String annotatedClassName,
     GenerateModel annotation,
-  )? generateModel,
+  )? generate,
 }) async {
   var annotation = const GenerateModel(fields: {});
   var didFindAnnotation = false;
-  // Analyze the annotated class and generate the model file.
+  // Analyze the annotated class and generate the files.
   await analyzeAnnotatedClasses(
     filePath: inputFilePath,
     collection: collection,
@@ -54,8 +54,8 @@ Future<GenerateModel?> analyzeModelFromFile({
       classAnnotationName,
       annotatedClassName,
     ) async {
-      if (generateModel != null) {
-        annotation = await generateModel(
+      if (generate != null) {
+        annotation = await generate(
           classAnnotationName,
           annotatedClassName,
           annotation,
