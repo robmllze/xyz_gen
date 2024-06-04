@@ -38,8 +38,9 @@ String _ip1(Set<Record> internalParameters) {
     final fieldName = e.fieldName;
     final fieldType = e.fieldType;
     final nullable = e.nullable != false;
+    final questionMark = nullable ? '?' : '';
     final required = nullable ? '' : 'required ';
-    return '$required$fieldType $fieldName,';
+    return '$required$fieldType$questionMark $fieldName,';
   }).toList()
     ..sort();
   return a.isNotEmpty ? a.join('\n') : '';
@@ -49,10 +50,8 @@ String _ip2(Set<Record> internalParameters) {
   final a = internalParameters.whereType<TStdField>().map((e) {
     final fieldName = e.fieldName;
     final fieldKey = fieldName.toSnakeCase();
-    final nullable = e.nullable != false;
-    final ifNotNull = nullable ? 'if ($fieldName != null) ' : '';
     final fieldK = 'K_${fieldKey.toUpperCase()}';
-    return '$ifNotNull$fieldK: $fieldName,';
+    return '$fieldK: $fieldName,';
   }).toList()
     ..sort();
   return a.isNotEmpty ? a.join('\n') : '';
