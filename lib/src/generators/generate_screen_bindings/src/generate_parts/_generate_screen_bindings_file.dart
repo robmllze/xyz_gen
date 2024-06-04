@@ -219,7 +219,7 @@ GenerateScreenBindings _updateFromClassAnnotationField(
               return (fieldName1 ?? fieldName2)!;
             }();
             return (
-              fieldName: fieldName,
+              fieldName: fieldName.toCamelCase(),
               fieldType: 'String',
               nullable: true,
             );
