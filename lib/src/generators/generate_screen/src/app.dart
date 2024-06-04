@@ -51,10 +51,6 @@ Future<void> generateScreensApp(List<String> arguments) async {
         help: 'Query parameters.',
       )
       ..addOption(
-        'path-segments',
-        help: 'Path segments.',
-      )
-      ..addOption(
         'bindings-template',
         help: 'Bindings template file path.',
         defaultsTo: toLocalSystemPathFormat(
@@ -122,10 +118,6 @@ Future<void> generateScreensApp(List<String> arguments) async {
         help: 'Screen title.',
       )
       ..addOption(
-        'navigation-control-widget',
-        help: 'Screen navigator.',
-      )
-      ..addOption(
         'part-file-dirs',
         help: 'Part file directories separated by `&`.',
       )
@@ -168,10 +160,8 @@ Future<void> generateScreensApp(List<String> arguments) async {
         isRedirectable: toBool('is-redirectable'),
         internalParameters: toOptionsMap('internal-parameters'),
         queryParameters: splitArg(results['query-parameters'])?.toSet(),
-        pathSegments: splitArg(results['path-segments'])?.toList(),
         makeup: results['makeup'],
         title: results['default-title'],
-        navigationControlWidget: results['navigation-control-widget'],
         partFileDirs: splitArg(results['part-file-dirs'])?.toSet(),
       );
     },
@@ -192,10 +182,8 @@ Future<void> generateScreensApp(List<String> arguments) async {
         isRedirectable: args.isRedirectable!,
         internalParameters: args.internalParameters ?? const {},
         queryParameters: args.queryParameters ?? const {},
-        pathSegments: args.pathSegments ?? const [],
         makeup: args.makeup ?? '',
         title: args.title ?? '',
-        navigationControlWidget: args.navigationControlWidget ?? '',
         partFileDirs: args.partFileDirs ?? {},
       );
     },

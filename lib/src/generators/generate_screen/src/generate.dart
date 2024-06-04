@@ -29,10 +29,8 @@ Future<void> generateScreen({
   bool isRedirectable = false,
   Map<String, String> internalParameters = const {},
   Set<String> queryParameters = const {},
-  List<String> pathSegments = const [],
   String makeup = '',
   String title = '',
-  String navigationControlWidget = '',
   Set<String> partFileDirs = const {},
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
@@ -47,12 +45,7 @@ Future<void> generateScreen({
         (e) => 'late final ${e.key} = this.configuration.${e.key};',
       )
       .join('\n');
-  final q1 = queryParameters
-      .map((e) => 'late final $e = this.configuration.$e;')
-      .join('\n');
-  final p1 = pathSegments
-      .map((e) => 'late final $e = this.configuration.$e;')
-      .join('\n');
+  final q1 = queryParameters.map((e) => 'late final $e = this.configuration.$e;').join('\n');
   final data = {
     '___SCREEN_CLASS___': screenClassName,
     '___BINDINGS_FILE___': BINDINGS_FILE_NAME,
@@ -60,14 +53,12 @@ Future<void> generateScreen({
     '___SCREEN_FILE___': screenFileName,
     '___VIEW_FILE___': VIEW_FILE_NAME,
     '___Q1___': q1,
-    '___P1___': p1,
     '___I1___': i1,
   };
   final folderDirPath = p.joinAll(
     [
       outputDirPath,
-      if (path.isNotEmpty)
-        path.startsWith(RegExp(r'[\\/]')) ? path.substring(1) : path,
+      if (path.isNotEmpty) path.startsWith(RegExp(r'[\\/]')) ? path.substring(1) : path,
       screenClassKey,
     ],
   );
@@ -84,16 +75,13 @@ Future<void> generateScreen({
     data,
     path: path,
     isAccessibleOnlyIfLoggedIn: isAccessibleOnlyIfLoggedIn,
-    isAccessibleOnlyIfLoggedInAndVerified:
-        isAccessibleOnlyIfLoggedInAndVerified,
+    isAccessibleOnlyIfLoggedInAndVerified: isAccessibleOnlyIfLoggedInAndVerified,
     isAccessibleOnlyIfLoggedOut: isAccessibleOnlyIfLoggedOut,
     isRedirectable: isRedirectable,
     internalParameters: internalParameters,
     queryParameters: queryParameters,
-    pathSegments: pathSegments,
     makeup: makeup,
     title: title,
-    navigationControlWidget: navigationControlWidget,
     partFileDirs: partFileDirs,
   );
   final stateFilePath = p.join(folderDirPath, VIEW_FILE_NAME);
@@ -123,47 +111,37 @@ Future<void> _writeScreenFile(
   bool isRedirectable = false,
   Map<String, String> internalParameters = const {},
   Set<String> queryParameters = const {},
-  List<String> pathSegments = const [],
   String makeup = '',
   String title = '',
-  String navigationControlWidget = '',
   Set<String> partFileDirs = const {},
 }) async {
   final a = internalParameters.entries
       .map((e) {
         final k = e.key;
         final v = e.value;
-        return k.isNotEmpty && v.isNotEmpty ? "'$k': '$v'" : null;
+        return k.isNotEmpty && v.isNotEmpty
+            ? "(fieldName: '$k', fieldType: $v, nullable: ${k.endsWith('?')},)"
+            : null;
       })
       .nonNulls
       .join(',');
-  final b = queryParameters
-      .map((e) => e.isNotEmpty ? "'$e'" : null)
-      .nonNulls
-      .join(',');
-  final c =
-      pathSegments.map((e) => e.isNotEmpty ? "'$e'" : null).nonNulls.join(',');
+  final b =
+      queryParameters.map((e) => e.isNotEmpty ? "(fieldName: '$e',)" : null).nonNulls.join(',');
   final generateScreenBindingsArgs = [
     if (path.isNotEmpty) "path: '$path'",
     if (title.isNotEmpty) "defaultTitle: '$title'",
-    if (navigationControlWidget.isNotEmpty)
-      "navigationControlWidget: '$navigationControlWidget'",
     if (makeup.isNotEmpty) "makeup: '$makeup'",
     if (isAccessibleOnlyIfLoggedIn) 'isAccessibleOnlyIfLoggedIn: true',
-    if (isAccessibleOnlyIfLoggedInAndVerified)
-      'isAccessibleOnlyIfLoggedInAndVerified: true',
+    if (isAccessibleOnlyIfLoggedInAndVerified) 'isAccessibleOnlyIfLoggedInAndVerified: true',
     if (isAccessibleOnlyIfLoggedOut) 'isAccessibleOnlyIfLoggedOut: true',
     if (isRedirectable) 'isRedirectable: true',
-    if (internalParameters.isNotEmpty && a.isNotEmpty)
-      'internalParameters: {$a,}',
+    if (internalParameters.isNotEmpty && a.isNotEmpty) 'internalParameters: {$a,}',
     if (queryParameters.isNotEmpty && b.isNotEmpty) 'queryParameters: {$b,}',
-    if (pathSegments.isNotEmpty && c.isNotEmpty) 'pathSegments: [$c,]',
   ].join(',');
   await _writeFile(templateFilePath, outputFilePath, {
     ...data,
-    '___GENERATE_SCREEN_BINDINGS_ARGS___': generateScreenBindingsArgs.isNotEmpty
-        ? '$generateScreenBindingsArgs,'
-        : '',
+    '___GENERATE_SCREEN_BINDINGS_ARGS___':
+        generateScreenBindingsArgs.isNotEmpty ? '$generateScreenBindingsArgs,' : '',
     '___PARTS___': partFileDirs.isNotEmpty
         ? '// @GenerateDirectives\n${partFileDirs.map((e) => e.toLowerCase().endsWith('.dart') ? e : '$e.dart').map((e) => "part '$e';'").join('\n')}'
         : '',
@@ -177,8 +155,7 @@ Future<void> _writeFile(
   String outputFilePath,
   Map<String, String> data,
 ) async {
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
+  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
   final output = replaceData(template, data);
   await writeFile(outputFilePath, output);
   await fmtDartFile(outputFilePath);

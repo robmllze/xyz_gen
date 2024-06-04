@@ -31,10 +31,8 @@ class GenerateScreenArgs extends ValidObject {
   final bool? isRedirectable;
   final Map<String, String>? internalParameters;
   final Set<String>? queryParameters;
-  final List<String>? pathSegments;
   final String? makeup;
   final String? title;
-  final String? navigationControlWidget;
   final Set<String>? partFileDirs;
 
   //
@@ -56,10 +54,8 @@ class GenerateScreenArgs extends ValidObject {
     required this.isRedirectable,
     required this.internalParameters,
     required this.queryParameters,
-    required this.pathSegments,
     required this.makeup,
     required this.title,
-    required this.navigationControlWidget,
     required this.partFileDirs,
   });
 
@@ -83,7 +79,6 @@ class GenerateScreenArgs extends ValidObject {
         if (isRedirectable != null) isRedirectable,
         if (makeup != null) makeup,
         if (title != null) title,
-        if (navigationControlWidget != null) navigationControlWidget,
         if (partFileDirs != null) partFileDirs,
       ]);
 }
