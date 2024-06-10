@@ -26,7 +26,7 @@ String _ip0(Set<Record> internalParameters) {
       "static const $fieldK = '$fieldKey';",
       '/// Returns the **internal parameter** with the key `$fieldKey`',
       '/// or [$fieldK].',
-      '$fieldType$questionMark get $fieldName => super.arg<$fieldType>($fieldK)$exclamationMark;',
+      '$fieldType$questionMark get $fieldName => this.arg<$fieldType>($fieldK)$exclamationMark;',
     ].join('\n');
   }).toList()
     ..sort();
@@ -71,7 +71,7 @@ String _qp0(Set<Record> queryParameters) {
       "static const $fieldK = '$fieldKey';",
       '/// Returns the URI **query parameter** with the key `$fieldKey`',
       '/// or [$fieldK].',
-      'String$questionMark get $fieldName => super.arg<String>($fieldK)$exclamationMark;',
+      'String$questionMark get $fieldName => this.arg<String>($fieldK)$exclamationMark;',
     ].join('\n');
   }).toList()
     ..sort();
