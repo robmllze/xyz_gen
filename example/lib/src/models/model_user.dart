@@ -18,6 +18,7 @@ part '_model_user.g.dart';
   fields: {
     ('id', String),
     ('email', T_LOWER_CASE_STRING),
+    ('child?', 'ModelUser'),
   },
   shouldInherit: true,
 )

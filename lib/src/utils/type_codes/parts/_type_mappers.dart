@@ -12,7 +12,7 @@ part of '../type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef TTypeMappers = Map<String, String Function(MapperEvent)>;
+typedef TTypeMappers = Map<String, String Function(MapperEvent event)>;
 
 TTypeMappers newTypeMappers(TTypeMappers input) =>
     TTypeMappers.unmodifiable(input);

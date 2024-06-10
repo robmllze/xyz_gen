@@ -24,6 +24,7 @@ class ModelUser extends _ModelUser {
   //
   //
 
+  static const K_CHILD = 'child';
   static const K_EMAIL = 'email';
   static const K_FIRST_NAME = 'first_name';
   static const K_ID = 'id';
@@ -34,6 +35,7 @@ class ModelUser extends _ModelUser {
   @override
   String get $class => CLASS;
 
+  ModelUser? child;
   String? email;
   String? firstName;
   String? id;
@@ -50,12 +52,14 @@ class ModelUser extends _ModelUser {
   //
 
   factory ModelUser({
+    ModelUser? child,
     required String email,
     String? firstName,
     required String id,
     String? lastName,
   }) {
     return ModelUser.b(
+      child: child,
       email: email,
       firstName: firstName,
       id: id,
@@ -68,6 +72,7 @@ class ModelUser extends _ModelUser {
   //
 
   ModelUser.b({
+    this.child,
     this.email,
     this.firstName,
     this.id,
@@ -169,6 +174,7 @@ class ModelUser extends _ModelUser {
   ) {
     try {
       return ModelUser.empty()
+        ..$child = otherData?[K_CHILD]
         ..$email = otherData?[K_EMAIL]
         ..$firstName = otherData?[K_FIRST_NAME]
         ..$id = otherData?[K_ID]
@@ -218,6 +224,7 @@ class ModelUser extends _ModelUser {
   }) {
     try {
       final withNulls = <String, dynamic>{
+        K_CHILD: this.$child,
         K_EMAIL: this.$email,
         K_FIRST_NAME: this.$firstName,
         K_ID: this.$id,
@@ -258,6 +265,9 @@ class ModelUser extends _ModelUser {
   ) {
     if (otherData != null && otherData.isNotEmpty) {
       final other = ModelUser.fromJson(otherData);
+      if (other.child != null) {
+        this.child = other.child!;
+      }
       if (other.email != null) {
         this.email = other.email!;
       }
@@ -276,6 +286,17 @@ class ModelUser extends _ModelUser {
   //
   //
   //
+
+  // child.
+  ModelUser? get childField => this.child;
+  set childField(ModelUser? v) => this.child = v;
+  @protected
+  dynamic get $child => this.child?.toJson();
+  @protected
+  set $child(v) => this.child = () {
+        final a = letMap<String, dynamic>(v);
+        return a != null ? ModelUser.fromJson(a) : null;
+      }();
 
   // email.
   String get emailField => this.email!;

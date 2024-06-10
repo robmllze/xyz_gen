@@ -14,12 +14,11 @@ part of '../generate.dart';
 
 Map<String, String> _dartReplacements({
   required GenerateModel annotation,
-  required Map<String, TypeCode> fields,
+  required Map<String, DartTypeCode> fields,
   required StringCaseType keyStringCaseType,
 }) {
   final fields0 = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
-  final entries0 = fields0.entries.toList()
-    ..sort((a, b) => a.key.compareTo(b.key));
+  final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final vars = entries0.map((e) => e.key);
   final entries1 = vars.map((i) => MapEntry(i, fields0[i]));
   final nonNullableVars = vars.where((e) => !fields0[e]!.nullable);

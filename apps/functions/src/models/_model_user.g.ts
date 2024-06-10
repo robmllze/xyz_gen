@@ -9,6 +9,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable eol-last */
 /* eslint-disable require-jsdoc */
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -18,27 +19,31 @@ class ModelUser {
   //
   //
 
+  child: ModelUser|null;
   email: string;
-  firstName: string | null;
+  firstName: string|null;
   id: string;
-  lastName: string | null;
+  lastName: string|null;
 
   //
   //
   //
 
   constructor({
+    child = null,
     email,
-    firstName,
+    firstName = null,
     id,
-    lastName,
+    lastName = null,
   }:
   {
+    child?: ModelUser|null,
     email: string,
-    firstName: string | null,
+    firstName?: string|null,
     id: string,
-    lastName: string | null,
+    lastName?: string|null,
   }) {
+    this.child = child;
     this.email = email;
     this.firstName = firstName;
     this.id = id;
@@ -51,6 +56,7 @@ class ModelUser {
 
   toMap(): Map<string, any> {
     return new Map<string, any>([
+      ['child', this.child?.toMap()],
       ['email', this.email],
       ['first_name', this.firstName],
       ['id', this.id],
@@ -64,6 +70,10 @@ class ModelUser {
 
   static fromMap(map: Map<string, any>): ModelUser {
     return new ModelUser({
+      child: (() => {
+        const v = map.get('child');
+        return v != null ? ModelUser.fromMap(v): v;
+      })(),
       email: map.get('email'),
       firstName: map.get('first_name'),
       id: map.get('id'),
@@ -77,10 +87,11 @@ class ModelUser {
 
   toObject(): any {
     return {
-      email: this.email,
-      first_name: this.firstName,
-      id: this.id,
-      last_name: this.lastName,
+      'child': this.child?.toObject(),
+      'email': this.email,
+      'first_name': this.firstName,
+      'id': this.id,
+      'last_name': this.lastName,
     };
   }
 
@@ -91,10 +102,14 @@ class ModelUser {
 
   static fromObject(obj: any): ModelUser {
     return new ModelUser({
-      email: obj['email'] as string,
-      firstName: obj['first_name'] as string | null,
-      id: obj['id'] as string,
-      lastName: obj['last_name'] as string | null,
+      child: (() => {
+        const v = obj['child'];
+        return v != null ? ModelUser.fromObject(v): v;
+      })(),
+      email: obj['email'],
+      firstName: obj['first_name'],
+      id: obj['id'],
+      lastName: obj['last_name'],
     });
   }
 
