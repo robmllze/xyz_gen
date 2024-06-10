@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.94.0]
+
+- Released @ 2024-06-10 06:10:24.104584Z
+- Refactor TypeScript generator
+
 ## [0.93.0]
 
 - Released @ 2024-06-10 06:05:14.748599Z
