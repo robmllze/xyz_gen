@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.95.0]
+
+- Released @ 2024-06-10 06:21:12.577812Z
+- Minor refactoring
+
 ## [0.94.0]
 
 - Released @ 2024-06-10 06:10:24.104584Z
