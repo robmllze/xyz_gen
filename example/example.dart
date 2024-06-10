@@ -10,7 +10,7 @@
 
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
-part '_model_user.g.dart';
+//part '_model_user.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,6 +21,7 @@ part '_model_user.g.dart';
   },
   shouldInherit: true,
 )
+// ignore: unused_element
 abstract class _ModelUser extends Model {
   @Field()
   String? firstName;

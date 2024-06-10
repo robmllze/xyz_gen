@@ -26,7 +26,7 @@ export 'generators/generate_models/src/analyze.dart';
 export 'generators/generate_models/src/app.dart';
 export 'generators/generate_models/src/generate.dart';
 export 'generators/generate_models/src/map_with.dart';
-export 'generators/generate_models/src/type_mappers/loose_type_mappers.dart';
+export 'generators/generate_models/src/type_mappers/dart_loose_type_mappers.dart';
 export 'generators/generate_preps/src/app.dart';
 export 'generators/generate_preps/src/generate.dart';
 export 'generators/generate_screen/src/app.dart';

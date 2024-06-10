@@ -12,10 +12,12 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
+import 'type_mappers/typescript_loose_type_mappers.dart';
 
 part 'generate_parts/_generate_model_file.dart';
 part 'generate_parts/_helpers.dart';
-part 'generate_parts/_replacements.dart';
+part 'generate_parts/_dart_replacements.dart';
+part 'generate_parts/_typescript_replacements.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,7 +26,7 @@ Future<void> generateModels({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
-  required String templateFilePath,
+  required Set<String> templateFilePaths,
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
   await generateFromTemplates(
@@ -32,7 +34,7 @@ Future<void> generateModels({
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
     pathPatterns: pathPatterns,
-    templateFilePaths: {templateFilePath},
+    templateFilePaths: templateFilePaths,
     generateForFile: _generateModelFromFile,
   );
   Here().debugLogStop('Done!');

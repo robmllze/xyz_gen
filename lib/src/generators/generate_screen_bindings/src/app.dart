@@ -61,7 +61,7 @@ Future<void> generateScreenBindingsApp(List<String> arguments) async {
     onResults: (parser, results) {
       return BasicCmdAppArgs(
         fallbackDartSdkPath: results['dart-sdk'],
-        templateFilePath: results['template'],
+        templateFilePaths: splitArg(results['template'])?.toSet(),
         rootPaths: splitArg(results['roots'])?.toSet(),
         subPaths: splitArg(results['subs'])?.toSet(),
         pathPatterns: splitArg(results['patterns'])?.toSet(),
@@ -70,7 +70,7 @@ Future<void> generateScreenBindingsApp(List<String> arguments) async {
     action: (parser, results, args) async {
       await generateScreenBindings(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
-        templateFilePath: args.templateFilePath!,
+        templateFilePath: args.templateFilePaths!.first,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},

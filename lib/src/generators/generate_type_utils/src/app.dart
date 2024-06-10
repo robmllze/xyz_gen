@@ -60,7 +60,7 @@ Future<void> generateTypeUtilsApp(List<String> arguments) async {
     onResults: (parser, results) {
       return BasicCmdAppArgs(
         fallbackDartSdkPath: results['dart-sdk'],
-        templateFilePath: results['template'],
+        templateFilePaths: splitArg(results['template'])?.toSet(),
         rootPaths: splitArg(results['roots'])?.toSet(),
         subPaths: splitArg(results['subs'])?.toSet(),
         pathPatterns: splitArg(results['patterns'])?.toSet(),
@@ -72,7 +72,7 @@ Future<void> generateTypeUtilsApp(List<String> arguments) async {
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
-        templateFilePath: args.templateFilePath!,
+        templateFilePath: args.templateFilePaths!.first,
       );
     },
   );

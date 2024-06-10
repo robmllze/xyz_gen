@@ -120,10 +120,7 @@ class TypeCode {
     }
 
     String step4(String input) {
-      return input
-          .replaceAll('[', '<')
-          .replaceAll(']', '>')
-          .replaceAll('+', ', ');
+      return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
     }
 
     var output = input;
@@ -133,6 +130,32 @@ class TypeCode {
     output = step3(output);
     output = step4(output);
     return output;
+  }
+
+  //
+  //
+  //
+
+  String toTypescriptTypeString() {
+    const typeMapping = {
+      'int': 'number',
+      'double': 'number',
+      'num': 'number',
+      'String': 'string',
+      'bool': 'boolean',
+      'List': 'Array',
+      'Map': 'Map',
+      'Set': 'Set',
+      'DateTime': 'Date',
+      'Duration': 'number',
+      'dynamic': 'any',
+      'void': 'void',
+    };
+    var type = typeMapping[this.nonNullableName] ?? 'any';
+    if (this.nullable && type != 'any' && type != 'void') {
+      type += ' | null';
+    }
+    return type;
   }
 
   //

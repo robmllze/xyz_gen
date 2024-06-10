@@ -18,7 +18,7 @@ class BasicCmdAppArgs extends ValidObject {
   //
 
   final String? fallbackDartSdkPath;
-  final String? templateFilePath;
+  final Set<String>? templateFilePaths;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
@@ -29,7 +29,7 @@ class BasicCmdAppArgs extends ValidObject {
 
   const BasicCmdAppArgs({
     this.fallbackDartSdkPath,
-    required this.templateFilePath,
+    required this.templateFilePaths,
     required this.rootPaths,
     required this.subPaths,
     required this.pathPatterns,
@@ -42,7 +42,7 @@ class BasicCmdAppArgs extends ValidObject {
   @override
   bool get valid => ValidObject.areValid([
         if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
-        this.templateFilePath,
+        this.templateFilePaths,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,

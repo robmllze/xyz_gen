@@ -87,7 +87,7 @@ class ModelUser extends _ModelUser {
     try {
       return fromOrNull(other)!;
     } catch (e) {
-      assert(false, e);
+      assert(false, 'ModelUser.from: $e');
       rethrow;
     }
   }
@@ -95,9 +95,7 @@ class ModelUser extends _ModelUser {
   static ModelUser? fromOrNull(
     Model? other,
   ) {
-    return fromJsonOrNull(
-      letAs<DataModel>(other)?.data ?? other?.toJson(),
-    )!;
+    return fromJsonOrNull(other?.toJson())!;
   }
 
   //
@@ -110,7 +108,7 @@ class ModelUser extends _ModelUser {
     try {
       return ofOrNull(other)!;
     } catch (e) {
-      assert(false, e);
+      assert(false, 'ModelUser.of: $e');
       rethrow;
     }
   }
@@ -131,7 +129,7 @@ class ModelUser extends _ModelUser {
     try {
       return fromJsonStringOrNull(source)!;
     } catch (e) {
-      assert(false, e);
+      assert(false, 'ModelUser.fromJsonString: $e');
       rethrow;
     }
   }
@@ -161,7 +159,7 @@ class ModelUser extends _ModelUser {
     try {
       return fromJsonOrNull(otherData)!;
     } catch (e) {
-      assert(false, e);
+      assert(false, 'ModelUser.fromJson: $e');
       rethrow;
     }
   }
@@ -190,7 +188,7 @@ class ModelUser extends _ModelUser {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, e);
+      assert(false, 'ModelUser.fromUri: $e');
       rethrow;
     }
   }
@@ -202,7 +200,7 @@ class ModelUser extends _ModelUser {
       if (uri != null && uri.path == CLASS) {
         return ModelUser.fromJson(uri.queryParameters);
       } else {
-        return ModelUser.b();
+        return ModelUser.empty();
       }
     } catch (_) {
       return null;
@@ -227,7 +225,7 @@ class ModelUser extends _ModelUser {
       }.mapWithDefault(defaultValue);
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, e);
+      assert(false, 'ModelUser.toJson: $e');
       rethrow;
     }
   }
@@ -284,7 +282,7 @@ class ModelUser extends _ModelUser {
   set emailField(String v) => this.email = v;
   @protected
   dynamic get $email =>
-      (this.email?.toString().trim().nullIfEmpty?.toLowerCase())!;
+      this.email?.toString().trim().nullIfEmpty?.toLowerCase();
   @protected
   set $email(v) => this.email = v?.toString().trim().nullIfEmpty?.toLowerCase();
 
@@ -300,7 +298,7 @@ class ModelUser extends _ModelUser {
   String get idField => this.id!;
   set idField(String v) => this.id = v;
   @protected
-  dynamic get $id => (this.id?.toString().trim().nullIfEmpty)!;
+  dynamic get $id => this.id?.toString().trim().nullIfEmpty;
   @protected
   set $id(v) => this.id = v?.toString().trim().nullIfEmpty;
 

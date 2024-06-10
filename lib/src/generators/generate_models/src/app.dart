@@ -45,9 +45,9 @@ Future<void> generateModelsApp(List<String> arguments) async {
         help: 'Path patterns separated by `&`.',
       )
       ..addOption(
-        'template',
+        'templates',
         abbr: 't',
-        help: 'Template file path.',
+        help: 'Template file paths separated by `&`..',
         defaultsTo: p.join(
           await getXyzGenLibPath(),
           'templates',
@@ -61,7 +61,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
     onResults: (parser, results) {
       return BasicCmdAppArgs(
         fallbackDartSdkPath: results['dart-sdk'],
-        templateFilePath: results['template'],
+        templateFilePaths: splitArg(results['templates'])?.toSet(),
         rootPaths: splitArg(results['roots'])?.toSet(),
         subPaths: splitArg(results['subs'])?.toSet(),
         pathPatterns: splitArg(results['patterns'])?.toSet(),
@@ -73,7 +73,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
-        templateFilePath: args.templateFilePath!,
+        templateFilePaths: args.templateFilePaths ?? const {},
       );
     },
   );

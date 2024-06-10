@@ -12,18 +12,18 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class LooseTypeMappers extends TypeMappers {
+class DartLooseTypeMappers extends TypeMappers {
   //
   //
   //
 
-  static final instance = LooseTypeMappers._();
+  static final instance = DartLooseTypeMappers._();
 
   //
   //
   //
 
-  LooseTypeMappers._();
+  DartLooseTypeMappers._();
 
   //
   //
