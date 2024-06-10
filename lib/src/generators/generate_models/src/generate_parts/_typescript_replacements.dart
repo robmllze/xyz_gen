@@ -31,10 +31,10 @@ Map<String, String> _typescriptReplacements({
       return '  ${e.key}: ${e.value?.toTypescriptTypeString() ?? 'any'};';
     }),
     '___P1___': entries1.map((e) {
-      return '    ${e.key},';
+      return '    ${e.key} = null,';
     }),
     '___P2___': entries1.map((e) {
-      return '    ${e.key}: ${e.value?.toTypescriptTypeString() ?? 'any'},';
+      return '    ${e.key}?: ${e.value?.toTypescriptTypeString() ?? 'any'},';
     }),
     '___P3___': entries1.map((e) {
       return '    this.${e.key} = ${e.key};';
