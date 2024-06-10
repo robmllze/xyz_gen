@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.92.1]
+
+- Released @ 2024-06-10 05:38:16.546461Z
+- Update output path for typescript models
+
 ## [0.92.0]
 
 - Released @ 2024-06-10 05:22:55.879060Z
