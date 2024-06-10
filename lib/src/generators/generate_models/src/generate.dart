@@ -26,6 +26,7 @@ Future<void> generateModels({
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
   required Set<String> templateFilePaths,
+  String? output,
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
   await generateFromTemplates(
@@ -35,6 +36,7 @@ Future<void> generateModels({
     pathPatterns: pathPatterns,
     templateFilePaths: templateFilePaths,
     generateForFile: _generateModelFromFile,
+    output: output,
   );
   Here().debugLogStop('Done!');
 }

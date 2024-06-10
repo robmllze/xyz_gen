@@ -16,6 +16,7 @@ Future<GenerateModel?> _generateModelFromFile(
   AnalysisContextCollection collection,
   String inputFilePath,
   Map<String, String> templates,
+  String? output,
 ) async {
   return analyzeModelFromFile(
     collection: collection,
@@ -26,6 +27,7 @@ Future<GenerateModel?> _generateModelFromFile(
         templates: templates,
         annotation: annotation,
         annotatedClassName: annotatedClassName,
+        output: output,
       );
       return annotation;
     },
@@ -104,6 +106,7 @@ Future<GenerateModel> generateModel({
   required Map<String, String> templates,
   required GenerateModel annotation,
   required String annotatedClassName,
+  String? output,
   bool dryRun = false,
 }) async {
   // Update the class name.
@@ -114,11 +117,10 @@ Future<GenerateModel> generateModel({
 
   // Define a function to generate the Dart model.
   Future<void> $generateDartModel(String template) async {
-    final output = replaceData(
+    final op = replaceData(
       template,
       {
-        '___SUPER_CLASS___':
-            annotation.shouldInherit ? annotatedClassName : 'Model',
+        '___SUPER_CLASS___': annotation.shouldInherit ? annotatedClassName : 'Model',
         '___SUPER_CONSTRUCTOR___': annotation.shouldInherit
             ? annotation.inheritanceConstructor?.nullIfEmpty != null
                 ? ': super.${annotation.inheritanceConstructor}()'
@@ -138,9 +140,8 @@ Future<GenerateModel> generateModel({
               ),
             );
           }).toMap(),
-          keyStringCaseType:
-              StringCaseType.values.valueOf(annotation.keyStringCase) ??
-                  StringCaseType.LOWER_SNAKE_CASE,
+          keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
+              StringCaseType.LOWER_SNAKE_CASE,
         ),
       },
     );
@@ -150,12 +151,17 @@ Future<GenerateModel> generateModel({
       final classFileDirPath = getDirPath(inputFilePath);
       final classKey = getFileNameWithoutExtension(classFileName);
       final outputFileName = '_$classKey.g.dart';
-      return p.join(classFileDirPath, outputFileName);
+      return p.joinAll(
+        [
+          output ?? classFileDirPath,
+          outputFileName,
+        ].nonNulls,
+      );
     }();
 
     if (!dryRun) {
       // Write the generated Dart file.
-      await writeFile(outputFilePath, output);
+      await writeFile(outputFilePath, op);
 
       // Format the generated Dart file.
       await fmtDartFile(outputFilePath);
@@ -164,7 +170,7 @@ Future<GenerateModel> generateModel({
 
   // Define a function to generate the Typescript model.
   Future<void> $generateTypescriptModel(String template) async {
-    final output = replaceData(
+    final op = replaceData(
       template,
       {
         '___CLASS___': annotation.className,
@@ -179,9 +185,8 @@ Future<GenerateModel> generateModel({
               ),
             );
           }).toMap(),
-          keyStringCaseType:
-              StringCaseType.values.valueOf(annotation.keyStringCase) ??
-                  StringCaseType.LOWER_SNAKE_CASE,
+          keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
+              StringCaseType.LOWER_SNAKE_CASE,
         ),
       },
     );
@@ -190,12 +195,17 @@ Future<GenerateModel> generateModel({
     final outputFilePath = () {
       final classKey = getFileNameWithoutExtension(classFileName);
       final outputFileName = '_$classKey.g.ts';
-      return p.join('.', 'ts_models', outputFileName);
+      return p.joinAll(
+        [
+          output ?? 'models',
+          outputFileName,
+        ].nonNulls,
+      );
     }();
 
     if (!dryRun) {
       // Write the generated Dart file.
-      await writeFile(outputFilePath, output);
+      await writeFile(outputFilePath, op);
     }
   }
 
@@ -225,8 +235,7 @@ GenerateModel _updateClassName(
   final a = annotatedClassName.replaceFirst(RegExp(r'^[_$]+'), '');
   final b = a != annotatedClassName ? a : '${annotatedClassName}Model';
   annotation = annotation.copyWith(
-    className:
-        annotation.className?.nullIfEmpty == null ? b : annotation.className,
+    className: annotation.className?.nullIfEmpty == null ? b : annotation.className,
   );
   return annotation;
 }
@@ -239,9 +248,8 @@ GenerateModel _updateFromAnnotatedMember(
   String fieldName,
   String fieldType,
 ) {
-  final nullable = fieldType == 'dynamic'
-      ? false
-      : fieldName.endsWith('?') || fieldType.endsWith('?');
+  final nullable =
+      fieldType == 'dynamic' ? false : fieldName.endsWith('?') || fieldType.endsWith('?');
   final TStdField more = (
     fieldName: fieldName,
     fieldType: fieldType,
@@ -283,15 +291,11 @@ GenerateModel _updateFromClassAnnotationField(
             }();
             var fieldType = () {
               final fieldType1 = e.getField('\$2')?.toStringValue();
-              final fieldType2 = e
-                  .getField('\$2')
-                  ?.toTypeValue()
-                  ?.getDisplayString(withNullability: false);
+              final fieldType2 =
+                  e.getField('\$2')?.toTypeValue()?.getDisplayString(withNullability: false);
               final fieldType3 = e.getField('fieldType')?.toStringValue();
-              final fieldType4 = e
-                  .getField('fieldType')
-                  ?.toTypeValue()
-                  ?.getDisplayString(withNullability: false);
+              final fieldType4 =
+                  e.getField('fieldType')?.toTypeValue()?.getDisplayString(withNullability: false);
               return (fieldType1 ?? fieldType2 ?? fieldType3 ?? fieldType4)!;
             }();
             final nullable = () {
@@ -330,8 +334,7 @@ GenerateModel _updateFromClassAnnotationField(
 
     case 'keyStringCase':
       return annotation.copyWith(
-        keyStringCase:
-            memberValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
+        keyStringCase: memberValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
       );
     default:
       return annotation;

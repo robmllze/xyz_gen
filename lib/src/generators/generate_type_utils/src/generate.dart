@@ -39,6 +39,7 @@ Future<void> _generateForFile(
   AnalysisContextCollection collection,
   String fixedFilePath,
   Map<String, String> templates,
+  String? _,
 ) async {
   await analyzeAnnotatedEnums(
     filePath: fixedFilePath,

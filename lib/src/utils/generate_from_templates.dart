@@ -27,6 +27,7 @@ import '/_common.dart';
 /// - [pathPatterns] is a set of patterns used to filter the Dart files found.
 /// - [deleteGeneratedFiles] can be set to `true` to delete generated files.
 /// - [onDelete] is a callback that is called when a file is deleted.
+/// - [output] is the output directory path.
 Future<void> generateFromTemplates({
   String? fallbackDartSdkPath,
   required Set<String> rootDirPaths,
@@ -35,12 +36,14 @@ Future<void> generateFromTemplates({
     AnalysisContextCollection collection,
     String filePath,
     Map<String, String> templates,
+    String? output,
   ) generateForFile,
   required Set<String> templateFilePaths,
   String begType = '',
   Set<String> pathPatterns = const {},
   bool deleteGeneratedFiles = false,
   void Function(String filePath)? onDelete,
+  String? output,
 }) async {
   final combinedPaths = combinePathSets([rootDirPaths, subDirPaths]);
   final collection = createAnalysisContextCollection(
@@ -77,7 +80,12 @@ Future<void> generateFromTemplates({
     );
     for (final result in results) {
       final filePath = result.filePath;
-      await generateForFile(collection, filePath, templates);
+      await generateForFile(
+        collection,
+        filePath,
+        templates,
+        output,
+      );
     }
   }
 }

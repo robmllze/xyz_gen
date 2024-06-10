@@ -55,6 +55,11 @@ Future<void> generateModelsApp(List<String> arguments) async {
         ),
       )
       ..addOption(
+        'output',
+        abbr: 'o',
+        help: 'Output directory path.',
+      )
+      ..addOption(
         'dart-sdk',
         help: 'Dart SDK path.',
       ),
@@ -65,6 +70,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
         rootPaths: splitArg(results['roots'])?.toSet(),
         subPaths: splitArg(results['subs'])?.toSet(),
         pathPatterns: splitArg(results['patterns'])?.toSet(),
+        output: results['output'],
       );
     },
     action: (parser, results, args) async {
@@ -74,6 +80,7 @@ Future<void> generateModelsApp(List<String> arguments) async {
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
         templateFilePaths: args.templateFilePaths ?? const {},
+        output: args.output,
       );
     },
   );

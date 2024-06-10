@@ -34,7 +34,7 @@ Future<Set<String>> generateScreenBindings({
     subDirPaths: subDirPaths,
     pathPatterns: pathPatterns,
     templateFilePaths: {templateFilePath},
-    generateForFile: (collection, filePath, templates) async {
+    generateForFile: (collection, filePath, templates, _) async {
       final temp = await _generateForFile(
         collection,
         filePath,

@@ -22,6 +22,7 @@ class BasicCmdAppArgs extends ValidObject {
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
+  final String? output;
 
   //
   //
@@ -33,6 +34,7 @@ class BasicCmdAppArgs extends ValidObject {
     required this.rootPaths,
     required this.subPaths,
     required this.pathPatterns,
+    this.output,
   });
 
   //
@@ -46,5 +48,6 @@ class BasicCmdAppArgs extends ValidObject {
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
+        if (this.output != null) this.output,
       ]);
 }
