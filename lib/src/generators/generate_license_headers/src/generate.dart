@@ -21,18 +21,21 @@ Future<void> generateLicenseHeaders({
   required String templateFilePath,
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
-  final template = (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
+  final template =
+      (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     var fileResults = await findFiles(
       dirPath,
       extensions: const {},
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async => !isGeneratedDartFilePath(filePath),
+      onFileFound: (_, __, filePath) async =>
+          !isGeneratedDartFilePath(filePath),
     );
     final templateLangFileExt =
         p.extension(templateFilePath, 2).replaceAll('.md', '').toLowerCase();
-    fileResults = fileResults.where((e) => e.extension == templateLangFileExt).toList();
+    fileResults =
+        fileResults.where((e) => e.extension == templateLangFileExt).toList();
     for (final result in fileResults) {
       await _generateForFile(result, template);
     }

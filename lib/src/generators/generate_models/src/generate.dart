@@ -12,7 +12,6 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 
 import '/_common.dart';
-import 'type_mappers/typescript_loose_type_mappers.dart';
 
 part 'generate_parts/_generate_model_file.dart';
 part 'generate_parts/_helpers.dart';
