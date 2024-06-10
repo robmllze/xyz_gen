@@ -18,13 +18,12 @@ Map<String, String> _typescriptReplacements({
   required StringCaseType keyStringCaseType,
 }) {
   final fields0 = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
-  final entries0 = fields0.entries.toList()
-    ..sort((a, b) => a.key.compareTo(b.key));
+  final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
   final vars = entries0.map((e) => e.key);
   final entries1 = vars.map((i) => MapEntry(i, fields0[i]));
-  final nonNullableVars = vars.where((e) => !fields0[e]!.nullable);
-  final keys = _getKeyNames(vars, keyStringCaseType);
-  final consts = _getKeyConstNames(vars);
+  // final nonNullableVars = vars.where((e) => !fields0[e]!.nullable);
+  // final keys = _getKeyNames(vars, keyStringCaseType);
+  // final consts = _getKeyConstNames(vars);
 
   return {
     '___P0___': entries1.map((e) {
