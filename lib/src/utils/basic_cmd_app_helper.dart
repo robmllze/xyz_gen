@@ -8,14 +8,18 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:args/args.dart';
+import 'dart:io';
 
-import '/_common.dart';
+import 'package:args/args.dart';
+import 'package:xyz_utils/xyz_utils.dart';
+
+import '../core_utils/print_arg_parser_usage.dart';
+import '../core_utils/valid_args_checker.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A helper for creating a basic command-line app.
-Future<void> basicCmdAppHelper<T extends ValidObject>({
+Future<void> basicCmdAppHelper<T extends ValidArgsChecker>({
   required String appTitle,
   required List<String> arguments,
   required ArgParser parser,
@@ -31,13 +35,13 @@ Future<void> basicCmdAppHelper<T extends ValidObject>({
       return;
     }
     if (results['help']) {
-      printUsage(appTitle, parser);
+      printArgParserUsage(appTitle, parser);
       return;
     }
     final args = onResults(parser, results);
-    if (!args.valid) {
+    if (!args.isValid) {
       Here().debugLogError('You must provide all required options.');
-      printUsage(appTitle, parser);
+      printArgParserUsage(appTitle, parser);
       exit(1);
     }
     await action(parser, results, args);

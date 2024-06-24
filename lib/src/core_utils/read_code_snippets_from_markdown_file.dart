@@ -8,37 +8,24 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/_common.dart';
+import 'dart:io';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GenerateForFilesArgs extends ValidArgsChecker {
-  //
-  //
-  //
-
-  final Set<String>? rootPaths;
-  final Set<String>? subPaths;
-  final Set<String>? pathPatterns;
-
-  //
-  //
-  //
-
-  const GenerateForFilesArgs({
-    required this.rootPaths,
-    required this.subPaths,
-    required this.pathPatterns,
-  });
-
-  //
-  //
-  //
-
-  @override
-  bool get isNotNullAndNotEmpty => ValidArgsChecker.isNotNullAndNotEmptyCheck([
-        this.rootPaths,
-        if (this.subPaths != null) this.subPaths,
-        if (this.pathPatterns != null) this.pathPatterns,
-      ]);
+/// Returns a list of all code snippets for the language [lang] from a markdown
+/// file at [filePath].
+Future<List<String>> readCodeSnippetsFromMarkdownFile(
+  String filePath, {
+  String lang = '[^\\n]+',
+}) async {
+  final isMarkdownFile = filePath.toLowerCase().endsWith('.md');
+  if (!isMarkdownFile) {
+    throw Exception('The path "$filePath" does not refer to a file with a .md extension.');
+  }
+  final file = File(filePath);
+  final input = await file.readAsString();
+  final dartCodeRegex = RegExp('```($lang)\\n(.*?)```', dotAll: true);
+  final matches = dartCodeRegex.allMatches(input);
+  final snippets = matches.map((e) => e.group(2)?.trim() ?? '').toList();
+  return snippets;
 }

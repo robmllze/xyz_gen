@@ -32,6 +32,12 @@ linter:
 analyzer:
   exclude:
     - build/**
+  enable-experiment:
+    - macros
+  plugins:
+    custom_lint:
+      rules:
+        - my_custom_rule
 
   errors:
     always_declare_return_types: error

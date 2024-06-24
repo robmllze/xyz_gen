@@ -8,14 +8,13 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/_common.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> handleCommentAnnotations({
   required String filePath,
-  required Map<String, Future<bool> Function(int, List<String>, String)>
-      annotationHandlers,
+  required Map<String, Future<bool> Function(int, List<String>, String)> annotationHandlers,
   required Set<String> annotationsToDelete,
 }) async {
   final lines = await readFileAsLines(filePath) ?? [];
@@ -30,16 +29,16 @@ Future<void> handleCommentAnnotations({
       if (match != null) {
         final instruction = match.group(1)?.replaceAll(_sugarRegExp, '') ?? '';
         instructions[n] = instruction;
-        final shouldContinue = await simplifiedAnnotationHandlers[instruction]
-            ?.call(n, lines, filePath);
+        final shouldContinue =
+            await simplifiedAnnotationHandlers[instruction]?.call(n, lines, filePath);
         if (shouldContinue == false) {
           break;
         }
       }
     }
     if (annotationsToDelete.isNotEmpty) {
-      final simplifiedAnnotationsToDelete = annotationsToDelete
-          .map((e) => e.replaceAll(_sugarRegExp, '').toLowerCase());
+      final simplifiedAnnotationsToDelete =
+          annotationsToDelete.map((e) => e.replaceAll(_sugarRegExp, '').toLowerCase());
       final newLines = List.of(lines);
       for (final instruction in instructions.entries) {
         final n = instruction.key;

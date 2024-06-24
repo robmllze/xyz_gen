@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GenerateForAnnotationTestArgs extends ValidObject {
+class GenerateForAnnotationTestArgs extends ValidArgsChecker {
   //
   //
   //
@@ -38,7 +38,7 @@ class GenerateForAnnotationTestArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  bool get isNotNullAndNotEmpty => ValidArgsChecker.isNotNullAndNotEmptyCheck([
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,

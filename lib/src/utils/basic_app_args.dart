@@ -8,11 +8,11 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/_common.dart';
+import '../core_utils/valid_args_checker.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class BasicAppArgs extends ValidObject {
+class BasicAppArgs extends ValidArgsChecker {
   //
   //
   //
@@ -36,7 +36,7 @@ class BasicAppArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  bool get isValid => ValidArgsChecker.isNotNullAndNotEmptyCheck([
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,

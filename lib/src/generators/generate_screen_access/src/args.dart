@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GenerateScreenAccessArgs extends ValidObject {
+class GenerateScreenAccessArgs extends ValidArgsChecker {
   //
   //
   //
@@ -42,13 +42,13 @@ class GenerateScreenAccessArgs extends ValidObject {
   //
 
   @override
-  bool get valid {
+  bool get isNotNullAndNotEmpty {
     final a = [
       if (this.rootPaths != null) this.rootPaths,
       if (this.subPaths != null) this.subPaths,
       if (this.screenClassNames != null) this.screenClassNames,
     ];
-    return ValidObject.areValid([
+    return ValidArgsChecker.isNotNullAndNotEmptyCheck([
       a,
       ...a,
       if (this.pathPatterns != null) this.pathPatterns,
