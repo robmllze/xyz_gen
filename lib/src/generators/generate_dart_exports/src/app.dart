@@ -8,11 +8,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
 import 'package:args/args.dart';
 
 import '/src/core_utils/run_command_line_app.dart';
-import '/src/core_utils/xyz_gen_paths_etc.dart';
 import '/src/language_support_utils/lang.dart';
 
 import '_args_checker.dart';
@@ -52,11 +50,6 @@ Future<void> generateDartExportsApp(List<String> args) async {
         'template',
         abbr: 't',
         help: 'Template file path.',
-        defaultsTo: p.join(
-          await getXyzGenLibPath(),
-          'templates',
-          'your_exports_template.dart.md',
-        ),
       ),
     onResults: (parser, results) {
       return ArgsChecker(
