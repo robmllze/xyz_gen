@@ -11,37 +11,13 @@
 //.title~
 
 import 'package:path/path.dart' as p;
-import 'package:xyz_utils/xyz_utils.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart';
+
+import '../language_support_utils/lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// An enumeration of languages that are partially or fully supported for code
-/// generation.
-enum XyzGenLang {
-  //
-  //
-  //
-
-  DART(langCode: 'dart'),
-  TYPESCRIPT(langCode: 'ts');
-
-  //
-  //
-  //
-
-  /// The language code used to identify the language, derived by converting
-  /// the common file extension associated with the language to lowercase.
-  final String langCode;
-
-  //
-  //
-  //
-
-  const XyzGenLang({
-    required this.langCode,
-  });
-
+extension CoreUtilsOnXyzGenLangExtension on Lang {
   //
   //
   //
@@ -146,19 +122,60 @@ enum XyzGenLang {
     }
   }
 
+  /// Deletes all source files from [dirPath] that match any of the provided
+  /// [pathPatterns].
+  ///
+  /// If [pathPatterns] is not specified, all generated files will be deleted.
+  /// The [onDelete] callback is called for each file after it is deleted.
+  Future<void> deleteAllSrcFiles(
+    String dirPath, {
+    Set<String> pathPatterns = const {},
+    Future<void> Function(String filePath)? onDelete,
+  }) async {
+    final filePaths = await listFilePaths(dirPath);
+    if (filePaths != null) {
+      final genFilePaths = filePaths
+          .where((e) => this.isValidSrcFilePath(e) && matchesAnyPathPattern(e, pathPatterns));
+      for (final filePath in genFilePaths) {
+        await this.deleteSrcFile(filePath);
+        await onDelete?.call(filePath);
+      }
+    }
+  }
+
   /// Deletes the source file corresponding to [filePath] if it exists.
   ///
   /// Returns `true` if the file was successfully deleted, otherwise returns
   /// `false`.
   Future<bool> deleteSrcFile(String filePath) async {
-    final genFilePath = getCorrespondingSrcPathOrNull(filePath);
-    if (genFilePath != null) {
+    if (this.isValidSrcFilePath(filePath)) {
       try {
-        await deleteFile(genFilePath);
+        await deleteFile(filePath);
         return true;
       } catch (_) {}
     }
     return false;
+  }
+
+  /// Deletes all generated files from [dirPath] that match any of the
+  /// provided [pathPatterns].
+  ///
+  /// If [pathPatterns] is not specified, all generated files will be deleted.
+  /// The [onDelete] callback is called for each file after it is deleted.
+  Future<void> deleteAllGenFiles(
+    String dirPath, {
+    Set<String> pathPatterns = const {},
+    Future<void> Function(String filePath)? onDelete,
+  }) async {
+    final filePaths = await listFilePaths(dirPath);
+    if (filePaths != null) {
+      final genFilePaths = filePaths
+          .where((e) => this.isValidGenFilePath(e) && matchesAnyPathPattern(e, pathPatterns));
+      for (final filePath in genFilePaths) {
+        await this.deleteGenFile(filePath);
+        await onDelete?.call(filePath);
+      }
+    }
   }
 
   /// Deletes the generated file corresponding to  [filePath] if it exists.
@@ -166,15 +183,12 @@ enum XyzGenLang {
   /// Returns `true` if the file was successfully deleted, otherwise returns
   /// `false`.
   Future<bool> deleteGenFile(String filePath) async {
-    final genFilePath = getCorrespondingGenPathOrNull(filePath);
-    if (genFilePath != null) {
+    if (this.isValidGenFilePath(filePath)) {
       try {
-        await deleteFile(genFilePath);
+        await deleteFile(filePath);
         return true;
       } catch (_) {}
     }
     return false;
   }
-
-  sadasas() {}
 }

@@ -10,6 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:meta/meta.dart' show nonVirtual;
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 /// Provides a mechanism to check if command line args are valid or not.
 abstract class ValidArgsChecker {
   //
@@ -32,6 +36,7 @@ abstract class ValidArgsChecker {
   /// Returns true if every element in [args] is neither `null` nor empty.
   /// If an argument does not have an `isEmpty` method, it is assumed to be not
   /// empty.
+  @nonVirtual
   bool get isValid {
     for (final arg in this.args) {
       if (arg == null) {

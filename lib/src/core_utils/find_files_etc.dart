@@ -11,7 +11,9 @@
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 
-import 'xyz_gen_lang.dart';
+import 'core_utils_on_lang_extension.dart';
+
+import '../language_support_utils/lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -25,7 +27,7 @@ import 'xyz_gen_lang.dart';
 /// `false`, the file is not added.
 Future<List<FindFilesFromDirResult>> findSourceFiles(
   String rootDirPath, {
-  required XyzGenLang lang,
+  required Lang lang,
   Set<String> pathPatterns = const {},
   _TOnFileFound? onFileFound,
 }) async {
@@ -50,7 +52,7 @@ Future<List<FindFilesFromDirResult>> findSourceFiles(
 /// `false`, the file is not added.
 Future<List<FindFilesFromDirResult>> findGeneratedFiles(
   String rootDirPath, {
-  required XyzGenLang lang,
+  required Lang lang,
   Set<String> pathPatterns = const {},
   _TOnFileFound? onFileFound,
 }) async {

@@ -8,40 +8,40 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
+import 'dart:io';
 
-import '/_common.dart';
+import 'package:path/path.dart' as p;
+import 'package:xyz_utils/xyz_utils_non_web.dart';
+
+import '/src/core_utils/find_files_etc.dart';
+import '/src/core_utils/process_comment_annots.dart';
+import '/src/language_support_utils/lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateDirectives({
+Future<void> generateDartDirectives({
   Set<String> rootDirPaths = const {},
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
-  // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
-    final results = await findFiles(
+    final srcFiles = await findSourceFiles(
       dirPath,
-      extensions: {'.dart'},
+      lang: Lang.DART,
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async =>
-          !isGeneratedDartFilePath(filePath),
     );
-    for (final result in results) {
-      final filePath = result.filePath;
-      await handleCommentAnnotations(
+    final annotations = {
+      '@GenerateDirectives',
+      'gd',
+    };
+    for (final scrFile in srcFiles) {
+      final filePath = scrFile.filePath;
+      await processCommentAnnots(
         filePath: filePath,
-        annotationHandlers: {
-          '@GenerateDirectives': generateDirectivesHandler,
-          'gd': generateDirectivesHandler,
-        },
-        annotationsToDelete: {
-          '@GenerateDirectives',
-          'gd',
-        },
+        onAnnotCallbacks: annotations.map((e) => MapEntry(e, _onAnnot)).toMap(),
+        annotsToDelete: annotations,
       );
     }
     Here().debugLogStop('Done!');
@@ -51,7 +51,7 @@ Future<void> generateDirectives({
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Handles the case where the code is annotated with @GenerateDirectives.
-Future<bool> generateDirectivesHandler(
+Future<bool> _onAnnot(
   int startIndex,
   List<String> lines,
   String filePath,
@@ -66,8 +66,7 @@ Future<bool> generateDirectivesHandler(
       if (match != null) {
         final relativePath = match.group(2);
         if (relativePath != null) {
-          final directiveFilePath =
-              Uri.file(originalDirPath).resolve(relativePath).toFilePath();
+          final directiveFilePath = Uri.file(originalDirPath).resolve(relativePath).toFilePath();
           final fileDoesntExist = !await fileExists(directiveFilePath);
           if (fileDoesntExist) {
             final directiveContent = () {

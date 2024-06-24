@@ -10,22 +10,49 @@
 
 import 'dart:io';
 
+import '../language_support_utils/lang.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Returns a list of all code snippets for the language [lang] from a markdown
-/// file at [filePath].
+/// Returns a list of all code snippets for the language [langCode] from a
+/// markdown file at [markdownFilePath].
 Future<List<String>> readCodeSnippetsFromMarkdownFile(
-  String filePath, {
-  String lang = '[^\\n]+',
+  String markdownFilePath, {
+  String? langCode,
 }) async {
-  final isMarkdownFile = filePath.toLowerCase().endsWith('.md');
+  final isMarkdownFile = markdownFilePath.toLowerCase().endsWith('.md');
   if (!isMarkdownFile) {
-    throw Exception('The path "$filePath" does not refer to a file with a .md extension.');
+    throw Exception('The path "$markdownFilePath" does not refer to a file with a .md extension.');
   }
-  final file = File(filePath);
+  final file = File(markdownFilePath);
   final input = await file.readAsString();
-  final dartCodeRegex = RegExp('```($lang)\\n(.*?)```', dotAll: true);
+  final dartCodeRegex = RegExp('```(${langCode ?? '[^\\n]+'})\\n(.*?)```', dotAll: true);
   final matches = dartCodeRegex.allMatches(input);
   final snippets = matches.map((e) => e.group(2)?.trim() ?? '').toList();
   return snippets;
+}
+
+/// Returns a Map of combined code snippets for the specified language [lang]
+/// from a set of markdown files provided in [markdownFilePaths].
+///
+/// The resulting Map's keys correspond to the markdown file paths, and the
+/// values correspond to the combined snippets from each file.
+Future<Map<String, String>> readCombinedCodeSnippetsFromMarkdownFiles(
+  Set<String> markdownFilePaths, {
+  Lang? lang,
+}) {
+  return Future.wait(
+    markdownFilePaths.map(
+      (e) async {
+        return MapEntry(
+          e,
+          (await readCodeSnippetsFromMarkdownFile(
+            e,
+            langCode: lang?.langCode,
+          ))
+              .join('\n'),
+        );
+      },
+    ),
+  ).then((e) => Map.fromEntries(e));
 }

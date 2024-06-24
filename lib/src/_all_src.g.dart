@@ -7,13 +7,14 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'core_utils/dart_commands.dart';
+export 'core_utils/core_utils_on_lang_extension.dart';
 export 'core_utils/find_files_etc.dart';
 export 'core_utils/print_arg_parser_usage.dart';
+export 'core_utils/process_comment_annots.dart';
 export 'core_utils/read_code_snippets_from_markdown_file.dart';
+export 'core_utils/run_command_line_app.dart';
 export 'core_utils/valid_args_checker.dart';
 export 'core_utils/xyz_gen_paths_etc.dart';
-export 'core_utils/xyz_gen_lang.dart';
 export 'generators/generate_directives/src/app.dart';
 export 'generators/generate_directives/src/generate.dart';
 export 'generators/generate_exports/src/app.dart';
@@ -47,13 +48,14 @@ export 'generators/generate_screen_bindings/src/app.dart';
 export 'generators/generate_screen_bindings/src/generate.dart';
 export 'generators/generate_type_utils/src/app.dart';
 export 'generators/generate_type_utils/src/generate.dart';
+export 'language_support_utils/dart/dart_support.dart';
+export 'language_support_utils/dart/dart_template_processor.dart';
+export 'language_support_utils/lang.dart';
+export 'language_support_utils/typescript/typescript_support.dart';
 export 'utils/analyze_annotated_classes.dart';
 export 'utils/analyze_annotated_enums.dart';
 export 'utils/basic_app_args.dart';
 export 'utils/basic_cmd_app_args.dart';
-export 'utils/basic_cmd_app_helper.dart';
 export 'utils/current_script_dir.dart';
-export 'utils/generate_from_templates.dart';
-export 'utils/handle_comment_annotations.dart';
 export 'utils/split_arg.dart';
 export 'utils/type_codes/type_codes.dart';

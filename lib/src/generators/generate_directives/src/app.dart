@@ -10,14 +10,17 @@
 
 import 'package:args/args.dart';
 
-import '/_common.dart';
+import '/src/core_utils/run_command_line_app.dart';
+
+import '_args_checker.dart';
+import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateDirectivesApp(List<String> arguments) async {
-  await basicCmdAppHelper<BasicAppArgs>(
-    appTitle: 'XYZ Gen - Generate Dependencies',
-    arguments: arguments,
+Future<void> generateDirectivesApp(List<String> args) async {
+  await runCommandLineApp(
+    title: 'XYZ Gen - Generate Dependencies',
+    args: args,
     parser: ArgParser()
       ..addFlag(
         'help',
@@ -42,14 +45,14 @@ Future<void> generateDirectivesApp(List<String> arguments) async {
         help: 'Path patterns separated by `&`.',
       ),
     onResults: (parser, results) {
-      return BasicAppArgs(
-        rootPaths: splitArg(results['roots'])?.toSet(),
-        subPaths: splitArg(results['subs'])?.toSet(),
-        pathPatterns: splitArg(results['patterns'])?.toSet(),
+      return ArgsChecker(
+        rootPaths: results['roots'],
+        subPaths: results['subs'],
+        pathPatterns: results['patterns'],
       );
     },
     action: (parser, results, args) async {
-      await generateDirectives(
+      await generateDartDirectives(
         rootDirPaths: args.rootPaths ?? {},
         subDirPaths: args.subPaths ?? {},
         pathPatterns: args.pathPatterns ?? {},

@@ -36,9 +36,9 @@ class BasicAppArgs extends ValidArgsChecker {
   //
 
   @override
-  bool get isValid => ValidArgsChecker.isNotNullAndNotEmptyCheck([
+  List get args => [
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
-      ]);
+      ];
 }

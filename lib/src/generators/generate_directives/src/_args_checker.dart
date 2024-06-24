@@ -8,34 +8,31 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '../core_utils/valid_args_checker.dart';
+import '/src/core_utils/valid_args_checker.dart';
+import '/src/utils/split_arg.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class BasicCmdAppArgs extends ValidArgsChecker {
+class ArgsChecker extends ValidArgsChecker {
   //
   //
   //
 
-  final String? fallbackDartSdkPath;
-  final Set<String>? templateFilePaths;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
-  final String? output;
 
   //
   //
   //
 
-  const BasicCmdAppArgs({
-    this.fallbackDartSdkPath,
-    required this.templateFilePaths,
-    required this.rootPaths,
-    required this.subPaths,
-    required this.pathPatterns,
-    this.output,
-  });
+  ArgsChecker({
+    required String rootPaths,
+    required String subPaths,
+    required String pathPatterns,
+  })  : this.rootPaths = splitArg(rootPaths)?.toSet(),
+        this.subPaths = splitArg(subPaths)?.toSet(),
+        this.pathPatterns = splitArg(pathPatterns)?.toSet();
 
   //
   //
@@ -43,11 +40,8 @@ class BasicCmdAppArgs extends ValidArgsChecker {
 
   @override
   List get args => [
-        if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
-        this.templateFilePaths,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
-        if (this.output != null) this.output,
       ];
 }
