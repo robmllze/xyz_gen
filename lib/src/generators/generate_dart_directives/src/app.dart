@@ -19,7 +19,7 @@ import 'generate.dart';
 
 Future<void> generateDirectivesApp(List<String> args) async {
   await runCommandLineApp(
-    title: 'XYZ Gen - Generate Dependencies',
+    title: '🇽🇾🇿 Gen | Generate Dart Directives',
     args: args,
     parser: ArgParser()
       ..addFlag(

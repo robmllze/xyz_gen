@@ -8,18 +8,23 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
+import 'package:args/args.dart';
 
-import '/_common.dart';
+import '/src/core_utils/run_command_line_app.dart';
+import '/src/core_utils/xyz_gen_paths_etc.dart';
+import '/src/language_support_utils/lang.dart';
+
+import '_args_checker.dart';
+import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating exports.
-Future<void> generateExportsApp(List<String> arguments) async {
-  await basicCmdAppHelper<BasicCmdAppArgs>(
-    appTitle: 'XYZ Gen - Generate Exports',
-    arguments: arguments,
+Future<void> generateDartExportsApp(List<String> args) async {
+  await runCommandLineApp(
+    title: '🇽🇾🇿 Gen | Generate Dart Exports',
+    args: args,
     parser: ArgParser()
       ..addFlag(
         'help',
@@ -54,15 +59,17 @@ Future<void> generateExportsApp(List<String> arguments) async {
         ),
       ),
     onResults: (parser, results) {
-      return BasicCmdAppArgs(
-        templateFilePaths: splitArg(results['template'])?.toSet(),
-        rootPaths: splitArg(results['roots'])?.toSet(),
-        subPaths: splitArg(results['subs'])?.toSet(),
-        pathPatterns: splitArg(results['patterns'])?.toSet(),
+      return ArgsChecker(
+        templateFilePaths: results['template'],
+        rootPaths: results['roots'],
+        subPaths: results['subs'],
+        pathPatterns: results['patterns'],
       );
     },
     action: (parser, results, args) async {
       await generateExports(
+        lang: Lang.DART,
+        exportLine: (e) => "export '$e';\n",
         templateFilePath: args.templateFilePaths!.first,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},

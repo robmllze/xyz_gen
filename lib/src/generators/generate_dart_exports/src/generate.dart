@@ -9,12 +9,19 @@
 //.title~
 
 import 'package:path/path.dart' as p;
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 
-import '/_common.dart';
+import '/src/core_utils/core_utils_on_lang_extension.dart';
+import '/src/core_utils/find_files_etc.dart';
+import '/src/core_utils/read_code_snippets_from_markdown_file.dart';
+import '/src/language_support_utils/lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// TODO:....
 Future<void> generateExports({
+  required Lang lang,
+  required String Function(String relativeFilePath) exportLine,
   required String templateFilePath,
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
@@ -23,19 +30,22 @@ Future<void> generateExports({
   Here().debugLogStart('Starting generator. Please wait...');
   var cachedDirPath = '';
   // Get the template to use.
-  final template =
-      (await readSnippetsFromMarkdownFile(templateFilePath)).join('\n');
+  final template = (await readCodeSnippetsFromMarkdownFile(
+    templateFilePath,
+    langCode: lang.langCode,
+  ))
+      .join('\n');
   // Loop through all possible directories.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     // Determine the output file path from dirPath.
     final folderName = p.basename(dirPath).toLowerCase();
-    final outputFileName = '_all_$folderName.g.dart';
+    final outputFileName = '_all_$folderName${lang.genExt}';
     final outputFilePath = p.join(dirPath, outputFileName);
     // Find all Dart files in dirPath.
-    await findFiles(
+    await findSourceFiles(
       dirPath,
-      extensions: {'.dart'},
+      lang: Lang.DART,
       pathPatterns: pathPatterns,
       onFileFound: (_, __, filePath) async {
         // Create the file if it doesn't exist.
@@ -60,7 +70,7 @@ Future<void> generateExports({
           if (!private) {
             await writeFile(
               outputFilePath,
-              "export '$relativeFilePath';\n",
+              exportLine(relativeFilePath),
               append: true,
             );
             return true;
