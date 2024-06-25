@@ -103,21 +103,27 @@ Future<bool> _onAnnot(
             normalDirectiveFilePath,
             "part of '$counterpartFilePath';",
           );
-          Here().debugLogMessage('Created "part" file $normalDirectiveFilePath for $filePath');
+          debugLogMessage(
+            'Created "part" file ${p.joinAll(p.split(normalDirectiveFilePath).takeLast(3))} for ${p.joinAll(p.split(filePath).takeLast(3))}',
+          );
         // Create import file.
         case 'import':
           await writeFile(
             normalDirectiveFilePath,
             '// Imported by $counterpartFilePath',
           );
-          Here().debugLogMessage('Created "import" file $normalDirectiveFilePath for $filePath');
+          debugLogMessage(
+            'Created "import" file ${p.joinAll(p.split(normalDirectiveFilePath).takeLast(3))} for ${p.joinAll(p.split(filePath).takeLast(3))}',
+          );
         // Create export file.
         case 'export':
           await writeFile(
             normalDirectiveFilePath,
             '// Exported by $counterpartFilePath',
           );
-          Here().debugLogMessage('Created "export" file $normalDirectiveFilePath for $filePath');
+          debugLogMessage(
+            'Created "export" file ${p.joinAll(p.split(normalDirectiveFilePath).takeLast(3))} for ${p.joinAll(p.split(filePath).takeLast(3))}',
+          );
         default:
           throw UnimplementedError('Unknown directive type: $directiveType');
       }

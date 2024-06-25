@@ -70,7 +70,7 @@ Future<void> generateDartExports({
             append: true,
           );
           debugLog(
-            'Added "${content.replaceAll('\n', '')}" to ...${p.joinAll(p.split(outputFilePath).reversed.take(3).toList().reversed)}',
+            'Added "${content.replaceAll('\n', '')}" to ...${p.joinAll(p.split(outputFilePath).takeLast(3))}',
           );
           return true;
         } else {
