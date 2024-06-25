@@ -23,12 +23,12 @@ import '/src/language_support_utils/lang.dart';
 /// Processes all file paths resulting from the combination of [rootDirPaths]
 /// and [subDirPaths] that match [pathPatterns].
 Future<void> generateDartDirectives({
-  Set<String> rootDirPaths = const {},
+  required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
-  // Loop through all dir path combinations.
+  // Loop through all directory combinations.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     // Find all Dart files from dirPath.

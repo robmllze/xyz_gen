@@ -17,7 +17,7 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateDirectivesApp(List<String> args) async {
+Future<void> runGenerateDartDirectivesApp(List<String> args) async {
   await runCommandLineApp(
     title: '🇽🇾🇿 Gen | Generate Dart Directives',
     args: args,

@@ -19,26 +19,27 @@ import '/src/language_support_utils/lang.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// TODO:....
-Future<void> generateExports({
-  required Lang lang,
-  required String Function(String relativeFilePath) exportLine,
-  required String templateFilePath,
+Future<void> generateDartExports({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
+  required Lang lang,
+  required String Function(String relativeFilePath) exportStatement,
+  bool Function(String exportFilePath)? exportIf,
+  required String templateFilePath,
 }) async {
   Here().debugLogStart('Starting generator. Please wait...');
-  var cachedDirPath = '';
-  // Get the template to use.
+  var workingDirPath = '';
+  // Read the template.
   final template = (await readCodeSnippetsFromMarkdownFile(
     templateFilePath,
     langCode: lang.langCode,
   ))
       .join('\n');
-  // Loop through all possible directories.
+  // Loop through all directory combinations.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
-    // Determine the output file path from dirPath.
+    // Determine the output file path.
     final folderName = p.basename(dirPath).toLowerCase();
     final outputFileName = '_all_$folderName${lang.genExt}';
     final outputFilePath = p.join(dirPath, outputFileName);
@@ -47,35 +48,32 @@ Future<void> generateExports({
       dirPath,
       lang: Lang.DART,
       pathPatterns: pathPatterns,
-      onFileFound: (_, __, filePath) async {
-        // Create the file if it doesn't exist.
-        if (dirPath != cachedDirPath) {
-          cachedDirPath = dirPath;
+      onFileFound: (_, __, exportFilePath) async {
+        // Clear the output file with new template data if it is not the
+        // current file being worked on.
+        if (dirPath != workingDirPath) {
+          workingDirPath = dirPath;
           await writeFile(outputFilePath, '$template\n\n');
         }
-        // Let's not add the output file to itself.
-        if (filePath != outputFilePath) {
-          // Get the relative file path.
-          var relativeFilePath = filePath.replaceFirst(dirPath, '');
-          // Remove the initial '/' from the relative file path if present.
-          relativeFilePath = relativeFilePath.startsWith(p.separator)
-              ? relativeFilePath.substring(1)
-              : relativeFilePath;
-          relativeFilePath = toUnixSystemPathFormat(relativeFilePath);
-          // Get the file name from the file path.
-          final fileName = p.basename(filePath);
-          // Check if the file is private / if it starts with '_'.
-          final private = fileName.startsWith('_');
-          // Write the export statement to the output file if it's not private.
-          if (!private) {
-            await writeFile(
-              outputFilePath,
-              exportLine(relativeFilePath),
-              append: true,
-            );
-            return true;
-          }
+        // Prevent the export file from exporting itself.
+        if (exportFilePath == outputFilePath) return false;
+        // Get the export path relative to the dirPath as a unix path.
+        final relativeFilePath = toUnixSystemPathFormat(p.relative(exportFilePath, from: dirPath));
+        // Write the export statement to the output file if it is determined that
+        // it should be exported by the shouldExport function.
+        if (exportIf?.call(exportFilePath) ?? true) {
+          final content = exportStatement(relativeFilePath);
+          await writeFile(
+            outputFilePath,
+            content,
+            append: true,
+          );
+          Here().debugLogMessage('Added $content to $outputFilePath');
+          return true;
+        } else {
+          Here().debugLogAlert('Skipped $exportFilePath');
         }
+
         return false;
       },
     );

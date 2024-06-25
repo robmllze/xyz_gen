@@ -8,7 +8,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:io';
+
 import 'package:args/args.dart';
+import 'package:path/path.dart' as p;
 
 import '/src/core_utils/run_command_line_app.dart';
 import '/src/language_support_utils/lang.dart';
@@ -19,7 +22,7 @@ import 'generate.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating exports.
-Future<void> generateDartExportsApp(List<String> args) async {
+Future<void> runGenerateDartExportsApp(List<String> args) async {
   await runCommandLineApp(
     title: '🇽🇾🇿 Gen | Generate Dart Exports',
     args: args,
@@ -60,9 +63,17 @@ Future<void> generateDartExportsApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await generateExports(
+      await generateDartExports(
         lang: Lang.DART,
-        exportLine: (e) => "export '$e';\n",
+        exportStatement: (relativeFilePath) => "export '$relativeFilePath';\n",
+        // Export only if no part of the path, relative to the root directory,
+        // starts with an underscore.
+        exportIf: (exportFilePath) {
+          final rootDirPath = p.normalize(p.join(Directory.current.path, '..'));
+          final exportFilePathFromRoot = p.relative(exportFilePath, from: rootDirPath);
+          final private = p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
+          return !private;
+        },
         templateFilePath: args.templateFilePaths!.first,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
