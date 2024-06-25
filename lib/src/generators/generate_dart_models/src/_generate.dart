@@ -11,15 +11,16 @@
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
+
 import 'package:xyz_gen_annotations/annotations_src/generate_model.dart';
-import 'package:xyz_utils/xyz_utils_non_web.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '/src/generators/generate_dart_models/src/etc/map_with.dart';
-import '/src/sdk/language_support_utils/dart/dart_support.dart';
-import '/src/sdk/language_support_utils/dart/dart_template_processor.dart';
-import '/src/utils/analyze_annotated_classes.dart';
 import '/src/utils/type_codes/type_codes.dart';
+import '../../../sdk/language_support_utils/dart/dart_annotated_class_analyzer.dart';
+import '/src/sdk/_all_sdk.g.dart' as sdk;
 
+import '_analyze_dart_file.dart';
+import 'etc/map_with.dart';
 import 'etc/type_mappers/dart_loose_type_mappers.dart';
 
 part 'etc/generate_parts/_generate_model_file.dart';
@@ -37,8 +38,8 @@ Future<void> generateDartModels({
   required Set<String> templateFilePaths,
   String? output,
 }) async {
-  debugLogStart('Starting generator. Please wait...');
-  final templateProcessor = DartTemplateProcessor(
+  utils.debugLogStart('Starting generator. Please wait...');
+  final templateProcessor = sdk.DartTemplateProcessor(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
@@ -47,9 +48,11 @@ Future<void> generateDartModels({
   await templateProcessor.processTemplates(
     templateFilePaths: templateFilePaths,
     onSourceFile: (result) async {
-      printRed(result.source.filePath);
-      printRed(result.data);
+      final filePath = result.source.filePath;
+      final a = sdk.Lang.DART.isValidSrcFilePath(filePath);
+      if (!a) return;
+      await analyzeDartFile(result.context!, filePath);
     },
   );
-  Here().debugLogStop('Done!');
+  utils.debugLogStop('Done!');
 }

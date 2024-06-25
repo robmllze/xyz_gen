@@ -19,7 +19,7 @@ Future<GenerateModel?> _generateModelFromFile(
   String? output,
 ) async {
   return analyzeModelFromFile(
-    collection: analysisContextCollection,
+    analysisContextCollection: analysisContextCollection,
     inputFilePath: filePath,
     generate: (classAnnotationName, annotatedClassName, annotation) async {
       annotation = await generateModel(
@@ -37,7 +37,7 @@ Future<GenerateModel?> _generateModelFromFile(
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<GenerateModel?> analyzeModelFromFile({
-  required AnalysisContextCollection collection,
+  required AnalysisContextCollection analysisContextCollection,
   required String inputFilePath,
   Future<GenerateModel> Function(
     String classAnnotationName,
@@ -47,10 +47,14 @@ Future<GenerateModel?> analyzeModelFromFile({
 }) async {
   var annotation = const GenerateModel(fields: {});
   var didFindAnnotation = false;
-  // Analyze the annotated class and generate the files.
-  await analyzeAnnotatedClasses(
+
+  final analyzer = DartAnnotatedClassAnalyzer(
     filePath: inputFilePath,
-    collection: collection,
+    analysisContextCollection: analysisContextCollection,
+  );
+
+  // Analyze the annotated class and generate the files.
+  await analyzer.analyze(
     // Call for each annotated class.
     onAnnotatedClass: (
       classAnnotationName,
@@ -113,11 +117,11 @@ Future<GenerateModel> generateModel({
   annotation = _updateClassName(annotation, annotatedClassName);
 
   // Get the class file name from the file path.
-  final classFileName = getBaseName(inputFilePath);
+  final classFileName = utils.getBaseName(inputFilePath);
 
   // Define a function to generate the Dart model.
   Future<void> $generateDartModel(String template) async {
-    final op = replaceData(
+    final op = utils.replaceData(
       template,
       {
         '___SUPER_CLASS___': annotation.shouldInherit ? annotatedClassName : 'Model',
@@ -140,16 +144,16 @@ Future<GenerateModel> generateModel({
               ),
             );
           }).toMap(),
-          keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
-              StringCaseType.LOWER_SNAKE_CASE,
+          keyStringCaseType: utils.StringCaseType.values.valueOf(annotation.keyStringCase) ??
+              utils.StringCaseType.LOWER_SNAKE_CASE,
         ),
       },
     );
 
     // Get the output file path.
     final outputFilePath = () {
-      final classFileDirPath = getDirPath(inputFilePath);
-      final classKey = getFileNameWithoutExtension(classFileName);
+      final classFileDirPath = utils.getDirPath(inputFilePath);
+      final classKey = utils.getFileNameWithoutExtension(classFileName);
       final outputFileName = '_$classKey.g.dart';
       return p.joinAll(
         [
@@ -161,16 +165,16 @@ Future<GenerateModel> generateModel({
 
     if (!dryRun) {
       // Write the generated Dart file.
-      await writeFile(outputFilePath, op);
+      await utils.writeFile(outputFilePath, op);
 
       // Format the generated Dart file.
-      await fmtDartFile(outputFilePath);
+      await sdk.fmtDartFile(outputFilePath);
     }
   }
 
   // Define a function to generate the Typescript model.
   Future<void> $generateTypescriptModel(String template) async {
-    final op = replaceData(
+    final op = utils.replaceData(
       template,
       {
         '___CLASS___': annotation.className,
@@ -185,15 +189,15 @@ Future<GenerateModel> generateModel({
               ),
             );
           }).toMap(),
-          keyStringCaseType: StringCaseType.values.valueOf(annotation.keyStringCase) ??
-              StringCaseType.LOWER_SNAKE_CASE,
+          keyStringCaseType: utils.StringCaseType.values.valueOf(annotation.keyStringCase) ??
+              utils.StringCaseType.LOWER_SNAKE_CASE,
         ),
       },
     );
 
     // Get the output file path.
     final outputFilePath = () {
-      final classKey = getFileNameWithoutExtension(classFileName);
+      final classKey = utils.getFileNameWithoutExtension(classFileName);
       final outputFileName = '_$classKey.g.ts';
       return p.joinAll(
         [
@@ -205,7 +209,7 @@ Future<GenerateModel> generateModel({
 
     if (!dryRun) {
       // Write the generated Dart file.
-      await writeFile(outputFilePath, op);
+      await utils.writeFile(outputFilePath, op);
     }
   }
 
@@ -334,7 +338,7 @@ GenerateModel _updateFromClassAnnotationField(
 
     case 'keyStringCase':
       return annotation.copyWith(
-        keyStringCase: memberValue.toStringValue() ?? StringCaseType.LOWER_SNAKE_CASE.name,
+        keyStringCase: memberValue.toStringValue() ?? utils.StringCaseType.LOWER_SNAKE_CASE.name,
       );
     default:
       return annotation;

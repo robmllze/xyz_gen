@@ -10,11 +10,7 @@
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 
-import '/src/sdk/core_utils/generic_template_processor.dart';
-import '/src/sdk/core_utils/core_utils_on_lang_extension.dart';
-import '/src/sdk/language_support_utils/lang.dart';
-
-import 'dart_support.dart';
+import '/src/sdk/_all_sdk.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

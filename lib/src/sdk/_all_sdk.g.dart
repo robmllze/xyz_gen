@@ -18,6 +18,7 @@ export 'core_utils/read_code_snippets_from_markdown_file.dart';
 export 'core_utils/run_command_line_app.dart';
 export 'core_utils/valid_args_checker.dart';
 export 'core_utils/xyz_gen_paths_etc.dart';
+export 'language_support_utils/dart/dart_annotated_class_analyzer.dart';
 export 'language_support_utils/dart/dart_support.dart';
 export 'language_support_utils/dart/dart_template_processor.dart';
 export 'language_support_utils/lang.dart';
@@ -27,4 +28,4 @@ export 'language_support_utils/typescript/typescript_support.dart';
 // No private files in directory.
 
 // --- GENERATED FILES ---
-// No generated files in directory.
+// export '_all_sdk.g.dart';

@@ -15,7 +15,7 @@ part of '../../_generate.dart';
 Map<String, String> _dartReplacements({
   required GenerateModel annotation,
   required Map<String, DartTypeCode> fields,
-  required StringCaseType keyStringCaseType,
+  required utils.StringCaseType keyStringCaseType,
 }) {
   final fields0 = fields.map((k, v) => MapEntry(k.toCamelCase(), v));
   final entries0 = fields0.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
