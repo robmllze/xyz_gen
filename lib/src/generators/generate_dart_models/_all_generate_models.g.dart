@@ -7,5 +7,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'src/generate_dart_directives_app.dart';
+export 'src/run_generate_dart_models_app.dart';
 export 'src/_generate.dart';
+export 'src/etc/map_with.dart';
+export 'src/etc/type_mappers/dart_loose_type_mappers.dart';
+export 'src/etc/type_mappers/typescript_loose_type_mappers.dart';

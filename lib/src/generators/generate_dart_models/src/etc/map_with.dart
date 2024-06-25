@@ -8,40 +8,28 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/src/sdk/core_utils/valid_args_checker.dart';
-import '/src/utils/split_arg.dart';
+import '/src/utils/type_codes/type_codes.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ArgsChecker extends ValidArgsChecker {
-  //
-  //
-  //
+String mapWithToMappers({
+  required TypeMappers typeMappers,
+  required String fieldName,
+  required String typeCode,
+}) {
+  return TypeCodeMapper(typeMappers.toMappers).map(
+    fieldName: fieldName,
+    typeCode: typeCode,
+  );
+}
 
-  final Set<String>? rootPaths;
-  final Set<String>? subPaths;
-  final Set<String>? pathPatterns;
-
-  //
-  //
-  //
-
-  ArgsChecker({
-    required dynamic rootPaths,
-    required dynamic subPaths,
-    required dynamic pathPatterns,
-  })  : this.rootPaths = splitArg(rootPaths)?.toSet(),
-        this.subPaths = splitArg(subPaths)?.toSet(),
-        this.pathPatterns = splitArg(pathPatterns)?.toSet();
-
-  //
-  //
-  //
-
-  @override
-  List get args => [
-        this.rootPaths,
-        if (this.subPaths != null) this.subPaths,
-        if (this.pathPatterns != null) this.pathPatterns,
-      ];
+String mapWithFromMappers({
+  required TypeMappers typeMappers,
+  required String fieldName,
+  required String typeCode,
+}) {
+  return TypeCodeMapper(typeMappers.fromMappers).map(
+    fieldName: fieldName,
+    typeCode: typeCode,
+  );
 }
