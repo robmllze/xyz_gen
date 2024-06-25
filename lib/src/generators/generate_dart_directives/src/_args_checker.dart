@@ -27,9 +27,9 @@ class ArgsChecker extends ValidArgsChecker {
   //
 
   ArgsChecker({
-    required String rootPaths,
-    required String subPaths,
-    required String pathPatterns,
+    required dynamic rootPaths,
+    required dynamic subPaths,
+    required dynamic pathPatterns,
   })  : this.rootPaths = splitArg(rootPaths)?.toSet(),
         this.subPaths = splitArg(subPaths)?.toSet(),
         this.pathPatterns = splitArg(pathPatterns)?.toSet();

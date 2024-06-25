@@ -36,6 +36,7 @@ Future<void> generateDartExports({
     langCode: lang.langCode,
   ))
       .join('\n');
+
   // Loop through all directory combinations.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
@@ -68,10 +69,12 @@ Future<void> generateDartExports({
             content,
             append: true,
           );
-          Here().debugLogMessage('Added $content to $outputFilePath');
+          debugLog(
+            'Added "${content.replaceAll('\n', '')}" to ...${p.joinAll(p.split(outputFilePath).reversed.take(3).toList().reversed)}',
+          );
           return true;
         } else {
-          Here().debugLogAlert('Skipped $exportFilePath');
+          debugLogAlert('Skipped $exportFilePath');
         }
 
         return false;

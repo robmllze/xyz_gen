@@ -88,6 +88,7 @@ Future<List<FindFilesFromDirResult>> findFilesFromDir(
     for (final filePath in filePaths) {
       final dirPath = getDirPath(filePath);
       final folderName = getBaseName(dirPath);
+
       final shouldAdd = (await onFileFound?.call(dirPath, folderName, filePath)) ?? true;
       if (shouldAdd) {
         final result = FindFilesFromDirResult._(

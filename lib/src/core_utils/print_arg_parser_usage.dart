@@ -14,16 +14,25 @@ import 'package:xyz_utils/xyz_utils_non_web.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Prints the usage information for the given [parser].
-void printArgParserUsage(String title, ArgParser parser) {
-  final topBorderLine = '╔${'═' * (title.length + 2)}╗';
-  final bottomBorderLine = '╚${'═' * (title.length + 2)}╝';
+void printArgParserUsage(
+  ArgParser parser, {
+  required String title,
+  required String description,
+}) {
+  final topBorderLine = '╔${'═' * (title.length - 1)}╗';
+  final bottomBorderLine = '╚${'═' * (title.length - 1)}╝';
   final titleLine = '║ $title ║';
   printLightCyan(
     [
+      '',
       topBorderLine,
       titleLine,
       bottomBorderLine,
+      '',
+      description,
+      '',
       parser.usage,
+      '',
     ].join('\n'),
   );
 }

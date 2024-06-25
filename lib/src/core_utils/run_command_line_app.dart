@@ -21,6 +21,7 @@ import '/src/core_utils/valid_args_checker.dart';
 /// A helper for creating and running a basic command-line application.
 Future<void> runCommandLineApp<T extends ValidArgsChecker>({
   required String title,
+  required String description,
   required List<String> args,
   required ArgParser parser,
   required T Function(
@@ -42,17 +43,26 @@ Future<void> runCommandLineApp<T extends ValidArgsChecker>({
       return;
     }
     if (results['help']) {
-      printArgParserUsage(title, parser);
+      printArgParserUsage(
+        parser,
+        title: title,
+        description: description,
+      );
       return;
     }
     final checker = onResults(parser, results);
     if (!checker.isValid) {
       Here().debugLogError('You must provide all required options.');
-      printArgParserUsage(title, parser);
+      printArgParserUsage(
+        parser,
+        title: title,
+        description: description,
+      );
       exit(1);
     }
     await action(parser, results, checker);
   } catch (e) {
     Here().debugLogError(e);
+    rethrow;
   }
 }

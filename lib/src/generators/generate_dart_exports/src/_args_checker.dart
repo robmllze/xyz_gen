@@ -31,10 +31,10 @@ class ArgsChecker extends ValidArgsChecker {
 
   ArgsChecker({
     this.fallbackDartSdkPath,
-    required String templateFilePaths,
-    required String rootPaths,
-    required String subPaths,
-    required String pathPatterns,
+    required dynamic templateFilePaths,
+    required dynamic rootPaths,
+    required dynamic subPaths,
+    required dynamic pathPatterns,
     this.output,
   })  : this.templateFilePaths = splitArg(templateFilePaths)?.toSet(),
         this.rootPaths = splitArg(rootPaths)?.toSet(),

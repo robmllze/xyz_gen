@@ -21,10 +21,11 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating exports.
+/// A command line app for generating export files.
 Future<void> runGenerateDartExportsApp(List<String> args) async {
   await runCommandLineApp(
-    title: '🇽🇾🇿 Gen | Generate Dart Exports',
+    title: '🇽🇾🇿  Generate Dart Exports',
+    description: 'A command line app for generating export files',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -56,10 +57,10 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
       ),
     onResults: (parser, results) {
       return ArgsChecker(
-        templateFilePaths: results['template'],
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
+        templateFilePaths: results['template'],
       );
     },
     action: (parser, results, args) async {
