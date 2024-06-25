@@ -17,7 +17,8 @@ import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// 'A command line app for generating missing Dart "import", "export" and "part" directives.'
+/// 'A command line app for generating missing Dart "import", "export" and
+/// "part" directives.'
 Future<void> runGenerateDartDirectivesApp(List<String> args) async {
   await runCommandLineApp(
     title: '🇽🇾🇿  Generate Dart Directives',

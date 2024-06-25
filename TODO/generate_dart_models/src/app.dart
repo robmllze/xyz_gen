@@ -8,24 +8,18 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:io';
-
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
 import '/src/core_utils/run_command_line_app.dart';
-import '/src/language_support_utils/lang.dart';
-
-import '_args_checker.dart';
-import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating export files.
-Future<void> runGenerateDartExportsApp(List<String> args) async {
+/// A command line app for generating models.
+Future<void> generateModelsApp(List<String> args) async {
   await runCommandLineApp(
-    title: '🇽🇾🇿  Generate Dart Exports',
-    description: 'A command line app for generating export files',
+    title: '🇽🇾🇿  Generate Models',
+    description: '',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -44,6 +38,7 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
         'subs',
         abbr: 's',
         help: 'Sub-directory paths separated by `&`.',
+        defaultsTo: 'models',
       )
       ..addOption(
         'patterns',
@@ -51,34 +46,37 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
         help: 'Path patterns separated by `&`.',
       )
       ..addOption(
-        'template',
+        'templates',
         abbr: 't',
-        help: 'Template file path.',
+        help: 'Template file paths separated by `&`..',
+      )
+      ..addOption(
+        'output',
+        abbr: 'o',
+        help: 'Output directory path.',
+      )
+      ..addOption(
+        'dart-sdk',
+        help: 'Dart SDK path.',
       ),
     onResults: (parser, results) {
-      return ArgsChecker(
-        rootPaths: results['roots'],
-        subPaths: results['subs'],
-        pathPatterns: results['patterns'],
-        templateFilePaths: results['template'],
+      return BasicCmdAppArgs(
+        fallbackDartSdkPath: results['dart-sdk'],
+        templateFilePaths: splitArg(results['templates'])?.toSet(),
+        rootPaths: splitArg(results['roots'])?.toSet(),
+        subPaths: splitArg(results['subs'])?.toSet(),
+        pathPatterns: splitArg(results['patterns'])?.toSet(),
+        output: results['output'],
       );
     },
     action: (parser, results, args) async {
-      await generateDartExports(
-        lang: Lang.DART,
-        exportStatement: (relativeFilePath) => "export '$relativeFilePath';\n",
-        // Export only if no part of the path, relative to the root directory,
-        // starts with an underscore.
-        exportIf: (exportFilePath) {
-          final rootDirPath = p.normalize(p.join(Directory.current.path, '..'));
-          final exportFilePathFromRoot = p.relative(exportFilePath, from: rootDirPath);
-          final private = p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
-          return !private;
-        },
-        templateFilePath: args.templateFilePaths!.first,
+      await generateModels(
+        fallbackDartSdkPath: args.fallbackDartSdkPath,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
+        templateFilePaths: args.templateFilePaths ?? const {},
+        output: args.output,
       );
     },
   );

@@ -21,13 +21,13 @@ import '/src/language_support_utils/lang.dart';
 /// comment annotations.
 ///
 /// Processes all file paths resulting from the combination of [rootDirPaths]
-/// and [subDirPaths] that match [pathPatterns].
+/// and [subDirPaths], filtered by [pathPatterns].
 Future<void> generateDartDirectives({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
-  Here().debugLogStart('Starting generator. Please wait...');
+  debugLogStart('Starting generator. Please wait...');
   // Loop through all directory combinations.
   final combinedDirPaths = combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
@@ -49,7 +49,7 @@ Future<void> generateDartDirectives({
         annotsToDelete: annotations,
       );
     }
-    Here().debugLogStop('Done!');
+    debugLogStop('Done!');
   }
 }
 
@@ -129,7 +129,7 @@ Future<bool> _onAnnot(
       }
     }
   } catch (e) {
-    Here().debugLogError(e);
+    debugLogError(e);
   }
   return true;
 }

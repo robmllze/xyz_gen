@@ -8,18 +8,27 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
-import '/_common.dart';
+import '/src/core_utils/run_command_line_app.dart';
+import '/src/language_support_utils/lang.dart';
+
+import '_args_checker.dart';
+import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating models.
-Future<void> generateModelsApp(List<String> arguments) async {
-  await basicCmdAppHelper<BasicCmdAppArgs>(
-    appTitle: 'XYZ Gen - Generate Models',
-    arguments: arguments,
+/// A command line app for generating Dart export files for the provided
+/// directories.
+Future<void> runGenerateDartExportsApp(List<String> args) async {
+  await runCommandLineApp(
+    title: '🇽🇾🇿  Generate Dart Exports',
+    description:
+        'A command line app for generating Dart export files for the provided directories.',
+    args: args,
     parser: ArgParser()
       ..addFlag(
         'help',
@@ -37,7 +46,6 @@ Future<void> generateModelsApp(List<String> arguments) async {
         'subs',
         abbr: 's',
         help: 'Sub-directory paths separated by `&`.',
-        defaultsTo: 'models',
       )
       ..addOption(
         'patterns',
@@ -45,42 +53,34 @@ Future<void> generateModelsApp(List<String> arguments) async {
         help: 'Path patterns separated by `&`.',
       )
       ..addOption(
-        'templates',
+        'template',
         abbr: 't',
-        help: 'Template file paths separated by `&`..',
-        defaultsTo: p.join(
-          await getXyzGenLibPath(),
-          'templates',
-          'your_model_template.dart.md',
-        ),
-      )
-      ..addOption(
-        'output',
-        abbr: 'o',
-        help: 'Output directory path.',
-      )
-      ..addOption(
-        'dart-sdk',
-        help: 'Dart SDK path.',
+        help: 'Template file path.',
       ),
     onResults: (parser, results) {
-      return BasicCmdAppArgs(
-        fallbackDartSdkPath: results['dart-sdk'],
-        templateFilePaths: splitArg(results['templates'])?.toSet(),
-        rootPaths: splitArg(results['roots'])?.toSet(),
-        subPaths: splitArg(results['subs'])?.toSet(),
-        pathPatterns: splitArg(results['patterns'])?.toSet(),
-        output: results['output'],
+      return ArgsChecker(
+        rootPaths: results['roots'],
+        subPaths: results['subs'],
+        pathPatterns: results['patterns'],
+        templateFilePaths: results['template'],
       );
     },
     action: (parser, results, args) async {
-      await generateModels(
-        fallbackDartSdkPath: args.fallbackDartSdkPath,
+      await generateExports(
+        lang: Lang.DART,
+        exportStatement: (relativeFilePath) => "export '$relativeFilePath';\n",
+        // Export only if no part of the path, relative to the root directory,
+        // starts with an underscore.
+        exportIf: (exportFilePath) {
+          final rootDirPath = p.normalize(p.join(Directory.current.path, '..'));
+          final exportFilePathFromRoot = p.relative(exportFilePath, from: rootDirPath);
+          final private = p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
+          return !private;
+        },
+        templateFilePath: args.templateFilePaths!.first,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
-        templateFilePaths: args.templateFilePaths ?? const {},
-        output: args.output,
       );
     },
   );
