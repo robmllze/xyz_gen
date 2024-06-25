@@ -48,7 +48,7 @@ Future<GenerateModel?> analyzeModelFromFile({
   var annotation = const GenerateModel(fields: {});
   var didFindAnnotation = false;
 
-  final analyzer = DartAnnotatedClassAnalyzer(
+  final analyzer = xyz.DartAnnotatedClassAnalyzer(
     filePath: inputFilePath,
     analysisContextCollection: analysisContextCollection,
   );
@@ -168,7 +168,7 @@ Future<GenerateModel> generateModel({
       await utils.writeFile(outputFilePath, op);
 
       // Format the generated Dart file.
-      await sdk.fmtDartFile(outputFilePath);
+      await xyz.fmtDartFile(outputFilePath);
     }
   }
 

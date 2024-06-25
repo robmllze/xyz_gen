@@ -13,7 +13,7 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
-import '/src/sdk/_all_sdk.g.dart' as sdk;
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_args_checker.dart';
 import '_generate.dart';
@@ -23,7 +23,7 @@ import '_generate.dart';
 /// A command line app for generating Dart export files for the provided
 /// directories.
 Future<void> runGenerateDartExportsApp(List<String> args) async {
-  await sdk.runCommandLineApp(
+  await xyz.runCommandLineApp(
     title: '🇽🇾🇿  Generate Dart Exports',
     description:
         'A command line app for generating Dart export files for the provided directories.',
@@ -66,7 +66,7 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
     },
     action: (parser, results, args) async {
       await generateExports<_Placholders>(
-        lang: sdk.Lang.DART,
+        lang: xyz.Lang.DART,
         statementBuilder: {
           _Placholders.PUBLIC_EXPORTS: (relativeFilePath) => "export '$relativeFilePath';",
           _Placholders.PRIVATE_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
@@ -76,7 +76,7 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
           final rootDirPath = p.normalize(p.join(Directory.current.path, '..'));
           final exportFilePathFromRoot = p.relative(exportFilePath, from: rootDirPath);
 
-          final isGenFile = sdk.Lang.DART.isValidGenFilePath(exportFilePath);
+          final isGenFile = xyz.Lang.DART.isValidGenFilePath(exportFilePath);
           if (isGenFile) {
             return _Placholders.GENERATED_EXPORTS;
           }

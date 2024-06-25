@@ -28,4 +28,4 @@ export 'language_support_utils/typescript/typescript_support.dart';
 // No private files in directory.
 
 // --- GENERATED FILES ---
-// export '_all_sdk.g.dart';
+// export '_all_xyz.g.dart';

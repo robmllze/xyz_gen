@@ -10,7 +10,7 @@
 
 import 'package:args/args.dart';
 
-import '/src/sdk/_all_sdk.g.dart' as sdk;
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_args_checker.dart';
 import '_generate.dart';
@@ -20,7 +20,7 @@ import '_generate.dart';
 /// 'A command line app for generating missing Dart "import", "export" and
 /// "part" directives.'
 Future<void> runGenerateDartDirectivesApp(List<String> args) async {
-  await sdk.runCommandLineApp(
+  await xyz.runCommandLineApp(
     title: '🇽🇾🇿  Generate Dart Directives',
     description:
         'A command line app for generating missing Dart "import", "export" and "part" directives.',

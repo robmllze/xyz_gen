@@ -11,7 +11,7 @@
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '/src/sdk/_all_sdk.g.dart' as sdk;
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -30,9 +30,9 @@ Future<void> generateDartDirectives({
   final combinedDirPaths = utils.combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     // Find all Dart files from dirPath.
-    final srcFiles = await sdk.findSourceFiles(
+    final srcFiles = await xyz.findSourceFiles(
       dirPath,
-      lang: sdk.Lang.DART,
+      lang: xyz.Lang.DART,
       pathPatterns: pathPatterns,
     );
     final annotations = {
@@ -41,7 +41,7 @@ Future<void> generateDartDirectives({
     };
     for (final scrFile in srcFiles) {
       // Call _onAnnot for each of the specified annotations found in srcFile.
-      await sdk.processCommentAnnots(
+      await xyz.processCommentAnnots(
         filePath: scrFile.filePath,
         onAnnotCallbacks: annotations.map((e) => MapEntry(e, _onAnnot)).toMap(),
         annotsToDelete: annotations,

@@ -10,7 +10,7 @@
 
 import 'package:args/args.dart';
 
-import '/src/sdk/core_utils/run_command_line_app.dart';
+import '/src/xyz/core_utils/run_command_line_app.dart';
 
 import '_args_checker.dart';
 import '_generate.dart';

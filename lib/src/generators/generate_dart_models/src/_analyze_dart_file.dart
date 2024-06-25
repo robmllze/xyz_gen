@@ -14,7 +14,7 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:xyz_gen_annotations/annotations_src/generate_model.dart';
 
-import '/src/sdk/_all_sdk.g.dart' as sdk;
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,7 +24,7 @@ Future<void> analyzeDartFile(
 ) async {
   var annotation = const GenerateModel(fields: {});
 
-  final analyzer = sdk.DartAnnotatedClassAnalyzer(
+  final analyzer = xyz.DartAnnotatedClassAnalyzer(
     filePath: filePath,
     analysisContextCollection: analysisContextCollection,
   );

@@ -16,8 +16,7 @@ import 'package:xyz_gen_annotations/annotations_src/generate_model.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/utils/type_codes/type_codes.dart';
-import '../../../sdk/language_support_utils/dart/dart_annotated_class_analyzer.dart';
-import '/src/sdk/_all_sdk.g.dart' as sdk;
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_analyze_dart_file.dart';
 import 'etc/map_with.dart';
@@ -39,7 +38,7 @@ Future<void> generateDartModels({
   String? output,
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
-  final templateProcessor = sdk.DartTemplateProcessor(
+  final templateProcessor = xyz.DartTemplateProcessor(
     fallbackDartSdkPath: fallbackDartSdkPath,
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
@@ -49,7 +48,7 @@ Future<void> generateDartModels({
     templateFilePaths: templateFilePaths,
     onSourceFile: (result) async {
       final filePath = result.source.filePath;
-      final a = sdk.Lang.DART.isValidSrcFilePath(filePath);
+      final a = xyz.Lang.DART.isValidSrcFilePath(filePath);
       if (!a) return;
       await analyzeDartFile(result.context!, filePath);
     },

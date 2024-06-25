@@ -10,7 +10,7 @@
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 
-import '/src/sdk/_all_sdk.g.dart';
+import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

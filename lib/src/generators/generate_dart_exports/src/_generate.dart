@@ -11,7 +11,7 @@
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '/src/sdk/_all_sdk.g.dart' as sdk;
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -31,7 +31,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
-  required sdk.Lang lang,
+  required xyz.Lang lang,
   Map<TPlaceholder, String Function(String relativeFilePath)>? statementBuilder,
   TPlaceholder Function(String exportFilePath)? statusBuilder,
   required String templateFilePath,
@@ -39,7 +39,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
-  final templateProcessor = sdk.GenericTemplateProcessor<TPlaceholder, Null>(
+  final templateProcessor = xyz.GenericTemplateProcessor<TPlaceholder, Null>(
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
   );
