@@ -8,6 +8,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:xyz_utils/xyz_utils.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;

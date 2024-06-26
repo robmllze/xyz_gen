@@ -36,10 +36,10 @@ Future<List<ClassInsight>> analyzeDartFile(
   final results = <ClassInsight>[];
   late GenerateModel temp;
   await analyzer.analyze(
-    onPreAnalysis: (_, __) => temp = const GenerateModel(fields: {}),
+    onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
     onPostAnalysis: (_, className) => results.add(ClassInsight(className, temp)),
-    inclClassAnnotations: {IGenerateModel.$this.name},
-    inclMemberAnnotations: {IField.$this.name},
+    inclClassAnnotations: {IGenerateModel.$this.id},
+    inclMemberAnnotations: {IField.$this.id},
     onAnnotatedClass: (p) => temp = _updateFromAnnotatedClass(temp, p),
     onClassAnnotationField: (p) => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) => temp = _updateFromAnnotatedMember(temp, p),
@@ -137,7 +137,7 @@ GenerateModel _updateFromAnnotatedMember(
   GenerateModel annotation,
   xyz.TOnAnnotatedMemberParams params,
 ) {
-  if (params.memberAnnotationName == IField.$this.name) {
+  if (params.memberAnnotationName == IField.$this.id) {
     final field = xyz.GenField(
       fieldName: params.memberName,
       fieldType: params.memberType,
