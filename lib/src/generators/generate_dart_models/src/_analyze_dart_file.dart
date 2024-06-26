@@ -36,13 +36,13 @@ Future<List<ClassInsight>> analyzeDartFile(
   final results = <ClassInsight>[];
   late GenerateModel temp;
   await analyzer.analyze(
-    onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
-    onPostAnalysis: (_, className) => results.add(ClassInsight(className, temp)),
     inclClassAnnotations: {IGenerateModel.$this.id},
     inclMemberAnnotations: {IField.$this.id},
     onAnnotatedClass: (p) => temp = _updateFromAnnotatedClass(temp, p),
     onClassAnnotationField: (p) => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) => temp = _updateFromAnnotatedMember(temp, p),
+    onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
+    onPostAnalysis: (_, className) => results.add(ClassInsight(className, temp)),
   );
   return results;
 }
@@ -63,7 +63,7 @@ class ClassInsight {
 /// it clashes with the annotated class.
 GenerateModel _updateFromAnnotatedClass(
   GenerateModel annotation,
-  xyz.TOnAnnotatedClassParams params,
+  xyz.OnAnnotatedClassParams params,
 ) {
   return _suggestClassName(annotation, params.className);
 }
@@ -77,7 +77,7 @@ GenerateModel _suggestClassName(GenerateModel annotation, String suggestedClassN
 }
 
 String _createGeneratedClassNameFromAnnotatedClassName(String className) {
-  // Remove all underscores and dollar signs.
+  // Removes all leading underscores or dollar signs.
   final a = className.replaceFirst(RegExp(r'^[_$]+'), '');
   // Add 'Model' to the generated class name if it's the same as the annotated class name.
   final b = a != className ? a : '${className}Model';
@@ -90,7 +90,7 @@ String _createGeneratedClassNameFromAnnotatedClassName(String className) {
 /// "fields" property.
 GenerateModel _updateFromClassAnnotationField(
   GenerateModel annotation,
-  xyz.TOnClassAnnotationFieldParams params,
+  xyz.OnClassAnnotationFieldParams params,
 ) {
   final x = IGenerateModel.values.valueOf(params.fieldName);
   switch (x) {
@@ -103,7 +103,7 @@ GenerateModel _updateFromClassAnnotationField(
         fields: {
           ...annotation.fields,
           ...?params.fieldValue.toSetValue()?.map((e) {
-            final field = xyz.GenField(
+            final field = Field(
               fieldName: e.fieldNameFromRecord()!,
               fieldType: e.fieldTypeFromRecord()!,
               nullable: e.nullableFromRecord()!,
@@ -135,12 +135,18 @@ GenerateModel _updateFromClassAnnotationField(
 /// annotation into its "fields" property.
 GenerateModel _updateFromAnnotatedMember(
   GenerateModel annotation,
-  xyz.TOnAnnotatedMemberParams params,
+  xyz.OnAnnotatedMemberParams params,
 ) {
   if (params.memberAnnotationName == IField.$this.id) {
-    final field = xyz.GenField(
-      fieldName: params.memberName,
-      fieldType: params.memberType,
+    final a1 = params.memberAnnotationFields[IField.fieldName.id]?.toStringValue();
+    final a2 = params.memberName;
+    final b1 = params.memberAnnotationFields[IField.fieldType.id]?.toStringValue();
+    final b2 = params.memberType.getDisplayString();
+    final c1 = params.memberAnnotationFields[IField.nullable.id]?.toBoolValue();
+    final field = xyz.DartField(
+      fieldName: a1 ?? a2,
+      fieldType: b1 ?? b2,
+      nullable: c1,
     );
     annotation = annotation.copyWith(
       fields: {

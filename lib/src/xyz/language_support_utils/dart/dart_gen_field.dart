@@ -9,34 +9,33 @@
 //.title~
 
 import 'package:meta/meta.dart';
-
-import '/src/xyz/_all_xyz.g.dart';
+import 'package:xyz_gen_annotations/annotations_src/field.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final class DartGenField extends GenField {
+final class DartField extends Field {
   //
   //
   //
 
-  const DartGenField({
+  const DartField({
     required super.fieldName,
     required super.fieldType,
     super.nullable,
   });
 
-  /// Derives an instance [DartGenField] from [source].
-  factory DartGenField.from(GenField source) {
-    return DartGenField(
+  /// Derives an instance [DartField] from [source].
+  factory DartField.from(Field source) {
+    return DartField(
       fieldName: source.fieldName,
       fieldType: source.fieldType,
       nullable: source.nullable,
     );
   }
 
-  /// Derives an instance [DartGenField] from [record].
-  factory DartGenField.fromRecord(TGenFieldRecord record) {
-    return DartGenField(
+  /// Derives an instance [DartField] from [record].
+  factory DartField.fromRecord(TFieldRecord record) {
+    return DartField(
       fieldName: record.fieldName,
       fieldType: record.fieldType,
       nullable: record.nullable,
@@ -48,41 +47,23 @@ final class DartGenField extends GenField {
   //
 
   @override
-  bool get nullable {
-    return [
-      super.nullable,
-      this.fieldNameMarkedAsNullableDartOnly,
-      this.fieldTypeMarkedAsNullableDartOnly,
-    ].any((e) => e == true);
+  String? get fieldName {
+    if (super.fieldName != null) {
+      return this._fieldNameNullable!
+          ? super.fieldName!.substring(0, super.fieldName!.length - 1)
+          : super.fieldName;
+    } else {
+      return null;
+    }
   }
 
-  //
-  //
-  //
-
-  /// Whether [fieldName] is marked as nullable in Dart. This would be the case
-  /// if [fieldName] ends with '?';
-  bool get fieldNameMarkedAsNullableDartOnly {
-    return this.fieldName.endsWith('?');
-  }
-
-  /// Whether [fieldType] is marked as nullable in Dart. This would be the case
-  /// if [fieldType] ends with '?';
-  bool get fieldTypeMarkedAsNullableDartOnly {
-    return this.fieldType.endsWith('?') || this.fieldType == 'dynamic';
-  }
-
-  //
-  //
-  //
-
-  /// Assumes [unknown] is a [TGenFieldRecord] or [GenField] or similar and
-  /// tries to construct a [DartGenField], otherwise returns `null`.
-  @visibleForTesting
-  static DartGenField? ofOrNull(dynamic unknown) {
-    try {
-      return DartGenField.from(GenField.ofOrNull(unknown)!);
-    } catch (_) {
+  @override
+  String? get fieldType {
+    if (super.fieldType != null) {
+      return this._fieldTypeNullable!
+          ? super.fieldType?.substring(0, super.fieldType!.length - 1)
+          : super.fieldType;
+    } else {
       return null;
     }
   }
@@ -90,4 +71,36 @@ final class DartGenField extends GenField {
   //
   //
   //
+
+  @override
+  bool? get nullable {
+    return [
+      super.nullable,
+      this._fieldNameNullable,
+      this._fieldTypeNullable,
+    ].any((e) => e == true);
+  }
+
+  //
+  //
+  //
+
+  bool? get _fieldNameNullable => super.fieldName?.endsWith('?');
+
+  bool? get _fieldTypeNullable => super.fieldType?.endsWith('?');
+
+  //
+  //
+  //
+
+  /// Assumes [unknown] is a [TFieldRecord] or [Field] or similar and  tries to
+  /// construct a [DartField], otherwise returns `null`.
+  @visibleForTesting
+  static DartField? ofOrNull(dynamic unknown) {
+    try {
+      return DartField.from(Field.ofOrNull(unknown)!);
+    } catch (_) {
+      return null;
+    }
+  }
 }

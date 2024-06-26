@@ -17,10 +17,13 @@ part '_model_user.g.dart';
 @GenerateModel(
   shouldInherit: true,
   fields: {
-    (fieldName: 'id', fieldType: String),
-    (fieldName: 'display_name', fieldType: String),
-    (fieldName: 'email', fieldType: 'LowerCase-String'),
+    //(fieldName: 'id', fieldType: String),
+    Field(fieldName: 'test', fieldType: 'String'),
+    //(fieldName: 'email', fieldType: 'LowerCase-String'),
   },
 )
 // ignore: unused_element
-abstract class _ModelUser extends Model {}
+abstract class _ModelUser extends Model {
+  @Field(nullable: true)
+  late int toets;
+}

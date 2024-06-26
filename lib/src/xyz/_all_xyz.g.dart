@@ -11,7 +11,6 @@
 export 'core_utils/combined_dir_paths.dart';
 export 'core_utils/core_utils_on_lang_extension.dart';
 export 'core_utils/find_files_etc.dart';
-export 'core_utils/gen_field.dart';
 export 'core_utils/placeholder_on_enum_extension.dart';
 export 'core_utils/print_arg_parser_usage.dart';
 export 'core_utils/process_comment_annots.dart';
