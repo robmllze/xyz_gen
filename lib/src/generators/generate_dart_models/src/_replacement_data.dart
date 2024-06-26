@@ -12,11 +12,12 @@ import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '../../../utils/type_codes/type_codes.dart';
-import '../../../xyz/language_support_utils/dart/dart_field.dart';
+
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_analyze_dart_file.dart';
 import '../../../xyz/language_support_utils/dart/dart_loose_type_mappers.dart';
+import '_strip_special_syntax_from_field_type.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -40,7 +41,7 @@ Map<String, String> replacementData(ClassInsight insight) {
   }.map((k, v) => MapEntry(k.placeholder, v));
 }
 
-Iterable<DartField> _dartFields(ClassInsight insight) {
+Iterable<xyz.DartField> _dartFields(ClassInsight insight) {
   return insight.annotation.fields.map((e) {
     e.runtimeType;
     return xyz.DartField.fromRecord(e);
@@ -91,7 +92,7 @@ String _p0(ClassInsight insight) {
 String _p1(ClassInsight insight) {
   return _dartFields(insight).map(
     (e) {
-      final t = e.fieldType;
+      final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
       final f = e.fieldName!;
       return '$t? $f;';
     },
@@ -101,7 +102,7 @@ String _p1(ClassInsight insight) {
 String _p2(ClassInsight insight) {
   return _dartFields(insight).map(
     (e) {
-      final t = e.fieldType;
+      final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
       final n = e.nullable;
       final f = e.fieldName!;
       return '${n ? '' : 'required'} $t${n ? '?' : ''} $f,';
@@ -171,6 +172,7 @@ String _p9(ClassInsight insight) {
     (e) {
       final f = e.fieldName!;
       final x = e.fieldTypeX!;
+      final s = stripSpecialSyntaxFromFieldType(x);
       final n = e.nullable;
       final a = TypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
         fieldName: 'this.$f',
@@ -182,8 +184,8 @@ String _p9(ClassInsight insight) {
       );
       return [
         '  // $f.',
-        '$x get ${f}Field => this.$f${n ? '' : '!'};',
-        'set ${f}Field($x v) => this.$f = v;',
+        '$s get ${f}Field => this.$f${n ? '' : '!'};',
+        'set ${f}Field($s v) => this.$f = v;',
         '@protected',
         'dynamic get \$$f => $a;',
         '@protected',

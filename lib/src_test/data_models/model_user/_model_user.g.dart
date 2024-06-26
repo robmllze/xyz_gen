@@ -33,7 +33,7 @@ class ModelUser extends _ModelUser {
   String get $class => CLASS;
 
   int? toets;
-  String? test;
+  Map<String, List<Map<String, ModelUser>>>? test;
 
   //
   //
@@ -47,7 +47,7 @@ class ModelUser extends _ModelUser {
 
   factory ModelUser({
     int? toets,
-    required String test,
+    required Map<String, List<Map<String, ModelUser>>> test,
   }) {
     return ModelUser.b(
       toets: toets,
@@ -265,10 +265,61 @@ class ModelUser extends _ModelUser {
   set $toets(v) => this.toets = letInt(v);
 
   // test.
-  String get testField => this.test!;
-  set testField(String v) => this.test = v;
+  Map<String, List<Map<String, ModelUser>>> get testField => this.test!;
+  set testField(Map<String, List<Map<String, ModelUser>>> v) => this.test = v;
   @protected
-  dynamic get $test => this.test?.toString().trim().nullIfEmpty;
+  dynamic get $test => this
+      .test
+      ?.map(
+        (p0, p1) => MapEntry(
+          p0?.toString().trim().nullIfEmpty,
+          p1
+              ?.map(
+                (p0) => p0
+                    ?.map(
+                      (p0, p1) => MapEntry(
+                        p0?.toString().trim().nullIfEmpty?.toLowerCase(),
+                        p1?.toJson(),
+                      ),
+                    )
+                    .nonNulls
+                    .nullIfEmpty,
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.toList(),
+        ),
+      )
+      .nonNulls
+      .nullIfEmpty;
   @protected
-  set $test(v) => this.test = v?.toString().trim().nullIfEmpty;
+  set $test(v) => this.test = letMap(v)
+      ?.map(
+        (p0, p1) => MapEntry(
+          p0?.toString().trim().nullIfEmpty,
+          letList(p1)
+              ?.map(
+                (p0) => letMap(p0)
+                    ?.map(
+                      (p0, p1) => MapEntry(
+                        p0?.toString().trim().nullIfEmpty?.toLowerCase(),
+                        () {
+                          final a = letMap<String, dynamic>(p1);
+                          return a != null ? ModelUser.fromJson(a) : null;
+                        }(),
+                      ),
+                    )
+                    .nonNulls
+                    .nullIfEmpty
+                    ?.cast(),
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.toList()
+              .cast(),
+        ),
+      )
+      .nonNulls
+      .nullIfEmpty
+      ?.cast();
 }
