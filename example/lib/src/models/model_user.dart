@@ -9,7 +9,6 @@
 //.title~
 
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-import 'package:xyz_utils/xyz_utils.dart';
 
 part '_model_user.g.dart';
 
