@@ -8,24 +8,14 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/dart/constant/value.dart';
+
 import 'package:path/path.dart' as p;
 
-import 'package:xyz_gen_annotations/annotations_src/generate_model.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '/src/utils/type_codes/type_codes.dart';
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_analyze_dart_file.dart';
-import 'etc/map_with.dart';
-import 'etc/type_mappers/dart_loose_type_mappers.dart';
-
-part 'etc/generate_parts/_generate_model_file.dart';
-part 'etc/generate_parts/_helpers.dart';
-part 'etc/generate_parts/_dart_replacements.dart';
-part 'etc/generate_parts/_ts_replacements.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

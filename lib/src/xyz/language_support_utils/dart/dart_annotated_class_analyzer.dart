@@ -238,3 +238,4 @@ typedef _TOnMemberAnnotationField = FutureOr<void> Function(
   String fieldName,
   DartObject fieldValue,
 );
+

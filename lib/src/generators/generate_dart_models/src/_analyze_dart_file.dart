@@ -12,7 +12,8 @@
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:xyz_gen_annotations/annotations_src/generate_model.dart';
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
+import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
@@ -73,23 +74,26 @@ Future<void> analyzeDartFile(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Updates [annotation] by deciding on a new name for the generated class if
+/// it clashes with the annotated class.
 GenerateModel _updateFromAnnotatedClass(
   GenerateModel annotation,
   String classAnnotationName,
   String className,
 ) {
-  return annotation.copyWith();
+  final c = annotation.className?.nullIfEmpty == null
+      ? _createGeneratedClassNameFromAnnotatedClassName(className)
+      : annotation.className;
+  annotation = annotation.copyWith(className: c);
+  return annotation;
 }
 
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-GenerateModel _updateFromAnnotatedMember(
-  GenerateModel annotation,
-  String memberAnnotationName,
-  String fieldName,
-  String fieldType,
-) {
-  return annotation.copyWith();
+String _createGeneratedClassNameFromAnnotatedClassName(String className) {
+  // Remove all underscores and dollar signs.
+  final a = className.replaceFirst(RegExp(r'^[_$]+'), '');
+  // Add 'Model' to the generated class name if it's the same as the annotated class name.
+  final b = a != className ? a : '${className}Model';
+  return b;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -100,4 +104,28 @@ GenerateModel _updateFromClassAnnotationField(
   DartObject memberValue,
 ) {
   return annotation.copyWith();
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Updates [annotation] by incorporating all members tagged with the @[Field]
+/// annotation into its "fields" property. This dual approach allows fields
+/// to be specified either through the @[GenerateModel] class annotation or
+/// the @Field member annotation.
+GenerateModel _updateFromAnnotatedMember(
+  GenerateModel annotation,
+  String memberAnnotationName,
+  String fieldName,
+  String fieldType,
+) {
+  if (memberAnnotationName == 'Field') {
+    annotation = annotation.copyWith(
+      fields: {
+        ...annotation.fields,
+        // ignore: invalid_use_of_visible_for_testing_member
+        xyz.GenField(fieldName: fieldName, fieldType: fieldType).toDartRecord,
+      },
+    );
+  }
+  return annotation;
 }
