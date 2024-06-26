@@ -27,6 +27,5 @@ export 'xyz/language_support_utils/lang.dart';
 export 'xyz/language_support_utils/typescript/typescript_support.dart';
 export 'xyz/language_support_utils/dart/dart_annotated_class_analyzer.dart';
 export 'utils/analyze_annotated_enums.dart';
-export 'utils/current_script_dir.dart';
+export 'xyz/core_utils/current_script_dir.dart';
 export 'xyz/core_utils/split_arg.dart';
-export 'utils/type_codes/type_codes.dart';

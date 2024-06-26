@@ -72,7 +72,7 @@ final class DartField extends Field {
 
   // The this.fieldName with '?' if nullable.
   @override
-  String? get fieldTypeX {
+  String? get fieldTypeCode {
     if (this.fieldType != null) {
       return '${this.fieldType}${this.nullable ? '?' : ''}';
     } else {

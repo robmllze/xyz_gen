@@ -15,4 +15,4 @@ export 'generate_dart_directives_app.dart';
 // export '_generate.dart';
 
 // --- GENERATED FILES ---
-// No generated files in directory.
+// export '_all_src.g.dart';

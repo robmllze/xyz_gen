@@ -16,8 +16,8 @@ export 'run_generate_dart_models_app.dart';
 // export '_generate.dart';
 // export '_generate_files_from_analysis_results.dart';
 // export '_replacement_data.dart';
-// export 'etc/_gen_field.dart';
-// export 'etc/generate_parts/_ts_replacements.dart';
+// export '_strip_special_syntax_from_field_type.dart';
+// export '_to_generic_type.dart';
 
 // --- GENERATED FILES ---
-// No generated files in directory.
+// export '_all_src.g.dart';

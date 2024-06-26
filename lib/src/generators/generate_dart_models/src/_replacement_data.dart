@@ -11,13 +11,13 @@
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '../../../utils/type_codes/type_codes.dart';
-
+import '../../../xyz/core_utils/type_codes/type_code_mapper.dart';
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_analyze_dart_file.dart';
 import '../../../xyz/language_support_utils/dart/dart_loose_type_mappers.dart';
 import '_strip_special_syntax_from_field_type.dart';
+import '_to_generic_type.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -171,16 +171,16 @@ String _p9(ClassInsight insight) {
   return _dartFields(insight).map(
     (e) {
       final f = e.fieldName!;
-      final x = e.fieldTypeX!;
+      final x = e.fieldTypeCode!;
       final s = stripSpecialSyntaxFromFieldType(x);
       final n = e.nullable;
       final a = TypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
         fieldName: 'this.$f',
-        fieldTypeX: x,
+        fieldTypeCode: x,
       );
       final b = TypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
         fieldName: 'v',
-        fieldTypeX: x,
+        fieldTypeCode: x,
       );
       return [
         '  // $f.',

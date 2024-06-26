@@ -15,4 +15,4 @@ export 'run_generate_dart_exports_app.dart';
 // export '_generate.dart';
 
 // --- GENERATED FILES ---
-// No generated files in directory.
+// export '_all_src.g.dart';

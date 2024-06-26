@@ -8,24 +8,26 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of '../type_codes.dart';
+import 'filter_mappers_by_type.dart';
+import 'type_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-String? _buildObjectMapper(
-  String type,
-  String fieldName,
-  TTypeMappers mappers,
-) {
-  final event = ObjectMapperEvent()
-    .._type = type
-    .._name = fieldName;
-  return _buildMapper(event, mappers);
+/// Mapper event for collection types, e.g. Map, List, Set.
+final class CollectionMapperEvent extends MapperEvent {
+  Iterable<String> _largs = [];
+  Iterable<String> _lhashes = [];
+  Iterable<String> _lparams = [];
+  Iterable<String> _ltypes = [];
+  String get args => this._largs.join(', ');
+  String get hashes => this._lhashes.join(', ');
+  String get params => this._lparams.join(', ');
+  String get types => this._ltypes.join(', ');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-String _buildCollectionMapper(
+String buildCollectionMapper(
   Iterable<List<String>> typeData,
   TTypeMappers mappers,
 ) {
@@ -40,10 +42,9 @@ String _buildCollectionMapper(
       .._largs = Iterable.generate(pLength, (n) => n).map((n) => 'p$n')
       .._type = element[1];
     final argIdMatch = RegExp(r'#x(\d+)').firstMatch(output);
-    collectionEvent._nameIndex =
-        argIdMatch != null && argIdMatch.groupCount > 0 //
-            ? int.tryParse(argIdMatch.group(1)!)
-            : null;
+    collectionEvent._nameIndex = argIdMatch != null && argIdMatch.groupCount > 0 //
+        ? int.tryParse(argIdMatch.group(1)!)
+        : null;
     final xHash = '#x${collectionEvent._nameIndex}';
     final formula = _buildMapper(collectionEvent, mappers);
     if (formula != null) {
@@ -80,6 +81,50 @@ String _buildCollectionMapper(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Mapper event for non-collection types, e.g. int, String, DateTime.
+final class ObjectMapperEvent extends MapperEvent {
+  ObjectMapperEvent();
+
+  ObjectMapperEvent.custom(String name, Iterable<String> matchGroups) {
+    this._name = name;
+    this._matchGroups = matchGroups;
+  }
+}
+
+String? buildObjectMapper(
+  String type,
+  String fieldName,
+  TTypeMappers mappers,
+) {
+  final event = ObjectMapperEvent()
+    .._type = type
+    .._name = fieldName;
+  return _buildMapper(event, mappers);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Mapper event base class.
+abstract base class MapperEvent {
+  /// The name of the field, e.g. "firstName" or "p3".
+  String? get name => this._name ?? (this._nameIndex != null ? 'p${this._nameIndex}' : null);
+  String? _name;
+
+  /// The index of the generated field name, e.g. "p3" = 3.
+  int? get nameIndex => this._nameIndex;
+  int? _nameIndex;
+
+  /// The field type, e.g. "String?".
+  String? get type => this._type;
+  String? _type;
+
+  /// Regex match groups.
+  Iterable<String>? get matchGroups => this._matchGroups;
+  Iterable<String>? _matchGroups;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 String? _buildMapper(
   MapperEvent event,
   TTypeMappers mappers,
@@ -98,8 +143,7 @@ String? _buildMapper(
       final typePattern = result.key;
       final match = RegExp(typePattern).firstMatch(type);
       if (match != null) {
-        event._matchGroups =
-            Iterable.generate(match.groupCount + 1, (i) => match.group(i)!);
+        event._matchGroups = Iterable.generate(match.groupCount + 1, (i) => match.group(i)!);
         final eventMapper = result.value;
         return eventMapper(event);
       }

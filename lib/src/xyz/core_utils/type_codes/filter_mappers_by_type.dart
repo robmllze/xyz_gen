@@ -8,8 +8,19 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part 'parts/_builders.dart';
-part 'parts/_helpers.dart';
-part 'parts/_mapper_event.dart';
-part 'parts/_type_code_mapper.dart';
-part 'parts/_type_mappers.dart';
+import 'type_mappers.dart';
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Searches [mappers] for mappers that match the given [type] and returns them.
+TTypeMappers filterMappersByType(
+  TTypeMappers mappers,
+  String type,
+) {
+  return Map.fromEntries(
+    mappers.entries.where((e) {
+      final key = e.key;
+      return RegExp(key).hasMatch(type);
+    }),
+  );
+}

@@ -8,7 +8,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of '../type_codes.dart';
+import 'decompose_collection_type.dart';
+import 'mapper_event.dart';
+import 'type_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -31,17 +33,16 @@ class TypeCodeMapper {
 
   String map({
     required String fieldName,
-    required String fieldTypeX,
+    required String fieldTypeCode,
   }) {
-    final genericTypeCode = toGenericTypeCode(fieldTypeX);
     var result = this.mapCollection(
       fieldName: fieldName,
-      genericTypeCode: genericTypeCode,
+      genericTypeCode: fieldTypeCode,
     );
     if (result == '#x0') {
       result = this.mapObject(
         fieldName: fieldName,
-        fieldTypeX: genericTypeCode,
+        fieldTypeCode: fieldTypeCode,
       );
     }
     return result;
@@ -53,9 +54,9 @@ class TypeCodeMapper {
 
   String mapObject({
     required String fieldName,
-    required String fieldTypeX,
+    required String fieldTypeCode,
   }) {
-    final formula = _buildObjectMapper(fieldTypeX, fieldName, this.mappers) ?? '#x0';
+    final formula = buildObjectMapper(fieldTypeCode, fieldName, this.mappers) ?? '#x0';
     return formula;
   }
 
@@ -69,9 +70,9 @@ class TypeCodeMapper {
   }) {
     // Break the typeCode up into to a list of type data that can be processed
     // by the builder.
-    final typeData = decomposeCollectionTypeCode(genericTypeCode);
+    final typeData = decomposeCollectionType(genericTypeCode);
     // Use the typeData to build a mapping formula.
-    var formula = _buildCollectionMapper(typeData, this.mappers);
+    var formula = buildCollectionMapper(typeData, this.mappers);
     // Insert the field name into the formula.
     formula = formula.replaceFirst('p0', fieldName);
     return formula;

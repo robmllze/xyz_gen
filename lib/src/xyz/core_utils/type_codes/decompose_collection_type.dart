@@ -8,11 +8,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of '../type_codes.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-/// Decomposes a complex [typeCode] into its constituent parts in
+/// Decomposes a complex [fieldTypeCode] into its constituent parts in
 /// preparation for being processed by the builder.
 ///
 /// i.e. This function transforms collection type codes like `List<String>` into
@@ -32,7 +28,7 @@ part of '../type_codes.dart';
 /// have already been broken down.
 /// - "List" results in `()` because it is seen as an object type (i.e. not a
 /// collection) This is because it does not have a `<...>` component.
-Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
+Iterable<List<String>> decomposeCollectionType(String fieldTypeCode) {
   final mapping = <int, List<String>>{};
 
   String? decompose(String input) {
@@ -45,9 +41,7 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
     final mappingEntries = matches.map((e) {
       final longType = e.group(0)!; // e.g. "List<String,int>"
       final shortType = e.group(1)!; // // e.g. "List"
-      final subtypes = e
-          .group(2)!
-          .split(','); // e.g. ["String", "int"] in "List<String,int>"
+      final subtypes = e.group(2)!.split(','); // e.g. ["String", "int"] in "List<String,int>"
       final nullableSymbol = e.group(5) ?? ''; // '?' or ""
       final index = e.start; // index in [input] where the match starts
       return MapEntry(
@@ -71,10 +65,10 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
     return mappingEntries.isNotEmpty ? input : null;
   }
 
-  // Decompose the typeCode until complete.
+  // Decompose the type until complete.
   {
     // [decompose] doesn't take spaces into account.
-    String? decomposed = typeCode.replaceAll(' ', '');
+    String? decomposed = fieldTypeCode.replaceAll(' ', '');
     do {
       decomposed = decompose(decomposed!);
     } while (decomposed != null);
@@ -89,61 +83,4 @@ Iterable<List<String>> decomposeCollectionTypeCode(String typeCode) {
     });
   final values = sortedMapping.map((e) => e.value);
   return values;
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-/// Searches [mappers] for mappers that match the given [type] and returns them.
-TTypeMappers filterMappersByType(
-  TTypeMappers mappers,
-  String type,
-) {
-  return Map.fromEntries(
-    mappers.entries.where((e) {
-      final key = e.key;
-      return RegExp(key).hasMatch(type);
-    }),
-  );
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-/// Expands some non-generic Dart collection types to their generic forms
-/// (e.g. Map to Map<dynamic, dynamic>). It processes types separated by "|"
-/// and skips over collections that already specify types.
-///
-/// This only works for the following types:
-///
-/// - Map
-/// - List
-/// - Set
-/// - Iterable
-/// - Queue
-/// - LinkedList
-/// - HashSet
-/// - LinkedHashSet
-/// - HashMap
-/// - LinkedHashMap
-String toGenericTypeCode(String typeCode) {
-  const TRANSFORMATIONS = {
-    'Map': 'Map<dynamic, dynamic>',
-    'List': 'List<dynamic>',
-    'Set': 'Set<dynamic>',
-    'Iterable': 'Iterable<dynamic>',
-    'Queue': 'Queue<dynamic>',
-    'LinkedList': 'LinkedList<dynamic>',
-    'HashSet': 'HashSet<dynamic>',
-    'LinkedHashSet': 'LinkedHashSet<dynamic>',
-    'HashMap': 'HashMap<dynamic, dynamic>',
-    'LinkedHashMap': 'LinkedHashMap<dynamic, dynamic>',
-  };
-
-  for (final key in TRANSFORMATIONS.keys) {
-    // This regex looks for the key (like "Map") that is not immediately
-    // followed by a "<", but it will also match if the key is followed by "|"
-    // and any text.
-    final regex = RegExp(r'\b' + key + r'\b(?![<|])');
-    typeCode = typeCode.replaceAll(regex, TRANSFORMATIONS[key]!);
-  }
-  return typeCode;
 }
