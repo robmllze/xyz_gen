@@ -39,7 +39,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
-  final templateProcessor = xyz.GenericTemplateProcessor<TPlaceholder, Null>(
+  final templateProcessor = xyz.TemplateIntegrator<TPlaceholder, Null>(
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
   );
@@ -47,7 +47,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
   var outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
   late final String template;
 
-  await templateProcessor.processTemplates(
+  await templateProcessor.engage(
     templateFilePaths: {templateFilePath},
     onTemplatesRead: (templates) async => template = templates.values.first,
     onSourceFile: (result) async {

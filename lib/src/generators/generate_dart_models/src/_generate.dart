@@ -8,14 +8,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-
-import 'package:path/path.dart' as p;
-
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_analyze_dart_file.dart';
+import '_generate_files_from_analysis_results.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -28,19 +26,41 @@ Future<void> generateDartModels({
   String? output,
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
-  final templateProcessor = xyz.DartTemplateProcessor(
-    fallbackDartSdkPath: fallbackDartSdkPath,
+  final templateIntegrator = xyz.TemplateIntegrator(
+    // Evaluate files in these paths.
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
+    // Evaluate paths that adhere to these patterns.
     pathPatterns: pathPatterns,
   );
-  await templateProcessor.processTemplates(
+
+  // Create context for the Dart analyzer.
+  final analysisContextCollection = xyz.createDartAnalysisContextCollection(
+    templateIntegrator.combinedDirPaths,
+    fallbackDartSdkPath,
+  );
+
+  // Read all templates from templateFilePaths and engage them with the files
+  // under consideration.
+  await templateIntegrator.engage(
     templateFilePaths: templateFilePaths,
-    onSourceFile: (result) async {
-      final filePath = result.source.filePath;
-      final a = xyz.Lang.DART.isValidSrcFilePath(filePath);
-      if (!a) return;
-      await analyzeDartFile(result.context!, filePath);
+    // For every source file found in the paths being evaluated...
+    onSourceFile: (integratorResult) async {
+      final filePath = integratorResult.source.filePath;
+      final isSrcFile = xyz.Lang.DART.isValidSrcFilePath(filePath);
+
+      // Skip if the file being evaluated isn't a Dart souce file, i.e. ends
+      // with '.dart' but not with '.g.dart'.
+      if (!isSrcFile) return;
+
+      final classInsights = await analyzeDartFile(
+        analysisContextCollection,
+        filePath,
+      );
+      await generateFilesFromAnalysisResults(
+        insights: classInsights,
+        templates: integratorResult.templates,
+      );
     },
   );
   utils.debugLogStop('Done!');

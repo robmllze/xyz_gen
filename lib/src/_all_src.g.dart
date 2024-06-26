@@ -23,7 +23,6 @@ export 'generators/generate_dart_exports/src/_generate.dart';
 export 'generators/generate_dart_models/src/run_generate_dart_models_app.dart';
 export 'generators/generate_dart_models/src/_generate.dart';
 export 'xyz/language_support_utils/dart/dart_support.dart';
-export 'xyz/language_support_utils/dart/dart_template_processor.dart';
 export 'xyz/language_support_utils/lang.dart';
 export 'xyz/language_support_utils/typescript/typescript_support.dart';
 export 'xyz/language_support_utils/dart/dart_annotated_class_analyzer.dart';

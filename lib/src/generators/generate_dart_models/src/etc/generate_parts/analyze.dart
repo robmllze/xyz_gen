@@ -10,7 +10,7 @@
 
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
-import '../_generate.dart';
+import '../../_generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
