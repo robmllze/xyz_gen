@@ -7,8 +7,17 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'src/run_generate_dart_models_app.dart';
-export 'src/_generate.dart';
-export 'src/etc/map_with.dart';
-export 'src/etc/type_mappers/dart_loose_type_mappers.dart';
-export 'src/etc/type_mappers/typescript_loose_type_mappers.dart';
+// --- PUBLIC FILES ---
+export 'run_generate_dart_models_app.dart';
+
+// --- PRIVATE FILES ---
+// export '_analyze_dart_file.dart';
+// export '_args_checker.dart';
+// export '_generate.dart';
+// export '_generate_files_from_analysis_results.dart';
+// export '_replacement_data.dart';
+// export 'etc/_gen_field.dart';
+// export 'etc/generate_parts/_ts_replacements.dart';
+
+// --- GENERATED FILES ---
+// No generated files in directory.

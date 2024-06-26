@@ -17,7 +17,7 @@ import '../language_support_utils/lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-extension CoreUtilsOnXyzGenLangExtension on Lang {
+extension CoreUtilsOnXyzGenLangX on Lang {
   //
   //
   //
@@ -190,5 +190,19 @@ extension CoreUtilsOnXyzGenLangExtension on Lang {
       } catch (_) {}
     }
     return false;
+  }
+
+  /// Converts [srcFileName] to a gen file name, e.g. 'hello.dart' -> '_hello.g.dart';
+  String convertToGenFileName(String srcFileName) {
+    final a = p.basename(srcFileName).toLowerCase().replaceLast(this.srcExt, this.genExt);
+    final b = a.startsWith('_') ? a : '_$a';
+    return b;
+  }
+
+  /// Converts [genFileName] to a src file name, e.g. '_hello.g.dart' -> 'hello.dart';
+  String convertToSrcFileName(String genFileName) {
+    final a = p.basename(genFileName).toLowerCase().replaceLast(this.genExt, this.srcExt);
+    final b = a.startsWith('_') && a.length > 1 ? a.substring(1) : a;
+    return b;
   }
 }

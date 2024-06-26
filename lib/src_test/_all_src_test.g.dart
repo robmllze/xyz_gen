@@ -8,7 +8,7 @@
 //.title~
 
 // --- PUBLIC FILES ---
-export 'data_models/model_user/model_user.dart';
+
 
 // --- PRIVATE FILES ---
 // No private files in directory.

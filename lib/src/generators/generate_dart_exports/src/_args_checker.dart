@@ -8,12 +8,11 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/src/xyz/core_utils/valid_args_checker.dart';
-import '/src/utils/split_arg.dart';
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ArgsChecker extends ValidArgsChecker {
+class ArgsChecker extends xyz.ValidArgsChecker {
   //
   //
   //
@@ -36,10 +35,10 @@ class ArgsChecker extends ValidArgsChecker {
     required dynamic subPaths,
     required dynamic pathPatterns,
     this.output,
-  })  : this.templateFilePaths = splitArg(templateFilePaths)?.toSet(),
-        this.rootPaths = splitArg(rootPaths)?.toSet(),
-        this.subPaths = splitArg(subPaths)?.toSet(),
-        this.pathPatterns = splitArg(pathPatterns)?.toSet();
+  })  : this.templateFilePaths = xyz.splitArg(templateFilePaths)?.toSet(),
+        this.rootPaths = xyz.splitArg(rootPaths)?.toSet(),
+        this.subPaths = xyz.splitArg(subPaths)?.toSet(),
+        this.pathPatterns = xyz.splitArg(pathPatterns)?.toSet();
 
   //
   //

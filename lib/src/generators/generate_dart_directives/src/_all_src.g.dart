@@ -7,5 +7,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'src/run_generate_dart_exports_app.dart';
-export 'src/_generate.dart';
+// --- PUBLIC FILES ---
+export 'generate_dart_directives_app.dart';
+
+// --- PRIVATE FILES ---
+// export '_args_checker.dart';
+// export '_generate.dart';
+
+// --- GENERATED FILES ---
+// No generated files in directory.

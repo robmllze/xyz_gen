@@ -7,14 +7,14 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'xyz/core_utils/core_utils_on_lang_extension.dart';
+export 'xyz/core_utils/core_utils_on_lang_x.dart';
 export 'xyz/core_utils/find_files_etc.dart';
 export 'xyz/core_utils/print_arg_parser_usage.dart';
 export 'xyz/core_utils/process_comment_annots.dart';
 export 'xyz/core_utils/read_code_snippets_from_markdown_file.dart';
 export 'xyz/core_utils/run_command_line_app.dart';
 export 'xyz/core_utils/valid_args_checker.dart';
-export 'xyz/core_utils/placeholder_on_enum_extension.dart';
+export 'xyz/core_utils/placeholder_on_enum_x.dart';
 export 'xyz/core_utils/xyz_gen_paths_etc.dart';
 export 'generators/generate_dart_directives/src/generate_dart_directives_app.dart';
 export 'generators/generate_dart_directives/src/_generate.dart';
@@ -28,5 +28,5 @@ export 'xyz/language_support_utils/typescript/typescript_support.dart';
 export 'xyz/language_support_utils/dart/dart_annotated_class_analyzer.dart';
 export 'utils/analyze_annotated_enums.dart';
 export 'utils/current_script_dir.dart';
-export 'utils/split_arg.dart';
+export 'xyz/core_utils/split_arg.dart';
 export 'utils/type_codes/type_codes.dart';

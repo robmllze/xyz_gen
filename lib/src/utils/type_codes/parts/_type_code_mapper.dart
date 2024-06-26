@@ -31,9 +31,9 @@ class TypeCodeMapper {
 
   String map({
     required String fieldName,
-    required String typeCode,
+    required String fieldTypeX,
   }) {
-    final genericTypeCode = toGenericTypeCode(typeCode);
+    final genericTypeCode = toGenericTypeCode(fieldTypeX);
     var result = this.mapCollection(
       fieldName: fieldName,
       genericTypeCode: genericTypeCode,
@@ -41,7 +41,7 @@ class TypeCodeMapper {
     if (result == '#x0') {
       result = this.mapObject(
         fieldName: fieldName,
-        typeCode: genericTypeCode,
+        fieldTypeX: genericTypeCode,
       );
     }
     return result;
@@ -53,10 +53,9 @@ class TypeCodeMapper {
 
   String mapObject({
     required String fieldName,
-    required String typeCode,
+    required String fieldTypeX,
   }) {
-    final formula =
-        _buildObjectMapper(typeCode, fieldName, this.mappers) ?? '#x0';
+    final formula = _buildObjectMapper(fieldTypeX, fieldName, this.mappers) ?? '#x0';
     return formula;
   }
 

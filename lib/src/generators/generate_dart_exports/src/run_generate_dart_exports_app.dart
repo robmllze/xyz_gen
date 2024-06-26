@@ -65,12 +65,12 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await generateExports<_Placholders>(
+      await generateExports<_Placeholders>(
         lang: xyz.Lang.DART,
         statementBuilder: {
-          _Placholders.PUBLIC_EXPORTS: (relativeFilePath) => "export '$relativeFilePath';",
-          _Placholders.PRIVATE_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
-          _Placholders.GENERATED_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
+          _Placeholders.PUBLIC_EXPORTS: (relativeFilePath) => "export '$relativeFilePath';",
+          _Placeholders.PRIVATE_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
+          _Placeholders.GENERATED_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
         },
         statusBuilder: (exportFilePath) {
           final rootDirPath = p.normalize(p.join(Directory.current.path, '..'));
@@ -78,21 +78,21 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
 
           final isGenFile = xyz.Lang.DART.isValidGenFilePath(exportFilePath);
           if (isGenFile) {
-            return _Placholders.GENERATED_EXPORTS;
+            return _Placeholders.GENERATED_EXPORTS;
           }
           final isPrivateFile = p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
           if (isPrivateFile) {
-            return _Placholders.PRIVATE_EXPORTS;
+            return _Placeholders.PRIVATE_EXPORTS;
           }
-          return _Placholders.PUBLIC_EXPORTS;
+          return _Placeholders.PUBLIC_EXPORTS;
         },
         placeholderBuilder: (placeholder) {
           switch (placeholder) {
-            case _Placholders.PUBLIC_EXPORTS:
+            case _Placeholders.PUBLIC_EXPORTS:
               return '// No public files in directory.';
-            case _Placholders.PRIVATE_EXPORTS:
+            case _Placeholders.PRIVATE_EXPORTS:
               return '// No private files in directory.';
-            case _Placholders.GENERATED_EXPORTS:
+            case _Placeholders.GENERATED_EXPORTS:
               return '// No generated files in directory.';
           }
         },
@@ -107,7 +107,7 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-enum _Placholders {
+enum _Placeholders {
   PUBLIC_EXPORTS,
   PRIVATE_EXPORTS,
   GENERATED_EXPORTS;

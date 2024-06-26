@@ -8,11 +8,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
+import 'package:path/path.dart' as p;
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
@@ -38,11 +36,20 @@ Future<List<ClassInsight>> analyzeDartFile(
   await analyzer.analyze(
     inclClassAnnotations: {IGenerateModel.$this.id},
     inclMemberAnnotations: {IField.$this.id},
-    onAnnotatedClass: (p) => temp = _updateFromAnnotatedClass(temp, p),
     onClassAnnotationField: (p) => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
-    onPostAnalysis: (_, className) => results.add(ClassInsight(className, temp)),
+    onPostAnalysis: (fullFilePath, className) {
+      final fileName = p.basename(fullFilePath);
+      final dirPath = p.dirname(fullFilePath);
+      final insight = ClassInsight(
+        className: className,
+        annotation: temp,
+        dirPath: dirPath,
+        fileName: fileName,
+      );
+      results.add(insight);
+    },
   );
   return results;
 }
@@ -50,38 +57,15 @@ Future<List<ClassInsight>> analyzeDartFile(
 class ClassInsight {
   final String className;
   final GenerateModel annotation;
+  final String dirPath;
+  final String fileName;
 
-  const ClassInsight(
-    this.className,
-    this.annotation,
-  );
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-/// Updates [annotation] by deciding on a new name for the generated class if
-/// it clashes with the annotated class.
-GenerateModel _updateFromAnnotatedClass(
-  GenerateModel annotation,
-  xyz.OnAnnotatedClassParams params,
-) {
-  return _suggestClassName(annotation, params.className);
-}
-
-GenerateModel _suggestClassName(GenerateModel annotation, String suggestedClassName) {
-  final c = annotation.className?.nullIfEmpty == null
-      ? _createGeneratedClassNameFromAnnotatedClassName(suggestedClassName)
-      : annotation.className;
-  annotation = annotation.copyWith(className: c);
-  return annotation;
-}
-
-String _createGeneratedClassNameFromAnnotatedClassName(String className) {
-  // Removes all leading underscores or dollar signs.
-  final a = className.replaceFirst(RegExp(r'^[_$]+'), '');
-  // Add 'Model' to the generated class name if it's the same as the annotated class name.
-  final b = a != className ? a : '${className}Model';
-  return b;
+  const ClassInsight({
+    required this.className,
+    required this.annotation,
+    required this.dirPath,
+    required this.fileName,
+  });
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

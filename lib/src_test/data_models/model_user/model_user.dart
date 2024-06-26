@@ -24,6 +24,6 @@ part '_model_user.g.dart';
 )
 // ignore: unused_element
 abstract class _ModelUser extends Model {
-  @Field(nullable: true)
-  late int toets;
+  @Field()
+  late int? toets;
 }

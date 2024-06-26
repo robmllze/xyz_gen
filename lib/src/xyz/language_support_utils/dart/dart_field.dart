@@ -46,10 +46,11 @@ final class DartField extends Field {
   //
   //
 
+  // The super.fieldName stripped of '?'.
   @override
   String? get fieldName {
     if (super.fieldName != null) {
-      return this._fieldNameNullable!
+      return this._isFieldNameNullable!
           ? super.fieldName!.substring(0, super.fieldName!.length - 1)
           : super.fieldName;
     } else {
@@ -57,12 +58,23 @@ final class DartField extends Field {
     }
   }
 
+  // The super.fieldType stripped of '?'.
   @override
   String? get fieldType {
     if (super.fieldType != null) {
-      return this._fieldTypeNullable!
+      return this._isFieldTypeNullable!
           ? super.fieldType?.substring(0, super.fieldType!.length - 1)
           : super.fieldType;
+    } else {
+      return null;
+    }
+  }
+
+  // The this.fieldName with '?' if nullable.
+  @override
+  String? get fieldTypeX {
+    if (this.fieldType != null) {
+      return '${this.fieldType}${this.nullable ? '?' : ''}';
     } else {
       return null;
     }
@@ -72,12 +84,13 @@ final class DartField extends Field {
   //
   //
 
+  // Whether super.fieldName or super.fieldType ends with '?' or super.nullable is true.
   @override
-  bool? get nullable {
+  bool get nullable {
     return [
       super.nullable,
-      this._fieldNameNullable,
-      this._fieldTypeNullable,
+      this._isFieldNameNullable,
+      this._isFieldTypeNullable,
     ].any((e) => e == true);
   }
 
@@ -85,9 +98,9 @@ final class DartField extends Field {
   //
   //
 
-  bool? get _fieldNameNullable => super.fieldName?.endsWith('?');
+  bool? get _isFieldNameNullable => super.fieldName?.endsWith('?');
 
-  bool? get _fieldTypeNullable => super.fieldType?.endsWith('?');
+  bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?');
 
   //
   //

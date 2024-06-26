@@ -39,7 +39,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
-  final templateProcessor = xyz.TemplateIntegrator<TPlaceholder, Null>(
+  final templateIntegrator = xyz.TemplateIntegrator<TPlaceholder, Null>(
     rootDirPaths: rootDirPaths,
     subDirPaths: subDirPaths,
   );
@@ -47,12 +47,12 @@ Future<void> generateExports<TPlaceholder extends Enum>({
   var outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
   late final String template;
 
-  await templateProcessor.engage(
+  await templateIntegrator.engage(
     templateFilePaths: {templateFilePath},
     onTemplatesRead: (templates) async => template = templates.values.first,
-    onSourceFile: (result) async {
-      final targetDirPath = result.targetDirPath;
-      final filePath = result.source.filePath;
+    onSourceFile: (integratorResult) async {
+      final targetDirPath = integratorResult.targetDirPath;
+      final filePath = integratorResult.source.filePath;
       final relativeFilePath = Uri.file(
         p.relative(filePath, from: targetDirPath),
         windows: false,

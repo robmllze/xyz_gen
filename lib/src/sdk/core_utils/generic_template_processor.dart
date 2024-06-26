@@ -12,7 +12,7 @@ import 'package:meta/meta.dart';
 import 'package:xyz_utils/xyz_utils.dart';
 
 import '/src/xyz/core_utils/find_files_etc.dart';
-import '/src/xyz/core_utils/placeholder_on_enum_extension.dart';
+import '../../xyz/core_utils/placeholder_on_enum_x.dart';
 import '/src/xyz/core_utils/read_code_snippets_from_markdown_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

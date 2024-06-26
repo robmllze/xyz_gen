@@ -16,6 +16,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:path/path.dart' as p;
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils.dart' as utils;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -80,43 +81,41 @@ final class DartAnnotatedClassAnalyzer {
     final context = this.analysisContextCollection.contextFor(fullFilePath);
     final library = await context.currentSession.getLibraryByUri(fullFileUri.toString());
     if (library is LibraryElementResult) {
-      final classElements = library.element.topLevelElements.whereType<ClassElement>();
-      for (final classElement in classElements) {
-        final className = classElement.displayName;
-        if (classNameFilter == null || classNameFilter.hasMatch(className)) {
-          onPreAnalysis?.call(
-            fullFilePath,
-            className,
-          );
-          await _processMemberAnnotations(
-            fullFilePath,
-            classElement,
-            memberNameFilter,
-            onAnnotatedMember,
-            onMemberAnnotationField,
-            inclMemberAnnotations,
-          );
-          await _processMethodAnnotations(
-            fullFilePath,
-            classElement,
-            methodNameFilter,
-            onAnnotatedMethod,
-            onMethodAnnotationField,
-            inclMethodAnnotations,
-          );
-          await _processClassAnnotations(
-            fullFilePath,
-            classElement,
-            onAnnotatedClass,
-            onClassAnnotationField,
-            inclClassAnnotations,
-          );
-        }
-        onPostAnalysis?.call(
+      final classElement = library.element.topLevelElements.whereType<ClassElement>().first;
+      final className = classElement.displayName;
+      if (classNameFilter == null || classNameFilter.hasMatch(className)) {
+        onPreAnalysis?.call(
           fullFilePath,
           className,
         );
+        await _processMemberAnnotations(
+          fullFilePath,
+          classElement,
+          memberNameFilter,
+          onAnnotatedMember,
+          onMemberAnnotationField,
+          inclMemberAnnotations,
+        );
+        await _processMethodAnnotations(
+          fullFilePath,
+          classElement,
+          methodNameFilter,
+          onAnnotatedMethod,
+          onMethodAnnotationField,
+          inclMethodAnnotations,
+        );
+        await _processClassAnnotations(
+          fullFilePath,
+          classElement,
+          onAnnotatedClass,
+          onClassAnnotationField,
+          inclClassAnnotations,
+        );
       }
+      onPostAnalysis?.call(
+        fullFilePath,
+        className,
+      );
     }
   }
 
