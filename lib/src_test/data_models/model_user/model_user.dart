@@ -18,7 +18,7 @@ part '_model_user.g.dart';
   shouldInherit: true,
   fields: {
     //(fieldName: 'id', fieldType: String),
-    Field(fieldName: 'test', fieldType: 'Map<String, List<Map<LowerCase-String, ModelUser>>>'),
+    Field(fieldName: 'test', fieldType: 'Map'),
     //(fieldName: 'email', fieldType: 'LowerCase-String'),
   },
 )

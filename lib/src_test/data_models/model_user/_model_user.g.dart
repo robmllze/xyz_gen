@@ -33,7 +33,7 @@ class ModelUser extends _ModelUser {
   String get $class => CLASS;
 
   int? toets;
-  Map<String, List<Map<String, ModelUser>>>? test;
+  Map<List<dynamic>, Map<dynamic, dynamic>>? test;
 
   //
   //
@@ -47,7 +47,7 @@ class ModelUser extends _ModelUser {
 
   factory ModelUser({
     int? toets,
-    required Map<String, List<Map<String, ModelUser>>> test,
+    required Map<List<dynamic>, Map<dynamic, dynamic>> test,
   }) {
     return ModelUser.b(
       toets: toets,
@@ -265,29 +265,29 @@ class ModelUser extends _ModelUser {
   set $toets(v) => this.toets = letInt(v);
 
   // test.
-  Map<String, List<Map<String, ModelUser>>> get testField => this.test!;
-  set testField(Map<String, List<Map<String, ModelUser>>> v) => this.test = v;
+  Map<List<dynamic>, Map<dynamic, dynamic>> get testField => this.test!;
+  set testField(Map<List<dynamic>, Map<dynamic, dynamic>> v) => this.test = v;
   @protected
   dynamic get $test => this
       .test
       ?.map(
         (p0, p1) => MapEntry(
-          p0?.toString().trim().nullIfEmpty,
-          p1
+          p0
               ?.map(
-                (p0) => p0
-                    ?.map(
-                      (p0, p1) => MapEntry(
-                        p0?.toString().trim().nullIfEmpty?.toLowerCase(),
-                        p1?.toJson(),
-                      ),
-                    )
-                    .nonNulls
-                    .nullIfEmpty,
+                (p0) => p0,
               )
               .nonNulls
               .nullIfEmpty
               ?.toList(),
+          p1
+              ?.map(
+                (p0, p1) => MapEntry(
+                  p0,
+                  p1,
+                ),
+              )
+              .nonNulls
+              .nullIfEmpty,
         ),
       )
       .nonNulls
@@ -296,27 +296,24 @@ class ModelUser extends _ModelUser {
   set $test(v) => this.test = letMap(v)
       ?.map(
         (p0, p1) => MapEntry(
-          p0?.toString().trim().nullIfEmpty,
-          letList(p1)
+          letList(p0)
               ?.map(
-                (p0) => letMap(p0)
-                    ?.map(
-                      (p0, p1) => MapEntry(
-                        p0?.toString().trim().nullIfEmpty?.toLowerCase(),
-                        () {
-                          final a = letMap<String, dynamic>(p1);
-                          return a != null ? ModelUser.fromJson(a) : null;
-                        }(),
-                      ),
-                    )
-                    .nonNulls
-                    .nullIfEmpty
-                    ?.cast(),
+                (p0) => p0,
               )
               .nonNulls
               .nullIfEmpty
               ?.toList()
               .cast(),
+          letMap(p1)
+              ?.map(
+                (p0, p1) => MapEntry(
+                  p0,
+                  p1,
+                ),
+              )
+              .nonNulls
+              .nullIfEmpty
+              ?.cast(),
         ),
       )
       .nonNulls
