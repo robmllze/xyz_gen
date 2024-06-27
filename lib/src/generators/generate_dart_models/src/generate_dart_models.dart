@@ -13,7 +13,8 @@ import 'package:xyz_utils/xyz_utils.dart' as utils;
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_analyze_dart_file.dart';
-import '_generate_files_from_analysis_results.dart';
+import '_generator_converger.dart';
+import '_replacement_producer.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -57,9 +58,10 @@ Future<void> generateDartModels({
         analysisContextCollection,
         filePath,
       );
-      await generateFilesFromAnalysisResults(
-        insights: classInsights,
-        templates: integratorResult.templates,
+      await generatorConverger.converge(
+        classInsights,
+        integratorResult.templates,
+        replacementProducer.produceReplacements,
       );
     },
   );

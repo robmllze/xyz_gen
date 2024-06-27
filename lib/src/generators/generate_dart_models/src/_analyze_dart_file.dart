@@ -22,7 +22,7 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 ///
 /// Each item in the list consists of the name of the analyzed class and the
 /// annotation applied to that class.
-Future<List<ClassInsight>> analyzeDartFile(
+Future<List<_ClassInsight>> analyzeDartFile(
   AnalysisContextCollection analysisContextCollection,
   String filePath,
 ) async {
@@ -31,41 +31,27 @@ Future<List<ClassInsight>> analyzeDartFile(
     analysisContextCollection: analysisContextCollection,
   );
 
-  final results = <ClassInsight>[];
+  final insights = <_ClassInsight>[];
   late GenerateModel temp;
   await analyzer.analyze(
     inclClassAnnotations: {IGenerateModel.$this.id},
     inclMemberAnnotations: {IField.$this.id},
-    onClassAnnotationField: (p) => temp = _updateFromClassAnnotationField(temp, p),
-    onAnnotatedMember: (p) => temp = _updateFromAnnotatedMember(temp, p),
+    onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
+    onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
     onPostAnalysis: (fullFilePath, className) {
       final fileName = p.basename(fullFilePath);
       final dirPath = p.dirname(fullFilePath);
-      final insight = ClassInsight(
+      final insight = _ClassInsight(
         className: className,
         annotation: temp,
         dirPath: dirPath,
         fileName: fileName,
       );
-      results.add(insight);
+      insights.add(insight);
     },
   );
-  return results;
-}
-
-class ClassInsight {
-  final String className;
-  final GenerateModel annotation;
-  final String dirPath;
-  final String fileName;
-
-  const ClassInsight({
-    required this.className,
-    required this.annotation,
-    required this.dirPath,
-    required this.fileName,
-  });
+  return insights;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -141,3 +127,7 @@ GenerateModel _updateFromAnnotatedMember(
   }
   return annotation;
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef _ClassInsight = xyz.ClassInsight<GenerateModel>;

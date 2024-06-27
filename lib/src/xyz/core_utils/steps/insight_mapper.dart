@@ -8,31 +8,24 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen/src/xyz/dart_utils/decompose_dart_collection_type.dart';
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-
-//part '_model_user.g.dart';
+import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-@GenerateModel(
-  fields: {
-    ('id', String),
-    ('email', T_LOWER_CASE_STRING),
-  },
-  shouldInherit: true,
-)
-// ignore: unused_element
-abstract class _ModelUser extends Model {
-  @Field()
-  String? firstName;
+class InsightMapper<TInsight extends Insight, _TPlaceholder extends Enum> {
+  //
+  //
+  //
 
-  @Field()
-  String? lastName;
+  final _TPlaceholder placeholder;
+  final Future<String> Function(TInsight insight) mapInsights;
 
-  String get fullName => '$firstName $lastName';
-}
+  //
+  //
+  //
 
-void main() {
-  print(decomposeDartCollectionType('List<String>'));
+  const InsightMapper({
+    required this.placeholder,
+    required this.mapInsights,
+  });
 }

@@ -8,11 +8,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'filter_mappers_by_type.dart';
-import 'type_mappers.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 /// Mapper event for collection types, e.g. Map, List, Set.
 final class CollectionMapperEvent extends MapperEvent {
   Iterable<String> _largs = [];
@@ -150,4 +145,34 @@ String? _buildMapper(
     }
   }
   return null;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Searches [mappers] for mappers that match the given [type] and returns them.
+TTypeMappers filterMappersByType(
+  TTypeMappers mappers,
+  String type,
+) {
+  return Map.fromEntries(
+    mappers.entries.where((e) {
+      final key = e.key;
+      return RegExp(key).hasMatch(type);
+    }),
+  );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef TTypeMappers = Map<String, String Function(MapperEvent event)>;
+
+TTypeMappers newTypeMappers(TTypeMappers input) => TTypeMappers.unmodifiable(input);
+
+abstract class TypeMappers {
+  TTypeMappers get fromMappers => {...this.collectionFromMappers, ...this.objectFromMappers};
+  TTypeMappers get toMappers => {...this.collectionToMappers, ...this.objectToMappers};
+  TTypeMappers get collectionFromMappers;
+  TTypeMappers get collectionToMappers;
+  TTypeMappers get objectFromMappers;
+  TTypeMappers get objectToMappers;
 }

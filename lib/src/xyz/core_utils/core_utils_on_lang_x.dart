@@ -13,7 +13,7 @@
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 
-import '../language_support_utils/lang.dart';
+import 'lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

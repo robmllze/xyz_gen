@@ -8,8 +8,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:async';
-
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
@@ -24,7 +22,7 @@ Future<void> analyzeAnnotatedEnums({
   required AnalysisContextCollection collection,
   RegExp? enumNamePattern,
   Set<String>? enumAnnotations,
-  FutureOr<void> Function(
+  Future<void> Function(
     String enumAnnotationName,
     String enumName,
   )? onAnnotatedEnum,
@@ -35,8 +33,7 @@ Future<void> analyzeAnnotatedEnums({
   final context = collection.contextFor(normalizedFilePath);
   final library = await context.currentSession.getLibraryByUri(fileUri);
   if (library is LibraryElementResult) {
-    final enumElements =
-        library.element.topLevelElements.whereType<EnumElement>();
+    final enumElements = library.element.topLevelElements.whereType<EnumElement>();
     for (final enumElement in enumElements) {
       final className = enumElement.displayName;
       if (enumNamePattern == null || enumNamePattern.hasMatch(className)) {
@@ -52,16 +49,15 @@ Future<void> analyzeAnnotatedEnums({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-FutureOr<void> _processEnumAnnotations(
+Future<void> _processEnumAnnotations(
   EnumElement enumElement,
-  FutureOr<void> Function(String, String)? onAnnotatedEnum,
+  Future<void> Function(String, String)? onAnnotatedEnum,
   Set<String>? enumAnnotations,
 ) async {
   for (final metadata in enumElement.metadata) {
     final element = metadata.element;
     final classAnnotationName = element?.displayName;
-    if (classAnnotationName != null &&
-        enumAnnotations?.contains(classAnnotationName) != false) {
+    if (classAnnotationName != null && enumAnnotations?.contains(classAnnotationName) != false) {
       await onAnnotatedEnum?.call(
         classAnnotationName,
         enumElement.displayName,

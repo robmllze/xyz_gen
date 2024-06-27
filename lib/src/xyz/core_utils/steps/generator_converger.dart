@@ -8,19 +8,33 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'type_mappers.dart';
+import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Searches [mappers] for mappers that match the given [type] and returns them.
-TTypeMappers filterMappersByType(
-  TTypeMappers mappers,
-  String type,
-) {
-  return Map.fromEntries(
-    mappers.entries.where((e) {
-      final key = e.key;
-      return RegExp(key).hasMatch(type);
-    }),
-  );
+class GeneratorConverger<TInsight extends Insight> {
+  //
+  //
+  //
+
+  final _TConvergeCallback<TInsight, Null> converge;
+
+  //
+  //
+  //
+
+  const GeneratorConverger(this.converge);
+
+  //
+  //
+  //
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef _TConvergeCallback<TInsight extends Insight, _TPlaceholder extends Enum?> = Future<void>
+    Function(
+  Iterable<TInsight> insights,
+  Map<String, String> templates,
+  TProduceReplacementsCallback<TInsight, _TPlaceholder> produceReplacements,
+);

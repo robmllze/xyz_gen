@@ -8,13 +8,11 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'decompose_collection_type.dart';
-import 'mapper_event.dart';
-import 'type_mappers.dart';
+import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class TypeCodeMapper {
+class DartTypeCodeMapper {
   //
   //
   //
@@ -25,7 +23,7 @@ class TypeCodeMapper {
   //
   //
 
-  const TypeCodeMapper(this.mappers);
+  const DartTypeCodeMapper(this.mappers);
 
   //
   //
@@ -70,7 +68,7 @@ class TypeCodeMapper {
   }) {
     // Break the typeCode up into to a list of type data that can be processed
     // by the builder.
-    final typeData = decomposeCollectionType(genericTypeCode);
+    final typeData = decomposeDartCollectionType(genericTypeCode);
     // Use the typeData to build a mapping formula.
     var formula = buildCollectionMapper(typeData, this.mappers);
     // Insert the field name into the formula.

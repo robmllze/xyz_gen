@@ -8,8 +8,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:async';
-
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/constant/value.dart';
@@ -123,7 +121,7 @@ final class DartAnnotatedClassAnalyzer {
   //
   //
 
-  FutureOr<void> _processMemberAnnotations(
+  Future<void> _processMemberAnnotations(
     String fullFilePath,
     ClassElement classElement,
     RegExp? memberNameFilter,
@@ -181,7 +179,7 @@ final class DartAnnotatedClassAnalyzer {
 //
 //
 
-  FutureOr<void> _processMethodAnnotations(
+  Future<void> _processMethodAnnotations(
     String fullFilePath,
     ClassElement classElement,
     RegExp? methodNameFilter,
@@ -232,7 +230,7 @@ final class DartAnnotatedClassAnalyzer {
   //
   //
 
-  FutureOr<void> _processClassAnnotations(
+  Future<void> _processClassAnnotations(
     String fullFilePath,
     ClassElement classElement,
     _TOnAnnotatedClassCallback? onAnnotatedClass,
@@ -289,7 +287,7 @@ final class OnAnnotatedClassParams {
   });
 }
 
-typedef _TOnAnnotatedClassCallback = FutureOr<dynamic> Function(
+typedef _TOnAnnotatedClassCallback = Future<dynamic> Function(
   OnAnnotatedClassParams parent,
 );
 
@@ -312,7 +310,7 @@ final class OnClassAnnotationFieldParams {
   });
 }
 
-typedef _TOnClassAnnotationFieldCallback = FutureOr<dynamic> Function(
+typedef _TOnClassAnnotationFieldCallback = Future<dynamic> Function(
   OnClassAnnotationFieldParams parent,
 );
 
@@ -333,7 +331,7 @@ final class OnAnnotatedMethodParams {
   });
 }
 
-typedef _TOnAnnotatedMethodCallback = FutureOr<dynamic> Function(
+typedef _TOnAnnotatedMethodCallback = Future<dynamic> Function(
   OnAnnotatedMethodParams parent,
 );
 
@@ -356,7 +354,7 @@ final class OnMethodAnnotationFieldParams {
   });
 }
 
-typedef _TOnMethodAnnotationFieldCallback = FutureOr<dynamic> Function(
+typedef _TOnMethodAnnotationFieldCallback = Future<dynamic> Function(
   OnMethodAnnotationFieldParams parent,
 );
 
@@ -379,7 +377,7 @@ final class OnAnnotatedMemberParams {
   });
 }
 
-typedef _TOnAnnotatedMemberCallback = FutureOr<dynamic> Function(
+typedef _TOnAnnotatedMemberCallback = Future<dynamic> Function(
   OnAnnotatedMemberParams parent,
 );
 
@@ -402,7 +400,7 @@ final class OnMemberAnnotationFieldParams {
   });
 }
 
-typedef _TOnMemberAnnotationFieldsCallback = FutureOr<dynamic> Function(
+typedef _TOnMemberAnnotationFieldsCallback = Future<dynamic> Function(
   OnMemberAnnotationFieldParams parent,
 );
 

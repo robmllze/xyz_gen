@@ -3,24 +3,48 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Licencing details are in the LICENSE file in the root directory.
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
+//
+// Licensing details can be found in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'mapper_event.dart';
+import 'insight.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef TTypeMappers = Map<String, String Function(MapperEvent event)>;
+class ClassInsight<TAnnotation> implements Insight {
+  //
+  //
+  //
 
-TTypeMappers newTypeMappers(TTypeMappers input) => TTypeMappers.unmodifiable(input);
+  final String className;
+  final TAnnotation annotation;
+  final Map<String, dynamic> Function(TAnnotation annotation)? toConfiguration;
 
-abstract class TypeMappers {
-  TTypeMappers get fromMappers => {...this.collectionFromMappers, ...this.objectFromMappers};
-  TTypeMappers get toMappers => {...this.collectionToMappers, ...this.objectToMappers};
-  TTypeMappers get collectionFromMappers;
-  TTypeMappers get collectionToMappers;
-  TTypeMappers get objectFromMappers;
-  TTypeMappers get objectToMappers;
+  @override
+  final String dirPath;
+
+  @override
+  final String fileName;
+
+  //
+  //
+  //
+
+  const ClassInsight({
+    required this.className,
+    required this.annotation,
+    this.toConfiguration,
+    required this.dirPath,
+    required this.fileName,
+  });
+
+  //
+  //
+  //
+
+  @override
+  Map<String, dynamic>? get configuration => this.toConfiguration?.call(this.annotation);
 }

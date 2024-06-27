@@ -8,8 +8,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-/// Decomposes a complex [fieldTypeCode] into its constituent parts in
-/// preparation for being processed by the builder.
+/// Decomposes a complex [fieldTypeCode] into its constituent parts to prepare
+/// it for processing.
 ///
 /// i.e. This function transforms collection type codes like `List<String>` into
 /// their components. Nested type codes are split into separate parts, and each
@@ -28,7 +28,7 @@
 /// have already been broken down.
 /// - "List" results in `()` because it is seen as an object type (i.e. not a
 /// collection) This is because it does not have a `<...>` component.
-Iterable<List<String>> decomposeCollectionType(String fieldTypeCode) {
+Iterable<List<String>> decomposeDartCollectionType(String fieldTypeCode) {
   final mapping = <int, List<String>>{};
 
   String? decompose(String input) {

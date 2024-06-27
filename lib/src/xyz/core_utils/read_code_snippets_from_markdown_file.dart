@@ -10,7 +10,7 @@
 
 import 'dart:io';
 
-import '../language_support_utils/lang.dart';
+import 'lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
