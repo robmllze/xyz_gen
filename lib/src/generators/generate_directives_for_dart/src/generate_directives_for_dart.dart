@@ -11,7 +11,6 @@
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '../../../_all_src.g.dart';
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -104,7 +103,7 @@ Future<bool> _onAnnot(
           );
 
           // Log a success.
-          utils.debugLogSuccess('Generated "part" file ${previewPath(normalDirectiveFilePath)}');
+          utils.debugLogSuccess('Generated "part" file ${xyz.previewPath(normalDirectiveFilePath)}');
         // Create import file.
         case 'import':
           await utils.writeFile(
@@ -112,7 +111,7 @@ Future<bool> _onAnnot(
             '// Imported by $counterpartFilePath',
           );
           // Log a success.
-          utils.debugLogSuccess('Generated "import" file ${previewPath(normalDirectiveFilePath)}');
+          utils.debugLogSuccess('Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}');
         // Create export file.
         case 'export':
           // Log a success.
@@ -120,7 +119,7 @@ Future<bool> _onAnnot(
             normalDirectiveFilePath,
             '// Exported by $counterpartFilePath',
           );
-          utils.debugLogSuccess('Generated "export" file ${previewPath(normalDirectiveFilePath)}');
+          utils.debugLogSuccess('Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}');
         default:
           throw UnimplementedError('Unknown directive type: $directiveType');
       }

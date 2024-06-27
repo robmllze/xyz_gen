@@ -12,7 +12,7 @@ import 'package:args/args.dart';
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import '_generate.dart';
+import 'generate_directives_for_dart.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
