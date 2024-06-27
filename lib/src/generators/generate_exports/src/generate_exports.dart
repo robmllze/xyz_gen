@@ -33,7 +33,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
   Set<String> pathPatterns = const {},
   required xyz.Lang lang,
   Map<TPlaceholder, String Function(String relativeFilePath)>? statementBuilder,
-  TPlaceholder Function(String exportFilePath)? statusBuilder,
+  TPlaceholder? Function(String exportFilePath)? statusBuilder,
   required String templateFilePath,
   String Function(TPlaceholder placeholder)? placeholderBuilder,
 }) async {

@@ -10,18 +10,18 @@
 
 import 'package:args/args.dart';
 
-import '/src/xyz/core_utils/run_command_line_app.dart';
+import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import '_args_checker.dart';
-import 'generate_dart_models.dart';
+import 'generate_models_for_dart_from_annotations.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating Dart data models from annotations.
-Future<void> runGenerateDartModelsApp(List<String> args) async {
-  await runCommandLineApp(
-    title: '🇽🇾🇿  Generate Dart Models',
-    description: 'A command line app for generating Dart data models from annotations',
+/// A command line app for generating Dart data models from annotations. The
+/// [args] are interpreted and passed to [generateModelsForDartFromAnnotations].
+Future<void> runGenerateModelsForDartApp(List<String> args) async {
+  await xyz.runCommandLineApp(
+    title: '🇽🇾🇿  Generate Models for Dart',
+    description: 'A command line app for generating Dart models from annotations',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -62,24 +62,64 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         help: 'Dart SDK path.',
       ),
     onResults: (parser, results) {
-      return ArgsChecker(
+      return _ArgsChecker(
         fallbackDartSdkPath: results['dart-sdk'],
         templateFilePaths: results['templates'],
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
-        output: results['output'],
       );
     },
     action: (parser, results, args) async {
-      await generateDartModels(
+      await generateModelsForDartFromAnnotations(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
         templateFilePaths: args.templateFilePaths ?? const {},
-        output: args.output,
       );
     },
   );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class _ArgsChecker extends xyz.ValidArgsChecker {
+  //
+  //
+  //
+
+  final String? fallbackDartSdkPath;
+  final Set<String>? templateFilePaths;
+  final Set<String>? rootPaths;
+  final Set<String>? subPaths;
+  final Set<String>? pathPatterns;
+
+  //
+  //
+  //
+
+  _ArgsChecker({
+    this.fallbackDartSdkPath,
+    required dynamic templateFilePaths,
+    required dynamic rootPaths,
+    required dynamic subPaths,
+    required dynamic pathPatterns,
+  })  : this.templateFilePaths = xyz.splitArg(templateFilePaths)?.toSet(),
+        this.rootPaths = xyz.splitArg(rootPaths)?.toSet(),
+        this.subPaths = xyz.splitArg(subPaths)?.toSet(),
+        this.pathPatterns = xyz.splitArg(pathPatterns)?.toSet();
+
+  //
+  //
+  //
+
+  @override
+  List get args => [
+        if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
+        this.templateFilePaths,
+        this.rootPaths,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
+      ];
 }

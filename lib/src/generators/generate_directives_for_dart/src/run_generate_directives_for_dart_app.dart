@@ -12,16 +12,15 @@ import 'package:args/args.dart';
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import '_args_checker.dart';
 import '_generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// 'A command line app for generating missing Dart "import", "export" and
 /// "part" directives.'
-Future<void> runGenerateDartDirectivesApp(List<String> args) async {
+Future<void> runGenerateMissingDirectivesForDartApp(List<String> args) async {
   await xyz.runCommandLineApp(
-    title: '🇽🇾🇿  Generate Dart Directives',
+    title: '🇽🇾🇿  Generate Missing Directives for Dart',
     description:
         'A command line app for generating missing Dart "import", "export" and "part" directives.',
     args: args,
@@ -49,18 +48,53 @@ Future<void> runGenerateDartDirectivesApp(List<String> args) async {
         help: 'Path patterns separated by `&`.',
       ),
     onResults: (parser, results) {
-      return ArgsChecker(
+      return _ArgsChecker(
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
       );
     },
     action: (parser, results, args) async {
-      await generateDartDirectives(
+      await generateDirectivesForDart(
         rootDirPaths: args.rootPaths ?? {},
         subDirPaths: args.subPaths ?? {},
         pathPatterns: args.pathPatterns ?? {},
       );
     },
   );
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class _ArgsChecker extends xyz.ValidArgsChecker {
+  //
+  //
+  //
+
+  final Set<String>? rootPaths;
+  final Set<String>? subPaths;
+  final Set<String>? pathPatterns;
+
+  //
+  //
+  //
+
+  _ArgsChecker({
+    required dynamic rootPaths,
+    required dynamic subPaths,
+    required dynamic pathPatterns,
+  })  : this.rootPaths = xyz.splitArg(rootPaths)?.toSet(),
+        this.subPaths = xyz.splitArg(subPaths)?.toSet(),
+        this.pathPatterns = xyz.splitArg(pathPatterns)?.toSet();
+
+  //
+  //
+  //
+
+  @override
+  List get args => [
+        this.rootPaths,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
+      ];
 }

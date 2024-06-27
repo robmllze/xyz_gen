@@ -8,15 +8,11 @@
 //.title~
 
 // --- PUBLIC FILES ---
-export 'run_generate_dart_models_app.dart';
+export 'run_generate_exports_for_dart_app.dart';
 
 // --- PRIVATE FILES ---
-// export '_analyze_dart_file.dart';
 // export '_args_checker.dart';
 // export '_generate.dart';
-// export '_generator_adapter.dart';
-// export '_replacer_adaptor.dart';
-// export '_strip_special_syntax_from_field_type.dart';
 
 // --- GENERATED FILES ---
 // export '_all_src.g.dart';

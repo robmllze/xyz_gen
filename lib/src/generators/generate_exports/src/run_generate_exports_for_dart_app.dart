@@ -15,16 +15,15 @@ import 'package:path/path.dart' as p;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import '_args_checker.dart';
-import '_generate.dart';
+import 'generate_exports.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating Dart export files for the provided
-/// directories.
-Future<void> runGenerateDartExportsApp(List<String> args) async {
+/// directories. The [args] are interpreted and passed to [generateExports].
+Future<void> runGenerateExportsForDartApp(List<String> args) async {
   await xyz.runCommandLineApp(
-    title: '🇽🇾🇿  Generate Dart Exports',
+    title: '🇽🇾🇿  Generate Exports for Dart',
     description:
         'A command line app for generating Dart export files for the provided directories.',
     args: args,
@@ -57,7 +56,7 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
         help: 'Template file path.',
       ),
     onResults: (parser, results) {
-      return ArgsChecker(
+      return _ArgsChecker(
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
@@ -80,11 +79,18 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
           if (isGenFile) {
             return _Placeholders.GENERATED_EXPORTS;
           }
-          final isPrivateFile = p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
-          if (isPrivateFile) {
-            return _Placeholders.PRIVATE_EXPORTS;
+
+          final isSrcFile = xyz.Lang.DART.isValidSrcFilePath(exportFilePath);
+          if (isSrcFile) {
+            final isPrivateFile =
+                p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
+            if (isPrivateFile) {
+              return _Placeholders.PRIVATE_EXPORTS;
+            } else {
+              return _Placeholders.PUBLIC_EXPORTS;
+            }
           }
-          return _Placeholders.PUBLIC_EXPORTS;
+          return null;
         },
         placeholderBuilder: (placeholder) {
           switch (placeholder) {
@@ -107,8 +113,47 @@ Future<void> runGenerateDartExportsApp(List<String> args) async {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+class _ArgsChecker extends xyz.ValidArgsChecker {
+  //
+  //
+  //
+
+  final Set<String>? templateFilePaths;
+  final Set<String>? rootPaths;
+  final Set<String>? subPaths;
+  final Set<String>? pathPatterns;
+
+  //
+  //
+  //
+
+  _ArgsChecker({
+    required dynamic templateFilePaths,
+    required dynamic rootPaths,
+    required dynamic subPaths,
+    required dynamic pathPatterns,
+  })  : this.templateFilePaths = xyz.splitArg(templateFilePaths)?.toSet(),
+        this.rootPaths = xyz.splitArg(rootPaths)?.toSet(),
+        this.subPaths = xyz.splitArg(subPaths)?.toSet(),
+        this.pathPatterns = xyz.splitArg(pathPatterns)?.toSet();
+
+  //
+  //
+  //
+
+  @override
+  List get args => [
+        this.templateFilePaths,
+        this.rootPaths,
+        if (this.subPaths != null) this.subPaths,
+        if (this.pathPatterns != null) this.pathPatterns,
+      ];
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
 enum _Placeholders {
   PUBLIC_EXPORTS,
   PRIVATE_EXPORTS,
-  GENERATED_EXPORTS;
+  GENERATED_EXPORTS,
 }

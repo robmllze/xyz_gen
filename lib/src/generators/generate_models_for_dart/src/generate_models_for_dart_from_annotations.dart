@@ -12,19 +12,30 @@ import 'package:xyz_utils/xyz_utils.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import '_analyze_dart_file.dart';
-import '_generator_converger.dart';
-import '_replacement_producer.dart';
+import '_utils/_extract_class_insights_from_dart_file.dart';
+import '_utils/_generator_converger.dart';
+import '_utils/_replacement_producer.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateDartModels({
+/// Generates Dart model files from insights derived from classes annotated
+/// with `@GenerateModel` in Dart source files.
+///
+/// The models are created using templates specified in [templateFilePaths].
+///
+/// This function combines [rootDirPaths] and [subDirPaths], applying
+/// [pathPatterns] to filter and determine the directories to search for source
+/// files. The generated files are placed in the same directories as the source
+/// files.
+///
+/// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
+/// used. This function leverages Dart's analyzer to interpret the annotations.
+Future<void> generateModelsForDartFromAnnotations({
   String? fallbackDartSdkPath,
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
   required Set<String> templateFilePaths,
-  String? output,
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
   final templateIntegrator = xyz.TemplateIntegrator(
@@ -54,10 +65,12 @@ Future<void> generateDartModels({
       // with '.dart' but not with '.g.dart'.
       if (!isSrcFile) return;
 
-      final classInsights = await analyzeDartFile(
+      final classInsights = await extractClassInsightsFromDartFile(
         analysisContextCollection,
         filePath,
       );
+
+      // Converge the insights, templates, and replacements.
       await generatorConverger.converge(
         classInsights,
         integratorResult.templates,

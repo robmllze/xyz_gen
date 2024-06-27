@@ -17,12 +17,12 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Analyzes the Dart file identified by [filePath] using [analysisContextCollection],
-/// and returns a list of insights.
+/// Analyzes the Dart file at [filePath] using [analysisContextCollection], and
+/// and extracts class insights from it.
 ///
 /// Each item in the list consists of the name of the analyzed class and the
 /// annotation applied to that class.
-Future<List<_ClassInsight>> analyzeDartFile(
+Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
   AnalysisContextCollection analysisContextCollection,
   String filePath,
 ) async {

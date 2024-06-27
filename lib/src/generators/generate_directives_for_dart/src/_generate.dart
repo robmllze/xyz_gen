@@ -20,7 +20,7 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 ///
 /// Processes all file paths resulting from the combination of [rootDirPaths]
 /// and [subDirPaths], filtered by [pathPatterns].
-Future<void> generateDartDirectives({
+Future<void> generateDirectivesForDart({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},

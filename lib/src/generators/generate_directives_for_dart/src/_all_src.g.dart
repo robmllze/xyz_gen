@@ -8,7 +8,7 @@
 //.title~
 
 // --- PUBLIC FILES ---
-export 'generate_dart_directives_app.dart';
+export 'run_generate_directives_for_dart_app.dart';
 
 // --- PRIVATE FILES ---
 // export '_args_checker.dart';
