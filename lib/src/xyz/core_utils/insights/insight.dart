@@ -24,6 +24,6 @@ abstract class Insight {
   const Insight({
     required this.dirPath,
     required this.fileName,
-    required this.configuration,
+    this.configuration,
   });
 }

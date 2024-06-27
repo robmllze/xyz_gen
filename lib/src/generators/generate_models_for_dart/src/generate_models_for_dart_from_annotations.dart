@@ -14,7 +14,7 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 import '_utils/_extract_class_insights_from_dart_file.dart';
 import '_utils/_generator_converger.dart';
-import '_utils/_replacement_producer.dart';
+import '_utils/_insight_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -74,7 +74,7 @@ Future<void> generateModelsForDartFromAnnotations({
       await generatorConverger.converge(
         classInsights,
         integratorResult.templates,
-        replacementProducer.produceReplacements,
+        insightMappers,
       );
     },
   );

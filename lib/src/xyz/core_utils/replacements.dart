@@ -8,12 +8,24 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/src/xyz/_all_xyz.g.dart' as xyz;
-
-import '_insight_mappers.dart';
+import 'insights/insight.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final replacementProducer = xyz.ReplacementProducer(() async {
-  return insightMappers;
-});
+class Replacements<TInsight extends Insight> {
+  //
+  //
+  //
+
+  final TInsight insight;
+  final Map<String, dynamic> replacements;
+
+  //
+  //
+  //
+
+  const Replacements({
+    required this.insight,
+    required this.replacements,
+  });
+}

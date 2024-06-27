@@ -3,48 +3,45 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Copyright Ⓒ Robert Mollentze, xyzand.dev
-//
-// Licensing details can be found in the LICENSE file in the root directory.
+// Licencing details are in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'insight.dart';
+import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ClassInsight<TAnnotation> implements Insight {
+class ReplacementProducer<TInsight extends Insight, TPlaceholder extends Enum> {
   //
   //
   //
 
-  final String className;
-  final TAnnotation annotation;
-  final Map<String, dynamic> Function(TAnnotation annotation)? toConfiguration;
-
-  @override
-  final String dirPath;
-
-  @override
-  final String fileName;
+  final Future<List<InsightMapper<TInsight, TPlaceholder>>> Function() _getMappers;
 
   //
   //
   //
 
-  const ClassInsight({
-    required this.className,
-    required this.annotation,
-    this.toConfiguration,
-    required this.dirPath,
-    required this.fileName,
-  });
+  const ReplacementProducer(this._getMappers);
 
   //
   //
   //
 
-  @override
-  Map<String, dynamic>? get configuration => this.toConfiguration?.call(this.annotation);
+  Future<Map<String, String>> Function(TInsight insight) get produceReplacements =>
+      (insight) async {
+        final mappers = await this._getMappers();
+        final entries = await Future.wait(
+          mappers.map(
+            (e) async {
+              return MapEntry(
+                e.placeholder.placeholder,
+                await e.mapInsights(insight),
+              );
+            },
+          ),
+        );
+        return Map.fromEntries(entries);
+      };
 }

@@ -19,31 +19,31 @@ import '_strip_special_syntax_from_field_type.dart';
 
 final insightMappers = [
   _InsightMapper(
-    placeholder: _Placeholders.SUPER_CLASS,
+    placeholder: Placeholders.SUPER_CLASS,
     mapInsights: (insight) async {
       return insight.annotation.shouldInherit ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.CLASS_FILE_NAME,
+    placeholder: Placeholders.CLASS_FILE_NAME,
     mapInsights: (insight) async {
       return insight.fileName;
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.CLASS,
+    placeholder: Placeholders.CLASS,
     mapInsights: (insight) async {
       return insight.annotation.className ?? insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.MODEL_ID,
+    placeholder: Placeholders.MODEL_ID,
     mapInsights: (insight) async {
       return insight.className.toLowerSnakeCase();
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.SUPER_CONSTRUCTOR,
+    placeholder: Placeholders.SUPER_CONSTRUCTOR,
     mapInsights: (insight) async {
       return insight.annotation.shouldInherit
           ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
@@ -53,7 +53,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P0,
+    placeholder: Placeholders.P0,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -65,7 +65,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P1,
+    placeholder: Placeholders.P1,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -77,7 +77,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P2,
+    placeholder: Placeholders.P2,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -90,7 +90,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P3,
+    placeholder: Placeholders.P3,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -101,7 +101,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P4,
+    placeholder: Placeholders.P4,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -112,7 +112,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P5,
+    placeholder: Placeholders.P5,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -124,7 +124,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P6,
+    placeholder: Placeholders.P6,
     mapInsights: (insight) async {
       return '${_dartFields(insight).map(
         (e) {
@@ -136,7 +136,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P7,
+    placeholder: Placeholders.P7,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -148,7 +148,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P8,
+    placeholder: Placeholders.P8,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -159,7 +159,7 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: _Placeholders.P9,
+    placeholder: Placeholders.P9,
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
@@ -193,7 +193,7 @@ final insightMappers = [
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-enum _Placeholders {
+enum Placeholders {
   SUPER_CLASS,
   CLASS,
   SUPER_CONSTRUCTOR,
@@ -225,4 +225,4 @@ StringCaseType _stringCaseType(_ClassInsight insight) {
 
 typedef _ClassInsight = xyz.ClassInsight<GenerateModel>;
 
-typedef _InsightMapper = xyz.InsightMapper<_ClassInsight, _Placeholders>;
+typedef _InsightMapper = xyz.InsightMapper<_ClassInsight, Placeholders>;

@@ -8,6 +8,7 @@
 //.title~
 
 // --- PUBLIC FILES ---
+export 'generators/generate_directives_for_dart/src/generate_directives_for_dart.dart';
 export 'generators/generate_directives_for_dart/src/run_generate_directives_for_dart_app.dart';
 export 'generators/generate_exports/src/generate_exports.dart';
 export 'generators/generate_exports/src/run_generate_exports_for_dart_app.dart';
@@ -18,6 +19,10 @@ export 'xyz/core_utils/combined_dir_paths.dart';
 export 'xyz/core_utils/core_utils_on_lang_x.dart';
 export 'xyz/core_utils/current_script_dir.dart';
 export 'xyz/core_utils/find_files_etc.dart';
+export 'xyz/core_utils/generator_converger.dart';
+export 'xyz/core_utils/insight_mapper.dart';
+export 'xyz/core_utils/insights/class_insight.dart';
+export 'xyz/core_utils/insights/insight.dart';
 export 'xyz/core_utils/lang.dart';
 export 'xyz/core_utils/mappers_etc.dart';
 export 'xyz/core_utils/placeholder_on_enum_x.dart';
@@ -25,13 +30,10 @@ export 'xyz/core_utils/preview_path.dart';
 export 'xyz/core_utils/print_arg_parser_usage.dart';
 export 'xyz/core_utils/process_comment_annots.dart';
 export 'xyz/core_utils/read_code_snippets_from_markdown_file.dart';
+export 'xyz/core_utils/replacement_producer.dart';
+export 'xyz/core_utils/replacements.dart';
 export 'xyz/core_utils/run_command_line_app.dart';
 export 'xyz/core_utils/split_arg.dart';
-export 'xyz/core_utils/steps/generator_converger.dart';
-export 'xyz/core_utils/steps/insight_mapper.dart';
-export 'xyz/core_utils/steps/insights/class_insight.dart';
-export 'xyz/core_utils/steps/insights/insight.dart';
-export 'xyz/core_utils/steps/replacement_producer.dart';
 export 'xyz/core_utils/template_integrator.dart';
 export 'xyz/core_utils/valid_args_checker.dart';
 export 'xyz/core_utils/xyz_gen_paths_etc.dart';
@@ -45,11 +47,9 @@ export 'xyz/dart_utils/decompose_dart_collection_type.dart';
 export 'xyz/typescript_utils/typescript_support.dart';
 
 // --- PRIVATE FILES ---
-// export 'generators/generate_directives_for_dart/src/_generate.dart';
 // export 'generators/generate_models_for_dart/src/_utils/_extract_class_insights_from_dart_file.dart';
 // export 'generators/generate_models_for_dart/src/_utils/_generator_converger.dart';
 // export 'generators/generate_models_for_dart/src/_utils/_insight_mappers.dart';
-// export 'generators/generate_models_for_dart/src/_utils/_replacement_producer.dart';
 // export 'generators/generate_models_for_dart/src/_utils/_strip_special_syntax_from_field_type.dart';
 // export 'xyz/typescript_utils/_ts_replacements.dart';
 

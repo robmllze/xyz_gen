@@ -13,30 +13,31 @@ import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 import 'package:path/path.dart' as p;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
+import '_insight_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final generatorConverger = xyz.GeneratorConverger<_ClassInsight>(
-  (insights, templates, replace) async {
+final generatorConverger = _GeneratorConverger(
+  (replacements, templates) async {
     var t = 0;
     for (final template in templates.values) {
-      for (final insight in insights) {
+      for (final replacement in replacements) {
         // Fill the template with the replacement data.
         final output = utils.replaceData(
           template,
-          await replace(insight),
+          replacement.replacements,
         );
 
         // Determine the output file name.
         final outputFileName = [
           '_',
-          insight.className.toLowerSnakeCase(),
+          replacement.insight.className.toLowerSnakeCase(),
           if (t > 0) t,
           xyz.Lang.DART.genExt,
         ].join();
 
         // Determine the output file path.
-        final outputFilePath = p.join(insight.dirPath, outputFileName);
+        final outputFilePath = p.join(replacement.insight.dirPath, outputFileName);
 
         // Write the generated Dart file.
         await utils.writeFile(outputFilePath, output);
@@ -57,4 +58,4 @@ final generatorConverger = xyz.GeneratorConverger<_ClassInsight>(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _ClassInsight = xyz.ClassInsight<GenerateModel>;
+typedef _GeneratorConverger = xyz.GeneratorConverger<xyz.ClassInsight<GenerateModel>, Placeholders>;

@@ -3,38 +3,34 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Licencing details are in the LICENSE file in the root directory.
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
+//
+// Licensing details can be found in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import '/src/xyz/_all_xyz.g.dart';
+import 'insight.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GeneratorConverger<TInsight extends Insight> {
+class ClassInsight<TAnnotation> extends Insight {
   //
   //
   //
 
-  final _TConvergeCallback<TInsight, Null> converge;
+  final String className;
+  final TAnnotation annotation;
 
   //
   //
   //
 
-  const GeneratorConverger(this.converge);
-
-  //
-  //
-  //
+  const ClassInsight({
+    required this.className,
+    required this.annotation,
+    required super.dirPath,
+    required super.fileName,
+    super.configuration,
+  });
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-typedef _TConvergeCallback<TInsight extends Insight, _TPlaceholder extends Enum?> = Future<void>
-    Function(
-  Iterable<TInsight> insights,
-  Map<String, String> templates,
-  TProduceReplacementsCallback<TInsight, _TPlaceholder> produceReplacements,
-);

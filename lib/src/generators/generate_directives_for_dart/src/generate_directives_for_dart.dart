@@ -35,7 +35,7 @@ Future<void> generateDirectivesForDart({
       lang: xyz.Lang.DART,
       pathPatterns: pathPatterns,
     );
-    final annotations = {
+    const ANNOTS = {
       '@GenerateDirectives',
       'gd',
     };
@@ -43,8 +43,8 @@ Future<void> generateDirectivesForDart({
       // Call _onAnnot for each of the specified annotations found in srcFile.
       await xyz.processCommentAnnots(
         filePath: scrFile.filePath,
-        onAnnotCallbacks: annotations.map((e) => MapEntry(e, _onAnnot)).toMap(),
-        annotsToDelete: annotations,
+        onAnnotCallbacks: ANNOTS.map((e) => MapEntry(e, _onAnnot)).toMap(),
+        annotsToDelete: ANNOTS,
       );
     }
   }
@@ -53,9 +53,9 @@ Future<void> generateDirectivesForDart({
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Handles the case where the code is annotated with @GenerateDirectives.
+/// Handles the case where the code is annotated.
 Future<bool> _onAnnot(
-  int startIndex,
+  int annotIndex,
   List<String> lines,
   String filePath,
 ) async {
@@ -64,7 +64,7 @@ Future<bool> _onAnnot(
     final dirPath = p.dirname(filePath);
 
     // Loop through the lines starting from the line after the annotation.
-    for (var i = startIndex + 1; i < lines.length; i++) {
+    for (var i = annotIndex + 1; i < lines.length; i++) {
       // Try to locate the directive string, such as "import '../hello_world.dart'",
       // in the line, or continue if none is found.
       final line = lines[i].trim();
