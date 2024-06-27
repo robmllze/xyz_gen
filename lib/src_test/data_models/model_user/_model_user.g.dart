@@ -33,7 +33,7 @@ class ModelUser extends _ModelUser {
   String get $class => CLASS;
 
   int? toets;
-  Map<List<dynamic>, Map<dynamic, dynamic>>? test;
+  Map<dynamic, dynamic>? test;
 
   //
   //
@@ -47,7 +47,7 @@ class ModelUser extends _ModelUser {
 
   factory ModelUser({
     int? toets,
-    required Map<List<dynamic>, Map<dynamic, dynamic>> test,
+    required Map<dynamic, dynamic> test,
   }) {
     return ModelUser.b(
       toets: toets,
@@ -265,29 +265,15 @@ class ModelUser extends _ModelUser {
   set $toets(v) => this.toets = letInt(v);
 
   // test.
-  Map<List<dynamic>, Map<dynamic, dynamic>> get testField => this.test!;
-  set testField(Map<List<dynamic>, Map<dynamic, dynamic>> v) => this.test = v;
+  Map<dynamic, dynamic> get testField => this.test!;
+  set testField(Map<dynamic, dynamic> v) => this.test = v;
   @protected
   dynamic get $test => this
       .test
       ?.map(
         (p0, p1) => MapEntry(
-          p0
-              ?.map(
-                (p0) => p0,
-              )
-              .nonNulls
-              .nullIfEmpty
-              ?.toList(),
-          p1
-              ?.map(
-                (p0, p1) => MapEntry(
-                  p0,
-                  p1,
-                ),
-              )
-              .nonNulls
-              .nullIfEmpty,
+          p0,
+          p1,
         ),
       )
       .nonNulls
@@ -296,24 +282,8 @@ class ModelUser extends _ModelUser {
   set $test(v) => this.test = letMap(v)
       ?.map(
         (p0, p1) => MapEntry(
-          letList(p0)
-              ?.map(
-                (p0) => p0,
-              )
-              .nonNulls
-              .nullIfEmpty
-              ?.toList()
-              .cast(),
-          letMap(p1)
-              ?.map(
-                (p0, p1) => MapEntry(
-                  p0,
-                  p1,
-                ),
-              )
-              .nonNulls
-              .nullIfEmpty
-              ?.cast(),
+          p0,
+          p1,
         ),
       )
       .nonNulls

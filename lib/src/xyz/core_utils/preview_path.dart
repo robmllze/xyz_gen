@@ -8,22 +8,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-
-part '_model_user.g.dart';
+import 'package:path/path.dart' as p;
+import 'package:xyz_utils/xyz_utils.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-@GenerateModel(
-  shouldInherit: true,
-  fields: {
-    //(fieldName: 'id', fieldType: String),
-    Field(fieldName: 'test', fieldType: 'Map'),
-    //(fieldName: 'email', fieldType: 'LowerCase-String'),
-  },
-)
-// ignore: unused_element
-abstract class _ModelUser extends Model {
-  @Field()
-  late int? toets;
+/// Takes the last 3 segments of the [path].
+String previewPath(String path) {
+  return '**${p.joinAll(p.split(path).takeLast(3))}';
 }

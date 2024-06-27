@@ -21,6 +21,7 @@ export 'xyz/core_utils/find_files_etc.dart';
 export 'xyz/core_utils/lang.dart';
 export 'xyz/core_utils/mappers_etc.dart';
 export 'xyz/core_utils/placeholder_on_enum_x.dart';
+export 'xyz/core_utils/preview_path.dart';
 export 'xyz/core_utils/print_arg_parser_usage.dart';
 export 'xyz/core_utils/process_comment_annots.dart';
 export 'xyz/core_utils/read_code_snippets_from_markdown_file.dart';

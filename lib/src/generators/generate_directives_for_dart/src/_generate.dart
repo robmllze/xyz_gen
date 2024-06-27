@@ -11,6 +11,7 @@
 import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
+import '../../../_all_src.g.dart';
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -47,8 +48,8 @@ Future<void> generateDirectivesForDart({
         annotsToDelete: annotations,
       );
     }
-    utils.debugLogStop('Done!');
   }
+  utils.debugLogStop('Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -101,27 +102,25 @@ Future<bool> _onAnnot(
             normalDirectiveFilePath,
             "part of '$counterpartFilePath';",
           );
-          utils.debugLogMessage(
-            'Created "part" file ${p.joinAll(p.split(normalDirectiveFilePath).takeLast(3))} for ${p.joinAll(p.split(filePath).takeLast(3))}',
-          );
+
+          // Log a success.
+          utils.debugLogSuccess('Generated "part" file ${previewPath(normalDirectiveFilePath)}');
         // Create import file.
         case 'import':
           await utils.writeFile(
             normalDirectiveFilePath,
             '// Imported by $counterpartFilePath',
           );
-          utils.debugLogMessage(
-            'Created "import" file ${p.joinAll(p.split(normalDirectiveFilePath).takeLast(3))} for ${p.joinAll(p.split(filePath).takeLast(3))}',
-          );
+          // Log a success.
+          utils.debugLogSuccess('Generated "import" file ${previewPath(normalDirectiveFilePath)}');
         // Create export file.
         case 'export':
+          // Log a success.
           await utils.writeFile(
             normalDirectiveFilePath,
             '// Exported by $counterpartFilePath',
           );
-          utils.debugLogMessage(
-            'Created "export" file ${p.joinAll(p.split(normalDirectiveFilePath).takeLast(3))} for ${p.joinAll(p.split(filePath).takeLast(3))}',
-          );
+          utils.debugLogSuccess('Generated "export" file ${previewPath(normalDirectiveFilePath)}');
         default:
           throw UnimplementedError('Unknown directive type: $directiveType');
       }

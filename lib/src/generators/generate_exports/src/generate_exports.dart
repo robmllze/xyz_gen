@@ -93,6 +93,9 @@ Future<void> generateExports<TPlaceholder extends Enum>({
       filePath,
       content,
     );
+
+    // Log a success.
+    utils.debugLogSuccess('Generated "${xyz.previewPath(filePath)}"');
   }
 
   utils.debugLogStop('Done!');

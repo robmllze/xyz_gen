@@ -46,6 +46,9 @@ final generatorConverger = xyz.GeneratorConverger<_ClassInsight>(
 
         // Format the generated Dart file.
         await xyz.fmtDartFile(outputFilePath);
+
+        // Log a success.
+        utils.debugLogSuccess('Generated "${xyz.previewPath(outputFilePath)}"');
       }
       t++;
     }
