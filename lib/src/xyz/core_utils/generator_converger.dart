@@ -51,7 +51,7 @@ class GeneratorConverger<TInsight extends Insight, TPlaceholder extends Enum> {
             },
           ),
         );
-        this._converge(
+        await this._converge(
           replacements,
           templates,
         );

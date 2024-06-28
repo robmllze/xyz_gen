@@ -19,7 +19,6 @@ import '_insight_mappers.dart';
 
 final generatorConverger = _GeneratorConverger(
   (replacements, templates) async {
-    var t = 0;
     for (final template in templates.entries) {
       final templateName = p.basename(template.key).replaceFirst(RegExp(r'\..*'), '');
       final templateContent = xyz.extractCodeFromMarkdown(template.value);
@@ -39,7 +38,6 @@ final generatorConverger = _GeneratorConverger(
             '_',
             templateName,
           ],
-          if (t > 0) t,
           xyz.Lang.DART.genExt,
         ].join();
 
@@ -58,7 +56,6 @@ final generatorConverger = _GeneratorConverger(
         // Log a success.
         utils.debugLogSuccess('Generated "${xyz.previewPath(outputFilePath)}"');
       }
-      t++;
     }
   },
 );
