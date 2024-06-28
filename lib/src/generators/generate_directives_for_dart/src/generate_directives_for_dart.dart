@@ -15,39 +15,60 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generates missing directive files for Dart source files based on specified
-/// comment annotations.
+/// Generates missing directives for Dart files
 ///
-/// Processes all file paths resulting from the combination of [rootDirPaths]
-/// and [subDirPaths], filtered by [pathPatterns].
+/// This function combines [rootDirPaths] and [subDirPaths], applying
+/// [pathPatterns] to filter and determine the directories to search for source
+/// files.
+///
+/// The outputs are generated from special comment annotations.
 Future<void> generateDirectivesForDart({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
 }) async {
+  // Notify start.
   utils.debugLogStart('Starting generator. Please wait...');
-  // Loop through all directory combinations.
-  final combinedDirPaths = utils.combinePathSets([rootDirPaths, subDirPaths]);
-  for (final dirPath in combinedDirPaths) {
-    // Find all Dart files from dirPath.
-    final srcFiles = await xyz.findSourceFilePaths(
-      dirPath,
-      lang: xyz.Lang.DART,
-      pathPatterns: pathPatterns,
+
+  // Explore all source paths.
+  final sourceFileExporer = xyz.PathExplorer(
+    categorizedPathPatterns: const [
+      xyz.CategorizedPattern(
+        pattern: r'.*\.dart$',
+      ),
+    ],
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        rootDirPaths,
+        subPaths: subDirPaths,
+        pathPatterns: pathPatterns,
+      ),
+    },
+  );
+  final sourceFileExplorerResults = await sourceFileExporer.explore();
+
+  // ---------------------------------------------------------------------------
+
+  const ANNOTS = {
+    '@@@GenerateDirectives',
+    '@@@gd',
+  };
+
+  // For each file...
+  for (final filePathResult in sourceFileExplorerResults.filePathResults) {
+    final filePath = filePathResult.path;
+
+    // Call _onAnnot for each of the specified annotations found in srcFile.
+    await xyz.processCommentAnnots(
+      filePath: filePath,
+      onAnnotCallbacks: ANNOTS.map((e) => MapEntry(e, _onAnnot)).toMap(),
+      annotsToDelete: ANNOTS,
     );
-    const ANNOTS = {
-      '@GenerateDirectives',
-      'gd',
-    };
-    for (final scrFile in srcFiles) {
-      // Call _onAnnot for each of the specified annotations found in srcFile.
-      await xyz.processCommentAnnots(
-        filePath: scrFile,
-        onAnnotCallbacks: ANNOTS.map((e) => MapEntry(e, _onAnnot)).toMap(),
-        annotsToDelete: ANNOTS,
-      );
-    }
   }
+
+  // ---------------------------------------------------------------------------
+
+  // Notify end.
   utils.debugLogStop('Done!');
 }
 
@@ -113,7 +134,8 @@ Future<bool> _onAnnot(
           );
           // Log a success.
           utils.debugLogSuccess(
-              'Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}',);
+            'Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}',
+          );
         // Create export file.
         case 'export':
           // Log a success.
@@ -122,7 +144,8 @@ Future<bool> _onAnnot(
             '// Exported by $counterpartFilePath',
           );
           utils.debugLogSuccess(
-              'Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}',);
+            'Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}',
+          );
         default:
           throw UnimplementedError('Unknown directive type: $directiveType');
       }
