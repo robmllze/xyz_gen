@@ -30,7 +30,7 @@ Future<void> generateDirectivesForDart({
   final combinedDirPaths = utils.combinePathSets([rootDirPaths, subDirPaths]);
   for (final dirPath in combinedDirPaths) {
     // Find all Dart files from dirPath.
-    final srcFiles = await xyz.findSourceFiles(
+    final srcFiles = await xyz.findSourceFilePaths(
       dirPath,
       lang: xyz.Lang.DART,
       pathPatterns: pathPatterns,
@@ -42,7 +42,7 @@ Future<void> generateDirectivesForDart({
     for (final scrFile in srcFiles) {
       // Call _onAnnot for each of the specified annotations found in srcFile.
       await xyz.processCommentAnnots(
-        filePath: scrFile.filePath,
+        filePath: scrFile,
         onAnnotCallbacks: ANNOTS.map((e) => MapEntry(e, _onAnnot)).toMap(),
         annotsToDelete: ANNOTS,
       );
@@ -103,7 +103,8 @@ Future<bool> _onAnnot(
           );
 
           // Log a success.
-          utils.debugLogSuccess('Generated "part" file ${xyz.previewPath(normalDirectiveFilePath)}');
+          utils
+              .debugLogSuccess('Generated "part" file ${xyz.previewPath(normalDirectiveFilePath)}');
         // Create import file.
         case 'import':
           await utils.writeFile(
@@ -111,7 +112,8 @@ Future<bool> _onAnnot(
             '// Imported by $counterpartFilePath',
           );
           // Log a success.
-          utils.debugLogSuccess('Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}');
+          utils.debugLogSuccess(
+              'Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}');
         // Create export file.
         case 'export':
           // Log a success.
@@ -119,7 +121,8 @@ Future<bool> _onAnnot(
             normalDirectiveFilePath,
             '// Exported by $counterpartFilePath',
           );
-          utils.debugLogSuccess('Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}');
+          utils.debugLogSuccess(
+              'Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}');
         default:
           throw UnimplementedError('Unknown directive type: $directiveType');
       }

@@ -76,7 +76,7 @@ Future<void> runGenerateModelsForDartApp(List<String> args) async {
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
-        templateFilePaths: args.templateFilePaths ?? const {},
+        templatesRootDirPaths: args.templateFilePaths ?? const {},
       );
     },
   );

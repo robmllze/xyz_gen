@@ -37,23 +37,23 @@ Future<void> runGenerateExportsForDartApp(List<String> args) async {
       ..addOption(
         'roots',
         abbr: 'r',
-        help: 'Root directory paths separated by `&`.',
+        help: 'Root directory paths of source files separated by `&`.',
         defaultsTo: 'lib',
       )
       ..addOption(
         'subs',
         abbr: 's',
-        help: 'Sub-directory paths separated by `&`.',
+        help: 'Sub-directory paths of source files separated by `&`.',
       )
       ..addOption(
         'patterns',
         abbr: 'p',
-        help: 'Path patterns separated by `&`.',
+        help: 'Path patterns for source files separated by `&`.',
       )
       ..addOption(
-        'template',
+        'templates',
         abbr: 't',
-        help: 'Template file path.',
+        help: 'Root directory paths of templates separated by `&`.',
       ),
     onResults: (parser, results) {
       return _ArgsChecker(
@@ -102,7 +102,7 @@ Future<void> runGenerateExportsForDartApp(List<String> args) async {
               return '// No generated files in directory.';
           }
         },
-        templateFilePath: args.templateFilePaths!.first,
+        templatesRootDirPaths: args.templatesRootDirPaths!,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
@@ -118,7 +118,7 @@ class _ArgsChecker extends xyz.ValidArgsChecker {
   //
   //
 
-  final Set<String>? templateFilePaths;
+  final Set<String>? templatesRootDirPaths;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
@@ -132,7 +132,7 @@ class _ArgsChecker extends xyz.ValidArgsChecker {
     required dynamic rootPaths,
     required dynamic subPaths,
     required dynamic pathPatterns,
-  })  : this.templateFilePaths = xyz.splitArg(templateFilePaths)?.toSet(),
+  })  : this.templatesRootDirPaths = xyz.splitArg(templateFilePaths)?.toSet(),
         this.rootPaths = xyz.splitArg(rootPaths)?.toSet(),
         this.subPaths = xyz.splitArg(subPaths)?.toSet(),
         this.pathPatterns = xyz.splitArg(pathPatterns)?.toSet();
@@ -143,7 +143,7 @@ class _ArgsChecker extends xyz.ValidArgsChecker {
 
   @override
   List get args => [
-        this.templateFilePaths,
+        this.templatesRootDirPaths,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,

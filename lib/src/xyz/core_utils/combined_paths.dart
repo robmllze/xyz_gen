@@ -10,19 +10,22 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_utils/xyz_utils.dart';
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A mechanism to combine root and subdirectory paths to form combined
 /// directory paths that adhere to specific path patterns.
-class CombinedDirPaths {
+class CombinedPaths extends Equatable {
   //
   //
   //
 
-  /// The target paths to search for source files.
-  final Set<String> combinedDirPaths;
+  final Set<String> paths;
+
+  //
+  //
+  //
 
   /// Patterns for filtering paths of interest.
   final Set<String> pathPatterns;
@@ -31,14 +34,11 @@ class CombinedDirPaths {
   //
   //
 
-  CombinedDirPaths({
-    required Set<String> rootDirPaths,
-    Set<String> subDirPaths = const {},
+  CombinedPaths(
+    Set<String> rootPaths, {
+    Set<String> subPaths = const {},
     this.pathPatterns = const {},
-  }) : combinedDirPaths = _combine(
-          [rootDirPaths, subDirPaths],
-          pathPatterns,
-        );
+  }) : paths = _combine([rootPaths, subPaths], pathPatterns);
 
   //
   //
@@ -52,4 +52,11 @@ class CombinedDirPaths {
       return matchesAnyPathPattern(e, pathPatterns);
     }).toSet();
   }
+
+  //
+  //
+  //
+
+  @override
+  List<Object?> get props => this.paths.toList();
 }

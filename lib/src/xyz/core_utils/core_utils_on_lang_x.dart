@@ -28,10 +28,8 @@ extension CoreUtilsOnXyzGenLangX on Lang {
   /// The generated file extension associated with the language, e.g. '.g.dart'.
   String get genExt => '.g.${this.langCode}';
 
-  /// Whether [filePath] is a valid file path for the language.
-  bool isValidFilePath(String filePath) {
-    return filePath.toLowerCase().endsWith(this.srcExt);
-  }
+  /// The template file extension associated with the language, e.g. '.dart.md'.
+  String get tplExt => '.${this.langCode}.md';
 
   /// Whether [filePath] is a valid generated file path for the language.
   bool isValidGenFilePath(String filePath) {
@@ -41,7 +39,17 @@ extension CoreUtilsOnXyzGenLangX on Lang {
   /// Whether [filePath] is a valid source file path for the language, i.e.
   /// a valid file path that is not a generated file path.
   bool isValidSrcFilePath(String filePath) {
-    return this.isValidFilePath(filePath) && !this.isValidGenFilePath(filePath);
+    return this._isValidFilePath(filePath) && !this.isValidGenFilePath(filePath);
+  }
+
+  /// Whether [filePath] is a valid file path for the language.
+  bool _isValidFilePath(String filePath) {
+    return filePath.toLowerCase().endsWith(this.srcExt);
+  }
+
+  /// Whether [filePath] is a valid template file path for the language.
+  bool isValidTplFilePath(String filePath) {
+    return filePath.toLowerCase().endsWith(this.tplExt);
   }
 
   /// Returns corresponding source file path for [filePath] or `null` if the

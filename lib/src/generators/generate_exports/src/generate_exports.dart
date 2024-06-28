@@ -34,68 +34,86 @@ Future<void> generateExports<TPlaceholder extends Enum>({
   required xyz.Lang lang,
   Map<TPlaceholder, String Function(String relativeFilePath)>? statementBuilder,
   TPlaceholder? Function(String exportFilePath)? statusBuilder,
-  required String templateFilePath,
+  required Set<String> templatesRootDirPaths,
   String Function(TPlaceholder placeholder)? placeholderBuilder,
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
-  final templateIntegrator = xyz.TemplateIntegrator<TPlaceholder, Null>(
-    rootDirPaths: rootDirPaths,
-    subDirPaths: subDirPaths,
-  );
-
-  var outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
-  late final String template;
-
-  await templateIntegrator.engage(
-    templateFilePaths: {templateFilePath},
-    onTemplatesRead: (templates) async => template = templates.values.first,
-    onSourceFile: (integratorResult) async {
-      final targetDirPath = integratorResult.targetDirPath;
-      final filePath = integratorResult.source.filePath;
-      final relativeFilePath = Uri.file(
-        p.relative(filePath, from: targetDirPath),
-        windows: false,
-      ).path;
-
-      // Determine the status and statement
-      final status = statusBuilder?.call(filePath);
-      final statement = statementBuilder?[status]?.call(relativeFilePath);
-
-      final rootFolderName = p.basename(targetDirPath);
-      final outputFileName = '_all_$rootFolderName${lang.genExt}';
-      final outputFilePath = p.join(targetDirPath, outputFileName);
-
-      // Add the statement to the output buffer under the status.
-      if (status != null && statement != null) {
-        outputBuffer[outputFilePath] ??= {};
-        (outputBuffer[outputFilePath]![status] ??= []).add(statement);
-      }
+  final templateFileExporer = xyz.PathExplorer(
+    pathPatterns: const [
+      xyz.CategorizedPattern(pattern: r'.*', category: 'any'),
+    ],
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        templatesRootDirPaths,
+      ),
     },
   );
 
-  // Write all output files.
-  for (final output in outputBuffer.entries) {
-    final filePath = output.key;
-    final exportStatements = output.value;
-    // Replace template placeholders with actual data.
-    var content = utils.replaceData(
-      template,
-      exportStatements.map((k, v) => MapEntry(k.placeholder, v.join('\n'))),
-    );
-    // Clear the remaining unused placeholders.
-    final clearRemainingPlaceholders =
-        statementBuilder?.map((k, v) => MapEntry(k.placeholder, placeholderBuilder?.call(k) ?? ''));
-    if (clearRemainingPlaceholders != null) {
-      content = utils.replaceData(content, clearRemainingPlaceholders);
-    }
-    await utils.writeFile(
-      filePath,
-      content,
-    );
+  final templates = await templateFileExporer.readAll();
 
-    // Log a success.
-    utils.debugLogSuccess('Generated "${xyz.previewPath(filePath)}"');
+  final sourceFileExporer = xyz.PathExplorer(
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        rootDirPaths,
+        subPaths: subDirPaths,
+        pathPatterns: pathPatterns,
+      ),
+    },
+  );
+
+  final sourceFileExplorerResults = await sourceFileExporer.explore();
+
+  for (final template in templates.entries) {
+    final templateName = p.basename(template.key).replaceFirst(RegExp(r'\..*'), '');
+    final templateContent = template.value;
+
+    for (final dirPathResult in sourceFileExplorerResults.dirPathResults) {
+      final dirPath = dirPathResult.path;
+      final folderName = p.basename(dirPath);
+      final outputFileName =
+          '_all_$folderName${templates.length > 1 ? templateName : ''}${lang.genExt}';
+      final outputFilePath = p.join(dirPath, outputFileName);
+      var outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
+      for (final filePathResult in dirPathResult.files) {
+        final filePath = filePathResult.path;
+        final relativeFilePath = p.relative(filePath, from: filePath);
+
+        // Determine the status and statement.
+        final status = statusBuilder?.call(filePath);
+        final statement = statementBuilder?[status]?.call(relativeFilePath);
+
+        // Add the statement to the output buffer under the status.
+        if (status != null && statement != null) {
+          outputBuffer[outputFilePath] ??= {};
+          (outputBuffer[outputFilePath]![status] ??= []).add(statement);
+        }
+      }
+
+      // Write all output files.
+      for (final output in outputBuffer.entries) {
+        final filePath = output.key;
+        final exportStatements = output.value;
+        // Replace template placeholders with actual data.
+        var content = utils.replaceData(
+          templateContent,
+          exportStatements.map((k, v) => MapEntry(k.placeholder, v.join('\n'))),
+        );
+        // Clear the remaining unused placeholders.
+        final clearRemainingPlaceholders = statementBuilder
+            ?.map((k, v) => MapEntry(k.placeholder, placeholderBuilder?.call(k) ?? ''));
+        if (clearRemainingPlaceholders != null) {
+          content = utils.replaceData(content, clearRemainingPlaceholders);
+        }
+        await utils.writeFile(
+          filePath,
+          content,
+        );
+
+        // Log a success.
+        utils.debugLogSuccess('Generated "${xyz.previewPath(filePath)}"');
+      }
+    }
   }
 
   utils.debugLogStop('Done!');

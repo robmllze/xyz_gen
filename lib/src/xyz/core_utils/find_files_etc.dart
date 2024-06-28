@@ -8,7 +8,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:path/path.dart' as p;
+import 'dart:async';
+
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 
 import 'core_utils_on_lang_x.dart';
@@ -17,7 +18,7 @@ import 'lang.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Finds all source files in [rootDirPath] that for the given [lang].
+/// Finds all source file paths in [rootDirPath] that for the given [lang].
 ///
 /// If [pathPatterns] is specified, only file paths that match all
 /// [pathPatterns] are added to the results.
@@ -25,24 +26,27 @@ import 'lang.dart';
 /// The [onFileFound] callback is invoked for each file, allowing for custom
 /// filtering, i.e. if the it returns `true`, the file is added, if it returns
 /// `false`, the file is not added.
-Future<List<FileFoundResult>> findSourceFiles(
+Future<List<String>> findSourceFilePaths(
   String rootDirPath, {
   required Lang lang,
   Set<String> pathPatterns = const {},
-  _TOnFileFound? onFileFound,
+  FutureOr<bool> Function(String filePath)? onFileFound,
 }) async {
-  return findFilesFromDir(
+  return findFilePaths(
     rootDirPath,
     pathPatterns: pathPatterns,
-    onFileFound: (result) async {
+    recursive: true,
+    onFilePathFound: (result) async {
       final a = await onFileFound?.call(result) ?? true;
-      final b = lang.isValidSrcFilePath(result.filePath);
+      final b = lang.isValidSrcFilePath(result);
       return a && b;
     },
   );
 }
 
-/// Finds all generated files in [rootDirPath] that for the given [lang].
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Finds all generated file paths in [rootDirPath] that for the given [lang].
 ///
 /// If [pathPatterns] is specified, only file paths that match all
 /// [pathPatterns] are added to the results.
@@ -50,36 +54,39 @@ Future<List<FileFoundResult>> findSourceFiles(
 /// The [onFileFound] callback is invoked for each file, allowing for custom
 /// filtering, i.e. if the it returns `true`, the file is added, if it returns
 /// `false`, the file is not added.
-Future<List<FileFoundResult>> findGeneratedFiles(
+Future<List<String>> findGeneratedFilePaths(
   String rootDirPath, {
   required Lang lang,
   Set<String> pathPatterns = const {},
-  _TOnFileFound? onFileFound,
+  FutureOr<bool> Function(String filePath)? onFileFound,
 }) async {
-  return findFilesFromDir(
+  return findFilePaths(
     rootDirPath,
     pathPatterns: pathPatterns,
-    onFileFound: (result) async {
+    recursive: true,
+    onFilePathFound: (result) async {
       final a = await onFileFound?.call(result) ?? true;
-      final b = lang.isValidGenFilePath(result.filePath);
+      final b = lang.isValidGenFilePath(result);
       return a && b;
     },
   );
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Finds all files in [rootDirPath], including sub-directories if [recursive]
 /// is `true`.
 ///
-/// The [onFileFound] callback is invoked for each file, allowing for custom
+/// The [onFilePathFound] callback is invoked for each file, allowing for custom
 /// filtering, i.e. if the it returns `true`, the file is added, if it returns
 /// `false`, the file is not added.
-Future<List<FileFoundResult>> findFilesFromDir(
+Future<List<String>> findFilePaths(
   String rootDirPath, {
   Set<String> pathPatterns = const {},
-  _TOnFileFound? onFileFound,
   bool recursive = true,
+  FutureOr<bool> Function(String filePath)? onFilePathFound,
 }) async {
-  final results = <FileFoundResult>[];
+  final results = <String>[];
   final filePaths = await listFilePaths(
     rootDirPath,
     recursive: recursive,
@@ -89,53 +96,11 @@ Future<List<FileFoundResult>> findFilesFromDir(
     for (final filePath in filePaths) {
       final a = matchesAnyPathPattern(filePath, pathPatterns);
       if (!a) continue;
-      final dirPath = getDirPath(filePath);
-      final folderName = getBaseName(dirPath);
-      final result = FileFoundResult._(
-        dirPath: dirPath,
-        folderName: folderName,
-        filePath: filePath,
-      );
-      final b = (await onFileFound?.call(result)) ?? true;
+
+      final b = (await onFilePathFound?.call(filePath)) ?? true;
       if (!b) continue;
-      results.add(result);
+      results.add(filePath);
     }
   }
   return results;
-}
-
-/// The `onFileFound` function structure for [findFilesFromDir],
-/// [findSourceFiles] and [findGeneratedFiles].
-typedef _TOnFileFound = Future<bool> Function(FileFoundResult result);
-
-/// Represents a file discovery result with details about its path, folder, and
-/// directory.
-final class FileFoundResult {
-  //
-  //
-  //
-
-  final String dirPath;
-  final String folderName;
-  final String filePath;
-
-  //
-  //
-  //
-
-  const FileFoundResult._({
-    required this.dirPath,
-    required this.folderName,
-    required this.filePath,
-  });
-
-  //
-  //
-  //
-
-  /// The extension of [filePath].
-  String get extension => p.extension(filePath);
-
-  /// The extension of [filePath], in lower case.
-  String get lowerCaseExt => extension.toLowerCase();
 }

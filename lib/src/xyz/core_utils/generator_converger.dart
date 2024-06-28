@@ -9,7 +9,6 @@
 //.title~
 
 import '/src/xyz/_all_xyz.g.dart';
-import 'replacements.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -40,8 +39,21 @@ class GeneratorConverger<TInsight extends Insight, TPlaceholder extends Enum> {
   ) get converge => (insights, templates, insightMappers) async {
         final produceReplacements =
             ReplacementProducer(() async => insightMappers).produceReplacements;
-        final replacements = await Future.wait(insights.map(
-            (a) => produceReplacements(a).then((b) => Replacements(insight: a, replacements: b))));
-        this._converge(replacements, templates);
+        final replacements = await Future.wait(
+          insights.map(
+            (a) {
+              return produceReplacements(a).then((b) {
+                return Replacements(
+                  insight: a,
+                  replacements: b,
+                );
+              });
+            },
+          ),
+        );
+        this._converge(
+          replacements,
+          templates,
+        );
       };
 }
