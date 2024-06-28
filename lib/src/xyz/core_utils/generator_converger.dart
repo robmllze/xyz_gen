@@ -19,7 +19,7 @@ class GeneratorConverger<TInsight extends Insight, TPlaceholder extends Enum> {
 
   final Future<void> Function(
     Iterable<Replacements<TInsight>> insights,
-    Map<String, String> templates,
+    List<FileReadResult> templates,
   ) _converge;
 
   //
@@ -34,7 +34,7 @@ class GeneratorConverger<TInsight extends Insight, TPlaceholder extends Enum> {
 
   Future<void> Function(
     Iterable<TInsight> insights,
-    Map<String, String> templates,
+    List<FileReadResult> templates,
     List<InsightMapper<TInsight, TPlaceholder>> insightMappers,
   ) get converge => (insights, templates, insightMappers) async {
         final produceReplacements =

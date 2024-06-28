@@ -9,7 +9,6 @@
 //.title~
 
 import 'package:path/path.dart' as p;
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
@@ -17,14 +16,17 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Generates export files for specified language [lang] from directories using
-/// templates located at [templateFilePath].
+/// templates located at [templatesRootDirPaths].
 ///
-/// The function combines [rootDirPaths] and [subDirPaths], filtered by
-/// [pathPatterns], to process directories. It generates export files by
-/// creating statements with [statementBuilder] based on the status determined
-/// by [statusBuilder]. These statuses and corresponding statements are then
-/// integrated into the template read from [templateFilePath] to create the
-/// final export files.
+/// This function combines [rootDirPaths] and [subDirPaths], applying
+/// [pathPatterns] to filter and determine the directories to search for source
+/// files.
+///
+///
+/// It generates export files by creating statements with [statementBuilder]
+/// based on the status determined by [statusBuilder]. These statuses and
+/// corresponding statements are then integrated into the templates to create
+/// the final export files.
 ///
 /// The [placeholderBuilder] can be used to replace all placeholders in the
 /// template with actual data.
@@ -40,16 +42,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
-  final templateFileExporer = xyz.PathExplorer(
-    dirPathGroups: {
-      xyz.CombinedPaths(
-        templatesRootDirPaths,
-      ),
-    },
-  );
-
-  final templates = await templateFileExporer.readAll();
-
+  // Explore all source paths.
   final sourceFileExporer = xyz.PathExplorer(
     dirPathGroups: {
       xyz.CombinedPaths(
@@ -59,19 +52,29 @@ Future<void> generateExports<TPlaceholder extends Enum>({
       ),
     },
   );
-
   final sourceFileExplorerResults = await sourceFileExporer.explore();
 
-  for (final template in templates.entries) {
-    final templateName = p.basename(template.key).replaceFirst(RegExp(r'\..*'), '');
-    final templateContent = xyz.extractCodeFromMarkdown(template.value);
+  // Read all templates from templatesRootDirPaths.
+  final templateFileExporer = xyz.PathExplorer(
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        templatesRootDirPaths,
+      ),
+    },
+  );
 
-    final topmpstDirPathResults = xyz.extractTopmostDirPathResults(
+  // Generate files for each template.
+  final templates = await templateFileExporer.readAll();
+  for (final template in templates) {
+    // Extract the content from the template.
+    final templateContent = xyz.extractCodeFromMarkdown(template.content);
+
+    final topmostDirPathResults = xyz.extractTopmostDirPaths(
       sourceFileExplorerResults.dirPathResults,
       toPath: (e) => e.path,
     );
 
-    for (final dirPathResult in topmpstDirPathResults) {
+    for (final dirPathResult in topmostDirPathResults) {
       final dirPath = dirPathResult.path;
       final folderName = p.basename(dirPath);
 
@@ -80,7 +83,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
         folderName,
         if (templates.length > 1) ...[
           '_',
-          templateName,
+          template.rootName,
         ],
         lang.genExt,
       ].join();

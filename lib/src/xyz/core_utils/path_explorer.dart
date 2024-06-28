@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 
+import 'categorize_pattern.dart';
 import 'combined_paths.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -43,50 +44,54 @@ class PathExplorer {
   //
   //
 
+  /// Explores [dirPathGroups] while adhering to [categorizedPathPatterns].
+  ///
+  /// Returns the subfiles and subfolders found.
   _TExplorerResult explore() async {
     final dirPathResults = <DirPathExplorerResult>[];
     final filePathResults = <FilePathExplorerResult>[];
 
-    Future<void> exploreDir(String dirPath) async {
+    Future<void> $exploreDir(String dirPath) async {
+      // 1. Find all dirPaths and dirPaths in dirPath
       final contentPaths = await _listNormalizedDirContentPaths(dirPath);
-
       final filePaths = <String>[];
       final dirPaths = <String>[];
-
       for (final contentPath in contentPaths) {
         if (await FileSystemEntity.isDirectory(contentPath)) {
           dirPaths.add(contentPath);
         }
-
         if (await FileSystemEntity.isFile(contentPath)) {
           filePaths.add(contentPath);
         }
       }
 
+      // 2. For each filePath, add the exploration result x to filePathResults.
       for (final filePath in filePaths) {
-        final temp = FilePathExplorerResult._(
+        final x = FilePathExplorerResult._(
           category: CategorizedPattern.categorize(filePath, categorizedPathPatterns),
           path: filePath,
         );
-
-        filePathResults.add(temp);
+        filePathResults.add(x);
       }
 
+      // 3. For each dirPath, add the exploration result x to dirPathResults,
+      // then also explore this dirPath via exploreDir.
       for (final dirPath in dirPaths) {
-        final temp = DirPathExplorerResult._(
+        final x = DirPathExplorerResult._(
           category: CategorizedPattern.categorize(dirPath, categorizedPathPatterns),
           path: dirPath,
           files: filePathResults,
         );
 
-        dirPathResults.add(temp);
-        await exploreDir(dirPath);
+        dirPathResults.add(x);
+        await $exploreDir(dirPath);
       }
     }
 
+    // 0. Explore each dirPath in all dirPathGroups.
     for (final dirPathGroup in dirPathGroups) {
       for (final dirPath in dirPathGroup.paths) {
-        await exploreDir(dirPath);
+        await $exploreDir(dirPath);
       }
     }
 
@@ -100,27 +105,61 @@ class PathExplorer {
   //
   //
 
-  Future<Map<String, String>> readAll({int? limit}) async {
+  /// Calls [explore] then reads every file found up to [limit] files if specified.
+  Future<List<FileReadResult>> readAll({int? limit}) async {
     final explorerResults = await this.explore();
-    final results = <String, String>{};
-    var ee = explorerResults.filePathResults;
+    final results = <FileReadResult>[];
+    var filePathResults = explorerResults.filePathResults;
     if (limit != null) {
-      ee.take(limit);
+      filePathResults.take(limit);
     }
-    for (final e in ee) {
+    for (final filePathResult in filePathResults) {
       try {
-        final filePath = e.path;
-        final file = File(filePath);
+        final path = filePathResult.path;
+        final file = File(path);
         final contents = await file.readAsString();
         if (contents.isNotEmpty) {
-          results[filePath] = contents;
+          results.add(
+            FileReadResult._(path: path, content: contents),
+          );
         }
       } catch (_) {}
     }
-    return results;
+    return List.unmodifiable(results);
   }
 }
 
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class FileReadResult {
+  //
+  //
+  //
+
+  final String path;
+  final String content;
+
+  //
+  //
+  //
+
+  const FileReadResult._({
+    required this.path,
+    required this.content,
+  });
+
+  //
+  //
+  //
+
+  String get baseName => p.basename(this.path);
+
+  //
+  //
+  //
+
+  String get rootName => this.baseName.replaceFirst(RegExp(r'\..*'), '');
+}
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 typedef _TExplorerResult = Future<
@@ -131,47 +170,7 @@ typedef _TExplorerResult = Future<
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final class CategorizedPattern {
-  //
-  //
-  //
-
-  final String pattern;
-  final dynamic category;
-
-  //
-  //
-  //
-
-  const CategorizedPattern({
-    required this.pattern,
-    required this.category,
-  });
-
-  //
-  //
-  //
-
-  RegExp get regExp => RegExp(this.pattern);
-
-  //
-  //
-  //
-
-  static dynamic categorize(String value, Iterable<CategorizedPattern> patterns) {
-    for (final e in patterns) {
-      final expression = RegExp(e.pattern);
-      if (expression.hasMatch(value)) {
-        return e.category;
-      }
-    }
-    return null;
-  }
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-final class FilePathExplorerResult extends _PathExplorerResult {
+final class FilePathExplorerResult extends PathExplorerResult {
   //
   //
   //
@@ -182,7 +181,9 @@ final class FilePathExplorerResult extends _PathExplorerResult {
   });
 }
 
-final class DirPathExplorerResult extends _PathExplorerResult {
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+final class DirPathExplorerResult extends PathExplorerResult {
   //
   //
   //
@@ -200,7 +201,9 @@ final class DirPathExplorerResult extends _PathExplorerResult {
   });
 }
 
-abstract base class _PathExplorerResult {
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract base class PathExplorerResult {
   //
   //
   //
@@ -212,7 +215,7 @@ abstract base class _PathExplorerResult {
   //
   //
 
-  const _PathExplorerResult({
+  const PathExplorerResult({
     required this.path,
     required this.category,
   });
@@ -220,43 +223,11 @@ abstract base class _PathExplorerResult {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Lists all contents of the given directory path.
+/// Lists all contents of the given [dirPath].
 Future<List<String>> _listNormalizedDirContentPaths(String dirPath) async {
   final dir = Directory(dirPath);
   if (!await dir.exists()) {
     return [];
   }
   return dir.list(recursive: false).map((e) => p.normalize(e.path)).toList();
-}
-
-/// Filters [paths] by extracting only the topmost paths.
-List<String> extractTopmostPaths(List<String> paths) {
-  paths.sort((a, b) => a.length.compareTo(b.length));
-  final topmostPaths = <String>[];
-  for (final path in paths) {
-    if (topmostPaths.every((topmostPath) => !path.startsWith('$topmostPath/'))) {
-      topmostPaths.add(path);
-    }
-  }
-
-  return topmostPaths;
-}
-
-/// Filters [results] by extracting only the topmost directory paths. Use
-/// [toPath] to specify how to map [T] to the path String.
-List<T> extractTopmostDirPathResults<T>(
-  List<T> results, {
-  required String Function(T) toPath,
-}) {
-  results.sort((a, b) => toPath(a).length.compareTo(toPath(b).length));
-  final topmostResults = <T>[];
-
-  for (final result in results) {
-    if (topmostResults
-        .every((topmostResult) => !toPath(result).startsWith('${toPath(topmostResult)}/'))) {
-      topmostResults.add(result);
-    }
-  }
-
-  return topmostResults;
 }
