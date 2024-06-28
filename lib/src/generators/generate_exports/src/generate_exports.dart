@@ -9,7 +9,6 @@
 //.title~
 
 import 'package:path/path.dart' as p;
-import 'package:xyz_utils/xyz_utils.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
@@ -74,10 +73,19 @@ Future<void> generateExports<TPlaceholder extends Enum>({
     for (final dirPathResult in topmpstDirPathResults) {
       final dirPath = dirPathResult.path;
       final folderName = p.basename(dirPath);
-      final templateCode = templates.length > 1 ? templateName : '';
-      final outputFileName = '_all_$folderName$templateCode${lang.genExt}';
+
+      final outputFileName = [
+        '_all_',
+        folderName,
+        if (templates.length > 1) ...[
+          '_',
+          templateName,
+        ],
+        lang.genExt,
+      ].join();
+
       final outputFilePath = p.join(dirPath, outputFileName);
-      var outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
+      final outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
 
       for (final filePathResult in sourceFileExplorerResults.filePathResults) {
         final filePath = filePathResult.path;
@@ -97,7 +105,6 @@ Future<void> generateExports<TPlaceholder extends Enum>({
       // Write all output files.
       for (final output in outputBuffer.entries) {
         final filePath = output.key;
-        printRed(filePath);
         final exportStatements = output.value;
         // Replace template placeholders with actual data.
         var content = utils.replaceData(

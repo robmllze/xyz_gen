@@ -8,8 +8,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:xyz_utils/xyz_utils.dart' as utils;
+import 'package:path/path.dart' as p;
 import 'package:xyz_utils/xyz_utils_non_web.dart';
+import 'package:xyz_utils/xyz_utils.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
@@ -40,11 +41,21 @@ Future<void> generateModelsForDartFromAnnotations({
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
+  final templateFileExporer = xyz.PathExplorer(
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        templatesRootDirPaths,
+      ),
+    },
+  );
+
+  final templates = await templateFileExporer.readAll();
+
   final sourceFileExporer = xyz.PathExplorer(
     categorizedPathPatterns: const [
       xyz.CategorizedPattern(
         category: '',
-        pattern: r'(?i)(?<!\.g)\.dart$',
+        pattern: r'.*\.dart$',
       ),
     ],
     dirPathGroups: {
@@ -56,37 +67,13 @@ Future<void> generateModelsForDartFromAnnotations({
     },
   );
 
-  final templateFileExporer = xyz.PathExplorer(
-    categorizedPathPatterns: const [
-      xyz.CategorizedPattern(
-        category: '',
-        pattern: r'(?i)\.dart.md$',
-      ),
-    ],
-    dirPathGroups: {
-      xyz.CombinedPaths(
-        templatesRootDirPaths,
-      ),
-    },
-  );
+  final sourceFileExplorerResults = await sourceFileExporer.explore();
 
   // Create context for the Dart analyzer.
   final analysisContextCollection = xyz.createDartAnalysisContextCollection(
     sourceFileExporer.dirPathGroups.first.paths,
     fallbackDartSdkPath,
   );
-
-  final templateFileExplorerResults = await templateFileExporer.explore();
-  final templates = <String, String>{};
-  for (final result in templateFileExplorerResults.filePathResults) {
-    final filePath = result.path;
-    final contents = await readFile(filePath);
-    if (contents != null && contents.isNotEmpty) {
-      templates[filePath] = contents;
-    }
-  }
-
-  final sourceFileExplorerResults = await sourceFileExporer.explore();
 
   for (final result in sourceFileExplorerResults.filePathResults) {
     final filePath = result.path;

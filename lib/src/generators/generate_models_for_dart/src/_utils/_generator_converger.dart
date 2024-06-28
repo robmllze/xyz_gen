@@ -20,11 +20,14 @@ import '_insight_mappers.dart';
 final generatorConverger = _GeneratorConverger(
   (replacements, templates) async {
     var t = 0;
-    for (final template in templates.values) {
+    for (final template in templates.entries) {
+      final templateName = p.basename(template.key).replaceFirst(RegExp(r'\..*'), '');
+      final templateContent = xyz.extractCodeFromMarkdown(template.value);
+
       for (final replacement in replacements) {
         // Fill the template with the replacement data.
         final output = utils.replaceData(
-          template,
+          templateContent,
           replacement.replacements,
         );
 
@@ -32,6 +35,10 @@ final generatorConverger = _GeneratorConverger(
         final outputFileName = [
           '_',
           replacement.insight.className.toLowerSnakeCase(),
+          if (templates.length > 1) ...[
+            '_',
+            templateName,
+          ],
           if (t > 0) t,
           xyz.Lang.DART.genExt,
         ].join();
