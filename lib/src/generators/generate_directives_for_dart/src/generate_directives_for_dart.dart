@@ -113,7 +113,7 @@ Future<bool> _onAnnot(
           );
           // Log a success.
           utils.debugLogSuccess(
-              'Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}');
+              'Generated "import" file ${xyz.previewPath(normalDirectiveFilePath)}',);
         // Create export file.
         case 'export':
           // Log a success.
@@ -122,7 +122,7 @@ Future<bool> _onAnnot(
             '// Exported by $counterpartFilePath',
           );
           utils.debugLogSuccess(
-              'Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}');
+              'Generated "export" file ${xyz.previewPath(normalDirectiveFilePath)}',);
         default:
           throw UnimplementedError('Unknown directive type: $directiveType');
       }

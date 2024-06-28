@@ -39,16 +39,7 @@ Future<void> generateModelsForDartFromAnnotations({
 }) async {
   utils.debugLogStart('Starting generator. Please wait...');
 
-  final templateFileExporer = xyz.PathExplorer(
-    dirPathGroups: {
-      xyz.CombinedPaths(
-        templatesRootDirPaths,
-      ),
-    },
-  );
-
-  final templates = await templateFileExporer.readAll();
-
+  // Explore all source paths.
   final sourceFileExporer = xyz.PathExplorer(
     categorizedPathPatterns: const [
       xyz.CategorizedPattern(
@@ -64,8 +55,17 @@ Future<void> generateModelsForDartFromAnnotations({
       ),
     },
   );
-
   final sourceFileExplorerResults = await sourceFileExporer.explore();
+
+  // Read all templates from templatesRootDirPaths.
+  final templateFileExporer = xyz.PathExplorer(
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        templatesRootDirPaths,
+      ),
+    },
+  );
+  final templates = await templateFileExporer.readAll();
 
   // Create context for the Dart analyzer.
   final analysisContextCollection = xyz.createDartAnalysisContextCollection(
@@ -73,15 +73,18 @@ Future<void> generateModelsForDartFromAnnotations({
     fallbackDartSdkPath,
   );
 
-  for (final result in sourceFileExplorerResults.filePathResults) {
-    final filePath = result.path;
+  // For each file...
+  for (final filePathResult in sourceFileExplorerResults.filePathResults) {
+    final filePath = filePathResult.path;
 
+    // Extract insights from the file.
     final classInsights = await extractClassInsightsFromDartFile(
       analysisContextCollection,
       filePath,
     );
 
-    // Converge the insights, templates, and replacements.
+    // Converge the insights, templates, and replacements to generate the
+    // ouput.
     await generatorConverger.converge(
       classInsights,
       templates,

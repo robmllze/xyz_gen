@@ -8,19 +8,16 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:io';
-
 import 'package:args/args.dart';
-import 'package:path/path.dart' as p;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import 'generate_exports.dart';
+import 'generate_exports_for_dart.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating Dart export files for the provided
-/// directories. The [args] are interpreted and passed to [generateExports].
+/// directories. The [args] are interpreted and passed to [generateExportsForDart].
 Future<void> runGenerateExportsForDartApp(List<String> args) async {
   await xyz.runCommandLineApp(
     title: '🇽🇾🇿  Generate Exports for Dart',
@@ -64,44 +61,7 @@ Future<void> runGenerateExportsForDartApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await generateExports<_Placeholders>(
-        lang: xyz.Lang.DART,
-        statementBuilder: {
-          _Placeholders.PUBLIC_EXPORTS: (relativeFilePath) => "export '$relativeFilePath';",
-          _Placeholders.PRIVATE_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
-          _Placeholders.GENERATED_EXPORTS: (relativeFilePath) => "// export '$relativeFilePath';",
-        },
-        statusBuilder: (exportFilePath) {
-          final rootDirPath = p.normalize(p.join(Directory.current.path, '..'));
-          final exportFilePathFromRoot = p.relative(exportFilePath, from: rootDirPath);
-
-          final isGenFile = xyz.Lang.DART.isValidGenFilePath(exportFilePath);
-          if (isGenFile) {
-            return _Placeholders.GENERATED_EXPORTS;
-          }
-
-          final isSrcFile = xyz.Lang.DART.isValidSrcFilePath(exportFilePath);
-          if (isSrcFile) {
-            final isPrivateFile =
-                p.split(exportFilePathFromRoot).any((part) => part.startsWith('_'));
-            if (isPrivateFile) {
-              return _Placeholders.PRIVATE_EXPORTS;
-            } else {
-              return _Placeholders.PUBLIC_EXPORTS;
-            }
-          }
-          return null;
-        },
-        placeholderBuilder: (placeholder) {
-          switch (placeholder) {
-            case _Placeholders.PUBLIC_EXPORTS:
-              return '// No public files in directory.';
-            case _Placeholders.PRIVATE_EXPORTS:
-              return '// No private files in directory.';
-            case _Placeholders.GENERATED_EXPORTS:
-              return '// No generated files in directory.';
-          }
-        },
+      await generateExportsForDart(
         templatesRootDirPaths: args.templatesRootDirPaths!,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
@@ -148,12 +108,4 @@ class _ArgsChecker extends xyz.ValidArgsChecker {
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
       ];
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-enum _Placeholders {
-  PUBLIC_EXPORTS,
-  PRIVATE_EXPORTS,
-  GENERATED_EXPORTS,
 }

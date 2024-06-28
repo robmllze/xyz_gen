@@ -19,18 +19,19 @@ class ClassInsight<TAnnotation> extends Insight {
   //
   //
 
-  final String className;
   final TAnnotation annotation;
+  final String className;
+  final String dirPath;
+  final String fileName;
 
   //
   //
   //
 
   const ClassInsight({
-    required this.className,
     required this.annotation,
-    required super.dirPath,
-    required super.fileName,
-    super.configuration,
+    required this.className,
+    required this.dirPath,
+    required this.fileName,
   });
 }
