@@ -9,6 +9,7 @@
 //.title~
 
 import 'package:path/path.dart' as p;
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
@@ -87,7 +88,10 @@ Future<void> generateExports<TPlaceholder extends Enum>({
       final outputFilePath = p.join(dirPath, outputFileName);
       final outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
 
-      for (final filePathResult in sourceFileExplorerResults.filePathResults) {
+      final filePathResultsForDir =
+          sourceFileExplorerResults.filePathResults.where((e) => e.path.startsWith(dirPath));
+
+      for (final filePathResult in filePathResultsForDir) {
         final filePath = filePathResult.path;
         final relativeFilePath = p.relative(filePath, from: dirPath);
 
