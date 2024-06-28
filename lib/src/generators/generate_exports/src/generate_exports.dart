@@ -9,6 +9,7 @@
 //.title~
 
 import 'package:path/path.dart' as p;
+import 'package:xyz_utils/xyz_utils.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
@@ -40,9 +41,6 @@ Future<void> generateExports<TPlaceholder extends Enum>({
   utils.debugLogStart('Starting generator. Please wait...');
 
   final templateFileExporer = xyz.PathExplorer(
-    pathPatterns: const [
-      xyz.CategorizedPattern(pattern: r'.*', category: 'any'),
-    ],
     dirPathGroups: {
       xyz.CombinedPaths(
         templatesRootDirPaths,
@@ -66,18 +64,24 @@ Future<void> generateExports<TPlaceholder extends Enum>({
 
   for (final template in templates.entries) {
     final templateName = p.basename(template.key).replaceFirst(RegExp(r'\..*'), '');
-    final templateContent = template.value;
+    final templateContent = xyz.extractCodeFromMarkdown(template.value);
 
-    for (final dirPathResult in sourceFileExplorerResults.dirPathResults) {
+    final topmpstDirPathResults = xyz.extractTopmostDirPathResults(
+      sourceFileExplorerResults.dirPathResults,
+      toPath: (e) => e.path,
+    );
+
+    for (final dirPathResult in topmpstDirPathResults) {
       final dirPath = dirPathResult.path;
       final folderName = p.basename(dirPath);
-      final outputFileName =
-          '_all_$folderName${templates.length > 1 ? templateName : ''}${lang.genExt}';
+      final templateCode = templates.length > 1 ? templateName : '';
+      final outputFileName = '_all_$folderName$templateCode${lang.genExt}';
       final outputFilePath = p.join(dirPath, outputFileName);
       var outputBuffer = <String, Map<TPlaceholder, List<String>>>{};
-      for (final filePathResult in dirPathResult.files) {
+
+      for (final filePathResult in sourceFileExplorerResults.filePathResults) {
         final filePath = filePathResult.path;
-        final relativeFilePath = p.relative(filePath, from: filePath);
+        final relativeFilePath = p.relative(filePath, from: dirPath);
 
         // Determine the status and statement.
         final status = statusBuilder?.call(filePath);
@@ -93,6 +97,7 @@ Future<void> generateExports<TPlaceholder extends Enum>({
       // Write all output files.
       for (final output in outputBuffer.entries) {
         final filePath = output.key;
+        printRed(filePath);
         final exportStatements = output.value;
         // Replace template placeholders with actual data.
         var content = utils.replaceData(

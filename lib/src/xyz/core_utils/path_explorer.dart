@@ -23,17 +23,17 @@ class PathExplorer {
   //
 
   final Set<CombinedPaths> dirPathGroups;
-  final Iterable<CategorizedPattern> pathPatterns;
+  final Iterable<CategorizedPattern> categorizedPathPatterns;
 
   //
   //
   //
 
   const PathExplorer({
-    this.pathPatterns = const [
+    this.categorizedPathPatterns = const [
       CategorizedPattern(
         pattern: r'.*',
-        category: 'any',
+        category: '',
       ),
     ],
     required this.dirPathGroups,
@@ -43,10 +43,7 @@ class PathExplorer {
   //
   //
 
-  _TExplorerResult explore({
-    void Function(DirPathExplorerResult result)? onDirPath,
-    void Function(FilePathExplorerResult result)? onFilePath,
-  }) async {
+  _TExplorerResult explore() async {
     final dirPathResults = <DirPathExplorerResult>[];
     final filePathResults = <FilePathExplorerResult>[];
 
@@ -57,48 +54,42 @@ class PathExplorer {
       final dirPaths = <String>[];
 
       for (final contentPath in contentPaths) {
-        if (await _isDirectory(contentPath)) {
+        if (await FileSystemEntity.isDirectory(contentPath)) {
           dirPaths.add(contentPath);
-        } else {
+        }
+
+        if (await FileSystemEntity.isFile(contentPath)) {
           filePaths.add(contentPath);
         }
       }
 
-      final fileResults = filePaths.map(
-        (e) {
-          final result = FilePathExplorerResult._(
-            category: CategorizedPattern.categorize(e, pathPatterns),
-            path: e,
-          );
-          onFilePath?.call(result);
-          return result;
-        },
-      );
+      for (final filePath in filePaths) {
+        final temp = FilePathExplorerResult._(
+          category: CategorizedPattern.categorize(filePath, categorizedPathPatterns),
+          path: filePath,
+        );
 
-      filePathResults.addAll(fileResults);
+        filePathResults.add(temp);
+      }
 
-      final dirResults = dirPaths.map(
-        (e) async {
-          await exploreDir(e);
-        },
-      );
+      for (final dirPath in dirPaths) {
+        final temp = DirPathExplorerResult._(
+          category: CategorizedPattern.categorize(dirPath, categorizedPathPatterns),
+          path: dirPath,
+          files: filePathResults,
+        );
 
-      await Future.wait(dirResults);
-
-      final dirResult = DirPathExplorerResult._(
-        category: CategorizedPattern.categorize(dirPath, pathPatterns),
-        path: dirPath,
-        files: fileResults,
-      );
-      dirPathResults.add(dirResult);
-      onDirPath?.call(dirResult);
+        dirPathResults.add(temp);
+        await exploreDir(dirPath);
+      }
     }
 
-    for (final dirPathGroup in this.dirPathGroups) {
+    for (final dirPathGroup in dirPathGroups) {
       for (final dirPath in dirPathGroup.paths) {
         await exploreDir(dirPath);
       }
     }
+
     return (
       dirPathResults: dirPathResults,
       filePathResults: filePathResults,
@@ -238,10 +229,34 @@ Future<List<String>> _listNormalizedDirContentPaths(String dirPath) async {
   return dir.list(recursive: false).map((e) => p.normalize(e.path)).toList();
 }
 
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+/// Filters [paths] by extracting only the topmost paths.
+List<String> extractTopmostPaths(List<String> paths) {
+  paths.sort((a, b) => a.length.compareTo(b.length));
+  final topmostPaths = <String>[];
+  for (final path in paths) {
+    if (topmostPaths.every((topmostPath) => !path.startsWith('$topmostPath/'))) {
+      topmostPaths.add(path);
+    }
+  }
 
-/// Checks if the given path is a directory.
-Future<bool> _isDirectory(String path) async {
-  final entity = FileSystemEntity.typeSync(path);
-  return entity == FileSystemEntityType.directory;
+  return topmostPaths;
+}
+
+/// Filters [results] by extracting only the topmost directory paths. Use
+/// [toPath] to specify how to map [T] to the path String.
+List<T> extractTopmostDirPathResults<T>(
+  List<T> results, {
+  required String Function(T) toPath,
+}) {
+  results.sort((a, b) => toPath(a).length.compareTo(toPath(b).length));
+  final topmostResults = <T>[];
+
+  for (final result in results) {
+    if (topmostResults
+        .every((topmostResult) => !toPath(result).startsWith('${toPath(topmostResult)}/'))) {
+      topmostResults.add(result);
+    }
+  }
+
+  return topmostResults;
 }

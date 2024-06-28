@@ -11,7 +11,6 @@
 //.title~
 
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A mechanism to combine root and subdirectory paths to form combined

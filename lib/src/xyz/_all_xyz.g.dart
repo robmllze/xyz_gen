@@ -22,7 +22,7 @@ export 'core_utils/placeholder_on_enum_x.dart';
 export 'core_utils/preview_path.dart';
 export 'core_utils/print_arg_parser_usage.dart';
 export 'core_utils/process_comment_annots.dart';
-export 'core_utils/read_code_snippets_from_markdown_file.dart';
+export 'core_utils/extract_code_from_markdown.dart';
 export 'core_utils/replacement_producer.dart';
 export 'core_utils/replacements.dart';
 export 'core_utils/run_command_line_app.dart';

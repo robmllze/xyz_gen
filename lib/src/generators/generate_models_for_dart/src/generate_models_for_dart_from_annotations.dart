@@ -41,7 +41,7 @@ Future<void> generateModelsForDartFromAnnotations({
   utils.debugLogStart('Starting generator. Please wait...');
 
   final sourceFileExporer = xyz.PathExplorer(
-    pathPatterns: const [
+    categorizedPathPatterns: const [
       xyz.CategorizedPattern(
         category: '',
         pattern: r'(?i)(?<!\.g)\.dart$',
@@ -57,7 +57,7 @@ Future<void> generateModelsForDartFromAnnotations({
   );
 
   final templateFileExporer = xyz.PathExplorer(
-    pathPatterns: const [
+    categorizedPathPatterns: const [
       xyz.CategorizedPattern(
         category: '',
         pattern: r'(?i)\.dart.md$',

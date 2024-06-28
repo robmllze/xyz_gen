@@ -60,7 +60,7 @@ Future<void> runGenerateExportsForDartApp(List<String> args) async {
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
-        templateFilePaths: results['template'],
+        templateFilePaths: results['templates'],
       );
     },
     action: (parser, results, args) async {
