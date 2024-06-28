@@ -22,7 +22,7 @@ final class CategorizedPattern {
 
   const CategorizedPattern({
     required this.pattern,
-    required this.category,
+    this.category,
   });
 
   //

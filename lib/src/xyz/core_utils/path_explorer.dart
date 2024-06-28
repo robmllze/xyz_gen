@@ -34,7 +34,6 @@ class PathExplorer {
     this.categorizedPathPatterns = const [
       CategorizedPattern(
         pattern: r'.*',
-        category: '',
       ),
     ],
     required this.dirPathGroups,
@@ -47,7 +46,7 @@ class PathExplorer {
   /// Explores [dirPathGroups] while adhering to [categorizedPathPatterns].
   ///
   /// Returns the subfiles and subfolders found.
-  _TExplorerResult explore() async {
+  _TExploreResult explore() async {
     final dirPathResults = <DirPathExplorerResult>[];
     final filePathResults = <FilePathExplorerResult>[];
 
@@ -127,7 +126,28 @@ class PathExplorer {
     }
     return List.unmodifiable(results);
   }
+
+  //
+  //
+  //
+
+  /// Lists all contents of the given [dirPath].
+  static Future<List<String>> _listNormalizedDirContentPaths(String dirPath) async {
+    final dir = Directory(dirPath);
+    if (!await dir.exists()) {
+      return [];
+    }
+    return dir.list(recursive: false).map((e) => p.normalize(e.path)).toList();
+  }
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef _TExploreResult = Future<
+    ({
+      List<DirPathExplorerResult> dirPathResults,
+      List<FilePathExplorerResult> filePathResults,
+    })>;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -160,13 +180,6 @@ class FileReadResult {
 
   String get rootName => this.baseName.replaceFirst(RegExp(r'\..*'), '');
 }
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-typedef _TExplorerResult = Future<
-    ({
-      List<DirPathExplorerResult> dirPathResults,
-      List<FilePathExplorerResult> filePathResults,
-    })>;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -219,15 +232,4 @@ abstract base class PathExplorerResult {
     required this.path,
     required this.category,
   });
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-/// Lists all contents of the given [dirPath].
-Future<List<String>> _listNormalizedDirContentPaths(String dirPath) async {
-  final dir = Directory(dirPath);
-  if (!await dir.exists()) {
-    return [];
-  }
-  return dir.list(recursive: false).map((e) => p.normalize(e.path)).toList();
 }

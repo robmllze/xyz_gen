@@ -12,7 +12,7 @@ import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ReplacementProducer<TInsight extends Insight, TPlaceholder extends Enum> {
+class ReplacementProducer<TInsight, TPlaceholder extends Enum> {
   //
   //
   //

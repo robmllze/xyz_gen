@@ -3,25 +3,29 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Licencing details are in the LICENSE file in the root directory.
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
+//
+// Licensing details can be found in the LICENSE file in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-class InsightMapper<TInsight, TPlaceholder extends Enum> {
+import '../path_explorer.dart';
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class DirInsight {
   //
   //
   //
 
-  final TPlaceholder placeholder;
-  final Future<String> Function(TInsight insight) mapInsights;
+  final DirPathExplorerResult dir;
 
   //
   //
   //
 
-  const InsightMapper({
-    required this.placeholder,
-    required this.mapInsights,
+  const DirInsight({
+    required this.dir,
   });
 }

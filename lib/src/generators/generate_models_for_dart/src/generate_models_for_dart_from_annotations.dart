@@ -21,29 +21,30 @@ import '_utils/_insight_mappers.dart';
 /// Generates Dart model files from insights derived from classes annotated
 /// with `@GenerateModel` in Dart source files.
 ///
-/// The models are created using templates specified in [templatesRootDirPaths].
-///
 /// This function combines [rootDirPaths] and [subDirPaths], applying
 /// [pathPatterns] to filter and determine the directories to search for source
-/// files. The generated files are placed in the same directories as the source
+/// files.
+///
+/// The outputs are generated from templates in [templatesRootDirPaths] and the
+/// generated files are placed in the same directories as the source
 /// files.
 ///
 /// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
 /// used. This function leverages Dart's analyzer to interpret the annotations.
 Future<void> generateModelsForDartFromAnnotations({
-  String? fallbackDartSdkPath,
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
   required Set<String> templatesRootDirPaths,
+  String? fallbackDartSdkPath,
 }) async {
+  // Notify start.
   utils.debugLogStart('Starting generator. Please wait...');
 
   // Explore all source paths.
   final sourceFileExporer = xyz.PathExplorer(
     categorizedPathPatterns: const [
       xyz.CategorizedPattern(
-        category: '',
         pattern: r'.*\.dart$',
       ),
     ],
@@ -67,6 +68,8 @@ Future<void> generateModelsForDartFromAnnotations({
   );
   final templates = await templateFileExporer.readAll();
 
+  // ---------------------------------------------------------------------------
+
   // Create context for the Dart analyzer.
   final analysisContextCollection = xyz.createDartAnalysisContextCollection(
     sourceFileExporer.dirPathGroups.first.paths,
@@ -83,8 +86,7 @@ Future<void> generateModelsForDartFromAnnotations({
       filePath,
     );
 
-    // Converge the insights, templates, and replacements to generate the
-    // ouput.
+    // Converge what was gathered to generate the output.
     await generatorConverger.converge(
       classInsights,
       templates,
@@ -92,5 +94,8 @@ Future<void> generateModelsForDartFromAnnotations({
     );
   }
 
+  // ---------------------------------------------------------------------------
+
+  // Notify end.
   utils.debugLogStop('Done!');
 }

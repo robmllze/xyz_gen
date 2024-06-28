@@ -12,7 +12,7 @@ import '/src/xyz/_all_xyz.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GeneratorConverger<TInsight extends Insight, TPlaceholder extends Enum> {
+class GeneratorConverger<TInsight, TPlaceholder extends Enum> {
   //
   //
   //
