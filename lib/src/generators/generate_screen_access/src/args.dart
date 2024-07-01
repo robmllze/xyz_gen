@@ -41,7 +41,7 @@ class GenerateScreenAccessArgs extends ValidArgsChecker {
   //
   //
 
- @override
+  @override
   List<dynamic> get args {
     final a = [
       if (this.rootPaths != null) this.rootPaths,

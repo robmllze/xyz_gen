@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.97.0]
+
+- Released @ 2024-07-01 02:45:13.160260Z
+- Update dependencies and file paths
+
 ## [0.96.0]
 
 - Released @ 2024-06-10 09:47:09.909090Z
