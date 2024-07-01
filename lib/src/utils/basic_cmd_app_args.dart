@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class BasicCmdAppArgs extends ValidObject {
+class BasicCmdAppArgs extends ValidArgsChecker {
   //
   //
   //
@@ -42,12 +42,12 @@ class BasicCmdAppArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  List<dynamic> get args => [
         if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
         this.templateFilePaths,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
         if (this.output != null) this.output,
-      ]);
+      ];
 }

@@ -40,16 +40,16 @@ Map<String, String> _typescriptReplacements({
       return '    this.${e.key} = ${e.key};';
     }),
     '___P4___': entries1.map((e) {
-      return "      ['${keyStringCaseType.convertString(e.key)}', this.${e.key}],";
+      return "      ['${keyStringCaseType.convert(e.key)}', this.${e.key}],";
     }),
     '___P5___': entries1.map((e) {
-      return "      ${e.key}: map.get('${keyStringCaseType.convertString(e.key)}'),";
+      return "      ${e.key}: map.get('${keyStringCaseType.convert(e.key)}'),";
     }),
     '___P6___': entries1.map((e) {
-      return "      '${keyStringCaseType.convertString(e.key)}': this.${e.key},";
+      return "      '${keyStringCaseType.convert(e.key)}': this.${e.key},";
     }),
     '___P7___': entries1.map((e) {
-      return "      ${e.key}: obj['${keyStringCaseType.convertString(e.key)}'] as ${e.value?.toTypescriptTypeString() ?? 'any'},";
+      return "      ${e.key}: obj['${keyStringCaseType.convert(e.key)}'] as ${e.value?.toTypescriptTypeString() ?? 'any'},";
     }),
   }.mapValues((e) => e.join('\n'));
 }

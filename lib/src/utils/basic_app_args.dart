@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class BasicAppArgs extends ValidObject {
+class BasicAppArgs extends ValidArgsChecker {
   //
   //
   //
@@ -36,9 +36,9 @@ class BasicAppArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  List<dynamic> get args => [
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
-      ]);
+      ];
 }

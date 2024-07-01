@@ -70,7 +70,7 @@ Future<void> generateFromTemplates({
       extensions: {'.dart'},
       pathPatterns: pathPatterns,
       onFileFound: (dirName, folderName, filePath) async {
-        final a = isMatchingFileName(filePath, begType, 'dart').$1;
+        final a = isMatchingFileName(filePath, begType, 'dart').status;
         final b = isSourceDartFilePath(filePath);
         if (a && b) {
           return true;

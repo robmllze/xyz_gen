@@ -15,7 +15,7 @@ import '/_common.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A helper for creating a basic command-line app.
-Future<void> basicCmdAppHelper<T extends ValidObject>({
+Future<void> basicCmdAppHelper<T extends ValidArgsChecker>({
   required String appTitle,
   required List<String> arguments,
   required ArgParser parser,
@@ -35,7 +35,7 @@ Future<void> basicCmdAppHelper<T extends ValidObject>({
       return;
     }
     final args = onResults(parser, results);
-    if (!args.valid) {
+    if (!args.isValid) {
       Here().debugLogError('You must provide all required options.');
       printUsage(appTitle, parser);
       exit(1);

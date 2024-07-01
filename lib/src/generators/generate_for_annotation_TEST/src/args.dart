@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GenerateForAnnotationTestArgs extends ValidObject {
+class GenerateForAnnotationTestArgs extends ValidArgsChecker {
   //
   //
   //
@@ -38,10 +38,10 @@ class GenerateForAnnotationTestArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  List<dynamic> get args => [
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
         if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
-      ]);
+      ];
 }

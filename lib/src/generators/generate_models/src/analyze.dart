@@ -28,7 +28,7 @@ Future<void> analyzeModels({
       path,
       extensions: {'.dart'},
       onFileFound: (dirName, folderName, filePath) async {
-        final a = isMatchingFileName(filePath, '', 'dart').$1;
+        final a = isMatchingFileName(filePath, '', 'dart').status;
         final b = isSourceDartFilePath(filePath);
         if (a && b) {
           return true;

@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GenerateScreenArgs extends ValidObject {
+class GenerateScreenArgs extends ValidArgsChecker {
   //
   //
   //
@@ -64,7 +64,7 @@ class GenerateScreenArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  List<dynamic> get args => [
         if (fallbackDartSdkPath != null) fallbackDartSdkPath,
         outputDirPath,
         screenName,
@@ -72,13 +72,12 @@ class GenerateScreenArgs extends ValidObject {
         screenTemplateFilePath,
         stateTemplateFilePath,
         configurationTemplateFilePath,
-        if (isAccessibleOnlyIfLoggedInAndVerified != null)
-          isAccessibleOnlyIfLoggedInAndVerified,
+        if (isAccessibleOnlyIfLoggedInAndVerified != null) isAccessibleOnlyIfLoggedInAndVerified,
         if (isAccessibleOnlyIfLoggedIn != null) isAccessibleOnlyIfLoggedIn,
         if (isAccessibleOnlyIfLoggedOut != null) isAccessibleOnlyIfLoggedOut,
         if (isRedirectable != null) isRedirectable,
         if (makeup != null) makeup,
         if (title != null) title,
         if (partFileDirs != null) partFileDirs,
-      ]);
+      ];
 }

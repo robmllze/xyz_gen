@@ -44,6 +44,7 @@ export 'utils/analyze_annotated_enums.dart';
 export 'utils/basic_app_args.dart';
 export 'utils/basic_cmd_app_args.dart';
 export 'utils/basic_cmd_app_helper.dart';
+export 'utils/valid_args_checker.dart';
 export 'utils/current_script_dir.dart';
 export 'utils/dart_files.dart';
 export 'utils/generate_from_templates.dart';

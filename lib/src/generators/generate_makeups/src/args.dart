@@ -12,7 +12,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class GenerateMakeupsArgs extends ValidObject {
+class GenerateMakeupsArgs extends ValidArgsChecker {
   //
   //
   //
@@ -48,7 +48,7 @@ class GenerateMakeupsArgs extends ValidObject {
   //
 
   @override
-  bool get valid => ValidObject.areValid([
+  List<dynamic> get args => [
         if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
         this.classTemplateFilePath,
         this.builderTemplateFilePath,
@@ -57,5 +57,5 @@ class GenerateMakeupsArgs extends ValidObject {
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
         this.outputDirPath,
-      ]);
+      ];
 }
