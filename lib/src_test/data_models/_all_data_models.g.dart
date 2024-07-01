@@ -10,8 +10,9 @@
 // --- PUBLIC FILES ---
 export 'model_user/model_user.dart';
 
-// --- PRIVATE FILES ---
-// ---
+// --- PRIVATE FILES (EXCLUDE) ---
+// None found.
 
-// --- GENERATED FILES ---
-// ---
+// --- GENERATED FILES (EXCLUDE) ---
+// export '_all_data_models.g.dart';
+// export 'model_user/_model_user.g.dart';

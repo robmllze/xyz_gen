@@ -17,36 +17,47 @@ import '/src/xyz/_all_xyz.g.dart' as xyz;
 final insightMappers = [
   _InsightMapper(
     placeholder: Placeholders.PUBLIC_EXPORTS,
-    mapInsights: (insight) async {
-      final dir = insight.dir;
-      final filePaths = dir.files.map((e) => p.relative(e.path, from: dir.path));
-      final exportFilePaths = filePaths.where((e) {
-        final baseName = p.basename(e);
-        return baseName.endsWith('.dart') && !baseName.endsWith('.g.dart');
-      });
-      if (exportFilePaths.isNotEmpty) {
-        final statements = exportFilePaths.map((e) => "export '$e';");
-        return statements.join('\n');
-      } else {
-        return '// ---';
-      }
-    },
+    mapInsights: (insight) async => _mapper(
+      insight,
+      (e) => e.endsWith('.dart') && !e.endsWith('.g.dart'),
+      (e) => "export '$e';",
+    ),
   ),
   _InsightMapper(
     placeholder: Placeholders.PRIVATE_EXPORTS,
-    mapInsights: (e) async {
-      return '// ---';
-    },
+    mapInsights: (insight) async => _mapper(
+      insight,
+      (e) => e.startsWith('_') && !e.endsWith('.g.dart'),
+      (e) => "// export '$e';",
+    ),
   ),
   _InsightMapper(
     placeholder: Placeholders.GENERATED_EXPORTS,
-    mapInsights: (e) async {
-      return '// ---';
-    },
+    mapInsights: (insight) async => _mapper(
+      insight,
+      (e) => e.endsWith('.g.dart'),
+      (e) => "// export '$e';",
+    ),
   ),
 ];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+String _mapper(
+  xyz.DirInsight insight,
+  bool Function(String) test,
+  String Function(String) statementBuilder,
+) {
+  final dir = insight.dir;
+  final filePaths = dir.files.map((e) => p.relative(e.path, from: dir.path));
+  final exportFilePaths = filePaths.where((e) => test(p.basename(e)));
+  if (exportFilePaths.isNotEmpty) {
+    final statements = exportFilePaths.map(statementBuilder);
+    return statements.join('\n');
+  } else {
+    return '// None found.';
+  }
+}
 
 enum Placeholders {
   PUBLIC_EXPORTS,
