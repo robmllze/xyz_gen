@@ -63,7 +63,8 @@ Future<void> analyzeAnnotatedClasses({
   final context = collection.contextFor(normalizedFilePath);
   final library = await context.currentSession.getLibraryByUri(fileUri);
   if (library is LibraryElementResult) {
-    final classElements = library.element.topLevelElements.whereType<ClassElement>();
+    final classElements =
+        library.element.topLevelElements.whereType<ClassElement>();
     for (final classElement in classElements) {
       final className = classElement.displayName;
       if (classNamePattern == null || classNamePattern.hasMatch(className)) {
@@ -103,7 +104,8 @@ FutureOr<void> _processClassAnnotations(
   for (final metadata in classElement.metadata) {
     final element = metadata.element;
     final classAnnotationName = element?.displayName;
-    if (classAnnotationName != null && classAnnotations?.contains(classAnnotationName) != false) {
+    if (classAnnotationName != null &&
+        classAnnotations?.contains(classAnnotationName) != false) {
       if (onClassAnnotationField != null) {
         final fieldNames = element?.children.map((e) => e.displayName);
         if (fieldNames != null) {
@@ -133,7 +135,8 @@ FutureOr<void> _processMethodAnnotations(
   Set<String>? methodAnnotations,
 ) async {
   for (final method in classElement.methods) {
-    if (methodNamePattern == null || methodNamePattern.hasMatch(method.displayName)) {
+    if (methodNamePattern == null ||
+        methodNamePattern.hasMatch(method.displayName)) {
       for (final methodMetadata in method.metadata) {
         final methodAnnotationName = methodMetadata.element?.displayName;
         if (methodAnnotationName != null &&
@@ -149,7 +152,8 @@ FutureOr<void> _processMethodAnnotations(
             final fieldNames = element?.children.map((e) => e.displayName);
             if (fieldNames != null) {
               for (final fieldName in fieldNames) {
-                final field = methodMetadata.computeConstantValue()?.getField(fieldName);
+                final field =
+                    methodMetadata.computeConstantValue()?.getField(fieldName);
                 if (field != null) {
                   await onMethodAnnotationField(fieldName, field);
                 }
@@ -172,7 +176,8 @@ FutureOr<void> _processMemberAnnotations(
   Set<String>? memberAnnotations,
 ) async {
   for (final fieldElement in classElement.fields) {
-    if (memberNamePattern == null || memberNamePattern.hasMatch(fieldElement.displayName)) {
+    if (memberNamePattern == null ||
+        memberNamePattern.hasMatch(fieldElement.displayName)) {
       for (final fieldMetadata in fieldElement.metadata) {
         final memberAnnotationName = fieldMetadata.element?.displayName;
         if (memberAnnotationName != null &&
@@ -188,7 +193,8 @@ FutureOr<void> _processMemberAnnotations(
             final fieldNames = element?.children.map((e) => e.displayName);
             if (fieldNames != null) {
               for (final fieldName in fieldNames) {
-                final field = fieldMetadata.computeConstantValue()?.getField(fieldName);
+                final field =
+                    fieldMetadata.computeConstantValue()?.getField(fieldName);
                 if (field != null) {
                   await onMemberAnnotationField(fieldName, field);
                 }

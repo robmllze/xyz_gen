@@ -2,8 +2,9 @@
 
 ## [0.97.0]
 
-- Released @ 2024-07-01 02:45:13.160260Z
+- Released @ 2024-07-01 02:47:02.072789Z
 - Update dependencies and file paths
+- Refactor generateModel function for improved readability and maintainability
 
 ## [0.96.0]
 

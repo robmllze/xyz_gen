@@ -29,13 +29,14 @@ Future<Set<String>> _generateForFile(
     final className = annotation.className?.nullIfEmpty ?? annotatedClassName;
     final classFileName = getBaseName(fixedFilePath);
     final classFileDirPath = getDirPath(fixedFilePath);
-    final screenKey =
-        annotation.screenKey?.nullIfEmpty ?? className.replaceFirst('Screen', '').toSnakeCase();
+    final screenKey = annotation.screenKey?.nullIfEmpty ??
+        className.replaceFirst('Screen', '').toSnakeCase();
     final screenConstKey = screenKey.toUpperCase();
     final configurationClassName = '${className}Configuration';
     final screenSegment = p.joinAll(
       [
-        annotation.path.isNotEmpty && annotation.path.startsWith(RegExp(r'[\\/]'))
+        annotation.path.isNotEmpty &&
+                annotation.path.startsWith(RegExp(r'[\\/]'))
             ? annotation.path.substring(1)
             : annotation.path,
         screenKey,
@@ -43,20 +44,24 @@ Future<Set<String>> _generateForFile(
     );
     final screenPath = '/$screenSegment';
     assert(
-      !annotation.isAccessibleOnlyIfLoggedInAndVerified || !annotation.isAccessibleOnlyIfLoggedIn,
+      !annotation.isAccessibleOnlyIfLoggedInAndVerified ||
+          !annotation.isAccessibleOnlyIfLoggedIn,
       'Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedIn` to `true`.',
     );
     assert(
-      !annotation.isAccessibleOnlyIfLoggedInAndVerified || !annotation.isAccessibleOnlyIfLoggedOut,
+      !annotation.isAccessibleOnlyIfLoggedInAndVerified ||
+          !annotation.isAccessibleOnlyIfLoggedOut,
       'Cannot set both `isAccessibleOnlyIfLoggedInAndVerified` and `isAccessibleOnlyIfLoggedOut` to `true`.',
     );
     assert(
-      !annotation.isAccessibleOnlyIfLoggedIn || !annotation.isAccessibleOnlyIfLoggedOut,
+      !annotation.isAccessibleOnlyIfLoggedIn ||
+          !annotation.isAccessibleOnlyIfLoggedOut,
       'Cannot set both `isAccessibleOnlyIfLoggedIn` and `isAccessibleOnlyIfLoggedOut` to `true`.',
     );
-    final isAlwaysAccessible = (!annotation.isAccessibleOnlyIfLoggedInAndVerified &&
-        !annotation.isAccessibleOnlyIfLoggedIn &&
-        !annotation.isAccessibleOnlyIfLoggedOut);
+    final isAlwaysAccessible =
+        (!annotation.isAccessibleOnlyIfLoggedInAndVerified &&
+            !annotation.isAccessibleOnlyIfLoggedIn &&
+            !annotation.isAccessibleOnlyIfLoggedOut);
     const OUTPUT_FILE_NAME = '_bindings.g.dart';
     final outputFilePath = p.join(classFileDirPath, OUTPUT_FILE_NAME);
 
@@ -74,8 +79,10 @@ Future<Set<String>> _generateForFile(
         '___SCREEN_PATH___': screenPath,
         '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN_AND_VERIFIED___':
             annotation.isAccessibleOnlyIfLoggedInAndVerified,
-        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___': annotation.isAccessibleOnlyIfLoggedIn,
-        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___': annotation.isAccessibleOnlyIfLoggedOut,
+        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_IN___':
+            annotation.isAccessibleOnlyIfLoggedIn,
+        '___IS_ACCESSIBLE_ONLY_IF_LOGGED_OUT___':
+            annotation.isAccessibleOnlyIfLoggedOut,
         '___IS_ALWAYS_ACCESSIBLE___': isAlwaysAccessible,
         '___IS_REDIRECTABLE___': annotation.isRedirectable,
         '___IP0___': _ip0(annotation.internalParameters),
@@ -138,7 +145,8 @@ GenerateScreenBindings _updateFromClassAnnotationField(
       );
     case 'isAccessibleOnlyIfLoggedInAndVerified':
       return annotation.copyWith(
-        isAccessibleOnlyIfLoggedInAndVerified: memberValue.toBoolValue() ?? false,
+        isAccessibleOnlyIfLoggedInAndVerified:
+            memberValue.toBoolValue() ?? false,
       );
     case 'isAccessibleOnlyIfLoggedIn':
       return annotation.copyWith(
@@ -164,9 +172,11 @@ GenerateScreenBindings _updateFromClassAnnotationField(
             }();
             var fieldType = () {
               final fieldType1 = e.getField('\$2')?.toStringValue();
-              final fieldType2 = e.getField('\$2')?.toTypeValue()?.getDisplayString();
+              final fieldType2 =
+                  e.getField('\$2')?.toTypeValue()?.getDisplayString();
               final fieldType3 = e.getField('fieldType')?.toStringValue();
-              final fieldType4 = e.getField('fieldType')?.toTypeValue()?.getDisplayString();
+              final fieldType4 =
+                  e.getField('fieldType')?.toTypeValue()?.getDisplayString();
               return (fieldType1 ?? fieldType2 ?? fieldType3 ?? fieldType4)!;
             }();
             final nullable = () {
@@ -214,7 +224,8 @@ GenerateScreenBindings _updateFromClassAnnotationField(
       );
     case 'defaultTitle':
       return annotation.copyWith(
-        defaultTitle: memberValue.toStringValue()?.nullIfEmpty ?? annotation.defaultTitle,
+        defaultTitle:
+            memberValue.toStringValue()?.nullIfEmpty ?? annotation.defaultTitle,
       );
     case 'makeup':
       return annotation.copyWith(
@@ -222,11 +233,13 @@ GenerateScreenBindings _updateFromClassAnnotationField(
       );
     case 'className':
       return annotation.copyWith(
-        className: memberValue.toStringValue()?.nullIfEmpty ?? annotation.className,
+        className:
+            memberValue.toStringValue()?.nullIfEmpty ?? annotation.className,
       );
     case 'screenKey':
       return annotation.copyWith(
-        screenKey: memberValue.toStringValue()?.nullIfEmpty ?? annotation.screenKey,
+        screenKey:
+            memberValue.toStringValue()?.nullIfEmpty ?? annotation.screenKey,
       );
   }
   return annotation;
