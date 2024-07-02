@@ -112,7 +112,7 @@ final insightMappers = [
         (e) {
           final n = e.nullable;
           final f = e.fieldName!.toCamelCase();
-          return n ? 'assert(this.$f != null);' : '';
+          return n ? '': 'assert(this.$f != null);';
         },
       ).join('\n');
     },
