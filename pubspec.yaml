@@ -22,13 +22,8 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  # xyz_gen_annotations: ">=0.47.0 <1.0.0"
-  xyz_gen_annotations:
-    path: ../xyz_gen_annotations
-
-  # xyz_utils: ">=0.56.0 <1.0.0"
-  xyz_utils:
-    path: ../xyz_utils
+  xyz_gen_annotations: ^0.48.1
+  xyz_utils: ">=0.60.0 <1.0.0"
   analyzer: ^6.4.1
   args: ^2.4.2
   path: ^1.9.0
