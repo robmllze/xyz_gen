@@ -35,7 +35,7 @@ final generatorConverger = _GeneratorConverger(
 
         // Determine the output file name.
         final outputFileName = [
-          'index',
+          '_index',
           if (templates.length > 1) ...[
             '_',
             template.rootName,
