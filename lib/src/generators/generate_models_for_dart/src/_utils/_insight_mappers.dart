@@ -37,12 +37,6 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.MODEL_ID,
-    mapInsights: (insight) async {
-      return insight.className.toLowerSnakeCase();
-    },
-  ),
-  _InsightMapper(
     placeholder: Placeholders.SUPER_CONSTRUCTOR,
     mapInsights: (insight) async {
       return insight.annotation.shouldInherit
@@ -70,7 +64,7 @@ final insightMappers = [
       return _dartFields(insight).map(
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return '$t? $f;';
         },
       ).join('\n');
@@ -83,7 +77,7 @@ final insightMappers = [
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
           final n = e.nullable;
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return '${n ? '' : 'required'} $t${n ? '?' : ''} $f,';
         },
       ).join('\n');
@@ -94,7 +88,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return '$f: $f,';
         },
       ).join('\n');
@@ -105,7 +99,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return 'this.$f,';
         },
       ).join('\n');
@@ -117,7 +111,7 @@ final insightMappers = [
       return _dartFields(insight).map(
         (e) {
           final n = e.nullable;
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return n ? 'assert(this.$f != null);' : '';
         },
       ).join('\n');
@@ -129,7 +123,7 @@ final insightMappers = [
       return '${_dartFields(insight).map(
         (e) {
           final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return '..\$$f = otherData${insight.className != 'DataModel' ? '?[$k]' : ''}';
         },
       ).join('\n')};';
@@ -141,7 +135,7 @@ final insightMappers = [
       return _dartFields(insight).map(
         (e) {
           final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return '${insight.className != 'DataModel' ? '$k: ' : '...'}this.\$$f,';
         },
       ).join('\n');
@@ -152,7 +146,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           return 'if (other.$f != null) { this.$f = other.$f!; }';
         },
       ).join('\n');
@@ -163,7 +157,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = e.fieldName!;
+          final f = _stringCaseType(insight).convert(e.fieldName!);
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
           final n = e.nullable;
@@ -197,7 +191,6 @@ enum Placeholders {
   SUPER_CLASS,
   CLASS,
   SUPER_CONSTRUCTOR,
-  MODEL_ID,
   CLASS_FILE_NAME,
   P0,
   P1,
