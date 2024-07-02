@@ -17,7 +17,7 @@ import '_utils/_insight_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generates export files for Dart from directories.
+/// Generates index files for Dart from directories.
 ///
 /// This function combines [rootDirPaths] and [subDirPaths], applying
 /// [pathPatterns] to filter and determine the directories to search for source
@@ -25,7 +25,7 @@ import '_utils/_insight_mappers.dart';
 ///
 /// The outputs are generated from templates in [templatesRootDirPaths] and the
 /// generated files are placed in the appropriate directories.
-Future<void> generateExportsForDart({
+Future<void> generateIndexFilesForDart({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},

@@ -34,10 +34,8 @@ final generatorConverger = _GeneratorConverger(
         );
 
         // Determine the output file name.
-        final folderName = p.basename(dirPath);
         final outputFileName = [
-          '_all_',
-          folderName,
+          'index',
           if (templates.length > 1) ...[
             '_',
             template.rootName,

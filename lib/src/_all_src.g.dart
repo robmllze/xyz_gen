@@ -9,8 +9,8 @@
 
 export 'generators/generate_directives_for_dart/src/generate_directives_for_dart.dart';
 export 'generators/generate_directives_for_dart/src/run_generate_directives_for_dart_app.dart';
-export 'generators/generate_exports_for_dart/src/generate_exports_for_dart.dart';
-export 'generators/generate_exports_for_dart/src/run_generate_exports_for_dart_app.dart';
+export 'generators/generate_index_files_for_dart/src/generate_index_files_for_dart.dart';
+export 'generators/generate_index_files_for_dart/src/run_generate_index_files_for_dart_app.dart';
 export 'generators/generate_models_for_dart/src/generate_models_for_dart_from_annotations.dart';
 export 'generators/generate_models_for_dart/src/run_generate_models_for_dart_app.dart';
 export 'utils/analyze_annotated_enums.dart';

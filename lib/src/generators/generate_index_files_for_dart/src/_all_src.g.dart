@@ -8,7 +8,7 @@
 //.title~
 
 // --- PUBLIC FILES ---
-export 'run_generate_exports_for_dart_app.dart';
+export 'run_generate_index_files_for_dart_app.dart';
 
 // --- PRIVATE FILES ---
 // export '_args_checker.dart';

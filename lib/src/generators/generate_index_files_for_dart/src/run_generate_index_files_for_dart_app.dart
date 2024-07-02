@@ -12,15 +12,15 @@ import 'package:args/args.dart';
 
 import '/src/xyz/_all_xyz.g.dart' as xyz;
 
-import 'generate_exports_for_dart.dart';
+import 'generate_index_files_for_dart.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating Dart export files for the provided
-/// directories. The [args] are interpreted and passed to [generateExportsForDart].
-Future<void> runGenerateExportsForDartApp(List<String> args) async {
+/// A command line app for generating index files for Dart from directories.
+/// The [args] are interpreted and passed to [generateIndexFilesForDart].
+Future<void> runGenerateIndexFilesForDartApp(List<String> args) async {
   await xyz.runCommandLineApp(
-    title: '🇽🇾🇿  Generate Exports for Dart',
+    title: '🇽🇾🇿  Generate Index Files for Dart',
     description:
         'A command line app for generating Dart export files for the provided directories.',
     args: args,
@@ -61,7 +61,7 @@ Future<void> runGenerateExportsForDartApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await generateExportsForDart(
+      await generateIndexFilesForDart(
         templatesRootDirPaths: args.templatesRootDirPaths!,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
