@@ -64,7 +64,7 @@ final insightMappers = [
       return _dartFields(insight).map(
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return '$t? $f;';
         },
       ).join('\n');
@@ -77,7 +77,7 @@ final insightMappers = [
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
           final n = e.nullable;
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return '${n ? '' : 'required'} $t${n ? '?' : ''} $f,';
         },
       ).join('\n');
@@ -88,7 +88,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return '$f: $f,';
         },
       ).join('\n');
@@ -99,7 +99,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return 'this.$f,';
         },
       ).join('\n');
@@ -111,7 +111,7 @@ final insightMappers = [
       return _dartFields(insight).map(
         (e) {
           final n = e.nullable;
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return n ? 'assert(this.$f != null);' : '';
         },
       ).join('\n');
@@ -123,7 +123,7 @@ final insightMappers = [
       return '${_dartFields(insight).map(
         (e) {
           final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return '..\$$f = otherData${insight.className != 'DataModel' ? '?[$k]' : ''}';
         },
       ).join('\n')};';
@@ -135,7 +135,7 @@ final insightMappers = [
       return _dartFields(insight).map(
         (e) {
           final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return '${insight.className != 'DataModel' ? '$k: ' : '...'}this.\$$f,';
         },
       ).join('\n');
@@ -146,7 +146,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           return 'if (other.$f != null) { this.$f = other.$f!; }';
         },
       ).join('\n');
@@ -157,7 +157,7 @@ final insightMappers = [
     mapInsights: (insight) async {
       return _dartFields(insight).map(
         (e) {
-          final f = _stringCaseType(insight).convert(e.fieldName!);
+          final f = e.fieldName!.toCamelCase();
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
           final n = e.nullable;
