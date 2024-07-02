@@ -79,41 +79,43 @@ final class DartAnnotatedClassAnalyzer {
     final context = this.analysisContextCollection.contextFor(fullFilePath);
     final library = await context.currentSession.getLibraryByUri(fullFileUri.toString());
     if (library is LibraryElementResult) {
-      final classElement = library.element.topLevelElements.whereType<ClassElement>().first;
-      final className = classElement.displayName;
-      if (classNameFilter == null || classNameFilter.hasMatch(className)) {
-        onPreAnalysis?.call(
+      final classElement = library.element.topLevelElements.whereType<ClassElement>().firstOrNull;
+      if (classElement != null) {
+        final className = classElement.displayName;
+        if (classNameFilter == null || classNameFilter.hasMatch(className)) {
+          onPreAnalysis?.call(
+            fullFilePath,
+            className,
+          );
+          await _processMemberAnnotations(
+            fullFilePath,
+            classElement,
+            memberNameFilter,
+            onAnnotatedMember,
+            onMemberAnnotationField,
+            inclMemberAnnotations,
+          );
+          await _processMethodAnnotations(
+            fullFilePath,
+            classElement,
+            methodNameFilter,
+            onAnnotatedMethod,
+            onMethodAnnotationField,
+            inclMethodAnnotations,
+          );
+          await _processClassAnnotations(
+            fullFilePath,
+            classElement,
+            onAnnotatedClass,
+            onClassAnnotationField,
+            inclClassAnnotations,
+          );
+        }
+        onPostAnalysis?.call(
           fullFilePath,
           className,
         );
-        await _processMemberAnnotations(
-          fullFilePath,
-          classElement,
-          memberNameFilter,
-          onAnnotatedMember,
-          onMemberAnnotationField,
-          inclMemberAnnotations,
-        );
-        await _processMethodAnnotations(
-          fullFilePath,
-          classElement,
-          methodNameFilter,
-          onAnnotatedMethod,
-          onMethodAnnotationField,
-          inclMethodAnnotations,
-        );
-        await _processClassAnnotations(
-          fullFilePath,
-          classElement,
-          onAnnotatedClass,
-          onClassAnnotationField,
-          inclClassAnnotations,
-        );
       }
-      onPostAnalysis?.call(
-        fullFilePath,
-        className,
-      );
     }
   }
 
