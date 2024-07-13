@@ -49,7 +49,7 @@ String _mapper(
   String Function(String) statementBuilder,
 ) {
   final dir = insight.dir;
-  final filePaths = dir.files.map((e) => p.relative(e.path, from: dir.path));
+  final filePaths = dir.getSubFiles().map((e) => p.relative(e.path, from: dir.path));
   final exportFilePaths = filePaths.where((e) => test(p.basename(e)));
   if (exportFilePaths.isNotEmpty) {
     final statements = exportFilePaths.map(statementBuilder);

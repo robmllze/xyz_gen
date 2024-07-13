@@ -36,6 +36,62 @@ Future<void> generateIndexFilesForDart({
 
   // Explore all source paths.
   final sourceFileExporer = xyz.PathExplorer(
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        rootDirPaths,
+        subPaths: subDirPaths,
+        pathPatterns: pathPatterns,
+      ),
+    },
+  );
+  final sourceFileExplorerResults = await sourceFileExporer.explore();
+
+  // Read all templates from templatesRootDirPaths.
+  final templateFileExporer = xyz.PathExplorer(
+    dirPathGroups: {
+      xyz.CombinedPaths(
+        templatesRootDirPaths,
+      ),
+    },
+  );
+  final templates = await templateFileExporer.readAll();
+
+  // Extract insights from the dir path results.
+  final dirInsights =
+      sourceFileExplorerResults.rootDirPathResults.map((e) => xyz.DirInsight(dir: e));
+
+  // Converge what was gathered to generate the output.
+  await generatorConverger.converge(
+    dirInsights,
+    templates,
+    insightMappers,
+  );
+
+  // ---------------------------------------------------------------------------
+
+  // Notify end.
+  utils.debugLogStop('Done!');
+
+  // for (final dirPathResult in sourceFileExplorerResults.rootDirPathResults) {
+  //   final insight = xyz.DirInsight(dir: dirPathResult);
+  //   // await generatorConverger.converge(
+  //   //   [insight],
+  //   //   templates,
+  //   //   insightMappers,
+  //   // );
+
+  //   //final path = p.normalize(p.join(dirPathResult.path, '..'));
+
+  //   print('--- ${dirPathResult.path} ---');
+  //   print(dirPathResult
+  //       .getSubFiles()
+  //       .map((e) => p.relative(e.path, from: dirPathResult.path))
+  //       .join('\n'));
+  // }
+
+/*
+  // Explore all source paths.
+  final sourceFileExporer = xyz.PathExplorer(
     categorizedPathPatterns: const [
       xyz.CategorizedPattern(
         pattern: r'.*\.dart$',
@@ -83,4 +139,6 @@ Future<void> generateIndexFilesForDart({
 
   // Notify end.
   utils.debugLogStop('Done!');
+
+  */
 }

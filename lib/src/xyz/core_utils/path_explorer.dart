@@ -11,6 +11,7 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 import 'categorize_pattern.dart';
 import 'combined_paths.dart';
@@ -47,11 +48,11 @@ class PathExplorer {
   ///
   /// Returns the subfiles and subfolders found.
   _TExploreResult explore() async {
-    final dirPathResults = <DirPathExplorerResult>[];
-    final filePathResults = <FilePathExplorerResult>[];
+    final dirPathResults = <DirPathExplorerResult>{};
+    final filePathResults = <FilePathExplorerResult>{};
 
-    Future<void> $exploreDir(String dirPath) async {
-      // 1. Find all dirPaths and dirPaths in dirPath
+    Future<DirPathExplorerResult> $exploreDir(String dirPath, DirPathExplorerResult? parent) async {
+      // 1. Find all dirPaths and filePaths in dirPath.
       final contentPaths = await _listNormalizedDirContentPaths(dirPath);
       final filePaths = <String>[];
       final dirPaths = <String>[];
@@ -64,37 +65,49 @@ class PathExplorer {
         }
       }
 
-      // 2. For each filePath, add the exploration result x to filePathResults.
+      // 2. Create a local filePathResults for the current directory.
+      final currentDirFilePathResults = <FilePathExplorerResult>{};
       for (final filePath in filePaths) {
         final x = FilePathExplorerResult._(
           category: CategorizedPattern.categorize(filePath, categorizedPathPatterns),
           path: filePath,
         );
-        filePathResults.add(x);
+        currentDirFilePathResults.add(x);
+      }
+      filePathResults.addAll(currentDirFilePathResults);
+
+      // 3. Recursively explore subdirectories.
+      final subDirResults = <DirPathExplorerResult>{};
+      for (final subDirPath in dirPaths) {
+        final subDirResult = await $exploreDir(subDirPath, parent);
+        subDirResults.add(subDirResult);
       }
 
-      // 3. For each dirPath, add the exploration result x to dirPathResults,
-      // then also explore this dirPath via exploreDir.
-      for (final dirPath in dirPaths) {
-        final x = DirPathExplorerResult._(
-          category: CategorizedPattern.categorize(dirPath, categorizedPathPatterns),
-          path: dirPath,
-          files: filePathResults,
-        );
+      // 4. Create the current directory result.
+      final dirResult = DirPathExplorerResult._(
+        category: CategorizedPattern.categorize(dirPath, categorizedPathPatterns),
+        path: dirPath,
+        files: currentDirFilePathResults,
+        dirs: subDirResults,
+        parentDir: parent,
+      );
 
-        dirPathResults.add(x);
-        await $exploreDir(dirPath);
-      }
+      dirPathResults.add(dirResult);
+      return dirResult;
     }
+
+    final rootDirPathResults = <DirPathExplorerResult>{};
 
     // 0. Explore each dirPath in all dirPathGroups.
     for (final dirPathGroup in dirPathGroups) {
       for (final dirPath in dirPathGroup.paths) {
-        await $exploreDir(dirPath);
+        final dirResult = await $exploreDir(dirPath, null);
+        rootDirPathResults.add(dirResult);
       }
     }
 
     return (
+      rootDirPathResults: rootDirPathResults,
       dirPathResults: dirPathResults,
       filePathResults: filePathResults,
     );
@@ -145,13 +158,14 @@ class PathExplorer {
 
 typedef _TExploreResult = Future<
     ({
-      List<DirPathExplorerResult> dirPathResults,
-      List<FilePathExplorerResult> filePathResults,
+      Set<DirPathExplorerResult> rootDirPathResults,
+      Set<DirPathExplorerResult> dirPathResults,
+      Set<FilePathExplorerResult> filePathResults,
     })>;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class FileReadResult {
+class FileReadResult extends Equatable {
   //
   //
   //
@@ -179,6 +193,13 @@ class FileReadResult {
   //
 
   String get rootName => this.baseName.replaceFirst(RegExp(r'\..*'), '');
+
+  //
+  //
+  //
+
+  @override
+  List<Object?> get props => [this.path, this.content];
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -202,6 +223,8 @@ final class DirPathExplorerResult extends PathExplorerResult {
   //
 
   final Iterable<FilePathExplorerResult> files;
+  final Iterable<DirPathExplorerResult> dirs;
+  final DirPathExplorerResult? parentDir;
 
   //
   //
@@ -211,12 +234,56 @@ final class DirPathExplorerResult extends PathExplorerResult {
     required super.category,
     required super.path,
     required this.files,
+    required this.dirs,
+    required this.parentDir,
   });
+
+  //
+  //
+  //
+
+  Set<DirPathExplorerResult> getSubDirs() {
+    final subDirs = <DirPathExplorerResult>{};
+    void $traverse(DirPathExplorerResult dir) {
+      subDirs.addAll(dir.dirs);
+      for (final subDir in dir.dirs) {
+        $traverse(subDir);
+      }
+    }
+
+    $traverse(this);
+    return subDirs;
+  }
+
+  //
+  //
+  //
+
+  Set<FilePathExplorerResult> getSubFiles() {
+    final subFiles = <FilePathExplorerResult>{};
+    void $traverse(DirPathExplorerResult dir) {
+      subFiles.addAll(dir.files);
+      for (final subDir in dir.dirs) {
+        $traverse(subDir);
+      }
+    }
+
+    $traverse(this);
+    return subFiles;
+  }
+
+  //
+  //
+  //
+
+  @override
+  List<Object?> get props =>
+      [this.path, this.category, ...this.files, ...this.dirs, this.parentDir];
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract base class PathExplorerResult {
+abstract base class PathExplorerResult extends Equatable {
   //
   //
   //
@@ -232,4 +299,11 @@ abstract base class PathExplorerResult {
     required this.path,
     required this.category,
   });
+
+  //
+  //
+  //
+
+  @override
+  List<Object?> get props => [this.path, this.category];
 }
