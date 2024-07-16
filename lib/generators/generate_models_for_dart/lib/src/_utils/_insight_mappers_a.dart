@@ -34,7 +34,11 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.CLASS,
     mapInsights: (insight) async {
-      return insight.annotation.className ?? insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
+      return insight.annotation.className ??
+          insight.className.replaceFirst(
+            RegExp(r'^[_$]+'),
+            '',
+          );
     },
   ),
   _InsightMapper(
@@ -76,10 +80,21 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
           final n = e.nullable;
           final f = e.fieldName!.toCamelCase();
-          return '${n ? '' : 'required'} $t${n ? '?' : ''} $f,';
+          return '${n ? '' : 'required'} this.$f,';
+        },
+      ).join('\n');
+    },
+  ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.FIELD_ASSERTIONS,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final n = e.nullable;
+          final f = e.fieldName!.toCamelCase();
+          return n ? '' : 'assert($f != null);';
         },
       ).join('\n');
     },
@@ -100,8 +115,9 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
+          final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
           final f = e.fieldName!.toCamelCase();
-          return 'this.$f,';
+          return '$t? $f,';
         },
       ).join('\n');
     },
@@ -166,6 +182,24 @@ final insightMappersA = [
       ).join('\n');
     },
   ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.GETTERS_A,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final f = e.fieldName!.toCamelCase();
+          final x = e.fieldTypeCode!;
+          final s = stripSpecialSyntaxFromFieldType(x);
+          final n = e.nullable;
+          return [
+            '  // $f.',
+            '$s get ${f}Field => this.$f${n ? '' : '!'};',
+            '',
+          ].join('\n');
+        },
+      ).join('\n');
+    },
+  ),
 ];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -178,12 +212,14 @@ enum PlaceholdersA {
   STATIC_KEY_NAMES,
   FIELD_DECLARATIONS_A,
   PARAMS_A1,
+  FIELD_ASSERTIONS,
   ARGS_A,
   PARAMS_A2,
   FROM_JSON_A1,
   FROM_JSON_A2,
   TO_JSON_A1,
   TO_JSON_A2,
+  GETTERS_A,
 }
 
-typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, Enum>;
+typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, PlaceholdersA>;

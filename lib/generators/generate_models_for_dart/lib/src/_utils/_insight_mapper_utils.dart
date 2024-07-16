@@ -26,7 +26,3 @@ StringCaseType stringCaseType(xyz.ClassInsight<GenerateModel> insight) {
   return StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
       StringCaseType.LOWER_SNAKE_CASE;
 }
-
-//typedef ClassInsight = xyz.ClassInsight<GenerateModel>;
-
-

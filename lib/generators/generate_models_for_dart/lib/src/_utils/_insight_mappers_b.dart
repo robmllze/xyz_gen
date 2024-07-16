@@ -32,18 +32,6 @@ final insightMappersB = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersB.FIELD_ASSERTIONS,
-    mapInsights: (insight) async {
-      return dartFields(insight).map(
-        (e) {
-          final n = e.nullable;
-          final f = e.fieldName!.toCamelCase();
-          return n ? '' : 'assert(this.$f != null);';
-        },
-      ).join('\n');
-    },
-  ),
-  _InsightMapper(
     placeholder: PlaceholdersB.FROM_JSON_B,
     mapInsights: (insight) async {
       return '${dartFields(insight).map(
@@ -122,4 +110,4 @@ enum PlaceholdersB {
   GETTERS_AND_SETTERS_B;
 }
 
-typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, Enum>;
+typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, PlaceholdersB>;

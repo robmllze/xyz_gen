@@ -85,7 +85,7 @@ Future<void> generateModelsForDartFromBlueprints({
 
       //fileConfig.fields['models']?[]
 
-      //printRed(fileConfig.fields);
+      printRed(fileConfig.fields);
     }
   }
 

@@ -15,6 +15,7 @@ import '/src/xyz/_index.g.dart' as xyz;
 import '_utils/_extract_class_insights_from_dart_file.dart';
 import '_utils/_generator_converger.dart';
 import '_utils/_insight_mappers_a.dart';
+import '_utils/_insight_mappers_b.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -92,7 +93,10 @@ Future<void> generateModelsForDartFromAnnotations({
     await generatorConverger.converge(
       classInsights,
       templates,
-      insightMappersA,
+      [
+        ...insightMappersA,
+        ...insightMappersB,
+      ],
     );
   }
 
