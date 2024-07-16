@@ -69,4 +69,4 @@ export 'src/utils/analyze_annotated_enums.dart';
 // export 'src/xyz/typescript_utils/_ts_replacements.dart';
 
 // --- GENERATED FILES (EXCLUDED) ---
-// None found.
+// export '_index.g.dart';

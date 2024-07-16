@@ -30,7 +30,8 @@ extension DartFromRecordOnDartObjectX on DartObject {
 
   String? _rawFieldNameFromRecord() {
     final a = this.getField('\$1')?.toStringValue();
-    final b = this.getField('fieldName')?.toStringValue();
+    final fieldName = FieldFields.fieldName.field.fieldName!;
+    final b = this.getField(fieldName)?.toStringValue();
     return a ?? b;
   }
 
@@ -51,8 +52,9 @@ extension DartFromRecordOnDartObjectX on DartObject {
   String? _rawFieldTypeFromRecord() {
     final a = this.getField('\$2')?.toStringValue();
     final b = this.getField('\$2')?.toTypeValue()?.getDisplayString();
-    final c = this.getField('fieldType')?.toStringValue();
-    final d = this.getField('fieldType')?.toTypeValue()?.getDisplayString();
+    final fieldName = FieldFields.fieldType.field.fieldName!;
+    final c = this.getField(fieldName)?.toStringValue();
+    final d = this.getField(fieldName)?.toTypeValue()?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 
@@ -66,7 +68,8 @@ extension DartFromRecordOnDartObjectX on DartObject {
     if (this.fieldTypeFromRecord() == 'dynamic') {
       return false;
     }
-    final a = this.getField('nullable')?.toBoolValue();
+    final fieldName = FieldFields.nullable.field.fieldName!;
+    final a = this.getField(fieldName)?.toBoolValue();
     final b = this.getField('\$3')?.toBoolValue();
     final c = this._rawFieldNameFromRecord()?.endsWith('?');
     final d = this._rawFieldTypeFromRecord()?.endsWith('?');

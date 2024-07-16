@@ -25,5 +25,5 @@ Iterable<xyz.DartField> dartFields(xyz.ClassInsight<GenerateModel> insight) {
 
 StringCaseType stringCaseType(xyz.ClassInsight<GenerateModel> insight) {
   return StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-      StringCaseType.LOWER_SNAKE_CASE;
+      StringCaseType.CAMEL_CASE;
 }

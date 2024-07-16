@@ -52,7 +52,9 @@ class PathExplorer<TCategory extends Enum> {
     final filePathResults = <FilePathExplorerResult<TCategory>>{};
 
     Future<DirPathExplorerResult<TCategory>> $exploreDir(
-        String dirPath, DirPathExplorerResult? parent) async {
+      String dirPath,
+      DirPathExplorerResult? parent,
+    ) async {
       // 1. Find all dirPaths and filePaths in dirPath.
       final contentPaths = await _listNormalizedDirContentPaths(dirPath);
       final filePaths = <String>[];

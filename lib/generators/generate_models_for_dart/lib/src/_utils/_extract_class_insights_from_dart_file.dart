@@ -34,8 +34,8 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
   final insights = <_ClassInsight>[];
   late GenerateModel temp;
   await analyzer.analyze(
-    inclClassAnnotations: {'GenerateModel'},
-    inclMemberAnnotations: {'Field'},
+    inclClassAnnotations: {GenerateModel.CLASS},
+    inclMemberAnnotations: {Field.CLASS},
     onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
@@ -117,12 +117,12 @@ GenerateModel _updateFromAnnotatedMember(
   GenerateModel annotation,
   xyz.OnAnnotatedMemberParams params,
 ) {
-  if (params.memberAnnotationName == 'Field') {
-    final a1 = params.memberAnnotationFields['fieldName']?.toStringValue();
+  if (params.memberAnnotationName == Field.CLASS) {
+    final a1 = params.memberAnnotationFields[FieldFields.fieldName.field.fieldName]?.toStringValue();
     final a2 = params.memberName;
-    final b1 = params.memberAnnotationFields['fieldType']?.toStringValue();
+    final b1 = params.memberAnnotationFields[FieldFields.fieldType.field.fieldName]?.toStringValue();
     final b2 = params.memberType.getDisplayString();
-    final c1 = params.memberAnnotationFields['nullable']?.toBoolValue();
+    final c1 = params.memberAnnotationFields[FieldFields.nullable.field.fieldName]?.toBoolValue();
     final field = xyz.DartField(
       fieldName: a1 ?? a2,
       fieldType: b1 ?? b2,
