@@ -8,13 +8,13 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-final class CategorizedPattern {
+final class CategorizedPattern<TCategory extends Enum> {
   //
   //
   //
 
   final String pattern;
-  final dynamic category;
+  final TCategory? category;
 
   //
   //
@@ -35,13 +35,28 @@ final class CategorizedPattern {
   //
   //
 
-  static dynamic categorize(String value, Iterable<CategorizedPattern> patterns) {
+  static TCategory? categorize<TCategory extends Enum>(
+    String value,
+    Iterable<CategorizedPattern<TCategory>> patterns,
+  ) {
     for (final e in patterns) {
-      final expression = RegExp(e.pattern);
+      final expression = RegExp(e.pattern, caseSensitive: false);
       if (expression.hasMatch(value)) {
         return e.category;
       }
     }
     return null;
   }
+
+  //
+  //
+  //
+
+  static const DEFAULT = _DefaultCategory.DEFAULT;
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+enum _DefaultCategory {
+  DEFAULT,
 }

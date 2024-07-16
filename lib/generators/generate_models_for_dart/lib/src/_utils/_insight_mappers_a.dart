@@ -13,31 +13,32 @@ import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_index.g.dart' as xyz;
 
+import '_insight_mapper_utils.dart';
 import '_strip_special_syntax_from_field_type.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final insightMappers = [
+final insightMappersA = [
   _InsightMapper(
-    placeholder: Placeholders.SUPER_CLASS,
+    placeholder: PlaceholdersA.SUPER_CLASS,
     mapInsights: (insight) async {
       return insight.annotation.shouldInherit ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.CLASS_FILE_NAME,
+    placeholder: PlaceholdersA.CLASS_FILE_NAME,
     mapInsights: (insight) async {
       return insight.fileName;
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.CLASS,
+    placeholder: PlaceholdersA.CLASS,
     mapInsights: (insight) async {
       return insight.annotation.className ?? insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.SUPER_CONSTRUCTOR,
+    placeholder: PlaceholdersA.SUPER_CONSTRUCTOR,
     mapInsights: (insight) async {
       return insight.annotation.shouldInherit
           ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
@@ -47,33 +48,33 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.P0,
+    placeholder: PlaceholdersA.STATIC_KEY_NAMES,
     mapInsights: (insight) async {
-      return _dartFields(insight).map(
+      return dartFields(insight).map(
         (e) {
           final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final c = _stringCaseType(insight).convert(e.fieldName!);
+          final c = stringCaseType(insight).convert(e.fieldName!);
           return "static const $k = '$c';";
         },
       ).join('\n');
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.P1,
+    placeholder: PlaceholdersA.FIELD_DECLARATIONS_A,
     mapInsights: (insight) async {
-      return _dartFields(insight).map(
+      return dartFields(insight).map(
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
           final f = e.fieldName!.toCamelCase();
-          return '$t? $f;';
+          return 'final $t? $f;';
         },
       ).join('\n');
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.P2,
+    placeholder: PlaceholdersA.PARAMS_A1,
     mapInsights: (insight) async {
-      return _dartFields(insight).map(
+      return dartFields(insight).map(
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
           final n = e.nullable;
@@ -84,9 +85,9 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.P3,
+    placeholder: PlaceholdersA.ARGS_A,
     mapInsights: (insight) async {
-      return _dartFields(insight).map(
+      return dartFields(insight).map(
         (e) {
           final f = e.fieldName!.toCamelCase();
           return '$f: $f,';
@@ -95,9 +96,9 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.P4,
+    placeholder: PlaceholdersA.PARAMS_A2,
     mapInsights: (insight) async {
-      return _dartFields(insight).map(
+      return dartFields(insight).map(
         (e) {
           final f = e.fieldName!.toCamelCase();
           return 'this.$f,';
@@ -106,79 +107,61 @@ final insightMappers = [
     },
   ),
   _InsightMapper(
-    placeholder: Placeholders.P5,
+    placeholder: PlaceholdersA.FROM_JSON_A1,
     mapInsights: (insight) async {
-      return _dartFields(insight).map(
-        (e) {
-          final n = e.nullable;
-          final f = e.fieldName!.toCamelCase();
-          return n ? '' : 'assert(this.$f != null);';
-        },
-      ).join('\n');
-    },
-  ),
-  _InsightMapper(
-    placeholder: Placeholders.P6,
-    mapInsights: (insight) async {
-      return '${_dartFields(insight).map(
+      return '${dartFields(insight).map(
         (e) {
           final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final f = e.fieldName!.toCamelCase();
-          return '..\$$f = otherData${insight.className != 'DataModel' ? '?[$k]' : ''}';
-        },
-      ).join('\n')};';
-    },
-  ),
-  _InsightMapper(
-    placeholder: Placeholders.P7,
-    mapInsights: (insight) async {
-      return _dartFields(insight).map(
-        (e) {
-          final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final f = e.fieldName!.toCamelCase();
-          return '${insight.className != 'DataModel' ? '$k: ' : '...'}this.\$$f,';
-        },
-      ).join('\n');
-    },
-  ),
-  _InsightMapper(
-    placeholder: Placeholders.P8,
-    mapInsights: (insight) async {
-      return _dartFields(insight).map(
-        (e) {
-          final f = e.fieldName!.toCamelCase();
-          return 'if (other.$f != null) { this.$f = other.$f!; }';
-        },
-      ).join('\n');
-    },
-  ),
-  _InsightMapper(
-    placeholder: Placeholders.P9,
-    mapInsights: (insight) async {
-      return _dartFields(insight).map(
-        (e) {
           final f = e.fieldName!.toCamelCase();
           final x = e.fieldTypeCode!;
-          final s = stripSpecialSyntaxFromFieldType(x);
-          final n = e.nullable;
+          final f0 = '${f}0';
+          final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
+            fieldName: f0,
+            fieldTypeCode: x,
+          );
+
+          return 'final $f0 = otherData?[$k];\nfinal $f = $b;';
+        },
+      ).join('\n')}';
+    },
+  ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.FROM_JSON_A2,
+    mapInsights: (insight) async {
+      return '${dartFields(insight).map(
+        (e) {
+          final f = e.fieldName!.toCamelCase();
+          return '$f: $f,';
+        },
+      ).join('\n')}';
+    },
+  ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.TO_JSON_A1,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final f = e.fieldName!.toCamelCase();
+          final f0 = '${f}0';
+          final x = e.fieldTypeCode!;
           final a = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.toMappers).map(
             fieldName: 'this.$f',
             fieldTypeCode: x,
           );
-          final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
-            fieldName: 'v',
-            fieldTypeCode: x,
-          );
-          return [
-            '  // $f.',
-            '$s get ${f}Field => this.$f${n ? '' : '!'};',
-            'set ${f}Field($s v) => this.$f = v;',
-            '@protected',
-            'dynamic get \$$f => $a;',
-            '@protected',
-            'set \$$f(v) => this.$f = $b;',
-            '',
-          ].join('\n');
+          return 'final $f0 = $a;';
+        },
+      ).join('\n');
+    },
+  ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.TO_JSON_A2,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
+          final f = e.fieldName!.toCamelCase();
+          final f0 = '${f}0';
+          return '$k: $f0,';
         },
       ).join('\n');
     },
@@ -187,35 +170,20 @@ final insightMappers = [
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-enum Placeholders {
+enum PlaceholdersA {
   SUPER_CLASS,
   CLASS,
   SUPER_CONSTRUCTOR,
   CLASS_FILE_NAME,
-  P0,
-  P1,
-  P2,
-  P3,
-  P4,
-  P5,
-  P6,
-  P7,
-  P8,
-  P9;
+  STATIC_KEY_NAMES,
+  FIELD_DECLARATIONS_A,
+  PARAMS_A1,
+  ARGS_A,
+  PARAMS_A2,
+  FROM_JSON_A1,
+  FROM_JSON_A2,
+  TO_JSON_A1,
+  TO_JSON_A2,
 }
 
-Iterable<xyz.DartField> _dartFields(_ClassInsight insight) {
-  return insight.annotation.fields.map((e) {
-    e.runtimeType;
-    return xyz.DartField.fromRecord(e);
-  }).nonNulls;
-}
-
-StringCaseType _stringCaseType(_ClassInsight insight) {
-  return StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-      StringCaseType.LOWER_SNAKE_CASE;
-}
-
-typedef _ClassInsight = xyz.ClassInsight<GenerateModel>;
-
-typedef _InsightMapper = xyz.InsightMapper<_ClassInsight, Placeholders>;
+typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, Enum>;

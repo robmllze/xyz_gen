@@ -8,7 +8,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:xyz_config/xyz_config.dart';
 import 'package:xyz_utils/xyz_utils.dart' as utils;
+import 'package:xyz_utils/xyz_utils_non_web.dart';
 
 import '/src/xyz/_index.g.dart' as xyz;
 
@@ -18,20 +20,7 @@ import '_utils/_insight_mappers_a.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generates Dart model files from insights derived from classes annotated
-/// with `@GenerateModel` in Dart source files.
-///
-/// This function combines [rootDirPaths] and [subDirPaths], applying
-/// [pathPatterns] to filter and determine the directories to search for source
-/// files.
-///
-/// The outputs are generated from templates in [templatesRootDirPaths] and the
-/// generated files are placed in the same directories as the source
-/// files.
-///
-/// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
-/// used. This function leverages Dart's analyzer to interpret the annotations.
-Future<void> generateModelsForDartFromAnnotations({
+Future<void> generateModelsForDartFromBlueprints({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
@@ -42,11 +31,19 @@ Future<void> generateModelsForDartFromAnnotations({
   utils.debugLogStart('Starting generator. Please wait...');
 
   // Explore all source paths.
-  final sourceFileExporer = xyz.PathExplorer(
+  final sourceFileExporer = xyz.PathExplorer<ConfigFileType>(
     categorizedPathPatterns: const [
       xyz.CategorizedPattern(
-        category: _Categories.DART,
-        pattern: r'.*\.dart$',
+        category: ConfigFileType.JSON,
+        pattern: r'(^.*\.)?blueprints\.json$',
+      ),
+      xyz.CategorizedPattern(
+        category: ConfigFileType.JSONC,
+        pattern: r'(^.*\.)?blueprints\.jsonc$',
+      ),
+      xyz.CategorizedPattern(
+        category: ConfigFileType.YAML,
+        pattern: r'(^.*\.)?blueprints\.yaml$',
       ),
     ],
     dirPathGroups: {
@@ -71,39 +68,47 @@ Future<void> generateModelsForDartFromAnnotations({
 
   // ---------------------------------------------------------------------------
 
-  // Create context for the Dart analyzer.
-  final analysisContextCollection = xyz.createDartAnalysisContextCollection(
-    sourceFileExporer.dirPathGroups.first.paths,
-    fallbackDartSdkPath,
-  );
+  for (final filePathResult in sourceFileExplorerResults.filePathResults) {
+    if (ConfigFileType.values.contains(filePathResult.category)) {
+      // Read the blueprint file.
+      final fileConfig = FileConfig(
+        ref: ConfigFileRef(
+          type: filePathResult.category,
+          read: () async {
+            final contents = await readFile(filePathResult.path);
+            return contents ?? '';
+          },
+        ),
+        settings: const ReplacePatternsSettings(caseSensitive: false),
+      );
+      final success = await fileConfig.readAssociatedFile();
 
-  // For each file...
-  for (final filePathResult
-      in sourceFileExplorerResults.filePathResults.where((e) => e.category == _Categories.DART)) {
-    final filePath = filePathResult.path;
+      //fileConfig.fields['models']?[]
 
-    // Extract insights from the file.
-    final classInsights = await extractClassInsightsFromDartFile(
-      analysisContextCollection,
-      filePath,
-    );
-
-    // Converge what was gathered to generate the output.
-    await generatorConverger.converge(
-      classInsights,
-      templates,
-      insightMappersA,
-    );
+      //printRed(fileConfig.fields);
+    }
   }
+
+  // // For each file...
+  // for (final filePathResult in sourceFileExplorerResults.filePathResults) {
+  //   final filePath = filePathResult.path;
+
+  //   // Extract insights from the file.
+  //   final classInsights = await extractClassInsightsFromDartFile(
+  //     analysisContextCollection,
+  //     filePath,
+  //   );
+
+  //   // Converge what was gathered to generate the output.
+  //   await generatorConverger.converge(
+  //     classInsights,
+  //     templates,
+  //     insightMappers,
+  //   );
+  //}
 
   // ---------------------------------------------------------------------------
 
   // Notify end.
   utils.debugLogStop('Done!');
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-enum _Categories {
-  DART,
 }

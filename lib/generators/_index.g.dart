@@ -16,6 +16,8 @@ export 'generate_directives_for_dart/lib/src/generate_directives_for_dart.dart';
 export 'generate_directives_for_dart/lib/src/run_generate_directives_for_dart_app.dart';
 export 'generate_models_for_dart/lib/src/run_generate_models_for_dart_app.dart';
 export 'generate_models_for_dart/lib/src/generate_models_for_dart_from_annotations.dart';
+export 'generate_models_for_dart/lib/src/generate_models_for_dart_from_blueprints.dart';
+export 'generate_models_for_dart/lib/src/run_generate_models_for_dart_from_blueprints_app.dart';
 
 // --- PRIVATE FILES (EXCLUDED) ---
 // export 'generate_index_files_for_typescript/lib/src/_utils/_generator_converger.dart';
@@ -28,4 +30,4 @@ export 'generate_models_for_dart/lib/src/generate_models_for_dart_from_annotatio
 // export 'generate_models_for_dart/lib/src/_utils/_insight_mappers.dart';
 
 // --- GENERATED FILES (EXCLUDED) ---
-// None found.
+// export '_index.g.dart';

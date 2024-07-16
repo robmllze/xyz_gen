@@ -13,7 +13,6 @@ import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 import 'package:path/path.dart' as p;
 
 import '/src/xyz/_index.g.dart' as xyz;
-import '_insight_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -60,4 +59,4 @@ final generatorConverger = _GeneratorConverger(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _GeneratorConverger = xyz.GeneratorConverger<xyz.ClassInsight<GenerateModel>, Placeholders>;
+typedef _GeneratorConverger = xyz.GeneratorConverger<xyz.ClassInsight<GenerateModel>, Enum>;
