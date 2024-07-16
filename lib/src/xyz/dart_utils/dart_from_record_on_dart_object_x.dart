@@ -9,7 +9,7 @@
 //.title~
 
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:xyz_gen_annotations/annotations_src/field.dart';
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -30,8 +30,7 @@ extension DartFromRecordOnDartObjectX on DartObject {
 
   String? _rawFieldNameFromRecord() {
     final a = this.getField('\$1')?.toStringValue();
-    final id = IField.fieldName.id;
-    final b = this.getField(id)?.toStringValue();
+    final b = this.getField('fieldName')?.toStringValue();
     return a ?? b;
   }
 
@@ -52,9 +51,8 @@ extension DartFromRecordOnDartObjectX on DartObject {
   String? _rawFieldTypeFromRecord() {
     final a = this.getField('\$2')?.toStringValue();
     final b = this.getField('\$2')?.toTypeValue()?.getDisplayString();
-    final id = IField.fieldType.id;
-    final c = this.getField(id)?.toStringValue();
-    final d = this.getField(id)?.toTypeValue()?.getDisplayString();
+    final c = this.getField('fieldType')?.toStringValue();
+    final d = this.getField('fieldType')?.toTypeValue()?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 
@@ -68,8 +66,7 @@ extension DartFromRecordOnDartObjectX on DartObject {
     if (this.fieldTypeFromRecord() == 'dynamic') {
       return false;
     }
-    final id = IField.nullable.id;
-    final a = this.getField(id)?.toBoolValue();
+    final a = this.getField('nullable')?.toBoolValue();
     final b = this.getField('\$3')?.toBoolValue();
     final c = this._rawFieldNameFromRecord()?.endsWith('?');
     final d = this._rawFieldTypeFromRecord()?.endsWith('?');

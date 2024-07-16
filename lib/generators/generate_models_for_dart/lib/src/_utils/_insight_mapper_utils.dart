@@ -16,10 +16,11 @@ import '/src/xyz/_index.g.dart' as xyz;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Iterable<xyz.DartField> dartFields(xyz.ClassInsight<GenerateModel> insight) {
-  return insight.annotation.fields.map((e) {
-    e.runtimeType;
-    return xyz.DartField.fromRecord(e);
-  }).nonNulls;
+  return insight.annotation.fields?.map((e) {
+        e.runtimeType;
+        return xyz.DartField.fromRecord(e);
+      }).nonNulls ??
+      {};
 }
 
 StringCaseType stringCaseType(xyz.ClassInsight<GenerateModel> insight) {

@@ -34,8 +34,8 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
   final insights = <_ClassInsight>[];
   late GenerateModel temp;
   await analyzer.analyze(
-    inclClassAnnotations: {IGenerateModel.$this.id},
-    inclMemberAnnotations: {IField.$this.id},
+    inclClassAnnotations: {'GenerateModel'},
+    inclMemberAnnotations: {'Field'},
     onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
@@ -62,41 +62,51 @@ GenerateModel _updateFromClassAnnotationField(
   GenerateModel annotation,
   xyz.OnClassAnnotationFieldParams params,
 ) {
-  final x = IGenerateModel.values.valueOf(params.fieldName);
+  final x = GenerateModelFields.values.valueOf(params.fieldName);
   switch (x) {
-    case IGenerateModel.className:
+    case GenerateModelFields.className:
       return annotation.copyWith(
-        className: params.fieldValue.toStringValue(),
+        GenerateModel(
+          className: params.fieldValue.toStringValue(),
+        ),
       );
-    case IGenerateModel.fields:
+    case GenerateModelFields.fields:
       return annotation.copyWith(
-        fields: {
-          ...annotation.fields,
-          ...?params.fieldValue.toSetValue()?.map((e) {
-            final field = Field(
-              fieldName: e.fieldNameFromRecord()!,
-              fieldType: e.fieldTypeFromRecord()!,
-              nullable: e.nullableFromRecord()!,
-            );
-            return field.toRecord;
-          }),
-        },
+        GenerateModel(
+          fields: {
+            ...?annotation.fields,
+            ...?params.fieldValue.toSetValue()?.map((e) {
+              final field = Field(
+                fieldName: e.fieldNameFromRecord()!,
+                fieldType: e.fieldTypeFromRecord()!,
+                nullable: e.nullableFromRecord()!,
+              );
+              return field.toRecord;
+            }),
+          },
+        ),
       );
-    case IGenerateModel.shouldInherit:
+    case GenerateModelFields.shouldInherit:
       return annotation.copyWith(
-        shouldInherit: params.fieldValue.toBoolValue(),
+        GenerateModel(
+          shouldInherit: params.fieldValue.toBoolValue(),
+        ),
       );
-    case IGenerateModel.inheritanceConstructor:
+    case GenerateModelFields.inheritanceConstructor:
       return annotation.copyWith(
-        inheritanceConstructor: params.fieldValue.toStringValue(),
+        GenerateModel(
+          inheritanceConstructor: params.fieldValue.toStringValue(),
+        ),
       );
-    case IGenerateModel.keyStringCase:
+    case GenerateModelFields.keyStringCase:
       return annotation.copyWith(
-        keyStringCase: params.fieldValue.toStringValue(),
+        GenerateModel(
+          keyStringCase: params.fieldValue.toStringValue(),
+        ),
       );
     default:
   }
-  return annotation.copyWith();
+  return GenerateModel.of(annotation);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -107,22 +117,24 @@ GenerateModel _updateFromAnnotatedMember(
   GenerateModel annotation,
   xyz.OnAnnotatedMemberParams params,
 ) {
-  if (params.memberAnnotationName == IField.$this.id) {
-    final a1 = params.memberAnnotationFields[IField.fieldName.id]?.toStringValue();
+  if (params.memberAnnotationName == 'Field') {
+    final a1 = params.memberAnnotationFields['fieldName']?.toStringValue();
     final a2 = params.memberName;
-    final b1 = params.memberAnnotationFields[IField.fieldType.id]?.toStringValue();
+    final b1 = params.memberAnnotationFields['fieldType']?.toStringValue();
     final b2 = params.memberType.getDisplayString();
-    final c1 = params.memberAnnotationFields[IField.nullable.id]?.toBoolValue();
+    final c1 = params.memberAnnotationFields['nullable']?.toBoolValue();
     final field = xyz.DartField(
       fieldName: a1 ?? a2,
       fieldType: b1 ?? b2,
       nullable: c1,
     );
     annotation = annotation.copyWith(
-      fields: {
-        ...annotation.fields,
-        field.toRecord,
-      },
+      GenerateModel(
+        fields: {
+          ...?annotation.fields,
+          field.toRecord,
+        },
+      ),
     );
   }
   return annotation;

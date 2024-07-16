@@ -20,6 +20,18 @@ import '_strip_special_syntax_from_field_type.dart';
 
 final insightMappersB = [
   _InsightMapper(
+    placeholder: PlaceholdersB.STATIC_KEY_NAMES,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
+          final c = stringCaseType(insight).convert(e.fieldName!);
+          return "static const $k = '$c';";
+        },
+      ).join('\n');
+    },
+  ),
+  _InsightMapper(
     placeholder: PlaceholdersB.FIELD_DECLARATIONS_B,
     mapInsights: (insight) async {
       return dartFields(insight).map(
@@ -102,12 +114,13 @@ final insightMappersB = [
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 enum PlaceholdersB {
+  STATIC_KEY_NAMES,
   FIELD_DECLARATIONS_B,
   FIELD_ASSERTIONS,
   FROM_JSON_B,
   TO_JSON_B,
   UPDATE_WITH_JSON_B,
-  GETTERS_AND_SETTERS_B;
+  GETTERS_AND_SETTERS_B,
 }
 
 typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, PlaceholdersB>;

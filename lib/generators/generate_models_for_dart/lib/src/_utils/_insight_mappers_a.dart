@@ -22,7 +22,7 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.SUPER_CLASS,
     mapInsights: (insight) async {
-      return insight.annotation.shouldInherit ? insight.className : 'Model';
+      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
@@ -44,23 +44,11 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.SUPER_CONSTRUCTOR,
     mapInsights: (insight) async {
-      return insight.annotation.shouldInherit
+      return insight.annotation.shouldInherit == true
           ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
               ? ': super.${insight.annotation.inheritanceConstructor}()'
               : ''
           : '';
-    },
-  ),
-  _InsightMapper(
-    placeholder: PlaceholdersA.STATIC_KEY_NAMES,
-    mapInsights: (insight) async {
-      return dartFields(insight).map(
-        (e) {
-          final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
-          final c = stringCaseType(insight).convert(e.fieldName!);
-          return "static const $k = '$c';";
-        },
-      ).join('\n');
     },
   ),
   _InsightMapper(
@@ -200,6 +188,21 @@ final insightMappersA = [
       ).join('\n');
     },
   ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.FIELDS,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final f = e.fieldName!.toCamelCase();
+          final x = e.fieldTypeCode!;
+          final y = x.endsWith('?') ? x.substring(0, x.length - 1) : x;
+          final c = stringCaseType(insight).convert(e.fieldName!);
+          final n = e.nullable;
+          return "$f(const Field(fieldName: '$c', fieldType: '$y', nullable: $n,),)";
+        },
+      ).join(',\n');
+    },
+  ),
 ];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -209,7 +212,6 @@ enum PlaceholdersA {
   CLASS,
   SUPER_CONSTRUCTOR,
   CLASS_FILE_NAME,
-  STATIC_KEY_NAMES,
   FIELD_DECLARATIONS_A,
   PARAMS_A1,
   FIELD_ASSERTIONS,
@@ -220,6 +222,7 @@ enum PlaceholdersA {
   TO_JSON_A1,
   TO_JSON_A2,
   GETTERS_A,
+  FIELDS,
 }
 
 typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, PlaceholdersA>;

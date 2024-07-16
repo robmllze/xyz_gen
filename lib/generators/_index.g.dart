@@ -24,10 +24,12 @@ export 'generate_models_for_dart/lib/src/run_generate_models_for_dart_from_bluep
 // export 'generate_index_files_for_typescript/lib/src/_utils/_insight_mappers.dart';
 // export 'generate_index_files_for_dart/lib/src/_utils/_generator_converger.dart';
 // export 'generate_index_files_for_dart/lib/src/_utils/_insight_mappers.dart';
+// export 'generate_models_for_dart/lib/src/_utils/_insight_mappers_b.dart';
 // export 'generate_models_for_dart/lib/src/_utils/_generator_converger.dart';
+// export 'generate_models_for_dart/lib/src/_utils/_insight_mapper_utils.dart';
 // export 'generate_models_for_dart/lib/src/_utils/_strip_special_syntax_from_field_type.dart';
 // export 'generate_models_for_dart/lib/src/_utils/_extract_class_insights_from_dart_file.dart';
-// export 'generate_models_for_dart/lib/src/_utils/_insight_mappers.dart';
+// export 'generate_models_for_dart/lib/src/_utils/_insight_mappers_a.dart';
 
 // --- GENERATED FILES (EXCLUDED) ---
 // export '_index.g.dart';
