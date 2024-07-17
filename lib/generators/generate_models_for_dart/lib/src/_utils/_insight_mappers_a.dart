@@ -132,7 +132,7 @@ final insightMappersA = [
                 '',
               );
           final f = e.fieldName!.toCamelCase();
-          final k = '${className}Fields.${f}';
+          final k = '${className}FieldNames.${f}';
           final x = e.fieldTypeCode!;
           final f0 = '${f}0';
           final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
