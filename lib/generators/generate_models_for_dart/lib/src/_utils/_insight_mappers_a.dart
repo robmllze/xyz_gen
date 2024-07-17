@@ -132,7 +132,7 @@ final insightMappersA = [
                 '',
               );
           final f = e.fieldName!.toCamelCase();
-          final k = '${className}Fields.${f}.name';
+          final k = '${className}Fields.${f}';
           final x = e.fieldTypeCode!;
           final f0 = '${f}0';
           final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
@@ -184,7 +184,7 @@ final insightMappersA = [
                 '',
               );
           final f = e.fieldName!.toCamelCase();
-          final k = '${className}Fields.${f}.name';
+          final k = '${className}Fields.${f}';
           final f0 = '${f}0';
           return '$k: $f0,';
         },
@@ -218,7 +218,7 @@ final insightMappersA = [
           final c = stringCaseType(insight).convert(e.fieldName!);
           return "static const $f = '$c';";
         },
-      ).join(',\n');
+      ).join('\n');
     },
   ),
   // _InsightMapper(
