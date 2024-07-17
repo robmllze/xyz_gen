@@ -115,7 +115,11 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return '${dartFields(insight).map(
         (e) {
-          final className = insight.className;
+          final className = insight.annotation.className ??
+              insight.className.replaceFirst(
+                RegExp(r'^[_$]+'),
+                '',
+              );
           final k = '${className}Fields.${e.fieldName}.name';
           final f = e.fieldName!.toCamelCase();
           final x = e.fieldTypeCode!;
@@ -163,7 +167,11 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final className = insight.className;
+          final className = insight.annotation.className ??
+              insight.className.replaceFirst(
+                RegExp(r'^[_$]+'),
+                '',
+              );
           final k = '${className}Fields.${e.fieldName}.name';
           final f = e.fieldName!.toCamelCase();
           final f0 = '${f}0';
