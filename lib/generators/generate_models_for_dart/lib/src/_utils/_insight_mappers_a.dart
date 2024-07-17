@@ -131,8 +131,8 @@ final insightMappersA = [
                 RegExp(r'^[_$]+'),
                 '',
               );
-          final k = '${className}Fields.${e.fieldName}.name';
           final f = e.fieldName!.toCamelCase();
+          final k = '${className}Fields.${f}.name';
           final x = e.fieldTypeCode!;
           final f0 = '${f}0';
           final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
@@ -183,8 +183,8 @@ final insightMappersA = [
                 RegExp(r'^[_$]+'),
                 '',
               );
-          final k = '${className}Fields.${e.fieldName}.name';
           final f = e.fieldName!.toCamelCase();
+          final k = '${className}Fields.${f}.name';
           final f0 = '${f}0';
           return '$k: $f0,';
         },
