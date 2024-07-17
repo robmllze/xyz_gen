@@ -210,20 +210,32 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.FIELDS,
+    placeholder: PlaceholdersA.FIELD_NAMES,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
           final f = e.fieldName!.toCamelCase();
-          final x = e.fieldTypeCode!;
-          final y = x.endsWith('?') ? x.substring(0, x.length - 1) : x;
           final c = stringCaseType(insight).convert(e.fieldName!);
-          final n = e.nullable;
-          return "$f(const Field(fieldName: '$c', fieldType: '$y', nullable: $n,),)";
+          return "static const $f = '$c';";
         },
       ).join(',\n');
     },
   ),
+  // _InsightMapper(
+  //   placeholder: PlaceholdersA.FIELDS,
+  //   mapInsights: (insight) async {
+  //     return dartFields(insight).map(
+  //       (e) {
+  //         final f = e.fieldName!.toCamelCase();
+  //         final x = e.fieldTypeCode!;
+  //         final y = x.endsWith('?') ? x.substring(0, x.length - 1) : x;
+  //         final c = stringCaseType(insight).convert(e.fieldName!);
+  //         final n = e.nullable;
+  //         return "$f(const Field(fieldName: '$c', fieldType: '$y', nullable: $n,),)";
+  //       },
+  //     ).join(',\n');
+  //   },
+  // ),
 ];
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -244,7 +256,8 @@ enum PlaceholdersA {
   TO_JSON_A1,
   TO_JSON_A2,
   GETTERS_A,
-  FIELDS,
+  //FIELDS,
+  FIELD_NAMES,
 }
 
 typedef _InsightMapper = xyz.InsightMapper<xyz.ClassInsight<GenerateModel>, PlaceholdersA>;
