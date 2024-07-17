@@ -76,6 +76,29 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
+    placeholder: PlaceholdersA.PARAMS_A2,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final f = e.fieldName!.toCamelCase();
+          return 'this.$f,';
+        },
+      ).join('\n');
+    },
+  ),
+  _InsightMapper(
+    placeholder: PlaceholdersA.PARAMS_A3,
+    mapInsights: (insight) async {
+      return dartFields(insight).map(
+        (e) {
+          final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
+          final f = e.fieldName!.toCamelCase();
+          return '$t? $f,';
+        },
+      ).join('\n');
+    },
+  ),
+  _InsightMapper(
     placeholder: PlaceholdersA.FIELD_ASSERTIONS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
@@ -94,18 +117,6 @@ final insightMappersA = [
         (e) {
           final f = e.fieldName!.toCamelCase();
           return '$f: $f,';
-        },
-      ).join('\n');
-    },
-  ),
-  _InsightMapper(
-    placeholder: PlaceholdersA.PARAMS_A2,
-    mapInsights: (insight) async {
-      return dartFields(insight).map(
-        (e) {
-          final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
-          final f = e.fieldName!.toCamelCase();
-          return '$t? $f,';
         },
       ).join('\n');
     },
@@ -227,6 +238,7 @@ enum PlaceholdersA {
   FIELD_ASSERTIONS,
   ARGS_A,
   PARAMS_A2,
+  PARAMS_A3,
   FROM_JSON_A1,
   FROM_JSON_A2,
   TO_JSON_A1,
