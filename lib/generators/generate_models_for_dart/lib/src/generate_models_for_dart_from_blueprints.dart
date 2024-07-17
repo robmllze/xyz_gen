@@ -9,6 +9,7 @@
 //.title~
 
 import 'package:xyz_config/xyz_config.dart';
+import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils.dart' as utils;
 import 'package:xyz_utils/xyz_utils_non_web.dart';
 
@@ -17,6 +18,7 @@ import '/src/xyz/_index.g.dart' as xyz;
 import '_utils/_extract_class_insights_from_dart_file.dart';
 import '_utils/_generator_converger.dart';
 import '_utils/_insight_mappers_a.dart';
+import '_utils/_insight_mappers_b.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -83,29 +85,54 @@ Future<void> generateModelsForDartFromBlueprints({
       );
       final success = await fileConfig.readAssociatedFile();
 
-      //fileConfig.fields['models']?[]
+      final m = Generate.fromJson(fileConfig.data.mapKeys((e) => e.toString()));
 
-      printRed(fileConfig.fields);
+      final annotations = m.annotations?.map((e) => GenerateModel.from(e));
+
+      printBlue(annotations);
+
+      final classInsights = annotations?.map(
+        (e) => xyz.ClassInsight(
+            annotation: e,
+            className: e.className!,
+            dirPath: m.outputDirPath!,
+            fileName: 'test.dart'),
+      );
+      if (classInsights != null) {
+        for (final template in templates) {
+          // final produceReplacements =
+          //     ReplacementProducer(() async => insightMappersA).produceReplacements;
+          // final aaa = await Future.wait(classInsights.map(
+          //   (a) {
+          //     return produceReplacements(a).then((b) {
+          //       return Replacements(
+          //         insight: a,
+          //         replacements: b,
+          //       );
+          //     });
+          //   },
+          // ));
+          // final output = utils.replaceData(
+          //   template.content,
+          //   replacement.replacements,
+          // );
+
+          ///printBlue(classInsight.className);
+        }
+
+        // printBlue(classInsights.length);
+        // // Converge what was gathered to generate the output.
+        // await generatorConverger.converge(
+        //   classInsights,
+        //   templates,
+        //   [
+        //     ...insightMappersA,
+        //     ...insightMappersB,
+        //   ],
+        // );
+      }
     }
   }
-
-  // // For each file...
-  // for (final filePathResult in sourceFileExplorerResults.filePathResults) {
-  //   final filePath = filePathResult.path;
-
-  //   // Extract insights from the file.
-  //   final classInsights = await extractClassInsightsFromDartFile(
-  //     analysisContextCollection,
-  //     filePath,
-  //   );
-
-  //   // Converge what was gathered to generate the output.
-  //   await generatorConverger.converge(
-  //     classInsights,
-  //     templates,
-  //     insightMappers,
-  //   );
-  //}
 
   // ---------------------------------------------------------------------------
 

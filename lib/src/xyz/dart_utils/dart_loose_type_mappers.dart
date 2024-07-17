@@ -172,11 +172,7 @@ class DartLooseTypeMappers extends TypeMappers {
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(letAs<String>(${e.name}))';
         },
-        r'^(DataModel)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
-          return '() { final a = letMap<String, dynamic>(${e.name}); return a != null ? DataModel(data: a): null; }()';
-        },
-        r'^(Model\w+|\w+Model)\??$': (e) {
+        r'^(Model\w*|\w*Model)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
           return '() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
@@ -269,11 +265,7 @@ class DartLooseTypeMappers extends TypeMappers {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.name';
         },
-        r'^(DataModel)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
-          return '${e.name}?.data';
-        },
-        r'^(Model\w+|\w+Model)\??$': (e) {
+        r'^(Model\w*|\w*Model)\??$': (e) {
           if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toJson()';
         },

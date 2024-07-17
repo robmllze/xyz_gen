@@ -20,7 +20,7 @@ import '_strip_special_syntax_from_field_type.dart';
 
 final insightMappersA = [
   _InsightMapper(
-    placeholder: PlaceholdersA.SUPER_CLASS,
+    placeholder: PlaceholdersA.SUPER_CLASS_NAME,
     mapInsights: (insight) async {
       return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
@@ -32,7 +32,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.CLASS,
+    placeholder: PlaceholdersA.CLASS_NAME,
     mapInsights: (insight) async {
       return insight.annotation.className ??
           insight.className.replaceFirst(
@@ -115,7 +115,8 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return '${dartFields(insight).map(
         (e) {
-          final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
+          final className = insight.className;
+          final k = '${className}Fields.${e.fieldName}.name';
           final f = e.fieldName!.toCamelCase();
           final x = e.fieldTypeCode!;
           final f0 = '${f}0';
@@ -162,7 +163,8 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final k = 'K_${e.fieldName!.toUpperSnakeCase()}';
+          final className = insight.className;
+          final k = '${className}Fields.${e.fieldName}.name';
           final f = e.fieldName!.toCamelCase();
           final f0 = '${f}0';
           return '$k: $f0,';
@@ -208,8 +210,8 @@ final insightMappersA = [
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 enum PlaceholdersA {
-  SUPER_CLASS,
-  CLASS,
+  SUPER_CLASS_NAME,
+  CLASS_NAME,
   SUPER_CONSTRUCTOR,
   CLASS_FILE_NAME,
   FIELD_DECLARATIONS_A,
