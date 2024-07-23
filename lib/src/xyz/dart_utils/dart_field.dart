@@ -48,9 +48,17 @@ final class DartField extends Field {
   // The super.fieldName stripped of '?' and as camelCase.
   @override
   String? get fieldName {
-    final temp = super.fieldType?.toString();
+    return this.fieldNameParts(StringCaseType.LOWER_SNAKE_CASE)?.join('_').toCamelCase();
+  }
+
+  Iterable<String>? fieldNameParts(
+    StringCaseType stringCaseType,
+  ) {
+    final temp = super.fieldName?.toString();
     if (temp != null) {
-      return (this._isFieldNameNullable! ? temp.substring(0, temp.length - 1) : temp).toCamelCase();
+      return (this._isFieldNameNullable! ? temp.substring(0, temp.length - 1) : temp)
+          .split('.')
+          .map((e) => stringCaseType.convert(e));
     } else {
       return null;
     }

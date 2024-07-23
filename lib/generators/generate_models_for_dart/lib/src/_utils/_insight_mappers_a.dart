@@ -126,21 +126,34 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return '${dartFields(insight).map(
         (e) {
-          final className = insight.annotation.className ??
-              insight.className.replaceFirst(
-                RegExp(r'^[_$]+'),
-                '',
-              );
           final f = e.fieldName;
-          final k = '${className}FieldNames.${f}';
           final x = e.fieldTypeCode!;
           final f0 = '${f}0';
           final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
             fieldName: f0,
             fieldTypeCode: x,
           );
+          String $v(String start, List<String>? fields) {
+            if (fields == null || fields.isEmpty) return '';
+            var result = "$start?['${fields[0]}']";
+            for (var n = 1; n < fields.length; n++) {
+              result = "letMap<String, dynamic>($result?['${fields[n]}'],)";
+            }
 
-          return 'final $f0 = otherData?[$k];\nfinal $f = $b;';
+            return result;
+          }
+
+          final fields = e
+              .fieldNameParts(
+                StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+                    StringCaseType.CAMEL_CASE,
+              )
+              ?.toList();
+          final v = $v('otherData', fields);
+          return [
+            'final $f0 = $v;',
+            'final $f = $b;',
+          ].join('\n');
         },
       ).join('\n')}';
     },
@@ -178,15 +191,25 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final className = insight.annotation.className ??
-              insight.className.replaceFirst(
-                RegExp(r'^[_$]+'),
-                '',
-              );
           final f = e.fieldName;
-          final k = '${className}FieldNames.${f}';
           final f0 = '${f}0';
-          return '$k: $f0,';
+          final fields = e
+              .fieldNameParts(
+                StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+                    StringCaseType.CAMEL_CASE,
+              )
+              ?.toList();
+          $v(String end, List<String>? fields) {
+            if (fields == null || fields.isEmpty) return '';
+            var result = "'${fields.last}': $end,";
+            for (var n = fields.length - 2; n >= 0; n--) {
+              result = "'${fields[n]}': {${result}},";
+            }
+            return result;
+          }
+
+          final v = $v(f0, fields);
+          return v;
         },
       ).join('\n');
     },
