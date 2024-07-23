@@ -34,7 +34,7 @@ dependencies:
 ## -----------------------------------------------------------------------------
 
 dependency_overrides:
-  # TODO: Comment out these lines if you don't have these packages at the
+  # TODO: Comment out these lines if you don't have these packages at their
   # respective paths. They are included for development purposes to allow
   # simultaneous work on this package and its dependencies.
   xyz_gen_annotations:
