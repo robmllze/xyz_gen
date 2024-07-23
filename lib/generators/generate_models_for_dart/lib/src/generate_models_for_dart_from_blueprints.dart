@@ -93,10 +93,11 @@ Future<void> generateModelsForDartFromBlueprints({
 
       final classInsights = annotations?.map(
         (e) => xyz.ClassInsight(
-            annotation: e,
-            className: e.className!,
-            dirPath: m.outputDirPath!,
-            fileName: 'test.dart'),
+          annotation: e,
+          className: e.className!,
+          dirPath: m.outputDirPath!,
+          fileName: 'test.dart',
+        ),
       );
       if (classInsights != null) {
         for (final template in templates) {

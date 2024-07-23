@@ -57,7 +57,7 @@ final insightMappersA = [
       return dartFields(insight).map(
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return 'final $t? $f;';
         },
       ).join('\n');
@@ -69,7 +69,7 @@ final insightMappersA = [
       return dartFields(insight).map(
         (e) {
           final n = e.nullable;
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return '${n ? '' : 'required'} this.$f,';
         },
       ).join('\n');
@@ -80,7 +80,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return 'this.$f,';
         },
       ).join('\n');
@@ -92,7 +92,7 @@ final insightMappersA = [
       return dartFields(insight).map(
         (e) {
           final t = stripSpecialSyntaxFromFieldType(e.fieldType!);
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return '$t? $f,';
         },
       ).join('\n');
@@ -104,7 +104,7 @@ final insightMappersA = [
       return dartFields(insight).map(
         (e) {
           final n = e.nullable;
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return n ? '' : 'assert($f != null);';
         },
       ).join('\n');
@@ -115,7 +115,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return '$f: $f,';
         },
       ).join('\n');
@@ -131,7 +131,7 @@ final insightMappersA = [
                 RegExp(r'^[_$]+'),
                 '',
               );
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           final k = '${className}FieldNames.${f}';
           final x = e.fieldTypeCode!;
           final f0 = '${f}0';
@@ -150,7 +150,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return '${dartFields(insight).map(
         (e) {
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           return '$f: $f,';
         },
       ).join('\n')}';
@@ -161,7 +161,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final a = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.toMappers).map(
@@ -183,7 +183,7 @@ final insightMappersA = [
                 RegExp(r'^[_$]+'),
                 '',
               );
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           final k = '${className}FieldNames.${f}';
           final f0 = '${f}0';
           return '$k: $f0,';
@@ -196,7 +196,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
           final n = e.nullable;
@@ -214,7 +214,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
-          final f = e.fieldName!.toCamelCase();
+          final f = e.fieldName;
           final c = stringCaseType(insight).convert(e.fieldName!);
           return "static const $f = '$c';";
         },

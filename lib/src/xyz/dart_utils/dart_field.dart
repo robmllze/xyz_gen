@@ -45,13 +45,12 @@ final class DartField extends Field {
   //
   //
 
-  // The super.fieldName stripped of '?'.
+  // The super.fieldName stripped of '?' and as camelCase.
   @override
   String? get fieldName {
-    if (super.fieldName != null) {
-      return this._isFieldNameNullable!
-          ? super.fieldName!.substring(0, super.fieldName!.length - 1)
-          : super.fieldName;
+    final temp = super.fieldType?.toString();
+    if (temp != null) {
+      return (this._isFieldNameNullable! ? temp.substring(0, temp.length - 1) : temp).toCamelCase();
     } else {
       return null;
     }
@@ -60,11 +59,10 @@ final class DartField extends Field {
   // The super.fieldType stripped of '?'.
   @override
   String? get fieldType {
-    if (super.fieldType != null) {
+    final temp = super.fieldType?.toString();
+    if (temp != null) {
       return _expandDynamicTypes(
-        this._isFieldTypeNullable!
-            ? super.fieldType!.substring(0, super.fieldType!.length - 1)
-            : super.fieldType!,
+        this._isFieldTypeNullable! ? temp.substring(0, temp.length - 1) : temp,
       );
     } else {
       return null;
