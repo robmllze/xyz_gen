@@ -135,10 +135,16 @@ final insightMappersA = [
           );
           String $v(String start, List<String>? fields) {
             if (fields == null || fields.isEmpty) return '';
-            var result = "$start?['${fields[0]}']";
-            for (var n = 1; n < fields.length; n++) {
-              result = "letMap<String, dynamic>($result?['${fields[n]}'],)";
+
+            var result = "$start";
+
+            if (fields.length > 1) {
+              for (var n = 0; n < fields.length - 1; n++) {
+                result = "letMap<String, dynamic>($result?['${fields[n]}'],)";
+              }
             }
+
+            result = "$result?['${fields.last}']";
 
             return result;
           }
@@ -201,9 +207,9 @@ final insightMappersA = [
               ?.toList();
           $v(String end, List<String>? fields) {
             if (fields == null || fields.isEmpty) return '';
-            var result = "'${fields.last}': $end,";
+            var result = "{'${fields.last}': $end,},";
             for (var n = fields.length - 2; n >= 0; n--) {
-              result = "'${fields[n]}': {${result}},";
+              result = "{'${fields[n]}': ${result}},";
             }
             return result;
           }
