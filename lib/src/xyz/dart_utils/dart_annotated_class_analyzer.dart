@@ -71,16 +71,16 @@ final class DartAnnotatedClassAnalyzer {
     _TOnMethodAnnotationFieldCallback? onMethodAnnotationField,
     _TOnAnnotatedMemberCallback? onAnnotatedMember,
     _TOnMemberAnnotationFieldsCallback? onMemberAnnotationField,
-    _TOnAnalysis? onPreAnalysis,
-    _TOnAnalysis? onPostAnalysis,
+    _TOnPreAnalysis? onPreAnalysis,
+    _TOnPostAnalysis? onPostAnalysis,
   }) async {
     final fullFilePath = p.normalize(p.absolute(filePath));
     final fullFileUri = Uri.file(fullFilePath);
     final context = this.analysisContextCollection.contextFor(fullFilePath);
     final library = await context.currentSession.getLibraryByUri(fullFileUri.toString());
     if (library is LibraryElementResult) {
-      final classElement = library.element.topLevelElements.whereType<ClassElement>().firstOrNull;
-      if (classElement != null) {
+      final classElements = library.element.topLevelElements.whereType<ClassElement>();
+      for (final classElement in classElements) {
         final className = classElement.displayName;
         if (classNameFilter == null || classNameFilter.hasMatch(className)) {
           onPreAnalysis?.call(
@@ -103,18 +103,23 @@ final class DartAnnotatedClassAnalyzer {
             onMethodAnnotationField,
             inclMethodAnnotations,
           );
+          final params = <OnAnnotatedClassParams>[];
           await _processClassAnnotations(
             fullFilePath,
             classElement,
-            onAnnotatedClass,
+            (p) async {
+              params.add(p);
+              await onAnnotatedClass?.call(p);
+            },
             onClassAnnotationField,
             inclClassAnnotations,
           );
+          if (onPostAnalysis != null) {
+            for (final p in params) {
+              onPostAnalysis(p);
+            }
+          }
         }
-        onPostAnalysis?.call(
-          fullFilePath,
-          className,
-        );
       }
     }
   }
@@ -408,4 +413,6 @@ typedef _TOnMemberAnnotationFieldsCallback = Future<dynamic> Function(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _TOnAnalysis = void Function(String fullFilePath, String className);
+typedef _TOnPreAnalysis = void Function(String fullFilePath, String className);
+
+typedef _TOnPostAnalysis = void Function(OnAnnotatedClassParams params);

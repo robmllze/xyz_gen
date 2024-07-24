@@ -39,11 +39,12 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
     onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
-    onPostAnalysis: (fullFilePath, className) {
-      final fileName = p.basename(fullFilePath);
-      final dirPath = p.dirname(fullFilePath);
+    onPostAnalysis: (params) {
+      final fullPathName = params.fullFilePath;
+      final fileName = p.basename(fullPathName);
+      final dirPath = p.dirname(fullPathName);
       final insight = _ClassInsight(
-        className: className,
+        className: params.className,
         annotation: temp,
         dirPath: dirPath,
         fileName: fileName,
