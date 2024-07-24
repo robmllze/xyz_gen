@@ -145,16 +145,12 @@ final insightMappersA = [
             }
 
             result = "$result?['${fields.last}']";
-
             return result;
           }
 
-          final fields = e
-              .fieldNameParts(
-                StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-                    StringCaseType.CAMEL_CASE,
-              )
-              ?.toList();
+          final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+              StringCaseType.CAMEL_CASE;
+          final fields = e.fieldPath!.map((e) => convertToStringCaseType(e, type)).toList();
           final v = $v('otherData', fields);
           return [
             'final $f0 = $v;',
@@ -199,12 +195,9 @@ final insightMappersA = [
         (e) {
           final f = e.fieldName;
           final f0 = '${f}0';
-          final fields = e
-              .fieldNameParts(
-                StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-                    StringCaseType.CAMEL_CASE,
-              )
-              ?.toList();
+          final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+              StringCaseType.CAMEL_CASE;
+          final fields = e.fieldPath!.map((e) => convertToStringCaseType(e, type)).toList();
           $v(String end, List<String>? fields) {
             if (fields == null || fields.isEmpty) return '';
             var result = "{'${fields.last}': $end,},";

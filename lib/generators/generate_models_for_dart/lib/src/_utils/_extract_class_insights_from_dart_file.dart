@@ -11,7 +11,6 @@
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:path/path.dart' as p;
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
 import '/src/xyz/_index.g.dart' as xyz;
 
@@ -63,22 +62,21 @@ GenerateModel _updateFromClassAnnotationField(
   GenerateModel annotation,
   xyz.OnClassAnnotationFieldParams params,
 ) {
-  final x = GenerateModelFields.values.valueOf(params.fieldName);
-  switch (x) {
-    case GenerateModelFields.className:
+  switch (params.fieldName) {
+    case GenerateModelFieldNames.className:
       return annotation.copyWith(
         GenerateModel(
           className: params.fieldValue.toStringValue(),
         ),
       );
-    case GenerateModelFields.fields:
+    case GenerateModelFieldNames.fields:
       return annotation.copyWith(
         GenerateModel(
           fields: {
             ...?annotation.fields,
             ...?params.fieldValue.toSetValue()?.map((e) {
               final field = Field(
-                fieldName: e.fieldNameFromRecord()!,
+                fieldPath: e.fieldPathFromRecord()!,
                 fieldType: e.fieldTypeFromRecord()!,
                 nullable: e.nullableFromRecord()!,
               );
@@ -87,19 +85,19 @@ GenerateModel _updateFromClassAnnotationField(
           },
         ),
       );
-    case GenerateModelFields.shouldInherit:
+    case GenerateModelFieldNames.shouldInherit:
       return annotation.copyWith(
         GenerateModel(
           shouldInherit: params.fieldValue.toBoolValue(),
         ),
       );
-    case GenerateModelFields.inheritanceConstructor:
+    case GenerateModelFieldNames.inheritanceConstructor:
       return annotation.copyWith(
         GenerateModel(
           inheritanceConstructor: params.fieldValue.toStringValue(),
         ),
       );
-    case GenerateModelFields.keyStringCase:
+    case GenerateModelFieldNames.keyStringCase:
       return annotation.copyWith(
         GenerateModel(
           keyStringCase: params.fieldValue.toStringValue(),
@@ -119,15 +117,14 @@ GenerateModel _updateFromAnnotatedMember(
   xyz.OnAnnotatedMemberParams params,
 ) {
   if (params.memberAnnotationName == Field.CLASS_NAME) {
-    final a1 =
-        params.memberAnnotationFields[FieldFields.fieldName.field.fieldName]?.toStringValue();
-    final a2 = params.memberName;
-    final b1 =
-        params.memberAnnotationFields[FieldFields.fieldType.field.fieldName]?.toStringValue();
+    final a1 = xyz.dartObjToList(params.memberAnnotationFields[FieldFieldNames.fieldPath]);
+    final a2 = [params.memberName];
+    final b1 = params.memberAnnotationFields[FieldFieldNames.fieldType]?.toStringValue();
+
     final b2 = params.memberType.getDisplayString();
-    final c1 = params.memberAnnotationFields[FieldFields.nullable.field.fieldName]?.toBoolValue();
+    final c1 = params.memberAnnotationFields[FieldFieldNames.nullable]?.toBoolValue();
     final field = xyz.DartField(
-      fieldName: a1 ?? a2,
+      fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
       nullable: c1,
     );

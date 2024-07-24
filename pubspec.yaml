@@ -22,28 +22,17 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  xyz_gen_annotations: ^0.48.1
-  xyz_utils: ">=0.63.0 <1.0.0"
-  xyz_config: ">=0.29.1 <1.0.0"
+  xyz_gen_annotations:
+    path: ../xyz_gen_annotations
+  xyz_utils: ">=0.63.2 <1.0.0"
+  xyz_config: ">=0.30.2 <1.0.0"
 
   analyzer: ^6.4.1
+  source_gen: ^1.5.0
   args: ^2.4.2
   path: ^1.9.0
   collection: ^1.18.0
   meta: ^1.11.0
-
-## -----------------------------------------------------------------------------
-
-dependency_overrides:
-  # TODO: Comment out these lines if you don't have these packages at their
-  # respective paths. They are included for development purposes to allow
-  # simultaneous work on this package and its dependencies.
-  xyz_gen_annotations:
-    path: ../xyz_gen_annotations
-  xyz_utils:
-    path: ../../xyz_utils
-  xyz_config:
-    path: ../../xyz_config
 
 ## -----------------------------------------------------------------------------
 

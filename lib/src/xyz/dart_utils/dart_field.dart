@@ -18,7 +18,7 @@ final class DartField extends Field {
   //
 
   const DartField({
-    required super.fieldName,
+    required super.fieldPath,
     required super.fieldType,
     super.nullable,
   });
@@ -26,7 +26,7 @@ final class DartField extends Field {
   /// Derives an instance [DartField] from [source].
   factory DartField.from(Field source) {
     return DartField(
-      fieldName: source.fieldName,
+      fieldPath: source.fieldPath,
       fieldType: source.fieldType,
       nullable: source.nullable,
     );
@@ -35,7 +35,7 @@ final class DartField extends Field {
   /// Derives an instance [DartField] from [record].
   factory DartField.fromRecord(TFieldRecord record) {
     return DartField(
-      fieldName: record.fieldName,
+      fieldPath: record.fieldPath,
       fieldType: record.fieldType,
       nullable: record.nullable,
     );
@@ -45,26 +45,18 @@ final class DartField extends Field {
   //
   //
 
-  // The super.fieldName stripped of '?' and as camelCase.
+  /// The super.fieldPath stripped of '?'.
   @override
+  List<String>? get fieldPath {
+    return super.fieldPath?.map((e) => e.trim().replaceAll('?', '')).toList();
+  }
+
+  /// The [fieldPath] joined and to camelCase.
   String? get fieldName {
-    return this.fieldNameParts(StringCaseType.LOWER_SNAKE_CASE)?.join('_').toCamelCase();
+    return this.fieldPath?.join('_').toCamelCase();
   }
 
-  Iterable<String>? fieldNameParts(
-    StringCaseType stringCaseType,
-  ) {
-    final temp = super.fieldName?.toString();
-    if (temp != null) {
-      return (this._isFieldNameNullable! ? temp.substring(0, temp.length - 1) : temp)
-          .split('.')
-          .map((e) => stringCaseType.convert(e));
-    } else {
-      return null;
-    }
-  }
-
-  // The super.fieldType stripped of '?'.
+  /// The super.fieldType stripped of '?'.
   @override
   String? get fieldType {
     final temp = super.fieldType?.toString();
@@ -77,7 +69,7 @@ final class DartField extends Field {
     }
   }
 
-  // The this.fieldName with '?' if nullable.
+  /// The this.fieldPath with '?' if nullable.
   @override
   String? get fieldTypeCode {
     if (this.fieldType != null) {
@@ -91,7 +83,7 @@ final class DartField extends Field {
   //
   //
 
-  // Whether super.fieldName or super.fieldType ends with '?' or super.nullable is true.
+  // Whether super.fieldPath or super.fieldType ends with '?' or super.nullable is true.
   @override
   bool get nullable {
     return [
@@ -105,7 +97,7 @@ final class DartField extends Field {
   //
   //
 
-  bool? get _isFieldNameNullable => super.fieldName?.endsWith('?');
+  bool? get _isFieldNameNullable => super.fieldPath?.any((e) => e.contains('?'));
 
   bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?');
 
