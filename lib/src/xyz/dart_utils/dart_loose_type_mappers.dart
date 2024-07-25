@@ -30,25 +30,23 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers get collectionFromMappers => newTypeMappers({
+  get collectionFromMappers => newTypeMappers<CollectionMapperEvent>({
+        // ---------------------------------------------------------------------
+        // Standard.
+        // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return 'letMap(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
         },
         r'^(Iterable)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return 'letIterable(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
         },
         r'^(List)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return 'letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
         },
         r'^(Set)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return 'letSet(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet()';
         },
         r'^(Queue)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return '(){ final a = letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.of(a): null; }()';
         },
       });
@@ -58,13 +56,14 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers get collectionToMappers => newTypeMappers({
+  get collectionToMappers => newTypeMappers<CollectionMapperEvent>({
+        // ---------------------------------------------------------------------
+        // Standard.
+        // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
         },
         r'^(Iterable|List|Set|Queue)\??$': (e) {
-          if (e is! CollectionMapperEvent) throw TypeError();
           return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
         },
       });
@@ -74,124 +73,97 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers get objectFromMappers => newTypeMappers({
+  get objectFromMappers => newTypeMappers<ObjectMapperEvent>({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
         r'^(dynamic)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}';
         },
         r'^(String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
         r'^(bool)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return 'letBool(${e.name})';
         },
         r'^(int)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return 'letInt(${e.name})';
         },
         r'^(double)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return 'letDouble(${e.name})';
         },
         r'^(num)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return 'letNum(${e.name})';
         },
         r'^(Timestamp)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '() { final a = ${e.name}; return a is Timestamp ? a: null; }()';
         },
         r'^(DateTime)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '() { final a = ${e.name}; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
         },
         r'^(Duration)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.tryParseDuration()';
         },
         r'^(Uri)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '(){ final a = ${e.name}; return a is String ? a.trim().nullIfEmpty?.toUriOrNull(): null; }()';
         },
         r'^(Color)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '(){ final a = letAs<int>(${e.name}); return a is int ? Color(a): null; }()';
         },
         // ---------------------------------------------------------------------
         // Special.
         // ---------------------------------------------------------------------
         r'^(LowerCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()';
         },
         r'^(Searchable-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\\w]', '')";
         },
         r'^(UpperCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperCase()';
         },
         r'^(LowerSnakeCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerSnakeCase()';
         },
         r'^(UpperSnakeCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperSnakeCase()';
         },
         r'^(LowerKebabCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerKebabCase()';
         },
         r'^(UpperKebabCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()';
         },
         r'^(LowerDotCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toLowerDotCase()';
         },
         r'^(UpperDotCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUpperDotCase()';
         },
         r'^(CamelCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()';
         },
         r'^(PascalCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()';
         },
         r'^(UriPathCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toUriPathCase()';
         },
         r'^(PathCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString().trim().nullIfEmpty?.toPathCase()';
         },
         // ---------------------------------------------------------------------
         // Default.
         // ---------------------------------------------------------------------
         r'^(Type-?\w*|\w*-?Type)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(letAs<String>(${e.name}))';
         },
         r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(letAs<String>(${e.name}))';
         },
         r'^(Model-?\w*|\w*-?Model)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           final typeName = e.matchGroups?.elementAt(1);
           return '() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
         },
@@ -199,7 +171,6 @@ class DartLooseTypeMappers extends TypeMappers {
         // Default.
         // ---------------------------------------------------------------------
         r'^(\w+)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}';
         },
       });
@@ -209,102 +180,80 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers get objectToMappers => newTypeMappers({
+  get objectToMappers => newTypeMappers<ObjectMapperEvent>({
         // ---------------------------------------------------------------------
         // Standart.
         // ---------------------------------------------------------------------
         r'^(String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty';
         },
         r'^(dynamic|bool|int|double|num|Timestamp)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}';
         },
         r'^(DateTime)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toUtc()?.toIso8601String()';
         },
         r'^(Duration|Uri)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toString()';
         },
         r'^(Color)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.value';
         },
         // ---------------------------------------------------------------------
         // Special.
         // ---------------------------------------------------------------------
         r'^(LowerCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toLowerCase()';
         },
         r'^(Searchable-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return "${e.name}?.trim().nullIfEmpty?.toLowerCase().replaceAll(r'[^\\w]', '')";
         },
         r'^(UpperCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toUpperCase()';
         },
         r'^(LowerSnakeCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toLowerSnakeCase()';
         },
         r'^(UpperSnakeCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toUpperSnakeCase()';
         },
         r'^(LowerKebabCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toLowerKebabCase()';
         },
         r'^(UpperKebabCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toUpperKebabCase()';
         },
         r'^(LowerDotCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toLowerDotCase()';
         },
         r'^(UpperDotCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toUpperDotCase()';
         },
         r'^(CamelCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toCamelCase()';
         },
         r'^(PascalCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toPascalCase()';
         },
         r'^(UriPathCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toUriPathCase()';
         },
         r'^(PathCase-String)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.trim().nullIfEmpty?.toPathCase()';
         },
         r'^(Type-?\w*|\w*-?Type)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.name';
         },
         r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.name';
         },
         r'^(Model-?\w*|\w*-?Model)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}?.toJson()';
         },
         // ---------------------------------------------------------------------
         // Default.
         // ---------------------------------------------------------------------
         r'^(\w+)\??$': (e) {
-          if (e is! ObjectMapperEvent) throw TypeError();
           return '${e.name}';
         },
       });

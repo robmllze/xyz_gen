@@ -8,6 +8,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import '../../../xyz_gen.dart';
+
 /// Mapper event for collection types, e.g. Map, List, Set.
 final class CollectionMapperEvent extends MapperEvent {
   Iterable<String> _largs = [];
@@ -166,54 +168,21 @@ TTypeMappers filterMappersByType(
 
 typedef TTypeMappers<E extends MapperEvent> = Map<String, String Function(E event)>;
 
-TTypeMappers newTypeMappers(TTypeMappers input) => TTypeMappers.unmodifiable(input);
-
-TTypeMappers<E> newTypeMappers1<E extends MapperEvent>(Iterable<_P> input) =>
-    TTypeMappers.unmodifiable(_map1(input));
+TTypeMappers<E> newTypeMappers<E extends MapperEvent>(_TEventMap<E> input) =>
+    Map.unmodifiable(input.map((k, v) => MapEntry(k, (e) => v(e as E))));
 
 abstract class TypeMappers {
-  TTypeMappers get fromMappers => {...this.collectionFromMappers, ...this.objectFromMappers};
-  TTypeMappers get toMappers => {...this.collectionToMappers, ...this.objectToMappers};
-  TTypeMappers get collectionFromMappers;
-  TTypeMappers get collectionToMappers;
-  TTypeMappers get objectFromMappers;
-  TTypeMappers get objectToMappers;
+  TTypeMappers<MapperEvent> get fromMappers =>
+      {...this.collectionFromMappers, ...this.objectFromMappers}.cast();
+  TTypeMappers<MapperEvent> get toMappers =>
+      {...this.collectionToMappers, ...this.objectToMappers}.cast();
+  TTypeMappers<CollectionMapperEvent> get collectionFromMappers;
+  TTypeMappers<CollectionMapperEvent> get collectionToMappers;
+  TTypeMappers<ObjectMapperEvent> get objectFromMappers;
+  TTypeMappers<ObjectMapperEvent> get objectToMappers;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Map<String, _TMapper<E>> _map<E extends MapperEvent>(
-  Iterable<Map<String, _TMapper>> entries,
-) {
-  return Map.fromEntries(
-    entries.map(
-      (e) {
-        final length = e.entries.length;
-        if (length != 1) throw Error();
-        return e.entries.first;
-      },
-    ),
-  );
-}
-
-Map<String, _TMapper<E>> _map1<E extends MapperEvent>(
-  Iterable<_P> params,
-) {
-  return _map<E>(params.map((e) => mapper(e)));
-}
-
-Map<String, _TMapper<E>> mapper<E extends MapperEvent>(_P<E> p) {
-  return {
-    p.$1: (e) {
-      if (e is! E) throw TypeError();
-      return p.$2(e);
-    },
-  }.cast();
-}
-
-typedef _P<E extends MapperEvent> = (
-  String pattern,
-  _TMapper<E> mapper,
-);
-
-typedef _TMapper<E extends MapperEvent> = String Function(E e);
+typedef _TEventMap<E extends MapperEvent> = Map<String, _TEventMapper<E>>;
+typedef _TEventMapper<E extends MapperEvent> = String Function(E event);
