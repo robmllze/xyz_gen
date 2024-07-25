@@ -164,9 +164,12 @@ TTypeMappers filterMappersByType(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef TTypeMappers = Map<String, String Function(MapperEvent event)>;
+typedef TTypeMappers<E extends MapperEvent> = Map<String, String Function(E event)>;
 
 TTypeMappers newTypeMappers(TTypeMappers input) => TTypeMappers.unmodifiable(input);
+
+TTypeMappers<E> newTypeMappers1<E extends MapperEvent>(Iterable<_P> input) =>
+    TTypeMappers.unmodifiable(_map1(input));
 
 abstract class TypeMappers {
   TTypeMappers get fromMappers => {...this.collectionFromMappers, ...this.objectFromMappers};
@@ -176,3 +179,41 @@ abstract class TypeMappers {
   TTypeMappers get objectFromMappers;
   TTypeMappers get objectToMappers;
 }
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Map<String, _TMapper<E>> _map<E extends MapperEvent>(
+  Iterable<Map<String, _TMapper>> entries,
+) {
+  return Map.fromEntries(
+    entries.map(
+      (e) {
+        final length = e.entries.length;
+        if (length != 1) throw Error();
+        return e.entries.first;
+      },
+    ),
+  );
+}
+
+Map<String, _TMapper<E>> _map1<E extends MapperEvent>(
+  Iterable<_P> params,
+) {
+  return _map<E>(params.map((e) => mapper(e)));
+}
+
+Map<String, _TMapper<E>> mapper<E extends MapperEvent>(_P<E> p) {
+  return {
+    p.$1: (e) {
+      if (e is! E) throw TypeError();
+      return p.$2(e);
+    },
+  }.cast();
+}
+
+typedef _P<E extends MapperEvent> = (
+  String pattern,
+  _TMapper<E> mapper,
+);
+
+typedef _TMapper<E extends MapperEvent> = String Function(E e);
