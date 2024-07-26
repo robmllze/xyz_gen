@@ -128,10 +128,11 @@ final insightMappersA = [
         (e) {
           final f = e.fieldName;
           final x = e.fieldTypeCode!;
+          final s = stripSpecialSyntaxFromFieldType(x);
           final f0 = '${f}0';
           final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
             fieldName: f0,
-            fieldTypeCode: x,
+            fieldTypeCode: s,
           );
           String $v(String start, List<String>? fields) {
             if (fields == null || fields.isEmpty) return '';
@@ -179,9 +180,10 @@ final insightMappersA = [
           final f = e.fieldName;
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
+          final s = stripSpecialSyntaxFromFieldType(x);
           final a = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.toMappers).map(
             fieldName: 'this.$f',
-            fieldTypeCode: x,
+            fieldTypeCode: s,
           );
           return 'final $f0 = $a;';
         },
