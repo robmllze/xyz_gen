@@ -159,13 +159,13 @@ class DartLooseTypeMappers extends TypeMappers {
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(letAs<String>(${e.name}))';
         },
-        r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
-          final typeName = e.matchGroups?.elementAt(1);
-          return '$typeName.values.valueOf(letAs<String>(${e.name}))';
-        },
         r'^(Model-?\w*|\w*-?Model)\??$': (e) {
           final typeName = e.matchGroups?.elementAt(1);
           return '() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
+        },
+        r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
+          final typeName = e.matchGroups?.elementAt(1);
+          return '$typeName.values.valueOf(letAs<String>(${e.name}))';
         },
         // ---------------------------------------------------------------------
         // Default.
@@ -244,11 +244,11 @@ class DartLooseTypeMappers extends TypeMappers {
         r'^(Type-?\w*|\w*-?Type)\??$': (e) {
           return '${e.name}?.name';
         },
-        r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
-          return '${e.name}?.name';
-        },
         r'^(Model-?\w*|\w*-?Model)\??$': (e) {
           return '${e.name}?.toJson()';
+        },
+        r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
+          return '${e.name}?.name';
         },
         // ---------------------------------------------------------------------
         // Default.
