@@ -11,6 +11,7 @@
 export 'run_generate_models_for_dart_app.dart';
 export 'generate_models_for_dart_from_annotations.dart';
 export 'generate_models_for_dart_from_blueprints.dart';
+export 'generate_models_for_typescript_from_blueprints.dart';
 export 'run_generate_models_for_dart_from_blueprints_app.dart';
 
 // --- PRIVATE FILES (EXCLUDED) ---

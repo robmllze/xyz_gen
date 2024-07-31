@@ -16,13 +16,12 @@ import 'package:xyz_utils/xyz_utils.dart' as utils;
 
 import '/src/xyz/_index.g.dart' as xyz;
 
-import '_utils/_generator_converger.dart';
-import '_utils/_insight_mappers_a.dart';
-import '_utils/_insight_mappers_b.dart';
+import '_utils/_typescript_generator_converger.dart';
+import '_utils/_typescript_insight_mappers_a.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> generateModelsForDartFromBlueprints({
+Future<void> generateModelsForTypeScriptFromBlueprints({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
@@ -106,7 +105,7 @@ Future<void> generateModelsForDartFromBlueprints({
                 annotation: annotation,
                 className: e.className!,
                 dirPath: dirPath,
-                fileName: '${e.className!.toSnakeCase()}.dart',
+                fileName: '${e.className!.toSnakeCase()}.ts',
               );
             },
           );
@@ -117,8 +116,7 @@ Future<void> generateModelsForDartFromBlueprints({
               classInsights,
               templates,
               [
-                ...insightMappersA,
-                ...insightMappersB,
+                ...typeScriptInsightMappers,
               ],
             );
           }

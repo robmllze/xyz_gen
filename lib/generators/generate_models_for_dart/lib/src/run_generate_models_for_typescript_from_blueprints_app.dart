@@ -12,16 +12,16 @@ import 'package:args/args.dart';
 
 import '/src/xyz/_index.g.dart' as xyz;
 
-import 'generate_models_for_dart_from_blueprints.dart';
+import 'generate_models_for_typescript_from_blueprints.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A command line app for generating Dart data models from blueprints. The
-/// [args] are interpreted and passed to [generateModelsForDartFromBlueprints].
-Future<void> runGenerateModelsForDartFromBlueprintsApp(List<String> args) async {
+/// A command line app for generating TypeScript data models from blueprints.
+/// The [args] are interpreted and passed to [generateModelsForTypeScriptFromBlueprints].
+Future<void> runGenerateModelsForTypeScriptFromBlueprintsApp(List<String> args) async {
   await xyz.runCommandLineApp(
-    title: '🇽🇾🇿  Generate Models for Dart',
-    description: 'A command line app for generating Dart models from annotations',
+    title: '🇽🇾🇿  Generate Models for TypeScript from blueprints',
+    description: 'A command line app for generating TypeScript models from blueprints',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -71,7 +71,7 @@ Future<void> runGenerateModelsForDartFromBlueprintsApp(List<String> args) async 
       );
     },
     action: (parser, results, args) async {
-      await generateModelsForDartFromBlueprints(
+      await generateModelsForTypeScriptFromBlueprints(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
