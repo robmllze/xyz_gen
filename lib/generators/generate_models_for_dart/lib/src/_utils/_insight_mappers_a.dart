@@ -11,6 +11,7 @@
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
+import '../../../../../xyz_gen.dart';
 import '/src/xyz/_index.g.dart' as xyz;
 
 import '_insight_mapper_utils.dart';
@@ -124,41 +125,29 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.FROM_JSON_A1,
     mapInsights: (insight) async {
-      return '${dartFields(insight).map(
-        (e) {
-          final f = e.fieldName;
-          final x = e.fieldTypeCode!;
-          final s = stripSpecialSyntaxFromFieldType(x);
-          final f0 = '${f}0';
-          final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
-            fieldName: f0,
-            fieldTypeCode: s,
-          );
-          String $v(String start, List<String>? fields) {
-            if (fields == null || fields.isEmpty) return '';
+      final fields = dartFields(insight).toList();
 
-            var result = "$start";
+      String $v(String a, DartField field) {
+        final keys = field.fieldPath;
+        if (keys == null || keys.isEmpty) return '';
+        final f = field.fieldName;
+        final x = field.fieldTypeCode!;
+        final s = stripSpecialSyntaxFromFieldType(x);
+        final b = xyz.DartTypeCodeMapper(xyz.DartLooseTypeMappers.instance.fromMappers).map(
+          fieldName: "$a?['${keys.last}']",
+          fieldTypeCode: s,
+        );
+        return 'final ${f} = $b;';
+      }
 
-            if (fields.length > 1) {
-              for (var n = 0; n < fields.length - 1; n++) {
-                result = "letMap<String, dynamic>($result?['${fields[n]}'],)";
-              }
-            }
-
-            result = "$result?['${fields.last}']";
-            return result;
-          }
-
-          final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-              StringCaseType.CAMEL_CASE;
-          final fields = e.fieldPath!.map((e) => convertToStringCaseType(e, type)).toList();
-          final v = $v('otherData', fields);
-          return [
-            'final $f0 = $v;',
-            'final $f = $b;',
-          ].join('\n');
-        },
-      ).join('\n')}';
+      final j = fields.map((a) {
+        final ff = fields
+            .where((b) => a.fieldPath!.join('.').startsWith(b.fieldPath!.join('.')))
+            .toList()
+          ..sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
+        return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'otherData', ff.first);
+      });
+      return j.join('\n');
     },
   ),
   _InsightMapper(
@@ -193,26 +182,87 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.TO_JSON_A2,
     mapInsights: (insight) async {
-      return dartFields(insight).map(
-        (e) {
-          final f = e.fieldName;
-          final f0 = '${f}0';
-          final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-              StringCaseType.CAMEL_CASE;
-          final fields = e.fieldPath!.map((e) => convertToStringCaseType(e, type)).toList();
-          $v(String end, List<String>? fields) {
-            if (fields == null || fields.isEmpty) return '';
-            var result = "{'${fields.last}': $end,},";
-            for (var n = fields.length - 2; n >= 0; n--) {
-              result = "{'${fields[n]}': ${result}},";
-            }
-            return result;
-          }
+      final fields = dartFields(insight).toList();
+      final parents = fields
+          .where(
+            (f1) =>
+                f1.fieldType == 'Map<String, dynamic>' &&
+                fields.map((e) => e.fieldName!).any((e) => e.startsWith(f1.fieldName!)),
+          )
+          .toList();
+      fields.removeWhere((e) => parents.contains(e));
 
-          final v = $v(f0, fields);
-          return v;
-        },
-      ).join('\n');
+      dynamic traverseMap(Map<String, dynamic> map, List<String> keys, {dynamic newValue}) {
+        dynamic current = map;
+        for (var n = 0; n < keys.length; n++) {
+          final key = keys[n];
+          if (n == keys.length - 1) {
+            if (newValue != null) {
+              current[key] = newValue; // Set the value if newValue is provided
+              return;
+            } else {
+              return current[key]; // Get the value if newValue is not provided
+            }
+          } else {
+            if (current is Map<String, dynamic> && current.containsKey(key)) {
+              current = current[key];
+            } else {
+              if (newValue != null) {
+                current[key] = <String, dynamic>{}; // Create a new map if we're setting a value
+                current = current[key];
+              } else {
+                return null; // Key not found or current is not a map
+              }
+            }
+          }
+        }
+        return null; // Return null if keys are exhausted without finding the value
+      }
+
+      final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+          StringCaseType.CAMEL_CASE;
+
+      void setValueInMap(
+        Map<String, dynamic> data,
+        Iterable<String> keys,
+        dynamic value,
+      ) {
+        if (keys.length > 1) {
+          for (var n = 0; n < keys.length - 1; n++) {
+            final k = keys.elementAt(n);
+            data = (data[k] ??= <String, dynamic>{});
+          }
+        }
+        final d1 = data[keys.last];
+        if (d1 is Map && value is Map) {
+          data[keys.last] = {...d1, ...value};
+        } else {
+          data[keys.last] = value;
+        }
+      }
+
+      final entries = fields
+          .map((e) => MapEntry(type.convertAll(e.fieldPath!).join('.'), '${e.fieldName}0'))
+          .toList()
+        ..sort((a, b) => b.key.compareTo(a.key));
+
+      var buffer = <String, dynamic>{};
+
+      for (final e in entries) {
+        setValueInMap(buffer, e.key.split('.').map((e) => "'$e'"), e.value);
+      }
+
+      for (final parent in parents) {
+        traverseMap(
+          buffer,
+          [...parent.fieldPath!.map((e) => "'${type.convert(e)}'"), '#'],
+          newValue: '...?${parent.fieldName}0,',
+        );
+      }
+
+      final test = buffer.entries.map((e) => '${e.key}: ${e.value},').join();
+
+      return test.replaceAll('#:', '');
     },
   ),
   _InsightMapper(
