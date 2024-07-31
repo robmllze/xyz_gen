@@ -89,15 +89,17 @@ Future<void> generateModelsForDartFromAnnotations({
       filePath,
     );
 
-    // Converge what was gathered to generate the output.
-    await generatorConverger.converge(
-      classInsights,
-      templates,
-      [
-        ...insightMappersA,
-        ...insightMappersB,
-      ],
-    );
+    if (classInsights.isNotEmpty) {
+      // Converge what was gathered to generate the output.
+      await generatorConverger.converge(
+        classInsights,
+        templates,
+        [
+          ...insightMappersA,
+          ...insightMappersB,
+        ],
+      );
+    }
   }
 
   // ---------------------------------------------------------------------------

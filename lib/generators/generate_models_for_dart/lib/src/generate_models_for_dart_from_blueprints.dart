@@ -8,14 +8,14 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:path/path.dart' as p;
 import 'package:xyz_config/xyz_config.dart';
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
-import 'package:xyz_utils/xyz_utils.dart' as utils;
 import 'package:xyz_utils/xyz_utils_non_web.dart';
+import 'package:xyz_utils/xyz_utils.dart' as utils;
 
 import '/src/xyz/_index.g.dart' as xyz;
 
-import '_utils/_extract_class_insights_from_dart_file.dart';
 import '_utils/_generator_converger.dart';
 import '_utils/_insight_mappers_a.dart';
 import '_utils/_insight_mappers_b.dart';
@@ -58,16 +58,6 @@ Future<void> generateModelsForDartFromBlueprints({
   );
   final sourceFileExplorerResults = await sourceFileExporer.explore();
 
-  // Read all templates from templatesRootDirPaths.
-  final templateFileExporer = xyz.PathExplorer(
-    dirPathGroups: {
-      xyz.CombinedPaths(
-        templatesRootDirPaths,
-      ),
-    },
-  );
-  final templates = await templateFileExporer.readAll();
-
   // ---------------------------------------------------------------------------
 
   for (final filePathResult in sourceFileExplorerResults.filePathResults) {
@@ -84,53 +74,56 @@ Future<void> generateModelsForDartFromBlueprints({
         settings: const ReplacePatternsSettings(caseSensitive: false),
       );
       final success = await fileConfig.readAssociatedFile();
+      if (success) {
 
-      final m = Generate.fromJson(fileConfig.data.mapKeys((e) => e.toString()));
+        final g = Generate.fromJson(fileConfig.data.mapKeys((e) => e.toString()));
+        final configFileDirPath = p.dirname(filePathResult.path);
+        final t0 =
+            g.templateFilePaths?.map((e) => p.normalize(p.join(configFileDirPath, e))).toSet() ??
+                {};
+        final t1 = templatesRootDirPaths;
 
-      final annotations = m.annotations?.map((e) => GenerateModel.from(e));
+        // Read all templates from templatesRootDirPaths.
+        final templateFileExporer = xyz.PathExplorer(
+          dirPathGroups: {if (t0.isNotEmpty) xyz.CombinedPaths(t0) else xyz.CombinedPaths(t1)},
+        );
+        final templates = await templateFileExporer.readAll();
 
-      printBlue(annotations);
+        final annotations = g.annotations?.map((e) => GenerateModel.from(e));
 
-      final classInsights = annotations?.map(
-        (e) => xyz.ClassInsight(
-          annotation: e,
-          className: e.className!,
-          dirPath: m.outputDirPath!,
-          fileName: 'test.dart',
-        ),
-      );
-      if (classInsights != null) {
-        for (final template in templates) {
-          // final produceReplacements =
-          //     ReplacementProducer(() async => insightMappersA).produceReplacements;
-          // final aaa = await Future.wait(classInsights.map(
-          //   (a) {
-          //     return produceReplacements(a).then((b) {
-          //       return Replacements(
-          //         insight: a,
-          //         replacements: b,
-          //       );
-          //     });
-          //   },
-          // ));
-          // final output = utils.replaceData(
-          //   template.content,
-          //   replacement.replacements,
-          // );
+        if (annotations != null) {
+          // Extract insights from the file.
+          final classInsights = annotations.map(
+            (e) {
+              final annotation = e.copyWith(
+                GenerateModel(
+                  fields: e.fields?.map((e) {
+                    return Field.fromJson(e).toRecord;
+                  }).toSet(),
+                ),
+              );
+              final dirPath = p.join(configFileDirPath, g.outputDirPath!);
+              return xyz.ClassInsight(
+                annotation: annotation,
+                className: e.className!,
+                dirPath: dirPath,
+                fileName: '${e.className!.toSnakeCase()}.dart',
+              );
+            },
+          );
 
-          ///printBlue(classInsight.className);
+          if (classInsights.isNotEmpty) {
+            // Converge what was gathered to generate the output.
+            await generatorConverger.converge(
+              classInsights,
+              templates,
+              [
+                ...insightMappersA,
+                ...insightMappersB,
+              ],
+            );
+          }
         }
-
-        // printBlue(classInsights.length);
-        // // Converge what was gathered to generate the output.
-        // await generatorConverger.converge(
-        //   classInsights,
-        //   templates,
-        //   [
-        //     ...insightMappersA,
-        //     ...insightMappersB,
-        //   ],
-        // );
       }
     }
   }

@@ -11,7 +11,6 @@
 import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
 import 'package:xyz_utils/xyz_utils_non_web.dart' as utils;
 
-import '../../../../../xyz_gen.dart';
 import '/src/xyz/_index.g.dart' as xyz;
 
 import '_insight_mapper_utils.dart';
@@ -127,7 +126,7 @@ final insightMappersA = [
     mapInsights: (insight) async {
       final fields = dartFields(insight).toList();
 
-      String $v(String a, DartField field) {
+      String $v(String a, xyz.DartField field) {
         final keys = field.fieldPath;
         if (keys == null || keys.isEmpty) return '';
         final f = field.fieldName;
